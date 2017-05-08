@@ -1,0 +1,15 @@
+/*
+ * Author:      熊哲
+ * CreateTime:  4/19/2017 2:20:04 PM
+ * Description:
+ * 
+*/
+using UnityEngine;
+
+namespace EZUnityTools
+{
+    public class #SCRIPTNAME#
+    {
+
+    }
+}
