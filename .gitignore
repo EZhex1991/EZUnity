@@ -13,6 +13,8 @@
 /Assets/Script_Lua_txt
 /Assets/Script_Lua_txt.meta
 
+.svn
+
 .vs
 *.sln
 *.csproj
@@ -20,8 +22,6 @@
 *.luaproj.user
 *.userprefs
 *.config
-
-.svn
 
 /Library
 /obj

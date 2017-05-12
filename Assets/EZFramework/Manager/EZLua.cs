@@ -68,7 +68,7 @@ namespace EZFramework
             fileName = EZSettings.Instance.luaDirName + "/" + fileName.Replace('.', '/');     // 返给lua调试器的路径
             try
             {
-                // File.ReadAllBytes返回值可能会带有BOM（0xEF，0xBB，0xBF），这回导致lua编译出错（</239>）
+                // File.ReadAllBytes返回值可能会带有BOM（0xEF，0xBB，0xBF），这会导致脚本加载出错（</239>）
                 byte[] script = System.Text.Encoding.UTF8.GetBytes(File.ReadAllText(filePath));
                 return script;
             }
