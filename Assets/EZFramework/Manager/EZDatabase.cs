@@ -5,7 +5,7 @@
  * 一个简易的数据库，使用缓存防止数据在异常情况下的丢失，同时可以减少外存的读写次数；
  * 
  * 1. Index: 索引是这个数据库的基本状态，记录当前有多少缓存和数据库中有哪些数据；
- * 2. Cache: 缓存是内存的修改记录，当对内存进行修改时外存不会同步修改，而是在缓存中记录下修改的字段、方式和值；（只有Cache是直接进行外存读写的）
+ * 2. Cache: 缓存是内存的修改记录，当对内存进行修改时外存不会同步修改，而是在缓存中记录下修改的字段、方式和值；（只有Cache是直接进行实时外存读写的）
  * 3. Data: 数据是一个键值对的集合，采用的数据结构是Hashtable，每个数据会保存成一个文件；
  * 运行时会首先读取Index，如果发现Cache不为0则会读取Cache，根据Cache对Data进行读取和修改；
  * 当需要从Data中取某一键值对记录时，会先判断该Data是否已加载到内存，如果没有则判断在Index中是否存在该数据，如果存在则加载对应文件，如果不存在则新建数据；
@@ -53,9 +53,13 @@ namespace EZFramework
         public override void Init()
         {
             base.Init();
+#if UNITY_EDITOR
             MainDirPath = EZSettings.Instance.runMode == EZSettings.RunMode.Develop
                             ? EZUtility.dataDirPath + "EZDatabase/"
                             : EZUtility.persistentDirPath + "EZDatabase/";
+#else
+            MainDirPath = EZUtility.persistentDirPath + "EZDatabase/";
+#endif
             IndexFilePath = MainDirPath + "_DBIndex" + EXTENSION_INDEX;
             CacheFilePath = MainDirPath + "_Cache" + EXTENSION_CACHE;
             Directory.CreateDirectory(MainDirPath);
@@ -67,14 +71,6 @@ namespace EZFramework
         {
             base.Exit();
             SaveData();
-        }
-        void OnApplicationFocus(bool focusStatus)
-        {
-            Log("Application Focus: " + focusStatus);
-            if (!focusStatus)
-            {
-                SaveData();
-            }
         }
 
         public bool Add(string dataName, object key, object value)
