@@ -69,5 +69,10 @@ namespace EZFramework
                 Debug.LogError(ex.Message);
             }
         }
+
+        public static void ClearPlayerPrefs()
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 }

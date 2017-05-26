@@ -39,5 +39,10 @@ namespace EZFramework
         {
             EZPathUtility.ClearStreamingAssets();
         }
+        [MenuItem(ROOT_NAME + "/Clear PlayerPrefs", priority = 52)]
+        public static void ClearPlayerPrefs()
+        {
+            EZPathUtility.ClearPlayerPrefs();
+        }
     }
 }

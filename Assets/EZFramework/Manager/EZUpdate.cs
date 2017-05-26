@@ -117,10 +117,9 @@ namespace EZFramework
         private IEnumerator Cor_Extract()
         {
             if (EZSettings.Instance.runMode == EZSettings.RunMode.Develop) yield break;
+            if (PlayerPrefs.GetString("EZUpdate_Extracted", "") == Application.version) yield break;
             string inputFilePath, outputFilePath;
             inputFilePath = sourceDirPath + "files.txt"; outputFilePath = runtimeDirPath + "files.txt";
-            if (File.Exists(outputFilePath)) yield break;
-
             if (loadingPanel != null) loadingPanel.ShowProgress("Extracting...");
             yield return Cor_ExtractFile(inputFilePath, outputFilePath);
             LoadFileList();
@@ -132,6 +131,7 @@ namespace EZFramework
                 inputFilePath = sourceDirPath + filePath; outputFilePath = runtimeDirPath + filePath;
                 yield return Cor_ExtractFile(inputFilePath, outputFilePath);
             }
+            PlayerPrefs.SetString("EZUpdate_Extracted", Application.version);
         }
         private IEnumerator Cor_ExtractFile(string source, string destination)
         {
