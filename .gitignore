@@ -8,10 +8,14 @@
 /Assets/EZFramework/3rdParty/XLua/Gen
 /Assets/EZFramework/3rdParty/XLua/Gen.meta
 
-/Assets/StreamingAssets
-/Assets/StreamingAssets.meta
+/Assets/_Temp
+/Assets/_Temp.meta
+/Assets/Resources
+/Assets/Resources.meta
 /Assets/Script_Lua_txt
 /Assets/Script_Lua_txt.meta
+/Assets/StreamingAssets
+/Assets/StreamingAssets.meta
 
 .svn
 

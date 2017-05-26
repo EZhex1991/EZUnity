@@ -1,6 +1,6 @@
 /*
- * Author:      熊哲
- * CreateTime:  4/19/2017 2:20:04 PM
+ * Author:      #AUTHORNAME#
+ * CreateTime:  #CREATETIME#
  * Description:
  * 
 */

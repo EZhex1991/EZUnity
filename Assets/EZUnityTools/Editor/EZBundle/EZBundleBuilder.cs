@@ -49,7 +49,7 @@ namespace EZUnityTools.EZEditor
             AssetDatabase.Refresh();
             BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
             BuildPipeline.BuildAssetBundles(bundleDirPath, GetBuildList(ezBundle).ToArray(), options, ezBundle.bundleTarget);
-            if (ezBundle.createListFile) BuildFileIndex(bundleDirPath, ezBundle.listFileName);
+            if (ezBundle.createListFile) CreateFileList(bundleDirPath, ezBundle.listFileName);
             AssetDatabase.Refresh();
             OnPostBuild();
         }
@@ -115,7 +115,7 @@ namespace EZUnityTools.EZEditor
             }
             return buildList;
         }
-        protected static void BuildFileIndex(string dirPath, string listFileName)
+        protected static void CreateFileList(string dirPath, string listFileName)
         {
             string listFilePath = dirPath + listFileName;
             if (File.Exists(listFilePath)) File.Delete(listFilePath);
@@ -127,7 +127,7 @@ namespace EZUnityTools.EZEditor
             StreamWriter streamWriter = new StreamWriter(fileStream);
             foreach (string filePath in fileList)
             {
-                if (filePath.EndsWith(".meta")) continue;
+                if (filePath.EndsWith(".meta") || filePath.EndsWith(".manifest")) continue;
                 string md5Data = GetFileMD5(filePath);
                 string relativePath = filePath.Replace(dirPath, string.Empty);
                 streamWriter.WriteLine(relativePath + DELIMITER + md5Data);

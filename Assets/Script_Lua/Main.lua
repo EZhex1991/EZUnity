@@ -9,10 +9,11 @@ local M = { };
 M.__index = M;
 ----- begin module -----
 function Start()
-	require("XLuaExample.Dictionary.Dictionary");
+	print("Lua Start");
 end
 
 function Exit()
+	print("Lua Exit");
 end
 ----- end -----
 return M;
