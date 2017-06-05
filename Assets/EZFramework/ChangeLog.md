@@ -1,3 +1,17 @@
+### 2017.06.05
+- 去掉无用的更新设置
+  - RunMode.Develop 开发模式，不解压不更新，资源读dataPath，lua使用loadFromFile，文件存在dataPath；
+  - RunMode.Local 本地模式，不解压不更新，资源读dataPath，lua使用loadFromBundle，文件存在persistentPath；
+  - RunMode.Update 更新模式，解压更新，资源读persistentPath，lua使用LoadFromBundle，文件存在persistentPath;
+
+### 2017.06.01
+- 部分变量名修改，部分常量改为变量，提高可读性；
+- EZBundle的fileList加入了文件大小的记录（string.Split分割后的第三段）；
+
+### 2017.05.26
+- EZBundle的fileList不再记录.manifest文件；
+- EZUpdate是否需要解压的判断，由判断文件目录是否存在改为判断PlayerPrefs的解压记录是否与安装包版本相同；
+
 ### 2017.05.05
 - EZSettings.asset的存放位置移动至EZFramework目录外（Assets/Resources/，因为不需要同步且必须打包）；
 - EZUnityTools的所有asset存放位置移动至EZUnityTools目录外（因为不需要同步）；
