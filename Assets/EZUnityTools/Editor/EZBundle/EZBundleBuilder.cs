@@ -128,9 +128,10 @@ namespace EZUnityTools.EZEditor
             foreach (string filePath in fileList)
             {
                 if (filePath.EndsWith(".meta") || filePath.EndsWith(".manifest")) continue;
-                string md5Data = GetFileMD5(filePath);
                 string relativePath = filePath.Replace(dirPath, string.Empty);
-                streamWriter.WriteLine(relativePath + DELIMITER + md5Data);
+                string md5Data = GetFileMD5(filePath);
+                string size = (new FileInfo(filePath).Length >> 10).ToString();
+                streamWriter.WriteLine(relativePath + DELIMITER + md5Data + DELIMITER + size);
             }
             streamWriter.Close();
             fileStream.Close();
