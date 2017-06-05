@@ -23,22 +23,26 @@ namespace EZFramework
         {
             streamWrite.WriteLine(timeTag.PadRight(10) + "\t" + logType.ToString().PadRight(10) + "\t" + string.Format(format, args));
             streamWrite.Flush();
-            if (logCount++ > 10000) NewLogFile();
+            if (logCount++ > logMax) NewLogFile();
             m_DefaultLogHandler.LogFormat(logType, context, format, args);
         }
 
         private ILogHandler m_DefaultLogHandler = Debug.logger.logHandler;
+
         private string mainDirPath { get; set; }
         private string currentLogFile { get; set; }
+
         private int logCount { get; set; }
+        private int logMax { get; set; }
+
         private string timeTag { get { return DateTime.Now.ToString("HH:mm:ss"); } }
         private FileStream fileStream { get; set; }
         private StreamWriter streamWrite { get; set; }
-        public EZLogHandler()
+
+        public EZLogHandler(string logPath, int maxLogCount = 10000)
         {
-            mainDirPath = EZSettings.Instance.runMode == EZSettings.RunMode.Develop
-                ? EZUtility.dataDirPath + "EZLog/"
-                : EZUtility.persistentDirPath + "EZLog/";
+            mainDirPath = logPath;
+            logMax = maxLogCount;
             NewLogFile();
         }
         private void NewLogFile()

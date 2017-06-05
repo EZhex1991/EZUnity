@@ -19,11 +19,18 @@ namespace EZFramework
 
         void Start()
         {
-#if !UNITY_EDITOR
-            EZSettings.Instance.runMode = EZSettings.RunMode.Update;
-#endif
             gameObject.hideFlags = hideFacade ? HideFlags.HideInHierarchy : HideFlags.None;
-            Debug.logger.logHandler = useDefaultLogHandler ? defaultLogHandler : new EZLogHandler();
+            if (useDefaultLogHandler)
+            {
+                Debug.logger.logHandler = defaultLogHandler;
+            }
+            else
+            {
+                string logPath = EZSettings.Instance.runMode == EZSettings.RunMode.Develop
+                    ? EZUtility.dataDirPath + "EZLog/"
+                    : EZUtility.persistentDirPath + "EZLog/";
+                Debug.logger.logHandler = new EZLogHandler(logPath);
+            }
 
             Screen.sleepTimeout = (int)EZSettings.Instance.sleepTimeout;
             Application.runInBackground = EZSettings.Instance.runInBackground;

@@ -17,10 +17,20 @@ namespace EZFramework
         void Awake()
         {
             gameObject.SetActive(true);
-            ShowProgress();
+            ShowProgress("", 0);
         }
 
-        public void ShowProgress(string str = "", float progress = 0)
+        public void ShowProgress(string str)
+        {
+            gameObject.SetActive(true);
+            text_Process.text = str;
+        }
+        public void ShowProgress(float progress)
+        {
+            gameObject.SetActive(true);
+            image_ProcessFill.fillAmount = progress;
+        }
+        public void ShowProgress(string str, float progress)
         {
             gameObject.SetActive(true);
             text_Process.text = str;

@@ -44,9 +44,8 @@ namespace EZFramework
         public SleepTimeout sleepTimeout = SleepTimeout.NeverSleep;
         public bool runInBackground = true;
         public int targetFrameRate = 45;
-
-        public string localServerAddress = "";
-        public string updateServerAddress = "";
+        
+        public string updateServer = "";
         public string bundleExtension = ".unity3d";
         public string luaDirName = "Script_Lua";
     }

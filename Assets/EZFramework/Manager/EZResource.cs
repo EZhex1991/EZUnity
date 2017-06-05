@@ -27,9 +27,18 @@ namespace EZFramework
         public override void Init()
         {
             base.Init();
-            bundleDirPath = EZSettings.Instance.runMode == EZSettings.RunMode.Develop
-                            ? EZUtility.streamingDirPath
-                            : EZUtility.persistentDirPath;
+            switch (EZSettings.Instance.runMode)
+            {
+                case EZSettings.RunMode.Develop:
+                    bundleDirPath = EZUtility.streamingDirPath;
+                    break;
+                case EZSettings.RunMode.Local:
+                    bundleDirPath = EZUtility.streamingDirPath;
+                    break;
+                case EZSettings.RunMode.Update:
+                    bundleDirPath = EZUtility.persistentDirPath;
+                    break;
+            }
             bundleExtension = EZSettings.Instance.bundleExtension;
             AssetBundle bundle = AssetBundle.LoadFromFile(bundleDirPath + "StreamingAssets");
             manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");

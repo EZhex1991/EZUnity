@@ -17,6 +17,12 @@ namespace EZFramework
         // 超时会停止更新
         [Range(5, 30)]
         public int timeout = 10;
+        // 解压提示
+        public string extractHint = "Extracting...";
+        // 更新提示
+        public string updateHint = "Updating...";
+        // 文件清单名称
+        public string fileListName = "files.txt";
         // 在进游戏时会忽略该前缀的更新
         public string ignorePrefix = "";
         // 在进游戏时会忽略该后缀的更新
@@ -30,40 +36,44 @@ namespace EZFramework
         public string bundleExtension { get; private set; }
         public string timeTag { get; private set; }
 
+        protected const string EXTRACTED_FLAG = "EZUpdate_Extracted";
         protected const char DELIMITER = '|';
-        protected Dictionary<string, string> md5Dict;
+        public class FileInfo
+        {
+            public string md5 { get; private set; }
+            public int size { get; private set; }
+            public FileInfo(string md5, int size)
+            {
+                this.md5 = md5;
+                this.size = size;
+            }
+            public FileInfo(string md5, string size)
+            {
+                this.md5 = md5;
+                this.size = Convert.ToInt32(size);
+            }
+        }
+        protected Dictionary<string, FileInfo> fileList;
         protected List<string> downloadList = new List<string>();
 
         public override void Init()
         {
             base.Init();
-            md5Dict = new Dictionary<string, string>();
+            fileList = new Dictionary<string, FileInfo>();
             sourceDirPath = EZUtility.streamingDirPath;
             switch (EZSettings.Instance.runMode)
             {
                 case EZSettings.RunMode.Develop:
                     runtimeDirPath = EZUtility.streamingDirPath;
-#if UNITY_EDITOR_WIN
-                    serverAddress = "file:///" + EZUtility.streamingDirPath;
-#else
-                    serverAddress = "file://" + EZUtility.streamingDirPath;
-#endif
+                    serverAddress = "";
                     break;
                 case EZSettings.RunMode.Local:
-                    runtimeDirPath = EZUtility.persistentDirPath;
-                    if (EZSettings.Instance.localServerAddress == "")
-                    {
-#if UNITY_EDITOR_WIN
-                        serverAddress = "file:///" + EZUtility.streamingDirPath;
-#else
-                        serverAddress = "file://" + EZUtility.streamingDirPath;
-#endif
-                    }
-                    else serverAddress = EZSettings.Instance.localServerAddress;
+                    runtimeDirPath = EZUtility.streamingDirPath;
+                    serverAddress = "";
                     break;
                 case EZSettings.RunMode.Update:
                     runtimeDirPath = EZUtility.persistentDirPath;
-                    serverAddress = EZSettings.Instance.updateServerAddress;
+                    serverAddress = EZSettings.Instance.updateServer;
                     break;
             }
             bundleExtension = EZSettings.Instance.bundleExtension;
@@ -73,6 +83,27 @@ namespace EZFramework
         public override void Exit()
         {
             base.Exit();
+        }
+
+        private void ShowLoadProgress(string str)
+        {
+            if (loadingPanel == null) return;
+            loadingPanel.ShowProgress(str);
+        }
+        private void ShowLoadProgress(float progress)
+        {
+            if (loadingPanel == null) return;
+            loadingPanel.ShowProgress(progress);
+        }
+        private void ShowLoadProgress(string str, float progress)
+        {
+            if (loadingPanel == null) return;
+            loadingPanel.ShowProgress(str, progress);
+        }
+        private void ShowLoadComplete()
+        {
+            if (loadingPanel == null) return;
+            loadingPanel.LoadComplete();
         }
 
         /// <summary>
@@ -85,111 +116,111 @@ namespace EZFramework
         }
         private IEnumerator Cor_StartUpdate(Action callback)
         {
-            if (loadingPanel != null) loadingPanel.ShowProgress();
+            ShowLoadProgress("", 0);
+            yield return new WaitForEndOfFrame();
             yield return Cor_Extract();
             yield return Cor_Update();
             callback();
-            if (loadingPanel != null) loadingPanel.LoadComplete();
+            yield return new WaitForEndOfFrame();
+            ShowLoadComplete();
         }
-
         private void LoadFileList()
         {
-            md5Dict.Clear();
+            fileList.Clear();
             try
             {
-                string[] fileList = File.ReadAllLines(runtimeDirPath + "files.txt");
-                for (int i = 0; i < fileList.Length; i++)
+                string[] fileInfoList = File.ReadAllLines(runtimeDirPath + fileListName);
+                for (int i = 0; i < fileInfoList.Length; i++)
                 {
-                    if (string.IsNullOrEmpty(fileList[i])) continue;
-                    string[] fileInfo = fileList[i].Split(DELIMITER);
-                    md5Dict.Add(fileInfo[0], fileInfo[1]);
+                    if (string.IsNullOrEmpty(fileInfoList[i])) continue;
+                    string[] fileInfo = fileInfoList[i].Split(DELIMITER);
+                    fileList.Add(fileInfo[0], new FileInfo(fileInfo[1], fileInfo[2]));
                 }
             }
             catch (Exception ex) { LogError(ex.Message); }
         }
-        private IEnumerator Cor_UpdateFileList()
-        {
-            string remotePath = serverAddress + "files.txt";
-            string localPath = runtimeDirPath + "files.txt";
-            yield return Cor_UpdateFile(remotePath, localPath, timeout);
-            LoadFileList();
-        }
         private IEnumerator Cor_Extract()
         {
-            if (EZSettings.Instance.runMode == EZSettings.RunMode.Develop) yield break;
-            if (PlayerPrefs.GetString("EZUpdate_Extracted", "") == Application.version) yield break;
-            string inputFilePath, outputFilePath;
-            inputFilePath = sourceDirPath + "files.txt"; outputFilePath = runtimeDirPath + "files.txt";
-            if (loadingPanel != null) loadingPanel.ShowProgress("Extracting...");
-            yield return Cor_ExtractFile(inputFilePath, outputFilePath);
+            if (EZSettings.Instance.runMode != EZSettings.RunMode.Update) yield break;
+            if (PlayerPrefs.GetString(EXTRACTED_FLAG, "") == Application.version) yield break;
+            ShowLoadProgress(extractHint, 0);
+            yield return new WaitForEndOfFrame();
+            yield return Cor_ExtractFile(fileListName);
             LoadFileList();
-            int total = md5Dict.Count, process = 0;
-            foreach (string filePath in md5Dict.Keys)
+            int total = fileList.Count, process = 0;
+            foreach (string relativePath in fileList.Keys)
             {
                 process++;
-                if (loadingPanel != null) loadingPanel.ShowProgress("Extracting..." + process + "/" + total, (float)process / total);
-                inputFilePath = sourceDirPath + filePath; outputFilePath = runtimeDirPath + filePath;
-                yield return Cor_ExtractFile(inputFilePath, outputFilePath);
+                ShowLoadProgress(extractHint + process + "/" + total, (float)process / total);
+                yield return new WaitForEndOfFrame();
+                yield return Cor_ExtractFile(relativePath);
             }
-            PlayerPrefs.SetString("EZUpdate_Extracted", Application.version);
+            PlayerPrefs.SetString(EXTRACTED_FLAG, Application.version);
         }
-        private IEnumerator Cor_ExtractFile(string source, string destination)
+        private IEnumerator Cor_ExtractFile(string relativePath)
         {
+            string source = sourceDirPath + relativePath;
+            string destination = runtimeDirPath + relativePath;
             Directory.CreateDirectory(Path.GetDirectoryName(destination));
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                WWW www = new WWW(source);
-                yield return www;
-                if (www.error == null) File.WriteAllBytes(destination, www.bytes);
-            }
-            else
-            {
-                File.Copy(source, destination, true);
-            }
+#if UNITY_EDITOR || UNITY_STANDALONE
+            File.Copy(source, destination, true);
+            yield return new WaitForEndOfFrame();
+#else
+            WWW www = new WWW(source);
+            yield return www;
+            if (www.error == null) File.WriteAllBytes(destination, www.bytes);
+#endif
         }
         private IEnumerator Cor_Update()
         {
-            if (!EZUtility.IsNetAvailable || EZSettings.Instance.runMode == EZSettings.RunMode.Develop)
+            if (!EZUtility.IsNetAvailable || EZSettings.Instance.runMode != EZSettings.RunMode.Update)
             {
                 LoadFileList();
                 yield break;
             }
-            if (loadingPanel != null) loadingPanel.ShowProgress("Updating...");
-            yield return Cor_UpdateFileList();
+            ShowLoadProgress(updateHint, 0);
+            yield return new WaitForEndOfFrame();
+            yield return Cor_UpdateFile(fileListName, timeout);
+            LoadFileList();
             List<string> updateList = new List<string>();
-            foreach (var fileInfo in md5Dict)
+            foreach (var fileInfo in fileList)
             {
                 if (fileInfo.Key.StartsWith(ignorePrefix)) continue;
                 if (fileInfo.Key.EndsWith(ignoreSuffix)) continue;
-                if (CheckUpdate(fileInfo.Key, fileInfo.Value) > 0)
+                if (CheckUpdate(fileInfo.Key, fileInfo.Value.md5) > 0)
                 {
                     updateList.Add(fileInfo.Key);
                 }
             }
-            if (loadingPanel != null) loadingPanel.ShowProgress("Updating...");
-            int total = updateList.Count, process = 0;
-            foreach (var rPath in updateList)
+            int total = updateList.Count, progress = 0;
+            foreach (var relativePath in updateList)
             {
-                process++;
-                if (loadingPanel != null) loadingPanel.ShowProgress("Updating..." + process + "/" + total, (float)process / total);
-                string remotePath = serverAddress + rPath;
-                string localPath = runtimeDirPath + rPath;
-                yield return Cor_UpdateFile(remotePath, localPath);
+                progress++;
+                string hint = updateHint + progress + "/" + total;
+                ShowLoadProgress(hint, (float)progress / total);
+                yield return new WaitForEndOfFrame();
+                yield return Cor_UpdateFile(relativePath, float.PositiveInfinity, hint);
             }
         }
-        private IEnumerator Cor_UpdateFile(string source, string destination, float timeout = float.PositiveInfinity)
+        private IEnumerator Cor_UpdateFile(string relativePath, float timeout = float.PositiveInfinity, string str = "")
         {
+            string source = serverAddress + relativePath;
+            string destination = runtimeDirPath + relativePath;
+            FileInfo info; int size = 0;
+            if (fileList.TryGetValue(relativePath, out info))
+                size = info.size;
             Log("Updating-> " + source);
             Log("To      -> " + destination);
             Directory.CreateDirectory(Path.GetDirectoryName(destination));
-            WWW www = new WWW(source); float time = 0;
+            WWW www = new WWW(source);
             while (!www.isDone)
             {
+                if (str != "") ShowLoadProgress(str + " (" + (int)(size * www.progress) + "/" + size + "KB)");
                 yield return new WaitForEndOfFrame();
-                time += Time.deltaTime;
-                if (time > timeout) break;
+                timeout -= Time.deltaTime;
+                if (timeout < 0) break;
             }
-            if (www.error == null)
+            if (www.isDone && www.error == null)
             {
                 File.WriteAllBytes(destination, www.bytes);
                 downloadList.Add(source);
@@ -197,52 +228,52 @@ namespace EZFramework
         }
 
         // -1：服务器无此文件；0：不需要更新；1：本地文件不存在；2：存在并需要更新；
-        public int CheckUpdate(string resourceName)
+        public int CheckUpdate(string relativePath)
         {
-            resourceName = resourceName.EndsWith(bundleExtension)
-                        ? resourceName.ToLower()
-                        : resourceName.ToLower() + bundleExtension;
-            if (!File.Exists(runtimeDirPath + resourceName))
+            relativePath = relativePath.EndsWith(bundleExtension)
+                        ? relativePath.ToLower()
+                        : relativePath.ToLower() + bundleExtension;
+            if (!File.Exists(runtimeDirPath + relativePath))
             {
-                Log("Need to Update, " + runtimeDirPath + resourceName + " not exist.");
+                Log("Need to update, " + runtimeDirPath + relativePath + " not exist.");
                 return 1;
             }
-            else if (EZSettings.Instance.runMode == EZSettings.RunMode.Develop)
+            else if (EZSettings.Instance.runMode != EZSettings.RunMode.Update)
             {
-                Log("Checked in DevelopMode: " + resourceName);
+                Log("Checked in non-update mode: " + relativePath);
                 return 0;
             }
 
-            string md5; if (!md5Dict.TryGetValue(resourceName, out md5))
+            FileInfo info; if (!fileList.TryGetValue(relativePath, out info))
             {
-                LogWarning("File not available, No such file on fileList: " + resourceName);
+                LogWarning("File not available, No such file on fileList: " + relativePath);
                 return -1;
             }
-            return CheckUpdate(resourceName, md5);
+            return CheckUpdate(relativePath, info.md5);
         }
         public int CheckUpdate(string relativePath, string md5)
         {
             string localPath = runtimeDirPath + relativePath;
             if (!File.Exists(localPath))
             {
-                Log("Need to Update, " + localPath + " not exist.");
+                Log("Need to update, " + localPath + " not exist.");
                 return 1;
             }
             if (EZUtility.MD5File(localPath) != md5)
             {
-                Log("Need to Update, " + localPath + " out of date.");
+                Log("Need to update, " + localPath + " out of date.");
                 return 2;
             }
             return 0;
         }
 
-        public WWWTask Download(string resourceName, Action<WWWTask, bool> callback = null)
+        public WWWTask Download(string relativePath, Action<WWWTask, bool> callback = null)
         {
-            resourceName = resourceName.EndsWith(bundleExtension)
-                        ? resourceName.ToLower()
-                        : resourceName.ToLower() + bundleExtension;
-            string url = serverAddress + resourceName;
-            string localPath = runtimeDirPath + resourceName;
+            relativePath = relativePath.EndsWith(bundleExtension)
+                        ? relativePath.ToLower()
+                        : relativePath.ToLower() + bundleExtension;
+            string url = serverAddress + relativePath;
+            string localPath = runtimeDirPath + relativePath;
             callback += delegate (WWWTask task, bool succeed)
             {
                 Log(task.url + "->" + succeed);

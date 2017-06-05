@@ -52,8 +52,8 @@ namespace EZFramework
                     luaEnv.AddLoader(LoadFromFile);
                     break;
                 case EZSettings.RunMode.Local:
-                    luaDirPath = EZUtility.dataDirPath + EZSettings.Instance.luaDirName + "/";
-                    luaEnv.AddLoader(LoadFromFile);
+                    luaBundle = AssetBundle.LoadFromFile(EZUtility.streamingDirPath + EZSettings.Instance.luaDirName + EZSettings.Instance.bundleExtension);
+                    luaEnv.AddLoader(LoadFromBundle);
                     break;
                 case EZSettings.RunMode.Update:
                     luaBundle = AssetBundle.LoadFromFile(EZUtility.persistentDirPath + EZSettings.Instance.luaDirName + EZSettings.Instance.bundleExtension);

@@ -43,8 +43,7 @@ namespace EZFramework
             ezSettings.targetFrameRate = EditorGUILayout.IntSlider("Frame Rate", ezSettings.targetFrameRate, 30, 120);
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Network", subtitleStyle);
-            ezSettings.localServerAddress = EditorGUILayout.TextField("Local Server", ezSettings.localServerAddress);
-            ezSettings.updateServerAddress = EditorGUILayout.TextField("Update Server", ezSettings.updateServerAddress);
+            ezSettings.updateServer = EditorGUILayout.TextField("Update Server", ezSettings.updateServer);
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Asset Bundle", subtitleStyle);
             ezSettings.bundleExtension = EditorGUILayout.TextField("Extension", ezSettings.bundleExtension);

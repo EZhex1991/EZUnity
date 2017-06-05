@@ -53,13 +53,18 @@ namespace EZFramework
         public override void Init()
         {
             base.Init();
-#if UNITY_EDITOR
-            MainDirPath = EZSettings.Instance.runMode == EZSettings.RunMode.Develop
-                            ? EZUtility.dataDirPath + "EZDatabase/"
-                            : EZUtility.persistentDirPath + "EZDatabase/";
-#else
-            MainDirPath = EZUtility.persistentDirPath + "EZDatabase/";
-#endif
+            switch (EZSettings.Instance.runMode)
+            {
+                case EZSettings.RunMode.Develop:
+                    MainDirPath = EZUtility.dataDirPath + "EZDatabase/";
+                    break;
+                case EZSettings.RunMode.Local:
+                    MainDirPath = EZUtility.persistentDirPath + "EZDatabase/";
+                    break;
+                case EZSettings.RunMode.Update:
+                    MainDirPath = EZUtility.persistentDirPath + "EZDatabase/";
+                    break;
+            }
             IndexFilePath = MainDirPath + "_DBIndex" + EXTENSION_INDEX;
             CacheFilePath = MainDirPath + "_Cache" + EXTENSION_CACHE;
             Directory.CreateDirectory(MainDirPath);
