@@ -22,7 +22,7 @@ namespace EZFramework
         // 记录已加载过的资源包
         protected Dictionary<string, AssetBundle> bundleDict = new Dictionary<string, AssetBundle>();
         protected AssetBundleManifest manifest;
-        
+
         // 初始化资源管理器，读取StreamingAssets的所有依赖（即所有的资源包名）
         public override void Init()
         {
@@ -76,6 +76,7 @@ namespace EZFramework
         }
         IEnumerator Cor_LoadAssetAsync<T>(string bundleName, string assetName, Action<T> callback) where T : Object
         {
+            yield return null;
             yield return Cor_LoadBundleAsync(bundleName);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
@@ -87,6 +88,7 @@ namespace EZFramework
         }
         IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Action<Object> callback)
         {
+            yield return null;
             yield return Cor_LoadBundleAsync(bundleName);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
@@ -98,6 +100,7 @@ namespace EZFramework
         }
         IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Type type, Action<Object> callback)
         {
+            yield return null;
             yield return Cor_LoadBundleAsync(bundleName);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
@@ -119,16 +122,25 @@ namespace EZFramework
         // 异步加载场景
         public void LoadSceneAsync(string sceneName, LoadSceneMode mode, Action action)
         {
-            StartCoroutine(Cor_LoadSceneAsync(sceneName, mode, true, action));
+            StartCoroutine(Cor_LoadSceneAsync(sceneName, sceneName, mode, true, action));
+        }
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, Action action)
+        {
+            StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, true, action));
         }
         public void LoadSceneAsync(string sceneName, LoadSceneMode mode, bool setActive = true, Action action = null)
         {
-            StartCoroutine(Cor_LoadSceneAsync(sceneName, mode, setActive, action));
+            StartCoroutine(Cor_LoadSceneAsync(sceneName, sceneName, mode, setActive, action));
         }
-        IEnumerator Cor_LoadSceneAsync(string sceneName, LoadSceneMode mode, bool setActive, Action action)
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive = true, Action action = null)
         {
-            if (loadingPanel != null) loadingPanel.ShowProgress("Loading");
-            yield return Cor_LoadBundleAsync(sceneName);
+            StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, setActive, action));
+        }
+        IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, Action action)
+        {
+            if (loadingPanel != null) loadingPanel.ShowProgress("Loading", 0);
+            yield return null;
+            yield return Cor_LoadBundleAsync(bundleName);
             AsyncOperation opr = SceneManager.LoadSceneAsync(sceneName, mode);
             while (!opr.isDone)
             {
@@ -136,8 +148,9 @@ namespace EZFramework
                 yield return null;
             }
             if (setActive) SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
-            if (action != null) action();
+            yield return null;
             if (loadingPanel != null) loadingPanel.LoadComplete();
+            if (action != null) action();
         }
 
         // 同步加载AssetBundle
@@ -170,6 +183,7 @@ namespace EZFramework
         // 异步加载AssetBundle
         IEnumerator Cor_LoadBundleAsync(string bundleName)
         {
+            yield return null;
             bundleName = bundleName.ToLower();
             if (!bundleName.EndsWith(bundleExtension))
             {
@@ -187,6 +201,7 @@ namespace EZFramework
         }
         IEnumerator Cor_LoadDependenciesAsync(string bundleName)
         {
+            yield return null;
             string[] dependencies = manifest.GetAllDependencies(bundleName);
             foreach (string dep in dependencies)
             {
