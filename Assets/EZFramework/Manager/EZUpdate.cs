@@ -78,7 +78,6 @@ namespace EZFramework
             }
             bundleExtension = EZSettings.Instance.bundleExtension;
             timeTag = "?v=" + DateTime.Now.ToString("yyyymmddhhmmss");
-            Directory.CreateDirectory(runtimeDirPath);
         }
         public override void Exit()
         {
@@ -117,16 +116,23 @@ namespace EZFramework
         private IEnumerator Cor_StartUpdate(Action callback)
         {
             ShowLoadProgress("", 0);
-            yield return new WaitForEndOfFrame();
-            yield return Cor_Extract();
-            yield return Cor_Update();
-            callback();
-            yield return new WaitForEndOfFrame();
+            yield return null;
+            if (EZSettings.Instance.runMode == EZSettings.RunMode.Update)
+            {
+                yield return Cor_Extract();
+                yield return Cor_Update();
+            }
+            else
+            {
+                yield return null;
+            }
             ShowLoadComplete();
+            callback();
         }
-        private void LoadFileList()
+        private IEnumerator Cor_LoadFileList()
         {
             fileList.Clear();
+            Log("Loading file list...");
             try
             {
                 string[] fileInfoList = File.ReadAllLines(runtimeDirPath + fileListName);
@@ -136,25 +142,32 @@ namespace EZFramework
                     string[] fileInfo = fileInfoList[i].Split(DELIMITER);
                     fileList.Add(fileInfo[0], new FileInfo(fileInfo[1], fileInfo[2]));
                 }
+                Log("File list loaded.");
             }
-            catch (Exception ex) { LogError(ex.Message); }
+            catch (Exception ex) { LogError("Load file list error: " + ex.Message); }
+            yield return null;
         }
         private IEnumerator Cor_Extract()
         {
-            if (EZSettings.Instance.runMode != EZSettings.RunMode.Update) yield break;
-            if (PlayerPrefs.GetString(EXTRACTED_FLAG, "") == Application.version) yield break;
+            if (PlayerPrefs.GetString(EXTRACTED_FLAG, "") == Application.version)
+            {
+                Log("Already extracted: " + Application.version);
+                yield break;
+            }
+            Log("Extracting...");
             ShowLoadProgress(extractHint, 0);
-            yield return new WaitForEndOfFrame();
+            yield return null;
             yield return Cor_ExtractFile(fileListName);
-            LoadFileList();
+            yield return Cor_LoadFileList();
             int total = fileList.Count, process = 0;
             foreach (string relativePath in fileList.Keys)
             {
                 process++;
                 ShowLoadProgress(extractHint + process + "/" + total, (float)process / total);
-                yield return new WaitForEndOfFrame();
+                yield return null;
                 yield return Cor_ExtractFile(relativePath);
             }
+            Log("Extract Complete.");
             PlayerPrefs.SetString(EXTRACTED_FLAG, Application.version);
         }
         private IEnumerator Cor_ExtractFile(string relativePath)
@@ -163,25 +176,43 @@ namespace EZFramework
             string destination = runtimeDirPath + relativePath;
             Directory.CreateDirectory(Path.GetDirectoryName(destination));
 #if UNITY_EDITOR || UNITY_STANDALONE
+            if (!File.Exists(source)) // 不要在安卓平台下检查dataPath和streamingAssetsPath下的文件是否存在
+            {
+                Log("File missing: " + source);
+                yield break;
+            }
+            Log("Extracting-> " + source);
+            Log("To        -> " + destination);
             File.Copy(source, destination, true);
-            yield return new WaitForEndOfFrame();
+            yield return null;
 #else
-            WWW www = new WWW(source);
+            WWW www = new WWW(source); // WWW的流式读取在发生错误时（文件不存在时）会有www.error；
             yield return www;
-            if (www.error == null) File.WriteAllBytes(destination, www.bytes);
+            if (www.error == null)
+            {
+                Log("Extracting-> " + source);
+                Log("To        -> " + destination);
+                File.WriteAllBytes(destination, www.bytes);
+            }
+            else
+            {
+                LogWarning("Extract error: " + source + " " + www.error);
+            }
 #endif
         }
         private IEnumerator Cor_Update()
         {
-            if (!EZUtility.IsNetAvailable || EZSettings.Instance.runMode != EZSettings.RunMode.Update)
+            if (!EZUtility.IsNetAvailable)
             {
-                LoadFileList();
+                Log("Network Error!");
+                yield return Cor_LoadFileList();
                 yield break;
             }
+            Log("Checking update...");
             ShowLoadProgress(updateHint, 0);
-            yield return new WaitForEndOfFrame();
+            yield return null;
             yield return Cor_UpdateFile(fileListName, timeout);
-            LoadFileList();
+            yield return Cor_LoadFileList();
             List<string> updateList = new List<string>();
             foreach (var fileInfo in fileList)
             {
@@ -192,15 +223,17 @@ namespace EZFramework
                     updateList.Add(fileInfo.Key);
                 }
             }
+            Log("Updating...");
             int total = updateList.Count, progress = 0;
             foreach (var relativePath in updateList)
             {
                 progress++;
                 string hint = updateHint + progress + "/" + total;
-                ShowLoadProgress(hint, (float)progress / total);
-                yield return new WaitForEndOfFrame();
+                //ShowLoadProgress(hint, (float)progress / total); // 显示总体进度
+                yield return null;
                 yield return Cor_UpdateFile(relativePath, float.PositiveInfinity, hint);
             }
+            Log("Update Complete.");
         }
         private IEnumerator Cor_UpdateFile(string relativePath, float timeout = float.PositiveInfinity, string str = "")
         {
@@ -215,8 +248,8 @@ namespace EZFramework
             WWW www = new WWW(source);
             while (!www.isDone)
             {
-                if (str != "") ShowLoadProgress(str + " (" + (int)(size * www.progress) + "/" + size + "KB)");
-                yield return new WaitForEndOfFrame();
+                if (str != "") ShowLoadProgress(str + " (" + (int)(size * www.progress) + "/" + size + "KB)", www.progress); // 显示当前进度
+                yield return null;
                 timeout -= Time.deltaTime;
                 if (timeout < 0) break;
             }
@@ -233,15 +266,15 @@ namespace EZFramework
             relativePath = relativePath.EndsWith(bundleExtension)
                         ? relativePath.ToLower()
                         : relativePath.ToLower() + bundleExtension;
+            if (EZSettings.Instance.runMode != EZSettings.RunMode.Update)
+            {
+                Log("Checked in non-update mode: " + relativePath);
+                return 0;
+            }
             if (!File.Exists(runtimeDirPath + relativePath))
             {
                 Log("Need to update, " + runtimeDirPath + relativePath + " not exist.");
                 return 1;
-            }
-            else if (EZSettings.Instance.runMode != EZSettings.RunMode.Update)
-            {
-                Log("Checked in non-update mode: " + relativePath);
-                return 0;
             }
 
             FileInfo info; if (!fileList.TryGetValue(relativePath, out info))
@@ -269,6 +302,7 @@ namespace EZFramework
 
         public WWWTask Download(string relativePath, Action<WWWTask, bool> callback = null)
         {
+            if (EZSettings.Instance.runMode != EZSettings.RunMode.Update) return null;
             relativePath = relativePath.EndsWith(bundleExtension)
                         ? relativePath.ToLower()
                         : relativePath.ToLower() + bundleExtension;
