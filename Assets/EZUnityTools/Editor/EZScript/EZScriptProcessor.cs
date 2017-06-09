@@ -35,9 +35,14 @@ namespace EZUnityTools.EZEditor
 
         private static bool IsEZScriptAsset(string filePath, EZScriptObject ezScript)
         {
+            string lowerName = filePath.ToLower();
             foreach (string ext in ezScript.extensionList)
             {
-                if (filePath.ToLower().EndsWith(ext)) return true;
+                if (lowerName.EndsWith(ext + ".txt")) return false;
+            }
+            foreach (string ext in ezScript.extensionList)
+            {
+                if (lowerName.EndsWith(ext)) return true;
             }
             return false;
         }
