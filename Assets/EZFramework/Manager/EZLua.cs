@@ -52,11 +52,11 @@ namespace EZFramework
                     luaEnv.AddLoader(LoadFromFile);
                     break;
                 case EZSettings.RunMode.Local:
-                    luaBundle = AssetBundle.LoadFromFile(EZUtility.streamingDirPath + EZSettings.Instance.luaDirName + EZSettings.Instance.bundleExtension);
+                    luaBundle = AssetBundle.LoadFromFile(EZUtility.streamingDirPath + EZSettings.Instance.luaDirName.ToLower() + EZSettings.Instance.bundleExtension);
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
                 case EZSettings.RunMode.Update:
-                    luaBundle = AssetBundle.LoadFromFile(EZUtility.persistentDirPath + EZSettings.Instance.luaDirName + EZSettings.Instance.bundleExtension);
+                    luaBundle = AssetBundle.LoadFromFile(EZUtility.persistentDirPath + EZSettings.Instance.luaDirName.ToLower() + EZSettings.Instance.bundleExtension);
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
             }
