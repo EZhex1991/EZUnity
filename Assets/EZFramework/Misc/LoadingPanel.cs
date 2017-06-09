@@ -11,8 +11,8 @@ namespace EZFramework
 {
     public class LoadingPanel : MonoBehaviour
     {
-        public Text text_Process;
-        public Image image_ProcessFill;
+        public Text text_Progress;
+        public Slider slider_Progress;
 
         void Awake()
         {
@@ -23,22 +23,23 @@ namespace EZFramework
         public void ShowProgress(string str)
         {
             gameObject.SetActive(true);
-            text_Process.text = str;
+            text_Progress.text = str;
         }
         public void ShowProgress(float progress)
         {
             gameObject.SetActive(true);
-            image_ProcessFill.fillAmount = progress;
+            slider_Progress.value = progress;
         }
         public void ShowProgress(string str, float progress)
         {
             gameObject.SetActive(true);
-            text_Process.text = str;
-            image_ProcessFill.fillAmount = progress;
+            text_Progress.text = str;
+            slider_Progress.value = progress;
         }
 
         public void LoadComplete()
         {
+            ShowProgress("", 0);
             gameObject.SetActive(false);
         }
     }
