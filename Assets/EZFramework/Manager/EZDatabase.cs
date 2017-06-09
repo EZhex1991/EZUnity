@@ -186,7 +186,7 @@ namespace EZFramework
             catch (Exception ex)
             {
                 LogWarning("Load data from file: " + dataName + " failed");
-                LogError(ex.Message);
+                LogWarning(ex.Message);
                 data = new DBData();
                 DBIndex.Add(dataName); SaveIndex();
             }
