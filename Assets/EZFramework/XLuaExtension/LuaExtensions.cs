@@ -68,9 +68,9 @@ namespace EZFramework
                 if (action != null) action(self, obj);
             });
         }
-        public static void LoadSceneAsync(this EZResource instance, string sceneName, LoadSceneMode mode, Action<LuaTable> action, LuaTable self)
+        public static void LoadSceneAsync(this EZResource instance, string bundleName, string sceneName, LoadSceneMode mode, Action<LuaTable> action, LuaTable self)
         {
-            instance.LoadSceneAsync(sceneName, mode, delegate ()
+            instance.LoadSceneAsync(bundleName, sceneName, mode, delegate ()
             {
                 if (action != null) action(self);
             });

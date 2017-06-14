@@ -1,3 +1,10 @@
+### 2017.06.14
+- EZResource加载场景需要提供bundle名称（之前限制bundle名称必须与场景名称相同）；
+
+### 2017.06.13
+- LuaEvent调用时会将EventKey传回，在直接以self为key时，可以self.func为参数添加self:func(params)监听；
+- LuaEvent移动至Resources下。
+
 ### 2017.06.08
 - 关闭Loading界面提到了执行回调之前（之前如果回调中需要开启Loading界面，那么会出现Loading界面闪烁[开启-重复开启-关闭-继续显示-再次关闭]的情况）
 

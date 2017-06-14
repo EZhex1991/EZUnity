@@ -111,7 +111,7 @@ namespace EZFramework
             }
         }
         // 同步加载场景，经测试5.3.5为同步非阻塞，实际意义不大
-        public void LoadScene(string sceneName, LoadSceneMode mode, bool setActive = true)
+        public void LoadScene(string bundleName, string sceneName, LoadSceneMode mode, bool setActive = true)
         {
             if (loadingPanel != null) loadingPanel.ShowProgress("Loading");
             LoadBundle(sceneName);
@@ -120,17 +120,9 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.LoadComplete();
         }
         // 异步加载场景
-        public void LoadSceneAsync(string sceneName, LoadSceneMode mode, Action action)
-        {
-            StartCoroutine(Cor_LoadSceneAsync(sceneName, sceneName, mode, true, action));
-        }
-        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, Action action)
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, Action action = null)
         {
             StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, true, action));
-        }
-        public void LoadSceneAsync(string sceneName, LoadSceneMode mode, bool setActive = true, Action action = null)
-        {
-            StartCoroutine(Cor_LoadSceneAsync(sceneName, sceneName, mode, setActive, action));
         }
         public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive = true, Action action = null)
         {
@@ -210,13 +202,9 @@ namespace EZFramework
         }
 
         // 卸载场景
-        public void UnloadScene(string sceneName, bool unloadBundle = false, bool unloadAll = false)
+        public void UnloadScene(string sceneName)
         {
             SceneManager.UnloadScene(sceneName);
-            if (unloadBundle)
-            {
-                UnloadBundle(sceneName, unloadAll);
-            }
         }
         // 卸载AssetBundle
         public void UnloadBundle(string bundleName, bool unloadAll = false)
