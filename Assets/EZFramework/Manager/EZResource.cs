@@ -124,7 +124,7 @@ namespace EZFramework
         {
             StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, true, action));
         }
-        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive = true, Action action = null)
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, Action action = null)
         {
             StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, setActive, action));
         }
