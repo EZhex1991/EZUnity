@@ -10,12 +10,30 @@ using XLua;
 
 namespace EZFramework.XLuaGen
 {
-    public class CSharpGenList
+    public static class CSharpGenList
     {
         [LuaCallCSharp]
         public static List<Type> LuaCallCSharp = new List<Type>()
         {
             typeof(System.Collections.Generic.Dictionary<string, object>),
+        };
+
+        [CSharpCallLua]
+        public static List<Type> CSharpCallLua = new List<Type>()
+        {
+            typeof(System.Action),
+            typeof(System.Action<string>),
+            typeof(System.Action<double>),
+            typeof(System.Action<float>),
+            typeof(System.Action<WWWTask, bool>),
+            typeof(System.Func<>),
+            typeof(System.Collections.IEnumerator),
+        };
+
+        [BlackList]
+        public static List<List<string>> BlackList = new List<List<string>>()
+        {
+
         };
     }
 }

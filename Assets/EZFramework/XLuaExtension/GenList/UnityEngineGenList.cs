@@ -87,21 +87,28 @@ namespace EZFramework.XLuaGen
             typeof(UnityEngine.SceneManagement.LoadSceneMode),
 
             typeof(UnityEngine.UI.Button),
+            typeof(UnityEngine.UI.Button.ButtonClickedEvent),
             typeof(UnityEngine.UI.GridLayoutGroup),
             typeof(UnityEngine.UI.GridLayoutGroup.Axis),
             typeof(UnityEngine.UI.GridLayoutGroup.Constraint),
             typeof(UnityEngine.UI.GridLayoutGroup.Corner),
             typeof(UnityEngine.UI.HorizontalLayoutGroup),
             typeof(UnityEngine.UI.Image),
+            typeof(UnityEngine.UI.Image.FillMethod),
+            typeof(UnityEngine.UI.Image.Type),
             typeof(UnityEngine.UI.InputField),
+            typeof(UnityEngine.UI.InputField.OnChangeEvent),
+            typeof(UnityEngine.UI.InputField.SubmitEvent),
             typeof(UnityEngine.UI.LayoutGroup),
             typeof(UnityEngine.UI.Mask),
             typeof(UnityEngine.UI.Outline),
             typeof(UnityEngine.UI.ScrollRect),
             typeof(UnityEngine.UI.Shadow),
             typeof(UnityEngine.UI.Slider),
+            typeof(UnityEngine.UI.Slider.SliderEvent),
             typeof(UnityEngine.UI.Text),
             typeof(UnityEngine.UI.Toggle),
+            typeof(UnityEngine.UI.Toggle.ToggleEvent),
             typeof(UnityEngine.UI.ToggleGroup),
             typeof(UnityEngine.UI.VerticalLayoutGroup),
         };
@@ -110,6 +117,9 @@ namespace EZFramework.XLuaGen
         public static List<Type> CSharpCallLua = new List<Type>()
         {
             typeof(UnityEngine.Events.UnityAction),
+            typeof(UnityEngine.Events.UnityAction<bool>),
+            typeof(UnityEngine.Events.UnityAction<float>),
+            typeof(UnityEngine.Events.UnityAction<string>),
         };
 
         [BlackList]

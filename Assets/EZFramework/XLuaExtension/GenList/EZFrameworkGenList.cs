@@ -35,16 +35,7 @@ namespace EZFramework.XLuaGen
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
-            typeof(System.Action),
-            typeof(System.Action<string>),
-            typeof(System.Action<double>),
-            typeof(System.Action<LuaTable>),
-            typeof(System.Action<LuaTable, Button>),
-            typeof(System.Action<LuaTable, Slider>),
-            typeof(System.Action<LuaTable, Toggle>),
-            typeof(System.Action<LuaTable, WWWTask, bool>),
-            typeof(System.Func<>),
-            typeof(System.Collections.IEnumerator),
+
         };
 
         [BlackList]
