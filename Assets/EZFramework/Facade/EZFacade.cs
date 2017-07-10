@@ -26,9 +26,7 @@ namespace EZFramework
             }
             else
             {
-                string logPath = EZSettings.Instance.runMode == EZSettings.RunMode.Develop
-                    ? EZUtility.dataDirPath + "EZLog/"
-                    : EZUtility.persistentDirPath + "EZLog/";
+                string logPath = EZUtility.persistentDirPath + "EZLog/";
                 Debug.logger.logHandler = new EZLogHandler(logPath);
             }
 

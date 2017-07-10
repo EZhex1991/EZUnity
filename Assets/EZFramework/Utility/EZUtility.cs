@@ -32,7 +32,7 @@ namespace EZFramework
             get
             {
 #if UNITY_EDITOR
-                return "C:/UnityPersistent/" + Application.productName + "/";
+                return PathNormalize(Application.dataPath + "/EZData/");
 #else
                 return PathNormalize(Application.persistentDataPath + "/Data/");   // persistent没有删除权限，建立子文件夹读写更方便
 #endif
