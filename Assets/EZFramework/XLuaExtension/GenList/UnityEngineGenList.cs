@@ -133,6 +133,7 @@ namespace EZFramework.XLuaGen
             new List<string>() {"UnityEngine.WWW", "movie" },
             new List<string>() {"UnityEngine.Handheld", "GetActivityIndicatorStyle" },
             new List<string>() {"UnityEngine.Handheld", "SetActivityIndicatorStyle", "UnityEngine.iOS.ActivityIndicatorStyle" },
+            new List<string>() {"UnityEngine.Handheld", "SetActivityIndicatorStyle", "UnityEngine.AndroidActivityIndicatorStyle" },
         };
     }
 }
