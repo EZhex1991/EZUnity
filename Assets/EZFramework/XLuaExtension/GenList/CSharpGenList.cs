@@ -22,11 +22,6 @@ namespace EZFramework.XLuaGen
         public static List<Type> CSharpCallLua = new List<Type>()
         {
             typeof(System.Action),
-            typeof(System.Action<string>),
-            typeof(System.Action<double>),
-            typeof(System.Action<float>),
-            typeof(System.Action<WWWTask, bool>),
-            typeof(System.Func<>),
             typeof(System.Collections.IEnumerator),
         };
 

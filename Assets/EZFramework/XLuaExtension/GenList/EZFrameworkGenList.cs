@@ -6,7 +6,7 @@
 */
 using System;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using UnityEngine;
 using XLua;
 
 namespace EZFramework.XLuaGen
@@ -36,7 +36,11 @@ namespace EZFramework.XLuaGen
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
-
+            typeof(System.Action<string>),
+            typeof(System.Action<double>),
+            typeof(System.Action<float>),
+            typeof(System.Action<GameObject>),
+            typeof(System.Action<WWWTask, bool>),
         };
 
         [BlackList]

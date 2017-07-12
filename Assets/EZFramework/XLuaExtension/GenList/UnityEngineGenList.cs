@@ -69,6 +69,7 @@ namespace EZFramework.XLuaGen
             typeof(UnityEngine.SpringJoint),
             typeof(UnityEngine.Sprite),
             typeof(UnityEngine.SpriteRenderer),
+            typeof(UnityEngine.SystemInfo),
             typeof(UnityEngine.TextAsset),
             typeof(UnityEngine.Texture),
             typeof(UnityEngine.Texture2D),
