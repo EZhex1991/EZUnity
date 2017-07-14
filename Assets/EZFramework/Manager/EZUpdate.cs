@@ -38,7 +38,7 @@ namespace EZFramework
 
         protected const string EXTRACTED_FLAG = "EZUpdate_Extracted";
         protected const char DELIMITER = '|';
-        public class FileInfo
+        protected class FileInfo
         {
             public string md5 { get; private set; }
             public int size { get; private set; }
