@@ -66,6 +66,15 @@ namespace EZFramework
             base.Exit();
             SaveData();
         }
+        // 暂停时存档（iOS一般不会退出）
+        void OnApplicationFocus(bool focusStatus)
+        {
+            Log("Application Focus: " + focusStatus);
+            if (!focusStatus)
+            {
+                SaveData();
+            }
+        }
 
         public bool Add(string dataName, object key, object value)
         {
