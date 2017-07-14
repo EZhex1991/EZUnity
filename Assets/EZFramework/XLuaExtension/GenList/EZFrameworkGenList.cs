@@ -29,6 +29,7 @@ namespace EZFramework.XLuaGen
             typeof(EZFramework.WWWTask),
 
             typeof(EZUnityTools.EZScrollRect),
+            typeof(EZUnityTools.EZScrollRect.Status),
 
         };
 
