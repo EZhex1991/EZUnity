@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -58,6 +59,9 @@ namespace EZUnityTools
         public Vector2 relocation { get; private set; }
         public GameObject focusObject { get; private set; }
 
+        public Action onMoveEvent = delegate { };
+        public Action<GameObject> onStopEvent = delegate { };
+
         private ScrollRect scrollRect;
         private GridLayoutGroup gridLayoutGroup;
         private Vector2 gridSize;
@@ -74,6 +78,7 @@ namespace EZUnityTools
         public void OnBeginDrag(PointerEventData eventData)
         {
             status = Status.Dragging;
+            onMoveEvent();
         }
         public void OnDrag(PointerEventData eventData)
         {
@@ -124,6 +129,7 @@ namespace EZUnityTools
                     if ((scrollRect.normalizedPosition - Normalize(relocation)).sqrMagnitude <= Vector2.kEpsilon)
                     {
                         status = Status.Relocated;
+                        onStopEvent(focusObject);
                     }
                     break;
                 case Status.Relocated:
