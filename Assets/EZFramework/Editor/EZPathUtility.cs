@@ -18,7 +18,7 @@ namespace EZFramework
             string luaDirPath = "Assets/" + EZSettings.Instance.luaDirName + "/";
             string luaTxtDirPath = "Assets/" + EZSettings.Instance.luaDirName + "_txt/";
             if (!Directory.Exists(luaDirPath)) return;
-            if (Directory.Exists(luaTxtDirPath)) Directory.Delete(luaTxtDirPath, true);
+            // if (Directory.Exists(luaTxtDirPath)) Directory.Delete(luaTxtDirPath, true);
             Directory.CreateDirectory(luaTxtDirPath);
             string[] files = Directory.GetFiles(luaDirPath, "*.lua", SearchOption.AllDirectories);
             foreach (string file in files)
@@ -26,6 +26,7 @@ namespace EZFramework
                 string newPath = luaTxtDirPath + file.Replace(luaDirPath, "").Replace("/", "_").Replace("\\", "_") + ".txt";
                 File.Copy(file, newPath, true);
             }
+            Debug.Log("Copy Complete.");
             AssetDatabase.Refresh();
         }
         public static void ClearLuaTxt()
