@@ -11,14 +11,21 @@ namespace EZFramework
     public class EZFacade : EZSingleton<EZFacade>
     {
         [SerializeField]
-        private bool hideFacade;
+        private bool hideFacade = false;
         [SerializeField]
-        private bool useDefaultLogHandler;
+        private bool useDefaultLogHandler = true;
+        [SerializeField]
+        [Tooltip("Don't use 'Develop Mode' here.")]
+        private EZSettings.RunMode runModeInApp = EZSettings.RunMode.Local;
 
         private ILogHandler defaultLogHandler = Debug.logger.logHandler;
 
         void Start()
         {
+#if !UNITY_EDITOR
+            if (runModeInApp == EZSettings.RunMode.Develop) runModeInApp = EZSettings.RunMode.Local;
+            EZSettings.Instance.runMode = runModeInApp;
+#endif
             gameObject.hideFlags = hideFacade ? HideFlags.HideInHierarchy : HideFlags.None;
             if (useDefaultLogHandler)
             {

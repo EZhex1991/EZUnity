@@ -35,7 +35,7 @@ namespace EZFramework
             EditorGUILayout.Space(); EditorGUILayout.LabelField(titleContent.text, titleStyle);
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Mode", subtitleStyle);
-            ezSettings.runMode = (EZSettings.RunMode)EditorGUILayout.EnumPopup("Run Mode", ezSettings.runMode);
+            ezSettings.runMode = (EZSettings.RunMode)EditorGUILayout.EnumPopup("Run Mode In Editor", ezSettings.runMode);
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", subtitleStyle);
             ezSettings.sleepTimeout = (EZSettings.SleepTimeout)EditorGUILayout.EnumPopup("Sleep Timeout", ezSettings.sleepTimeout);
