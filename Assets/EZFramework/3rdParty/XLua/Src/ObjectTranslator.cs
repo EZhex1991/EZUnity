@@ -85,7 +85,17 @@ namespace XLua
 
     sealed class LuaIndexes
     {
-        public static int LUA_REGISTRYINDEX = -10000;
+        public static int LUA_REGISTRYINDEX
+        {
+            get
+            {
+                return InternalGlobals.LUA_REGISTRYINDEX;
+            }
+            set
+            {
+                InternalGlobals.LUA_REGISTRYINDEX = value;
+            }
+        }
     }
 
     public partial class ObjectTranslator
@@ -95,13 +105,6 @@ namespace XLua
         internal ObjectCasters objectCasters;
 
         internal readonly ObjectPool objects = new ObjectPool();
-        //public readonly Dictionary<int, object> objects = new Dictionary<int, object>();
-        // object to object #
-        //Fix bug by john, struct equals is by value, blow will print
-        //local v1=Vector3(1,1,1) 
-        //local v2=Vector3(1,1,1) 
-        //v1.x = 100 
-        //print(v1.x, v2.x) 
         internal readonly Dictionary<object, int> reverseMap = new Dictionary<object, int>(new ReferenceEqualsComparer());
 		internal LuaEnv luaEnv;
 		internal StaticLuaCallbacks metaFunctions;
@@ -204,11 +207,11 @@ namespace XLua
             }
 #endif
             assemblies = new List<Assembly>();
-            assemblies.Add(Assembly.GetExecutingAssembly());
 
 #if UNITY_WSA && !UNITY_EDITOR
             var assemblies_usorted = Utils.GetAssemblies();
 #else
+            assemblies.Add(Assembly.GetExecutingAssembly());
             var assemblies_usorted = AppDomain.CurrentDomain.GetAssemblies();
 #endif
             addAssemblieByName(assemblies_usorted, "mscorlib,");
@@ -243,7 +246,7 @@ namespace XLua
             initCSharpCallLua();
         }
 
-        enum LOGLEVEL{
+        internal enum LOGLEVEL{
             NO,
             INFO,
             WARN,
@@ -332,7 +335,7 @@ namespace XLua
 #endif
         
         Dictionary<int, WeakReference> delegate_bridges = new Dictionary<int, WeakReference>();
-        public Delegate CreateDelegateBridge(RealStatePtr L, Type delegateType, int idx)
+        public object CreateDelegateBridge(RealStatePtr L, Type delegateType, int idx)
         {
             LuaAPI.lua_pushvalue(L, idx);
             LuaAPI.lua_rawget(L, LuaIndexes.LUA_REGISTRYINDEX);
@@ -343,6 +346,10 @@ namespace XLua
 
                 if (delegate_bridges[referenced].IsAlive)
                 {
+                    if (delegateType == null)
+                    {
+                        return delegate_bridges[referenced].Target;
+                    }
                     DelegateBridgeBase exist_bridge = delegate_bridges[referenced].Target as DelegateBridgeBase;
                     Delegate exist_delegate;
                     if (exist_bridge.TryGetDelegate(delegateType, out exist_delegate))
@@ -389,6 +396,11 @@ namespace XLua
                 LuaAPI.lua_pushnil(L);
                 LuaAPI.xlua_rawseti(L, LuaIndexes.LUA_REGISTRYINDEX, reference);
                 throw e;
+            }
+            if (delegateType == null)
+            {
+                delegate_bridges[reference] = new WeakReference(bridge);
+                return bridge;
             }
             try {
                 var ret = bridge.GetDelegateByType(delegateType);
@@ -511,6 +523,9 @@ namespace XLua
             LuaAPI.lua_rawset(L, -3);
             LuaAPI.xlua_pushasciistring(L, "private_accessible");
             LuaAPI.lua_pushstdcallcfunction(L, StaticLuaCallbacks.XLuaPrivateAccessible);
+            LuaAPI.lua_rawset(L, -3);
+            LuaAPI.xlua_pushasciistring(L, "metatable_operation");
+            LuaAPI.lua_pushstdcallcfunction(L, StaticLuaCallbacks.XLuaMetatableOperation);
             LuaAPI.lua_rawset(L, -3);
             LuaAPI.lua_pop(L, 1);
 
@@ -659,6 +674,11 @@ namespace XLua
                 object obj;
                 if (udata != -1 && objects.TryGetValue(udata, out obj))
                 {
+                    RawObject rawObject = obj as RawObject;
+                    if (rawObject != null)
+                    {
+                        obj = rawObject.Target;
+                    }
                     return type.IsAssignableFrom(obj.GetType());
                 }
 
@@ -679,7 +699,9 @@ namespace XLua
 
             if (udata != -1)
             {
-                return objects.Get(udata);
+                object obj = objects.Get(udata);
+                RawObject rawObject = obj as RawObject;
+                return rawObject == null ? obj : rawObject.Target;
             }
             else
             {
@@ -748,7 +770,7 @@ namespace XLua
             }
             return ret;
         }
-#if UNITY_EDITOR
+#if UNITY_EDITOR || XLUA_GENERAL
         public void PushParams(RealStatePtr L, Array ary)
         {
             if (ary != null)
@@ -783,7 +805,7 @@ namespace XLua
         //only store the type id to type map for struct
         Dictionary<int, Type> typeMap = new Dictionary<int, Type>();
 
-        int getTypeId(RealStatePtr L, Type type, out bool is_first, LOGLEVEL log_level = LOGLEVEL.WARN)
+        internal int getTypeId(RealStatePtr L, Type type, out bool is_first, LOGLEVEL log_level = LOGLEVEL.WARN)
         {
             int type_id;
             is_first = false;
@@ -949,25 +971,13 @@ namespace XLua
                 int ival = (int)LuaAPI.lua_tonumber(L, idx);
                 res = Enum.ToObject(type, ival);
             }
-            else
-            if (lt == LuaTypes.LUA_TSTRING)
+            else if (lt == LuaTypes.LUA_TSTRING)
             {
                 string sflags = LuaAPI.lua_tostring(L, idx);
-                string err = null;
-                try
-                {
-                    res = Enum.Parse(type, sflags);
-                }
-                catch (ArgumentException e)
-                {
-                    err = e.Message;
-                }
-                if (err != null)
-                {
-                    return LuaAPI.luaL_error(L, err);
-                }
+                res = Enum.Parse(type, sflags);
             }
-            else {
+            else 
+            {
                 return LuaAPI.luaL_error(L, "#1 argument must be a integer or a string");
             }
             PushAny(L, res);
@@ -1116,7 +1126,8 @@ namespace XLua
 #if !UNITY_5 && !XLUA_GENERAL
                 if (obj != null && obj is UnityEngine.Object && ((obj as UnityEngine.Object) == null))
                 {
-                    throw new UnityEngine.MissingReferenceException("The object of type '"+ obj.GetType().Name +"' has been destroyed but you are still trying to access it.");
+                    //throw new UnityEngine.MissingReferenceException("The object of type '"+ obj.GetType().Name +"' has been destroyed but you are still trying to access it.");
+                    return null;
                 }
 #endif
                 return obj;

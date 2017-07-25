@@ -363,7 +363,8 @@ namespace XLua
                         }
                         else
                         {
-                            return translator.SafeGetCSObj(L, idx);
+                            object obj = translator.SafeGetCSObj(L, idx);
+                            return (obj is RawObject) ? (obj as RawObject).Target : obj;
                         }
                     }
                 default:
@@ -431,6 +432,21 @@ namespace XLua
                     }
 
                     return translator.CreateDelegateBridge(L, type, idx);
+                };
+            }
+            else if (typeof(DelegateBridgeBase).IsAssignableFrom(type))
+            {
+                return (RealStatePtr L, int idx, object target) =>
+                {
+                    object obj = fixTypeGetter(L, idx, target);
+                    if (obj != null) return obj;
+
+                    if (!LuaAPI.lua_isfunction(L, idx))
+                    {
+                        return null;
+                    }
+
+                    return translator.CreateDelegateBridge(L, null, idx);
                 };
             }
             else if (type.IsInterface())
@@ -501,8 +517,8 @@ namespace XLua
                         }
                         else
                         {
-                            if (StaticLuaCallbacks.GenTryArraySetPtr == null
-                                || !StaticLuaCallbacks.GenTryArraySetPtr(type, L, translator, ary, i, n + 1))
+                            if (InternalGlobals.genTryArraySetPtr == null
+                                || !InternalGlobals.genTryArraySetPtr(type, L, translator, ary, i, n + 1))
                             {
                                 ary.SetValue(elementCaster(L, n + 1, null), i);
                             }
