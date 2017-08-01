@@ -150,7 +150,10 @@ namespace EZUnityTools.EZEditor
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Save As"))
                 {
-                    EZScriptableObject.Create(saveName, Object.Instantiate(ezBundle));
+                    if (saveName == "")
+                        EZScriptableObject.Create(EZBundleObject.AssetName, Object.Instantiate(ezBundle));
+                    else
+                        EZScriptableObject.Create(saveName, Object.Instantiate(ezBundle));
                 }
                 saveName = EditorGUILayout.TextField(saveName);
                 EditorGUILayout.EndHorizontal();
