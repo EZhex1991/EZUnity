@@ -13,7 +13,7 @@ namespace EZUnityTools.EZEditor
     public abstract class EZScriptableObject : ScriptableObject
     {
         // 自定义Asset的存放路径（相对于工程路径）
-        private static string AssetsDirPath = "Assets/EZAssets/";
+        public static string AssetsDirPath = "Assets/EZAssets/";
 
         // 加载一个ScriptableAsset
         public static T Load<T>(string adbFileName, bool createDefault = true) where T : ScriptableObject

@@ -5,18 +5,13 @@
  * 
 */
 using UnityEditor;
+using UnityEngine;
 
 namespace EZUnityTools.EZEditor
 {
     public class MenuItems
     {
         private const string ROOT_NAME = "EZUnityTools";
-
-        [MenuItem(ROOT_NAME + "/EZRename")]
-        private static void EZRename()
-        {
-            EditorWindow.GetWindow<EZRenameEditorWindow>("EZRename").Show();
-        }
 
         [MenuItem(ROOT_NAME + "/EZScript")]
         private static void EZScript()
@@ -34,6 +29,18 @@ namespace EZUnityTools.EZEditor
         private static void EZKeystore()
         {
             EditorWindow.GetWindow<EZKeystoreEditorWindow>("EZKeystore").Show();
+        }
+
+        [MenuItem(ROOT_NAME + "/EZRename")]
+        private static void EZRename()
+        {
+            EditorWindow.GetWindow<EZRenameEditorWindow>("EZRename").Show();
+        }
+
+        [MenuItem(ROOT_NAME + "/EZAsset/Generate Default Material")]
+        private static void GenerateMaterial()
+        {
+            EZDefaultAssetGenerator.GenerateMaterial(true);
         }
     }
 }
