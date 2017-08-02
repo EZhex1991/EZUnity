@@ -83,7 +83,7 @@ namespace EZFramework
             Destroy(audioListener);
             audioListener = go.AddComponent<AudioListener>();
         }
-        
+
         public void PlayBgm(AudioClip audio, bool loop = true, float fadeOutTime = 0.2f)
         {
             audioSource.DOFade(0, fadeOutTime).OnComplete(delegate
@@ -93,6 +93,14 @@ namespace EZFramework
                 audioSource.loop = loop;
                 audioSource.Play();
             });
+        }
+        public void PauseBgm(float fadeOutTime = 0.2f)
+        {
+            audioSource.Pause();
+        }
+        public void UnPauseBgm(float fadeOutTime = 0.2f)
+        {
+            audioSource.UnPause();
         }
         public void StopBgm(float fadeOutTime = 0.2f)
         {
@@ -117,7 +125,7 @@ namespace EZFramework
                 AudioSource.PlayClipAtPoint(audio, position, EfxVolume);
             }
         }
-        
+
         public AudioSource AddAudioSource(GameObject go)
         {
             AudioSource audioSource = go.AddComponent<AudioSource>();
