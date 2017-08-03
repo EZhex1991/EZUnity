@@ -26,20 +26,20 @@ namespace EZUnityTools.EZEditor
         public string listFileName = "files.txt";
 
         [Serializable]
-        public class BundleInfo
-        {
-            public string bundleName = "";
-            public string filePattern = "*.*";
-            public string dirPath = "";
-            public SearchOption searchOption = SearchOption.AllDirectories;
-        }
-        [Serializable]
         public class CopyInfo
         {
             public string destDirPath = "";
             public string filePattern = "*.*";
-            public string sourDirPath = "";
             public SearchOption searchOption = SearchOption.AllDirectories;
+            public string sourDirPath = "";
+        }
+        [Serializable]
+        public class BundleInfo
+        {
+            public string bundleName = "";
+            public string filePattern = "*.*";
+            public SearchOption searchOption = SearchOption.AllDirectories;
+            public string dirPath = "";
         }
         public List<CopyInfo> copyList = new List<CopyInfo>();
         public List<BundleInfo> bundleList = new List<BundleInfo>();

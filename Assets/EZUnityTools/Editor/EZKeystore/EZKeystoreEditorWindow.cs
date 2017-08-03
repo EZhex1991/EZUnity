@@ -12,28 +12,40 @@ namespace EZUnityTools.EZEditor
     public class EZKeystoreEditorWindow : EZEditorWindow
     {
         private EZKeystoreObject ezKeystore;
+        private SerializedObject so_EZKeystore;
+        private SerializedProperty keystoreFilePath;
+        private SerializedProperty keystorePassword;
+        private SerializedProperty keyAliasName;
+        private SerializedProperty keyAliasPassword;
 
         protected override void OnFocus()
         {
-            base.OnEnable();
+            base.OnFocus();
             ezKeystore = EZScriptableObject.Load<EZKeystoreObject>(EZKeystoreObject.AssetName, false);
             if (ezKeystore == null)
             {
                 ezKeystore = EZKeystoreInitializer.CreateKeystore();
             }
+            so_EZKeystore = new SerializedObject(ezKeystore);
+            keystoreFilePath = so_EZKeystore.FindProperty("keystoreFilePath");
+            keystorePassword = so_EZKeystore.FindProperty("keystorePassword");
+            keyAliasName = so_EZKeystore.FindProperty("keyAliasName");
+            keyAliasPassword = so_EZKeystore.FindProperty("keyAliasPassword");
         }
 
         protected override void OnGUI()
         {
             base.OnGUI();
+            so_EZKeystore.Update();
             if (GUILayout.Button("Load"))
             {
                 EZKeystoreInitializer.CreateKeystore();
             }
-            ezKeystore.keystoreFilePath = EditorGUILayout.TextField("Keystore File Path", ezKeystore.keystoreFilePath);
-            ezKeystore.keystorePassword = EditorGUILayout.PasswordField("Keystore Password", ezKeystore.keystorePassword);
-            ezKeystore.keyAliasName = EditorGUILayout.TextField("Key Alias Name", ezKeystore.keyAliasName);
-            ezKeystore.keyAliasPassword = EditorGUILayout.PasswordField("Key Alias Password", ezKeystore.keyAliasPassword);
+            EditorGUILayout.PropertyField(keystoreFilePath);
+            EditorGUILayout.PropertyField(keystorePassword);
+            EditorGUILayout.PropertyField(keyAliasName);
+            EditorGUILayout.PropertyField(keyAliasPassword);
+            so_EZKeystore.ApplyModifiedProperties();
             if (GUI.changed)
             {
                 EZKeystoreInitializer.SetKeystore(ezKeystore);

@@ -8,39 +8,39 @@ using System.IO;
 
 namespace EZUnityTools.EZEditor
 {
-    public class EZScriptProcessor : UnityEditor.AssetModificationProcessor
+    public class EZScriptTemplateProcessor : UnityEditor.AssetModificationProcessor
     {
         private static void OnWillCreateAsset(string metaPath)
         {
             string filePath = metaPath.Replace(".meta", "");
-            EZScriptObject ezScript = EZScriptableObject.Load<EZScriptObject>(EZScriptObject.AssetName, false);
-            if (ezScript != null)
+            EZScriptTemplateObject ezScriptTemplate = EZScriptableObject.Load<EZScriptTemplateObject>(EZScriptTemplateObject.AssetName, false);
+            if (ezScriptTemplate != null)
             {
-                Replace(filePath, ezScript);
+                Replace(filePath, ezScriptTemplate);
             }
         }
 
-        public static void Replace(string filePath, EZScriptObject ezScript)
+        public static void Replace(string filePath, EZScriptTemplateObject ezScriptTemplate)
         {
-            if (!IsEZScriptAsset(filePath, ezScript)) return;
+            if (!IsEZScriptAsset(filePath, ezScriptTemplate)) return;
             string content = File.ReadAllText(filePath);
             content = content.Replace("#SCRIPTNAME", Path.GetFileNameWithoutExtension(filePath));
             content = content.Replace("#CREATETIME#", System.DateTime.Now.ToString());
-            foreach (EZScriptObject.Pattern pattern in ezScript.patternList)
+            foreach (EZScriptTemplateObject.Pattern pattern in ezScriptTemplate.patternList)
             {
                 content = content.Replace(pattern.Key, pattern.Value);
             }
             File.WriteAllText(filePath, content);
         }
 
-        private static bool IsEZScriptAsset(string filePath, EZScriptObject ezScript)
+        private static bool IsEZScriptAsset(string filePath, EZScriptTemplateObject ezScriptTemplate)
         {
             string lowerName = filePath.ToLower();
-            foreach (string ext in ezScript.extensionList)
+            foreach (string ext in ezScriptTemplate.extensionList)
             {
                 if (lowerName.EndsWith(ext + ".txt")) return false;
             }
-            foreach (string ext in ezScript.extensionList)
+            foreach (string ext in ezScriptTemplate.extensionList)
             {
                 if (lowerName.EndsWith(ext)) return true;
             }

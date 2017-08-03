@@ -72,6 +72,10 @@ namespace EZUnityTools.EZEditor
                     mr.enabled = false;
                 }
             }
+            foreach (Transform tr in gameObject.transform)
+            {
+                OnPostprocessModel(tr.gameObject);
+            }
         }
         Material OnAssignMaterialModel(Material material, Renderer renderer)
         {
@@ -82,7 +86,7 @@ namespace EZUnityTools.EZEditor
             )
             {
                 Debug.Log("Invalid Material Name: " + material.name);
-                return EZDefaultAssetGenerator.GenerateMaterial();
+                return EZAssetGenerator.GenerateMaterial();
             }
             return null;
         }

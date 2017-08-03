@@ -7,140 +7,134 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEditorInternal;
 
 namespace EZUnityTools.EZEditor
 {
     public class EZBundleEditorWindow : EZEditorWindow
     {
         private EZBundleObject ezBundle;
+        private SerializedObject so_EZBundle;
+        private SerializedProperty bundleTarget;
+        private SerializedProperty relativePath;
+        private SerializedProperty removeOldFiles;
+        private SerializedProperty bundleDirPath;
+        private SerializedProperty bundleExtension;
+        private SerializedProperty createListFile;
+        private SerializedProperty listFileName;
+        private ReorderableList copyList;
+        private ReorderableList bundleList;
+
         private Vector2 scrollView;
-        private int bundleListSize = 0;
-        private int copyListSize = 0;
+        private bool copyListFoldout = true;
+        private bool bundleListFoldout = true;
         private string saveName = "";
 
         protected override void OnFocus()
         {
             base.OnFocus();
             ezBundle = EZScriptableObject.Load<EZBundleObject>(EZBundleObject.AssetName);
-            bundleListSize = ezBundle.bundleList.Count;
-            copyListSize = ezBundle.copyList.Count;
+            so_EZBundle = new SerializedObject(ezBundle);
+            bundleTarget = so_EZBundle.FindProperty("bundleTarget");
+            relativePath = so_EZBundle.FindProperty("relativePath");
+            removeOldFiles = so_EZBundle.FindProperty("removeOldFiles");
+            bundleDirPath = so_EZBundle.FindProperty("bundleDirPath");
+            bundleExtension = so_EZBundle.FindProperty("bundleExtension");
+            createListFile = so_EZBundle.FindProperty("createListFile");
+            listFileName = so_EZBundle.FindProperty("listFileName");
+            copyList = new ReorderableList(so_EZBundle, so_EZBundle.FindProperty("copyList"), true, true, true, true);
+            bundleList = new ReorderableList(so_EZBundle, so_EZBundle.FindProperty("bundleList"), true, true, true, true);
+            copyList.drawHeaderCallback = DrawCopyListHeader;
+            copyList.drawElementCallback = DrawCopyListElement;
+            bundleList.drawHeaderCallback = DrawBundleListHeader;
+            bundleList.drawElementCallback = DrawBundleListElement;
         }
 
         protected override void OnGUI()
         {
             base.OnGUI();
-            GUI_BaseInfo();
+            so_EZBundle.Update();
+            DrawBaseInfo();
             scrollView = EditorGUILayout.BeginScrollView(scrollView);
-            GUI_CopyList();
-            GUI_BundelList();
+            copyListFoldout = EditorGUILayout.Foldout(copyListFoldout, "Copy List");
+            if (copyListFoldout) copyList.DoLayoutList();
+            bundleListFoldout = EditorGUILayout.Foldout(bundleListFoldout, "Bundle List");
+            if (bundleListFoldout) bundleList.DoLayoutList();
             EditorGUILayout.EndScrollView();
-            GUI_Button();
-            if (GUI.changed) EditorUtility.SetDirty(ezBundle);
+            DrawButton();
+            so_EZBundle.ApplyModifiedProperties();
         }
 
-        private void GUI_BaseInfo()
+        private void DrawBaseInfo()
         {
-            ezBundle.bundleTarget = (BuildTarget)EditorGUILayout.EnumPopup("Bundle Target", ezBundle.bundleTarget);
+            EditorGUILayout.PropertyField(bundleTarget);
             {
                 EditorGUILayout.BeginHorizontal();
-                ezBundle.relativePath = EditorGUILayout.Toggle("Relative Path", ezBundle.relativePath);
-                ezBundle.removeOldFiles = EditorGUILayout.Toggle("Remove Old Files", ezBundle.removeOldFiles);
+                EditorGUILayout.PropertyField(relativePath);
+                EditorGUILayout.PropertyField(removeOldFiles);
                 EditorGUILayout.EndHorizontal();
             }
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Bundle Directory", new GUILayoutOption[] { GUILayout.Width(150), });
                 if (ezBundle.relativePath) EditorGUILayout.LabelField("Assets/", new GUILayoutOption[] { GUILayout.Width(50), });
-                ezBundle.bundleDirPath = EditorGUILayout.TextField(ezBundle.bundleDirPath);
+                EditorGUILayout.PropertyField(bundleDirPath, GUIContent.none);
                 EditorGUILayout.EndHorizontal();
             }
             {
                 EditorGUILayout.BeginHorizontal();
-                ezBundle.bundleExtension = EditorGUILayout.TextField("Bundle Extension", ezBundle.bundleExtension);
+                EditorGUILayout.PropertyField(bundleExtension);
                 EditorGUILayout.EndHorizontal();
             }
             {
                 EditorGUILayout.BeginHorizontal();
-                ezBundle.createListFile = EditorGUILayout.Toggle("Create List File", ezBundle.createListFile);
-                if (ezBundle.createListFile) ezBundle.listFileName = EditorGUILayout.TextField("List File Name", ezBundle.listFileName);
+                EditorGUILayout.PropertyField(createListFile);
+                if (ezBundle.createListFile) EditorGUILayout.PropertyField(listFileName);
                 EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.Space();
         }
-        private void GUI_CopyList()
+
+        private void DrawCopyListHeader(Rect rect)
         {
-            EditorGUILayout.Space();
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Copy List", subtitleStyle, new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Size", new GUILayoutOption[] { GUILayout.Width(40), });
-                copyListSize = EditorGUILayout.DelayedIntField(copyListSize); copyListSize = copyListSize < 0 ? 0 : copyListSize;
-                EditorGUILayout.EndHorizontal();
-            }
-            while (copyListSize != ezBundle.copyList.Count)
-            {
-                if (copyListSize < ezBundle.copyList.Count) ezBundle.copyList.RemoveAt(copyListSize);
-                else ezBundle.copyList.Add(new EZBundleObject.CopyInfo());
-            }
-            {
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Label("", new GUILayoutOption[] { GUILayout.Width(20), });
-                EditorGUILayout.LabelField("Destination", new GUILayoutOption[] { GUILayout.Width(120), });
-                EditorGUILayout.LabelField("File Pattern", new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Search Option", new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Source Dir");
-                EditorGUILayout.EndHorizontal();
-            }
-            for (int i = 0; i < ezBundle.copyList.Count; i++)
-            {
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Label(i.ToString(), new GUILayoutOption[] { GUILayout.Width(20), });
-                ezBundle.copyList[i].destDirPath = EditorGUILayout.TextField(ezBundle.copyList[i].destDirPath, new GUILayoutOption[] { GUILayout.Width(120), });
-                ezBundle.copyList[i].filePattern = EditorGUILayout.TextField(ezBundle.copyList[i].filePattern, new GUILayoutOption[] { GUILayout.Width(100), });
-                ezBundle.copyList[i].searchOption = (SearchOption)EditorGUILayout.EnumPopup(ezBundle.copyList[i].searchOption, new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Assets/", new GUILayoutOption[] { GUILayout.Width(50), });
-                ezBundle.copyList[i].sourDirPath = EditorGUILayout.TextField(ezBundle.copyList[i].sourDirPath);
-                EditorGUILayout.EndHorizontal();
-            }
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, 35, EditorGUIUtility.singleLineHeight), "NO.");
+            EditorGUI.LabelField(new Rect(rect.x + 40, rect.y, 120, EditorGUIUtility.singleLineHeight), "Destination");
+            EditorGUI.LabelField(new Rect(rect.x + 165, rect.y, 100, EditorGUIUtility.singleLineHeight), "File Pattern");
+            EditorGUI.LabelField(new Rect(rect.x + 270, rect.y, 100, EditorGUIUtility.singleLineHeight), "Search Option");
+            EditorGUI.LabelField(new Rect(rect.x + 375, rect.y, rect.width - 375, EditorGUIUtility.singleLineHeight), "Source");
+
         }
-        private void GUI_BundelList()
+        private void DrawCopyListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            EditorGUILayout.Space();
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Build List", subtitleStyle, new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Size", new GUILayoutOption[] { GUILayout.Width(40), });
-                bundleListSize = EditorGUILayout.DelayedIntField(bundleListSize, new GUILayoutOption[] { GUILayout.Width(40), }); bundleListSize = bundleListSize < 0 ? 0 : bundleListSize;
-                EditorGUILayout.EndHorizontal();
-            }
-            while (bundleListSize != ezBundle.bundleList.Count)
-            {
-                if (bundleListSize < ezBundle.bundleList.Count) ezBundle.bundleList.RemoveAt(bundleListSize);
-                else ezBundle.bundleList.Add(new EZBundleObject.BundleInfo());
-            }
-            {
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Label("", new GUILayoutOption[] { GUILayout.Width(20), });
-                EditorGUILayout.LabelField("Bundle Name", new GUILayoutOption[] { GUILayout.Width(120), });
-                EditorGUILayout.LabelField("File Pattern", new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Search Option", new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Directory Path");
-                EditorGUILayout.EndHorizontal();
-            }
-            for (int i = 0; i < ezBundle.bundleList.Count; i++)
-            {
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Label(i.ToString(), new GUILayoutOption[] { GUILayout.Width(20), });
-                ezBundle.bundleList[i].bundleName = EditorGUILayout.TextField(ezBundle.bundleList[i].bundleName, new GUILayoutOption[] { GUILayout.Width(120), }).ToLower();
-                ezBundle.bundleList[i].filePattern = EditorGUILayout.TextField(ezBundle.bundleList[i].filePattern, new GUILayoutOption[] { GUILayout.Width(100), });
-                ezBundle.bundleList[i].searchOption = (SearchOption)EditorGUILayout.EnumPopup(ezBundle.bundleList[i].searchOption, new GUILayoutOption[] { GUILayout.Width(100), });
-                EditorGUILayout.LabelField("Assets/", new GUILayoutOption[] { GUILayout.Width(50), });
-                ezBundle.bundleList[i].dirPath = EditorGUILayout.TextField(ezBundle.bundleList[i].dirPath);
-                EditorGUILayout.EndHorizontal();
-            }
-            EditorGUILayout.Space();
+            rect.y += 1;
+            SerializedProperty copyInfo = copyList.serializedProperty.GetArrayElementAtIndex(index);
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, 20, EditorGUIUtility.singleLineHeight), index.ToString("00"));
+            EditorGUI.PropertyField(new Rect(rect.x + 25, rect.y, 120, EditorGUIUtility.singleLineHeight), copyInfo.FindPropertyRelative("destDirPath"), GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x + 150, rect.y, 100, EditorGUIUtility.singleLineHeight), copyInfo.FindPropertyRelative("filePattern"), GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x + 255, rect.y, 100, EditorGUIUtility.singleLineHeight), copyInfo.FindPropertyRelative("searchOption"), GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x + 360, rect.y, rect.width - 360, EditorGUIUtility.singleLineHeight), copyInfo.FindPropertyRelative("sourDirPath"), GUIContent.none);
         }
-        private void GUI_Button()
+
+        private void DrawBundleListHeader(Rect rect)
+        {
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, 35, EditorGUIUtility.singleLineHeight), "NO.");
+            EditorGUI.LabelField(new Rect(rect.x + 40, rect.y, 120, EditorGUIUtility.singleLineHeight), "Bundle Name");
+            EditorGUI.LabelField(new Rect(rect.x + 165, rect.y, 100, EditorGUIUtility.singleLineHeight), "File Pattern");
+            EditorGUI.LabelField(new Rect(rect.x + 270, rect.y, 100, EditorGUIUtility.singleLineHeight), "Search Option");
+            EditorGUI.LabelField(new Rect(rect.x + 375, rect.y, rect.width - 380, EditorGUIUtility.singleLineHeight), "Directory");
+        }
+        private void DrawBundleListElement(Rect rect, int index, bool isActive, bool isFocused)
+        {
+            rect.y += 1;
+            SerializedProperty bundleInfo = bundleList.serializedProperty.GetArrayElementAtIndex(index);
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, 20, EditorGUIUtility.singleLineHeight), index.ToString("00"));
+            EditorGUI.PropertyField(new Rect(rect.x + 25, rect.y, 120, EditorGUIUtility.singleLineHeight), bundleInfo.FindPropertyRelative("bundleName"), GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x + 150, rect.y, 100, EditorGUIUtility.singleLineHeight), bundleInfo.FindPropertyRelative("filePattern"), GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x + 255, rect.y, 100, EditorGUIUtility.singleLineHeight), bundleInfo.FindPropertyRelative("searchOption"), GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x + 360, rect.y, rect.width - 360, EditorGUIUtility.singleLineHeight), bundleInfo.FindPropertyRelative("dirPath"), GUIContent.none);
+        }
+
+        private void DrawButton()
         {
             if (GUILayout.Button("Build Bundle"))
             {
@@ -150,9 +144,7 @@ namespace EZUnityTools.EZEditor
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Save As"))
                 {
-                    if (saveName == "")
-                        EZScriptableObject.Create(EZBundleObject.AssetName, Object.Instantiate(ezBundle));
-                    else
+                    if (saveName != "" && saveName != EZBundleObject.AssetName)
                         EZScriptableObject.Create(saveName, Object.Instantiate(ezBundle));
                 }
                 saveName = EditorGUILayout.TextField(saveName);

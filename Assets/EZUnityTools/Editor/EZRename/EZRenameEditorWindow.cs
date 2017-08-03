@@ -16,11 +16,11 @@ namespace EZUnityTools.EZEditor
     {
         public enum SelectionMode
         {
-            Asset = UnityEditor.SelectionMode.Assets,
-            Hierarchy = UnityEditor.SelectionMode.TopLevel | UnityEditor.SelectionMode.OnlyUserModifiable,
+            Assets = UnityEditor.SelectionMode.Assets,
+            SceneObjects = UnityEditor.SelectionMode.TopLevel | UnityEditor.SelectionMode.OnlyUserModifiable,
         }
 
-        private SelectionMode m_SelectionMode = SelectionMode.Asset;
+        private SelectionMode m_SelectionMode = SelectionMode.Assets;
         private SelectionMode selectionMode
         {
             get
@@ -99,17 +99,17 @@ namespace EZUnityTools.EZEditor
         {
             switch (selectionMode)
             {
-                case SelectionMode.Asset:
+                case SelectionMode.Assets:
                     string oldPath = AssetDatabase.GetAssetPath(obj);
                     return Path.GetFileNameWithoutExtension(oldPath);
-                case SelectionMode.Hierarchy:
+                case SelectionMode.SceneObjects:
                     return obj.name;
                 default:
                     return null;
             }
         }
 
-        private void RenameAsset()
+        private void RenameAssets()
         {
             EditorUtility.DisplayProgressBar("Reimporting", "", 0);
             int process = 0;
@@ -125,7 +125,7 @@ namespace EZUnityTools.EZEditor
             }
             EditorUtility.ClearProgressBar();
         }
-        private void RenameHierarchy()
+        private void RenameSceneObjects()
         {
             EditorUtility.DisplayProgressBar("Renaming", "", 0);
             int process = 0;
@@ -152,6 +152,15 @@ namespace EZUnityTools.EZEditor
         protected override void OnGUI()
         {
             base.OnGUI();
+            DrawConfig();
+            EditorGUILayout.Space();
+            DrawButton();
+            EditorGUILayout.Space();
+            DrawFilePreview();
+        }
+
+        private void DrawConfig()
+        {
             selectionMode = (SelectionMode)EditorGUILayout.EnumPopup("Selection Mode", selectionMode);
             {
                 EditorGUILayout.BeginHorizontal();
@@ -175,8 +184,10 @@ namespace EZUnityTools.EZEditor
                 suffix = EditorGUILayout.TextField("Suffix", suffix);
                 EditorGUILayout.EndHorizontal();
             }
+        }
 
-            EditorGUILayout.Space();
+        private void DrawButton()
+        {
             showLog = EditorGUILayout.Toggle("Show Log", showLog);
             if (GUILayout.Button("Reset"))
             {
@@ -187,53 +198,61 @@ namespace EZUnityTools.EZEditor
             {
                 switch (selectionMode)
                 {
-                    case SelectionMode.Asset:
-                        RenameAsset();
+                    case SelectionMode.Assets:
+                        RenameAssets();
                         break;
-                    case SelectionMode.Hierarchy:
-                        RenameHierarchy();
+                    case SelectionMode.SceneObjects:
+                        RenameSceneObjects();
                         break;
                 }
                 Reset();
             }
-            EditorGUILayout.Space();
+        }
+
+        private void DrawFilePreview()
+        {
             {
                 EditorGUILayout.BeginHorizontal();
-                foldout = EditorGUILayout.Foldout(foldout, "Name List (" + nameList.Count + ")");
+                foldout = EditorGUILayout.Foldout(foldout, "Name List " + nameList.Count.ToString("(00)"));
                 collapse = EditorGUILayout.ToggleLeft("Collapse", collapse);
                 EditorGUILayout.EndHorizontal();
             }
             if (foldout)
             {
                 EditorGUILayout.BeginHorizontal();
-                if (collapse) GUILayout.Label("" + nameDict.Count, new GUILayoutOption[] { GUILayout.Width(20), });
+                GUILayout.Label("", new GUILayoutOption[] { GUILayout.Width(20), });
                 EditorGUILayout.LabelField("Old Name ");
                 EditorGUILayout.LabelField("New Name");
                 EditorGUILayout.EndHorizontal();
 
                 scrollView = EditorGUILayout.BeginScrollView(scrollView);
                 if (collapse)
-                {
-                    foreach (var nameInfo in nameDict)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        GUILayout.Label("" + nameInfo.Value, new GUILayoutOption[] { GUILayout.Width(20), });
-                        EditorGUILayout.TextField(nameInfo.Key);
-                        EditorGUILayout.TextField(GetNewName(nameInfo.Key));
-                        EditorGUILayout.EndHorizontal();
-                    }
-                }
+                    DrawNameDict();
                 else
-                {
-                    foreach (string name in nameList)
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.TextField(name);
-                        EditorGUILayout.TextField(GetNewName(name));
-                        EditorGUILayout.EndHorizontal();
-                    }
-                }
+                    DrawNameList();
                 EditorGUILayout.EndScrollView();
+            }
+        }
+        private void DrawNameDict()
+        {
+            foreach (var nameInfo in nameDict)
+            {
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Label(nameInfo.Value.ToString(), new GUILayoutOption[] { GUILayout.Width(20), });
+                EditorGUILayout.TextField(nameInfo.Key);
+                EditorGUILayout.TextField(GetNewName(nameInfo.Key));
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+        private void DrawNameList()
+        {
+            for (int i = 0; i < nameList.Count; i++)
+            {
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Label(i.ToString("00"), new GUILayoutOption[] { GUILayout.Width(20), });
+                EditorGUILayout.TextField(nameList[i]);
+                EditorGUILayout.TextField(GetNewName(nameList[i]));
+                EditorGUILayout.EndHorizontal();
             }
         }
     }

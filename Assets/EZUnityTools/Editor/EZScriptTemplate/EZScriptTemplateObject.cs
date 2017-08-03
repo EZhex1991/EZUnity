@@ -11,12 +11,10 @@ using UnityEngine;
 
 namespace EZUnityTools.EZEditor
 {
-    public class EZScriptObject : EZScriptableObject
+    public class EZScriptTemplateObject : EZScriptableObject
     {
-        public const string AssetName = "EZScript";
-
-        public List<TextAsset> templateList = new List<TextAsset>();
-
+        public const string AssetName = "EZScriptTemplate";
+        
         public List<string> extensionList = new List<string> { ".cs", ".lua", ".txt", };
 
         [Serializable]
