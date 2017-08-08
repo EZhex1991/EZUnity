@@ -19,15 +19,15 @@ namespace EZFramework.LuaBehaviour
         private Action<LuaTable> luaOnMouseUp;
         private Action<LuaTable> luaOnMouseExit;
         private Action<LuaTable> luaOnMouseUpAsButton;
-        void Start()
+        void Awake()
         {
-            self.Get("LuaOnMouseEnter", out luaOnMouseEnter);
-            self.Get("LuaOnMouseOver", out luaOnMouseOver);
-            self.Get("LuaOnMouseDown", out luaOnMouseDown);
-            self.Get("LuaOnMouseDrag", out luaOnMouseDrag);
-            self.Get("LuaOnMouseUp", out luaOnMouseUp);
-            self.Get("LuaOnMouseExit", out luaOnMouseExit);
-            self.Get("LuaOnMouseUpAsButton", out luaOnMouseUpAsButton);
+            bindings[gameObject].Get("LuaOnMouseEnter", out luaOnMouseEnter);
+            bindings[gameObject].Get("LuaOnMouseOver", out luaOnMouseOver);
+            bindings[gameObject].Get("LuaOnMouseDown", out luaOnMouseDown);
+            bindings[gameObject].Get("LuaOnMouseDrag", out luaOnMouseDrag);
+            bindings[gameObject].Get("LuaOnMouseUp", out luaOnMouseUp);
+            bindings[gameObject].Get("LuaOnMouseExit", out luaOnMouseExit);
+            bindings[gameObject].Get("LuaOnMouseUpAsButton", out luaOnMouseUpAsButton);
         }
         void OnMouseEnter()
         {

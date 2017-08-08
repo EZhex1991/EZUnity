@@ -15,11 +15,11 @@ namespace EZFramework.LuaBehaviour
         private Action<LuaTable> luaUpdate;
         private Action<LuaTable> luaFixedUpdate;
         private Action<LuaTable> luaLateUpdate;
-        void Start()
+        void Awake()
         {
-            self.Get("LuaUpdate", out luaUpdate);
-            self.Get("LuaFixedUpdate", out luaFixedUpdate);
-            self.Get("LuaLateUpdate", out luaLateUpdate);
+            bindings[gameObject].Get("LuaUpdate", out luaUpdate);
+            bindings[gameObject].Get("LuaFixedUpdate", out luaFixedUpdate);
+            bindings[gameObject].Get("LuaLateUpdate", out luaLateUpdate);
         }
         void Update()
         {

@@ -16,11 +16,11 @@ namespace EZFramework.LuaBehaviour
         private Action<LuaTable, Collider> luaOnTriggerEnter;
         private Action<LuaTable, Collider> luaOnTriggerStay;
         private Action<LuaTable, Collider> luaOnTriggerExit;
-        void Start()
+        void Awake()
         {
-            self.Get("LuaOnTriggerEnter", out luaOnTriggerEnter);
-            self.Get("LuaOnTriggerStay", out luaOnTriggerStay);
-            self.Get("LuaOnTriggerExit", out luaOnTriggerExit);
+            bindings[gameObject].Get("LuaOnTriggerEnter", out luaOnTriggerEnter);
+            bindings[gameObject].Get("LuaOnTriggerStay", out luaOnTriggerStay);
+            bindings[gameObject].Get("LuaOnTriggerExit", out luaOnTriggerExit);
         }
         void OnTriggerEnter(Collider collider)
         {

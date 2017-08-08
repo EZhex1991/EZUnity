@@ -22,24 +22,37 @@ namespace EZFramework.LuaBehaviour
     public abstract class _LuaBehaviour<T> : MonoBehaviour
         where T : _LuaBehaviour<T>
     {
+        /*
+         * 之前是在AddComponent之后把luatable赋值给“self”，但这样意味着Component在Awake时“self”为空，所以Awake无法动态绑定
+         * 现在用静态词典在AddComponent前记录绑定的luatable，保证Awake可以获取这个“self”
+         * 但这样意味着一个GameObject只能绑定一个luatable，所以多个lua脚本响应同一事件需要在lua端进行消息分发
+         * 当然，改为Dictionary<GameObject, List<LuaTable>>可以实现和之前一样的效果，只是个人认为在lua上实现会更方便一点
+         * 关于这个LuaTable变量的命名问题，自己怎么改都可以，个人在lua上基本只用冒号声明方法，这里的self只是方便在lua上的理解
+         * PS：不管在C#上还是Lua上，纠结于self这个“变量名称”只能说明对Lua的self理解不够
+         */
         public LuaTable self;
+        public static Dictionary<GameObject, LuaTable> bindings = new Dictionary<GameObject, LuaTable>();
         public static T Bind(GameObject obj, LuaTable self)
         {
-            T behaviour = obj.AddComponent<T>();    // 在这一句实际上Awake已经执行了，所以Awake方法无法被动态绑定；
+            if (bindings.ContainsKey(obj))
+            {
+                Debug.LogError(typeof(T).ToString() + "already exist, bind failed", obj);
+                return obj.GetComponent<T>();
+            }
+            bindings.Add(obj, self);
+            T behaviour = obj.AddComponent<T>();    // 在这一句实际上Awake已经执行了
             behaviour.self = self;
             return behaviour;
         }
         public static void Remove(GameObject obj)
         {
             if (obj == null) return;
-            foreach (T behaviour in obj.GetComponents<T>())
-            {
-                Destroy(behaviour);
-            }
+            Remove(obj.GetComponent<T>());
         }
         public static void Remove(T behaviour)
         {
             if (behaviour == null) return;
+            bindings.Remove(behaviour.gameObject);
             Destroy(behaviour);
         }
     }

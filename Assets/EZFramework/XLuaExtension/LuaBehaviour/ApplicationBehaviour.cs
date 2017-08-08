@@ -14,10 +14,10 @@ namespace EZFramework.LuaBehaviour
     {
         private Action<LuaTable, bool> luaOnApplicationFocus;
         private Action<LuaTable, bool> luaOnApplicationPause;
-        void Start()
+        void Awake()
         {
-            self.Get("LuaOnApplicationFocus", out luaOnApplicationFocus);
-            self.Get("LuaOnApplicationPause", out luaOnApplicationPause);
+            bindings[gameObject].Get("LuaOnApplicationFocus", out luaOnApplicationFocus);
+            bindings[gameObject].Get("LuaOnApplicationPause", out luaOnApplicationPause);
         }
         void OnApplicationFocus(bool focusStatus)
         {
