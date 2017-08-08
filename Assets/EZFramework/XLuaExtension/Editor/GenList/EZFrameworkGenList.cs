@@ -26,16 +26,17 @@ namespace EZFramework.XLuaGen
             typeof(EZFramework.EZUpdate),
             typeof(EZFramework.EZUI),
             typeof(EZFramework.EZUIExtensions),
+
             typeof(EZFramework.WWWTask),
 
             typeof(EZUnityTools.EZScrollRect),
             typeof(EZUnityTools.EZScrollRect.Status),
-
         };
 
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
+            typeof(System.Action),
             typeof(System.Action<string>),
             typeof(System.Action<double>),
             typeof(System.Action<float>),

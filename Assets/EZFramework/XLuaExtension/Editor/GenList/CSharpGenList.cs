@@ -15,7 +15,7 @@ namespace EZFramework.XLuaGen
         [LuaCallCSharp]
         public static List<Type> LuaCallCSharp = new List<Type>()
         {
-            typeof(System.Collections.Generic.Dictionary<string, object>),
+            typeof(System.Type),
         };
 
         [CSharpCallLua]
