@@ -16,7 +16,7 @@ namespace EZFramework
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = FindObjectOfType<T>();
                     if (instance == null)
@@ -27,17 +27,18 @@ namespace EZFramework
                 return instance;
             }
         }
-        
+
         // Awake时对该单例进行初始化，防止出现多实例
-        protected void Awake()
+        protected virtual void Awake()
         {
             if (instance == null)
             {
                 instance = this as T;
             }
-            else if(instance != this)
+            else if (instance != this)
             {
                 Destroy(this);
+                return;
             }
 
             if (transform.parent == null)
