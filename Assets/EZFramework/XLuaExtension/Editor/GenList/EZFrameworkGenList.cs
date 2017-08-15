@@ -29,8 +29,10 @@ namespace EZFramework.XLuaGen
 
             typeof(EZFramework.WWWTask),
 
-            typeof(EZUnityTools.EZScrollRect),
-            typeof(EZUnityTools.EZScrollRect.Status),
+            typeof(EZUnityTools.UI.EZScrollRect),
+            typeof(EZUnityTools.UI.EZScrollRect.Status),
+            typeof(EZUnityTools.UI.EZGridLayout),
+            typeof(EZUnityTools.UI.EZOutstand),
         };
 
         [CSharpCallLua]
@@ -42,6 +44,8 @@ namespace EZFramework.XLuaGen
             typeof(System.Action<float>),
             typeof(System.Action<GameObject>),
             typeof(System.Action<WWWTask, bool>),
+
+            typeof(System.Action<int, int>),
         };
 
         [BlackList]
