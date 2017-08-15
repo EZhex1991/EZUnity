@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,26 +12,52 @@ namespace EZUnityTools.EZEditor
 {
     public class EZAssetPostprocessor : UnityEditor.AssetPostprocessor
     {
+        string dirPath { get { return Path.GetDirectoryName(assetPath); } }
+        string dirName { get { return dirPath.Substring(dirPath.LastIndexOf("/") + 1); } }
+        string assetName { get { return Path.GetFileName(assetPath); } }
+
         void OnPreprocessTexture()
         {
-            // sprite_spriteName
-            if (assetPath.ToLower().Contains("sprite_"))
+            TextureImporter textureImporter = (TextureImporter)assetImporter;
+            if (assetName.ToLower().StartsWith("sprite"))
             {
-                TextureImporter textureImporter = (TextureImporter)assetImporter;
-                textureImporter.textureType = TextureImporterType.Sprite;
                 textureImporter.mipmapEnabled = false;
-                textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+                if (dirName.StartsWith("[") && dirName.EndsWith("]"))
+                {
+                    textureImporter.spritePackingTag = dirName.Substring(1, dirName.Length - 2);
+                }
+                // sprite_spriteName
+                if (assetName.ToLower().StartsWith("sprite_"))
+                {
+                    textureImporter.textureType = TextureImporterType.Sprite;
+                    textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+                }
+                // sprite@_spriteName
+                else if (assetName.ToLower().StartsWith("sprite@_"))
+                {
+                    textureImporter.textureType = TextureImporterType.Advanced;
+                }
+                // sprite@RGBA32_spriteName
+                else if (assetName.ToLower().StartsWith("sprite@rgba32_"))
+                {
+                    textureImporter.textureType = TextureImporterType.Advanced;
+                    textureImporter.textureFormat = TextureImporterFormat.RGBA32;
+                }
+                // sprite@RGB24_spriteName
+                else if (assetName.ToLower().StartsWith("sprite@rgb24_"))
+                {
+                    textureImporter.textureType = TextureImporterType.Advanced;
+                    textureImporter.textureFormat = TextureImporterFormat.RGB24;
+                }
             }
             // textureName_normalMap
             if (assetPath.ToLower().Contains("normalmap"))
             {
-                TextureImporter textureImporter = (TextureImporter)assetImporter;
                 textureImporter.textureType = TextureImporterType.Bump;
             }
             // textureName_bumpMap
-            if (assetPath.ToLower().Contains("bumpmap"))
+            else if (assetPath.ToLower().Contains("bumpmap"))
             {
-                TextureImporter textureImporter = (TextureImporter)assetImporter;
                 textureImporter.textureType = TextureImporterType.Bump;
                 textureImporter.convertToNormalmap = true;
             }
@@ -46,16 +73,15 @@ namespace EZUnityTools.EZEditor
 
         void OnPreprocessModel()
         {
+            ModelImporter modelImporter = (ModelImporter)assetImporter;
             // modelName@animationName
             if (assetPath.Contains("@"))
             {
-                ModelImporter modelImporter = (ModelImporter)assetImporter;
                 modelImporter.importMaterials = false;
             }
             // modelName_collider
             if (assetPath.ToLower().Contains("collider"))
             {
-                ModelImporter modelImporter = (ModelImporter)assetImporter;
                 modelImporter.importMaterials = false;
                 modelImporter.addCollider = true;
                 modelImporter.animationType = ModelImporterAnimationType.None;
@@ -93,10 +119,10 @@ namespace EZUnityTools.EZEditor
 
         void OnPostprocessAudio(AudioClip audioClip)
         {
+            AudioImporter audioImporter = (AudioImporter)assetImporter;
             // audioName_mono
             if (assetPath.ToLower().Contains("_mono"))
             {
-                AudioImporter audioImporter = (AudioImporter)assetImporter;
                 audioImporter.forceToMono = true;
             }
         }
