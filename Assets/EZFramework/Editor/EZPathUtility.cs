@@ -26,7 +26,7 @@ namespace EZFramework
                 string newPath = luaTxtDirPath + file.Replace(luaDirPath, "").Replace("/", "_").Replace("\\", "_") + ".txt";
                 File.Copy(file, newPath, true);
             }
-            Debug.Log("Copy Complete.");
+            Debug.Log("Lua files to txt files, copy complete.");
             AssetDatabase.Refresh();
         }
         public static void ClearLuaTxt()
