@@ -36,17 +36,20 @@ namespace EZUnityTools.EZEditor
                 else if (assetName.ToLower().StartsWith("sprite@_"))
                 {
                     textureImporter.textureType = TextureImporterType.Advanced;
+                    textureImporter.spriteImportMode = SpriteImportMode.Single;
                 }
                 // sprite@RGBA32_spriteName
                 else if (assetName.ToLower().StartsWith("sprite@rgba32_"))
                 {
                     textureImporter.textureType = TextureImporterType.Advanced;
+                    textureImporter.spriteImportMode = SpriteImportMode.Single;
                     textureImporter.textureFormat = TextureImporterFormat.RGBA32;
                 }
                 // sprite@RGB24_spriteName
                 else if (assetName.ToLower().StartsWith("sprite@rgb24_"))
                 {
                     textureImporter.textureType = TextureImporterType.Advanced;
+                    textureImporter.spriteImportMode = SpriteImportMode.Single;
                     textureImporter.textureFormat = TextureImporterFormat.RGB24;
                 }
             }
