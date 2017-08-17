@@ -52,8 +52,11 @@ namespace EZFramework.LuaBehaviour
         public static void Remove(T behaviour)
         {
             if (behaviour == null) return;
-            bindings.Remove(behaviour.gameObject);
             Destroy(behaviour);
+        }
+        protected virtual void OnDestroy()
+        {
+            bindings.Remove(gameObject);
         }
     }
 
