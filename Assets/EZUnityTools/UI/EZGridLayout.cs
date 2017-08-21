@@ -34,7 +34,7 @@ namespace EZUnityTools.UI
         [SerializeField]
         protected RectOffset m_Padding = new RectOffset();
         public RectOffset padding { get { return m_Padding; } set { SetProperty(ref m_Padding, value); } }
-        
+
         [SerializeField]
         protected Vector2 m_Spacing = new Vector2(100, 100);
         public Vector2 spacing { get { return m_Spacing; } set { SetProperty(ref m_Spacing, new Vector2(Mathf.Abs(value.x), Mathf.Abs(value.y))); } }
@@ -119,8 +119,8 @@ namespace EZUnityTools.UI
         public virtual float minHeight { get { return m_MinSize[1]; } }
         public virtual float preferredWidth { get { return m_PreferredSized[0]; } }
         public virtual float preferredHeight { get { return m_PreferredSized[1]; } }
-        public virtual float flexibleWidth { get { return m_PreferredSized[0]; } }
-        public virtual float flexibleHeight { get { return m_PreferredSized[1]; } }
+        public virtual float flexibleWidth { get { return 1; } }
+        public virtual float flexibleHeight { get { return 1; } }
         public virtual int layoutPriority { get { return 0; } }
 
         public virtual void SetLayoutHorizontal()
