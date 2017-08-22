@@ -6,7 +6,7 @@
 */
 using UnityEditor;
 
-namespace EZUnityTools.UI
+namespace EZUnityTools.UI.Editor
 {
     [CustomEditor(typeof(EZScrollRect))]
     public class EZScrollRectEditor : UnityEditor.UI.ScrollRectEditor

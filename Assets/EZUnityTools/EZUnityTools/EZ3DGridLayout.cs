@@ -4,8 +4,6 @@
  * Description:
  * 
 */
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EZUnityTools
@@ -14,28 +12,42 @@ namespace EZUnityTools
     public class EZ3DGridLayout : MonoBehaviour
     {
         public enum AxisOrder { XYZ = 0, XZY = 1, YXZ = 2, YZX = 3, ZXY = 4, ZYX = 5 }
+        public enum UpdateMode { OnChange = 0, Update = 1, Manual = 2 }
+
+        [SerializeField]
+        private UpdateMode m_UpdateMode = UpdateMode.OnChange;
+        public UpdateMode updateMode { get { return m_UpdateMode; } set { SetProperty(ref m_UpdateMode, value); } }
 
         [SerializeField]
         private AxisOrder m_AxisOrder = AxisOrder.XYZ;
-        public AxisOrder axisOrder { get { return m_AxisOrder; } set { m_AxisOrder = value; } }
+        public AxisOrder axisOrder { get { return m_AxisOrder; } set { SetProperty(ref m_AxisOrder, value); } }
 
         [SerializeField]
         private int m_Constraint1 = 5;
-        public int constraint1 { get { return m_Constraint1; } set { m_Constraint1 = value; } }
+        public int constraint1 { get { return m_Constraint1; } set { SetProperty(ref m_Constraint1, value); } }
 
         [SerializeField]
         private int m_Constraint2 = 5;
-        public int constraint2 { get { return m_Constraint2; } set { m_Constraint2 = value; } }
+        public int constraint2 { get { return m_Constraint2; } set { SetProperty(ref m_Constraint2, value); } }
 
         [SerializeField]
         private Vector3 m_Offset = Vector3.zero;
-        public Vector3 offset { get { return m_Offset; } set { m_Offset = value; } }
+        public Vector3 offset { get { return m_Offset; } set { SetProperty(ref m_Offset, value); } }
 
         [SerializeField]
         private Vector3 m_Distance = Vector3.one;
-        public Vector3 distance { get { return m_Distance; } set { m_Distance = value; } }
+        public Vector3 distance { get { return m_Distance; } set { SetProperty(ref m_Distance, value); } }
 
-        protected virtual void LateUpdate()
+        protected virtual void Update()
+        {
+            if (updateMode == UpdateMode.Update) ResetChildren();
+        }
+        protected virtual void OnTransformChildrenChanged()
+        {
+            if (updateMode == UpdateMode.OnChange) ResetChildren();
+        }
+
+        public virtual void ResetChildren()
         {
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -64,6 +76,13 @@ namespace EZUnityTools
                         break;
                 }
             }
+        }
+
+        protected virtual void SetProperty<T>(ref T currentValue, T newValue)
+        {
+            if ((currentValue == null && newValue == null) || (currentValue != null && currentValue.Equals(newValue))) return;
+            currentValue = newValue;
+            ResetChildren();
         }
     }
 }

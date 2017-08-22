@@ -8,16 +8,8 @@ using UnityEngine;
 
 namespace EZUnityTools
 {
-    public class EZBreathingScale : MonoBehaviour
+    public abstract class EZBreathingEffects : MonoBehaviour
     {
-        [SerializeField]
-        private Vector3 m_Scale1 = Vector3.one * 0.5f;
-        public Vector3 scale1 { get { return m_Scale1; } set { m_Scale1 = value; } }
-
-        [SerializeField]
-        private Vector3 m_Scale2 = Vector3.one;
-        public Vector3 scale2 { get { return m_Scale2; } set { m_Scale2 = value; } }
-
         [SerializeField]
         private float m_TransitionDuration1 = 1;
         public float transitionDuration1 { get { return m_TransitionDuration1; } set { m_TransitionDuration1 = value; } }
@@ -36,21 +28,18 @@ namespace EZUnityTools
 
         private float time;
 
-        void OnEnable()
+        protected void OnEnable()
         {
             time = -delay;
         }
 
-        void Update()
+        protected void Update()
         {
             time = (time + Time.deltaTime) % (transitionDuration1 + transitionDuration2 + interval);
             float lerp = time <= transitionDuration1 ? time / transitionDuration1 : 1 - (time - transitionDuration1) / transitionDuration2;
-            transform.localScale = Vector3.Lerp(scale1, scale2, lerp);
+            DoEffects(lerp);
         }
 
-        void OnDisable()
-        {
-            transform.localScale = scale1;
-        }
+        public abstract void DoEffects(float lerp);
     }
 }
