@@ -32,11 +32,11 @@ namespace EZFramework.LuaBehaviour
          */
         public LuaTable self;
         public static Dictionary<GameObject, LuaTable> bindings = new Dictionary<GameObject, LuaTable>();
-        public static T Bind(GameObject obj, LuaTable self)
+        public static T Bind(GameObject obj, LuaTable self, string traceback = "") // traceback用于定位重复绑定的调用位置，lua使用debug.traceback()即可
         {
             if (bindings.ContainsKey(obj))
             {
-                Debug.LogError(typeof(T).ToString() + "already exist, bind failed", obj);
+                Debug.LogException(new InvalidOperationException(typeof(T).ToString() + "already exist, bind failed." + traceback), obj);
                 return obj.GetComponent<T>();
             }
             bindings.Add(obj, self);
