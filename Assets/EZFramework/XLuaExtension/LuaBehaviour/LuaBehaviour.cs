@@ -38,9 +38,10 @@ namespace EZFramework.LuaBehaviour
         {
             if (luaOnDisable != null) luaOnDisable(self);
         }
-        void OnDestroy()
+        protected override void OnDestroy()
         {
             if (luaOnDestroy != null) luaOnDestroy(self);
+            base.OnDestroy();
         }
     }
 }
