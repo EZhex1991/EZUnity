@@ -38,43 +38,52 @@ namespace EZUnityTools
         private Vector3 m_Distance = Vector3.one;
         public Vector3 distance { get { return m_Distance; } set { SetProperty(ref m_Distance, value); } }
 
+        [SerializeField]
+        private bool m_ActiveObjectsOnly = true;
+        public bool activeObjectsOnly { get { return m_ActiveObjectsOnly; } set { SetProperty(ref m_ActiveObjectsOnly, value); } }
+
         protected virtual void Update()
         {
             if (updateMode == UpdateMode.Update) ResetChildren();
         }
         protected virtual void OnTransformChildrenChanged()
         {
+            if (!this.isActiveAndEnabled) return;
             if (updateMode == UpdateMode.OnChange) ResetChildren();
         }
 
         public virtual void ResetChildren()
         {
+            int index = 0;
             for (int i = 0; i < transform.childCount; i++)
             {
-                int axis1 = i % constraint1;
-                int axis2 = (i % (constraint1 * constraint2)) / constraint1;
-                int axis3 = i / (constraint1 * constraint2);
+                Transform child = transform.GetChild(i);
+                if (activeObjectsOnly && !child.gameObject.activeSelf) continue;
+                int axis1 = index % constraint1;
+                int axis2 = (index % (constraint1 * constraint2)) / constraint1;
+                int axis3 = index / (constraint1 * constraint2);
                 switch (axisOrder)
                 {
                     case AxisOrder.XYZ:
-                        transform.GetChild(i).localPosition = new Vector3(axis1 * distance.x, axis2 * distance.y, axis3 * distance.z) + offset;
+                        child.localPosition = new Vector3(axis1 * distance.x, axis2 * distance.y, axis3 * distance.z) + offset;
                         break;
                     case AxisOrder.XZY:
-                        transform.GetChild(i).localPosition = new Vector3(axis1 * distance.x, axis3 * distance.y, axis2 * distance.z) + offset;
+                        child.localPosition = new Vector3(axis1 * distance.x, axis3 * distance.y, axis2 * distance.z) + offset;
                         break;
                     case AxisOrder.YXZ:
-                        transform.GetChild(i).localPosition = new Vector3(axis2 * distance.x, axis1 * distance.y, axis3 * distance.z) + offset;
+                        child.localPosition = new Vector3(axis2 * distance.x, axis1 * distance.y, axis3 * distance.z) + offset;
                         break;
                     case AxisOrder.YZX:
-                        transform.GetChild(i).localPosition = new Vector3(axis3 * distance.x, axis1 * distance.y, axis2 * distance.z) + offset;
+                        child.localPosition = new Vector3(axis3 * distance.x, axis1 * distance.y, axis2 * distance.z) + offset;
                         break;
                     case AxisOrder.ZXY:
-                        transform.GetChild(i).localPosition = new Vector3(axis2 * distance.x, axis3 * distance.y, axis1 * distance.z) + offset;
+                        child.localPosition = new Vector3(axis2 * distance.x, axis3 * distance.y, axis1 * distance.z) + offset;
                         break;
                     case AxisOrder.ZYX:
-                        transform.GetChild(i).localPosition = new Vector3(axis3 * distance.x, axis2 * distance.y, axis1 * distance.z) + offset;
+                        child.localPosition = new Vector3(axis3 * distance.x, axis2 * distance.y, axis1 * distance.z) + offset;
                         break;
                 }
+                index++;
             }
         }
 
@@ -84,5 +93,12 @@ namespace EZUnityTools
             currentValue = newValue;
             ResetChildren();
         }
+#if UNITY_EDITOR
+        protected virtual void OnValidate()
+        {
+            if (!this.isActiveAndEnabled) return;
+            ResetChildren();
+        }
+#endif
     }
 }
