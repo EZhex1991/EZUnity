@@ -4,7 +4,6 @@
  * Description:
  * 
 */
-using System;
 using UnityEngine;
 
 namespace EZUnityTools
