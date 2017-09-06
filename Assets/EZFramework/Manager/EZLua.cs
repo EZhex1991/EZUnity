@@ -94,5 +94,10 @@ namespace EZFramework
             else yield return cor;
             callback();
         }
+
+        public static bool IsNull(UnityEngine.Object o)
+        {
+            return o == null;
+        }
     }
 }
