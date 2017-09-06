@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 
 namespace EZFramework.LuaInjector
 {
@@ -29,6 +28,7 @@ namespace EZFramework.LuaInjector
             typeof(UnityEngine.UI.Slider),
             typeof(UnityEngine.UI.Text),
             typeof(UnityEngine.UI.Toggle),
+            typeof(UnityEngine.UI.ToggleGroup),
         };
 
         public static Type GetType(string typeName, bool deepSearch = true)
