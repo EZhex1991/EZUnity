@@ -23,7 +23,7 @@ namespace XLua.CSObjectWrap
         {
 		    XLua.LuaEnv.AddIniter((luaenv, translator) => {
 			    <%ForEachCsList(wraps, function(wrap)%>
-				translator.DelayWrapLoader(typeof(<%=CsFullTypeName(wrap)%>), <%=CSVariableName(wrap)%>Wrap.__Register);
+				translator.DelayWrapLoader(typeof(<%=CsFullTypeName(wrap)%>), translator.__Register<%=CSVariableName(wrap)%>);
 				<%end)%>
 				<% if generic_wraps then 
 				for generic_def, instances in pairs(generic_wraps) do
@@ -36,7 +36,7 @@ namespace XLua.CSObjectWrap
 				generic_arg_list = generic_arg_list .. ">"
 				
 				%>
-				translator.DelayWrapLoader(typeof(<%=generic_def.Name:gsub("`%d+", "") .. generic_arg_list%>), <%=CSVariableName(generic_def)%>Wrap<%=generic_arg_list%>.__Register);
+				translator.DelayWrapLoader(typeof(<%=generic_def.Name:gsub("`%d+", "") .. generic_arg_list%>), translator.__Register<%=CSVariableName(generic_def)%><%=generic_arg_list%>);
 				<%
 				end
 				end
