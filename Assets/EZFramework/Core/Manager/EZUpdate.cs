@@ -8,11 +8,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 namespace EZFramework
 {
-    public class EZUpdate : TEZManager<EZUpdate>
+    public class EZUpdate : _EZManager<EZUpdate>
     {
         // 超时会停止更新
         [Range(5, 30)]
@@ -28,7 +30,7 @@ namespace EZFramework
         // 在进游戏时会忽略该后缀的更新
         public string ignoreSuffix = "";
         // 用于显示更新进度的UI，可以不指定
-        public LoadingPanel loadingPanel;
+        public EZLoadingPanel loadingPanel;
 
         public string sourceDirPath { get; private set; }
         public string runtimeDirPath { get; private set; }
@@ -56,27 +58,32 @@ namespace EZFramework
         protected Dictionary<string, FileInfo> fileList;
         protected List<string> downloadList = new List<string>();
 
+        private bool updateMode;
+
         public override void Init()
         {
             base.Init();
             fileList = new Dictionary<string, FileInfo>();
-            sourceDirPath = EZUtility.streamingDirPath;
-            switch (EZSettings.Instance.runMode)
+            sourceDirPath = EZFacade.streamingDirPath;
+            switch (EZFrameworkSettings.Instance.runMode)
             {
-                case EZSettings.RunMode.Develop:
-                    runtimeDirPath = EZUtility.streamingDirPath;
+                case EZFrameworkSettings.RunMode.Develop:
+                    runtimeDirPath = EZFacade.streamingDirPath;
                     serverAddress = "";
+                    updateMode = false;
                     break;
-                case EZSettings.RunMode.Local:
-                    runtimeDirPath = EZUtility.streamingDirPath;
+                case EZFrameworkSettings.RunMode.Local:
+                    runtimeDirPath = EZFacade.streamingDirPath;
                     serverAddress = "";
+                    updateMode = false;
                     break;
-                case EZSettings.RunMode.Update:
-                    runtimeDirPath = EZUtility.persistentDirPath;
-                    serverAddress = EZSettings.Instance.updateServer;
+                case EZFrameworkSettings.RunMode.Update:
+                    runtimeDirPath = EZFacade.persistentDirPath;
+                    serverAddress = EZFrameworkSettings.Instance.updateServer;
+                    updateMode = true;
                     break;
             }
-            bundleExtension = EZSettings.Instance.bundleExtension;
+            bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
             timeTag = "?v=" + DateTime.Now.ToString("yyyymmddhhmmss");
         }
         public override void Exit()
@@ -117,7 +124,7 @@ namespace EZFramework
         {
             ShowLoadProgress("", 0);
             yield return null;
-            if (EZSettings.Instance.runMode == EZSettings.RunMode.Update)
+            if (updateMode)
             {
                 yield return Cor_Extract();
                 yield return Cor_Update();
@@ -202,7 +209,7 @@ namespace EZFramework
         }
         private IEnumerator Cor_Update()
         {
-            if (!EZUtility.IsNetAvailable)
+            if (!EZFacade.IsNetAvailable)
             {
                 Log("Network Error!");
                 yield return Cor_LoadFileList();
@@ -266,7 +273,7 @@ namespace EZFramework
             relativePath = relativePath.EndsWith(bundleExtension)
                         ? relativePath.ToLower()
                         : relativePath.ToLower() + bundleExtension;
-            if (EZSettings.Instance.runMode != EZSettings.RunMode.Update)
+            if (!updateMode)
             {
                 Log("Checked in non-update mode: " + relativePath);
                 return 0;
@@ -292,32 +299,57 @@ namespace EZFramework
                 Log("Need to update, " + localPath + " not exist.");
                 return 1;
             }
-            if (EZUtility.MD5File(localPath) != md5)
+            if (CalcFileMD5(localPath) != md5)
             {
                 Log("Need to update, " + localPath + " out of date.");
                 return 2;
             }
             return 0;
         }
-
-        public WWWTask Download(string relativePath, Action<WWWTask, bool> callback = null)
+        public static string CalcFileMD5(string filePath)
         {
-            if (EZSettings.Instance.runMode != EZSettings.RunMode.Update) return null;
+            try
+            {
+                FileStream fs = new FileStream(filePath, FileMode.Open);
+                MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
+                byte[] md5Data = md5Hasher.ComputeHash(fs);
+                StringBuilder sBuilder = new StringBuilder();
+                for (int i = 0; i < md5Data.Length; i++)
+                {
+                    sBuilder.Append(md5Data[i].ToString("x2"));
+                }
+                fs.Close();
+                return sBuilder.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Calculate MD5 failed, error: " + ex.Message);
+            }
+        }
+
+        public EZWWWTask Download(string relativePath)
+        {
+            if (!updateMode) return null;
             relativePath = relativePath.EndsWith(bundleExtension)
                         ? relativePath.ToLower()
                         : relativePath.ToLower() + bundleExtension;
-            string url = serverAddress + relativePath;
+            string source = serverAddress + relativePath;
             string localPath = runtimeDirPath + relativePath;
-            callback += delegate (WWWTask task, bool succeed)
+            EZWWWTask task = EZNetwork.Instance.NewTask(source, null);
+            task.onStopCallback += delegate (string url, byte[] bytes)
             {
-                Log(task.url + "->" + succeed);
-                if (succeed)
+                if (bytes != null)
                 {
                     downloadList.Add(url);
-                    File.WriteAllBytes(localPath, task.www.bytes);
+                    File.WriteAllBytes(localPath, bytes);
+                    Log("Task complete -> " + url);
+                }
+                else
+                {
+                    Log("Task failed -> " + url);
                 }
             };
-            return EZNetwork.Instance.NewTask(url, null, callback);
+            return task;
         }
     }
 }

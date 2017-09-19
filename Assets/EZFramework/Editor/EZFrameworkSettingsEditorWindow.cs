@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public class EZSettingsEditorWindow : EditorWindow
+    public class EZFrameworkSettingsEditorWindow : EditorWindow
     {
-        private EZSettings ezSettings;
+        private EZFrameworkSettings ezSettings;
         private GUIStyle titleStyle = new GUIStyle();
         private GUIStyle subtitleStyle = new GUIStyle();
 
@@ -21,12 +21,12 @@ namespace EZFramework
             titleStyle.fontStyle = FontStyle.Bold;
             titleStyle.alignment = TextAnchor.MiddleCenter;
             subtitleStyle.fontStyle = FontStyle.Bold;
-            ezSettings = AssetDatabase.LoadAssetAtPath<EZSettings>(EZSettings.AssetDirPath + EZSettings.AssetName + ".asset");
+            ezSettings = AssetDatabase.LoadAssetAtPath<EZFrameworkSettings>(EZFrameworkSettings.AssetDirPath + EZFrameworkSettings.AssetName + ".asset");
             if (ezSettings == null)
             {
-                ezSettings = CreateInstance<EZSettings>();
-                System.IO.Directory.CreateDirectory(EZSettings.AssetDirPath);
-                AssetDatabase.CreateAsset(ezSettings, EZSettings.AssetDirPath + EZSettings.AssetName + ".asset");
+                ezSettings = CreateInstance<EZFrameworkSettings>();
+                System.IO.Directory.CreateDirectory(EZFrameworkSettings.AssetDirPath);
+                AssetDatabase.CreateAsset(ezSettings, EZFrameworkSettings.AssetDirPath + EZFrameworkSettings.AssetName + ".asset");
             }
         }
 
@@ -35,10 +35,10 @@ namespace EZFramework
             EditorGUILayout.Space(); EditorGUILayout.LabelField(titleContent.text, titleStyle);
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Mode", subtitleStyle);
-            ezSettings.runMode = (EZSettings.RunMode)EditorGUILayout.EnumPopup("Run Mode In Editor", ezSettings.runMode);
+            ezSettings.runMode = (EZFrameworkSettings.RunMode)EditorGUILayout.EnumPopup("Run Mode In Editor", ezSettings.runMode);
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", subtitleStyle);
-            ezSettings.sleepTimeout = (EZSettings.SleepTimeout)EditorGUILayout.EnumPopup("Sleep Timeout", ezSettings.sleepTimeout);
+            ezSettings.sleepTimeout = (EZFrameworkSettings.SleepTimeout)EditorGUILayout.EnumPopup("Sleep Timeout", ezSettings.sleepTimeout);
             ezSettings.runInBackground = EditorGUILayout.Toggle("Run In Background", ezSettings.runInBackground);
             ezSettings.targetFrameRate = EditorGUILayout.IntSlider("Frame Rate", ezSettings.targetFrameRate, 30, 120);
 

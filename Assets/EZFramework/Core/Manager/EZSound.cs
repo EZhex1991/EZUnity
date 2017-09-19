@@ -10,7 +10,7 @@ using UnityEngine;
 namespace EZFramework
 {
     [RequireComponent(typeof(AudioSource))]
-    public class EZSound : TEZManager<EZSound>
+    public class EZSound : _EZManager<EZSound>
     {
         public AudioSource audioSource { get { return GetComponent<AudioSource>(); } }
         private AudioListener m_AudioListener;

@@ -12,37 +12,37 @@ namespace EZFramework
     {
         private const string ROOT_NAME = "EZFramework";
 
-        [MenuItem(ROOT_NAME + "/EZSettings", priority = 0)]
+        [MenuItem(ROOT_NAME + "/Settings", priority = 0)]
         public static void EZSettings()
         {
-            EditorWindow.GetWindow<EZSettingsEditorWindow>("EZSettings").Show();
+            EditorWindow.GetWindow<EZFrameworkSettingsEditorWindow>("Settings").Show();
         }
 
         [MenuItem(ROOT_NAME + "/Copy Lua To Text", priority = 20)]
         public static void LuaToTxt()
         {
-            EZPathUtility.LuaToTxt();
+            EZFrameworkUtility.LuaToTxt();
         }
         [MenuItem(ROOT_NAME + "/Clear Lua Text", priority = 21)]
         public static void ClearLuaTxt()
         {
-            EZPathUtility.ClearLuaTxt();
+            EZFrameworkUtility.ClearLuaTxt();
         }
 
         [MenuItem(ROOT_NAME + "/Clear Persistent Path", priority = 50)]
         public static void ClearPersistent()
         {
-            EZPathUtility.ClearPersistent();
+            EZFrameworkUtility.ClearPersistent();
         }
         [MenuItem(ROOT_NAME + "/Clear StreamingAssets Path", priority = 51)]
         public static void ClearStreamingAssets()
         {
-            EZPathUtility.ClearStreamingAssets();
+            EZFrameworkUtility.ClearStreamingAssets();
         }
         [MenuItem(ROOT_NAME + "/Clear PlayerPrefs", priority = 52)]
         public static void ClearPlayerPrefs()
         {
-            EZPathUtility.ClearPlayerPrefs();
+            EZFrameworkUtility.ClearPlayerPrefs();
         }
     }
 }

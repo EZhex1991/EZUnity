@@ -6,6 +6,8 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using XLua;
 
@@ -16,8 +18,6 @@ namespace EZFramework.XLuaGen
         [LuaCallCSharp]
         public static List<Type> LuaCallCSharp = new List<Type>()
         {
-            typeof(EZFramework.EZUtility),
-
             typeof(EZFramework.EZFacade),
             typeof(EZFramework.EZDatabase),
             typeof(EZFramework.EZNetwork),
@@ -27,12 +27,7 @@ namespace EZFramework.XLuaGen
             typeof(EZFramework.EZUI),
             typeof(EZFramework.EZUIExtensions),
 
-            typeof(EZFramework.WWWTask),
-
-            typeof(EZUnityTools.UI.EZScrollRect),
-            typeof(EZUnityTools.UI.EZScrollRect.Status),
-            typeof(EZUnityTools.UI.EZGridLayout),
-            typeof(EZUnityTools.UI.EZOutstand),
+            typeof(EZFramework.EZWWWTask),
         };
 
         [CSharpCallLua]
@@ -43,9 +38,30 @@ namespace EZFramework.XLuaGen
             typeof(System.Action<double>),
             typeof(System.Action<float>),
             typeof(System.Action<GameObject>),
-            typeof(System.Action<WWWTask, bool>),
+            typeof(System.Action<string, byte[]>),
 
             typeof(System.Action<int, int>),
+        };
+
+        [LuaCallCSharp]
+        public static List<Type> EZComponent_CSCallLua
+        {
+            get
+            {
+                return (Assembly.Load("Assembly-CSharp").GetTypes()
+                    .Where(type => type.FullName.StartsWith("EZComponent")))
+                    .ToList();
+            }
+        }
+        [CSharpCallLua]
+        public static List<Type> EZComponent_LuaCallCS = new List<Type>()
+        {
+            typeof(System.Action),
+            typeof(System.Action<int>),
+            typeof(System.Action<float>),
+            typeof(System.Action<Color>),
+            typeof(System.Action<Vector2>),
+            typeof(System.Action<Vector3>),
         };
 
         [BlackList]

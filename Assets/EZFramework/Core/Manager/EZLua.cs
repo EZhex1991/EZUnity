@@ -13,7 +13,7 @@ using XLua;
 namespace EZFramework
 {
     [LuaCallCSharp]
-    public class EZLua : TEZManager<EZLua>
+    public class EZLua : _EZManager<EZLua>
     {
         public string luaDirPath { get; private set; }
         public AssetBundle luaBundle { get; private set; }
@@ -45,18 +45,18 @@ namespace EZFramework
         }
         private void AddLoader()
         {
-            switch (EZSettings.Instance.runMode)
+            switch (EZFrameworkSettings.Instance.runMode)
             {
-                case EZSettings.RunMode.Develop:
-                    luaDirPath = EZUtility.dataDirPath + EZSettings.Instance.luaDirName + "/";
+                case EZFrameworkSettings.RunMode.Develop:
+                    luaDirPath = EZFacade.dataDirPath + EZFrameworkSettings.Instance.luaDirName + "/";
                     luaEnv.AddLoader(LoadFromFile);
                     break;
-                case EZSettings.RunMode.Local:
-                    luaBundle = AssetBundle.LoadFromFile(EZUtility.streamingDirPath + EZSettings.Instance.luaDirName.ToLower() + EZSettings.Instance.bundleExtension);
+                case EZFrameworkSettings.RunMode.Local:
+                    luaBundle = AssetBundle.LoadFromFile(EZFacade.streamingDirPath + EZFrameworkSettings.Instance.luaDirName.ToLower() + EZFrameworkSettings.Instance.bundleExtension);
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
-                case EZSettings.RunMode.Update:
-                    luaBundle = AssetBundle.LoadFromFile(EZUtility.persistentDirPath + EZSettings.Instance.luaDirName.ToLower() + EZSettings.Instance.bundleExtension);
+                case EZFrameworkSettings.RunMode.Update:
+                    luaBundle = AssetBundle.LoadFromFile(EZFacade.persistentDirPath + EZFrameworkSettings.Instance.luaDirName.ToLower() + EZFrameworkSettings.Instance.bundleExtension);
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
             }
@@ -65,7 +65,7 @@ namespace EZFramework
         private byte[] LoadFromFile(ref string fileName)
         {
             string filePath = luaDirPath + fileName.Replace('.', '/') + ".lua";             // lua文件的实际路径
-            fileName = EZSettings.Instance.luaDirName + "/" + fileName.Replace('.', '/');     // 返给lua调试器的路径
+            fileName = luaDirPath + fileName.Replace('.', '/');     // 返给lua调试器的路径
             try
             {
                 // File.ReadAllBytes返回值可能会带有BOM（0xEF，0xBB，0xBF），这会导致脚本加载出错（</239>）
@@ -98,6 +98,11 @@ namespace EZFramework
         public static bool IsNull(UnityEngine.Object o)
         {
             return o == null;
+        }
+
+        public static void SetItem(IDictionary dict, object key, object value)
+        {
+            dict[key] = value;
         }
     }
 }

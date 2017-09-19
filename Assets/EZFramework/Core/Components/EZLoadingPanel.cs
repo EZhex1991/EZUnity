@@ -9,10 +9,11 @@ using UnityEngine.UI;
 
 namespace EZFramework
 {
-    public class LoadingPanel : MonoBehaviour
+    public class EZLoadingPanel : MonoBehaviour
     {
-        public Text text_Progress;
         public Slider slider_Progress;
+        public Text text_Percentage;
+        public Text text_Progress;
 
         void Awake()
         {
@@ -25,16 +26,18 @@ namespace EZFramework
             gameObject.SetActive(true);
             text_Progress.text = str;
         }
-        public void ShowProgress(float progress)
+        public void ShowProgress(float percentage)
         {
             gameObject.SetActive(true);
-            slider_Progress.value = progress;
+            slider_Progress.value = percentage;
+            text_Percentage.text = (percentage * 100).ToString("00") + "%";
         }
-        public void ShowProgress(string str, float progress)
+        public void ShowProgress(string str, float percentage)
         {
             gameObject.SetActive(true);
             text_Progress.text = str;
-            slider_Progress.value = progress;
+            slider_Progress.value = percentage;
+            text_Percentage.text = (percentage * 100).ToString("00") + "%";
         }
 
         public void LoadComplete()

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public class EZNetwork : TEZManager<EZNetwork>
+    public class EZNetwork : _EZManager<EZNetwork>
     {
         // 允许同时运行的任务数量
         [Range(1, 10)]
@@ -18,14 +18,14 @@ namespace EZFramework
 
         private List<string> taskList;  //记录所有的任务
         private Queue<string> taskQueue;    //记录等待的任务
-        private Dictionary<string, WWWTask> taskDict;  //任务名和任务对象的词典
+        private Dictionary<string, EZWWWTask> taskDict;  //任务名和任务对象的词典
 
         public override void Init()
         {
             base.Init();
             taskList = new List<string>();
             taskQueue = new Queue<string>();
-            taskDict = new Dictionary<string, WWWTask>();
+            taskDict = new Dictionary<string, EZWWWTask>();
         }
         public override void Exit()
         {
@@ -36,11 +36,11 @@ namespace EZFramework
             }
         }
 
-        public WWWTask NewTask(string url, byte[] postData, Action<WWWTask, bool> callback = null)
+        public EZWWWTask NewTask(string url, byte[] postData)
         {
-            callback += OnComplete;
-            WWWTask task = gameObject.AddComponent<WWWTask>();
-            task.SetTask(url, postData, callback);
+            EZWWWTask task = gameObject.AddComponent<EZWWWTask>();
+            task.SetTask(url, postData);
+            task.onStopCallback += OnComplete;
             if (taskList.Count >= maxTask)
             {
                 taskQueue.Enqueue(url);
@@ -57,15 +57,15 @@ namespace EZFramework
         private void NextTask()
         {
             if (taskQueue.Count <= 0) return;
-            WWWTask task = taskDict[taskQueue.Dequeue()];
+            EZWWWTask task = taskDict[taskQueue.Dequeue()];
             taskList.Add(task.url);
             task.StartTask();
         }
-        private void OnComplete(WWWTask task, bool succeed)
+        private void OnComplete(string url, byte[] bytes)
         {
-            Log("Task over-> " + task.url);
-            taskList.Remove(task.url);
-            taskDict.Remove(task.url);
+            Log("Task over-> " + url);
+            taskList.Remove(url);
+            taskDict.Remove(url);
             NextTask();
         }
 

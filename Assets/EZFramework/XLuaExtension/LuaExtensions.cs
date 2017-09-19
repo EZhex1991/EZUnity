@@ -5,11 +5,8 @@
  * 
 */
 using System;
-using System.Text;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using System.Collections;
 using XLua;
-using Object = UnityEngine.Object;
 
 // 为了降低Lua和框架中其他逻辑的耦合性，部分方法使用扩展方式添加
 namespace EZFramework

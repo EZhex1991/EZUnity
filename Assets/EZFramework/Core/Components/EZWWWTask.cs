@@ -11,22 +11,24 @@ using UCoroutine = UnityEngine.Coroutine;
 
 namespace EZFramework
 {
-    public class WWWTask : MonoBehaviour
+    public class EZWWWTask : MonoBehaviour
     {
         public string url { get; private set; }
         public byte[] postData { get; private set; }
-        public Action<WWWTask, bool> callback { get; private set; }
 
-        public UCoroutine cor { get; private set; }
-        public WWW www { get; private set; }
         public float progress { get { return www == null ? 0 : www.progress; } }
         public bool isDone { get { return www == null ? false : www.isDone; } }
 
-        public void SetTask(string url, byte[] postData, Action<WWWTask, bool> callback = null)
+        public Action<float> onProgressCallback;
+        public Action<string, byte[]> onStopCallback;
+
+        private UCoroutine cor;
+        private WWW www;
+
+        public void SetTask(string url, byte[] postData)
         {
             this.url = url;
             this.postData = postData;
-            this.callback = callback;
         }
         public void StartTask(float timeout = 600)
         {
@@ -35,7 +37,7 @@ namespace EZFramework
         }
         public void StopTask(bool destroy = false)
         {
-            if (callback != null) callback(this, false);
+            if (onStopCallback != null) onStopCallback(url, null);
             if (cor != null)
             {
                 StopCoroutine(cor);
@@ -61,15 +63,9 @@ namespace EZFramework
                     StopTask();
                 }
                 yield return null;
+                if (onProgressCallback != null) onProgressCallback(www.progress);
             }
-            if (www.error == null)
-            {
-                if (callback != null) callback(this, true);
-            }
-            else
-            {
-                if (callback != null) callback(this, false);
-            }
+            if (onStopCallback != null) onStopCallback(url, www.error == null ? www.bytes : null);
         }
     }
 }

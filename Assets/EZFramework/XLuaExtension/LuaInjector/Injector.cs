@@ -23,6 +23,14 @@ namespace EZFramework.LuaInjector
                 {
                     self.SetInPath(pair.key, pair.value);
                 }
+                else if (pair.key.Contains("#"))
+                {
+                    string[] info = pair.key.Split('#');
+                    string tableName = info[0];
+                    int index = System.Convert.ToInt32(info[1]);
+                    LuaTable table = self.Get<LuaTable>(tableName);
+                    table.Set(index, pair.value);
+                }
                 else
                 {
                     self.Set(pair.key, pair.value);

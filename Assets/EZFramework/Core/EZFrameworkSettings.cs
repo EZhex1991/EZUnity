@@ -8,20 +8,20 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public class EZSettings : ScriptableObject
+    public class EZFrameworkSettings : ScriptableObject
     {
         // 必须放置在Resources目录下！
         public const string AssetDirPath = "Assets/Resources/";
-        public const string AssetName = "EZSettings";
-        private static EZSettings instance;
-        public static EZSettings Instance
+        public const string AssetName = "EZFrameworkSettings";
+        private static EZFrameworkSettings instance;
+        public static EZFrameworkSettings Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = Resources.Load<EZSettings>(AssetName);
-                    if (instance == null) instance = CreateInstance<EZSettings>();
+                    instance = Resources.Load<EZFrameworkSettings>(AssetName);
+                    if (instance == null) instance = CreateInstance<EZFrameworkSettings>();
                 }
                 return instance;
             }
@@ -44,7 +44,7 @@ namespace EZFramework
         public SleepTimeout sleepTimeout = SleepTimeout.NeverSleep;
         public bool runInBackground = true;
         public int targetFrameRate = 45;
-        
+
         public string updateServer = "";
         public string bundleExtension = ".unity3d";
         public string luaDirName = "Script_Lua";

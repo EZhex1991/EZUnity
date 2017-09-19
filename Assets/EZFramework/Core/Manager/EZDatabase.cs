@@ -21,7 +21,7 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public class EZDatabase : TEZManager<EZDatabase>
+    public class EZDatabase : _EZManager<EZDatabase>
     {
         // 设置缓存的大小，根据实际的需要调节，如果需要读写长字符串建议调小一点
         [Range(10, 1000)]
@@ -53,7 +53,7 @@ namespace EZFramework
         public override void Init()
         {
             base.Init();
-            MainDirPath = EZUtility.persistentDirPath + "EZDatabase/";
+            MainDirPath = EZFacade.persistentDirPath + "EZDatabase/";
             IndexFilePath = MainDirPath + "_DBIndex" + EXTENSION_INDEX;
             CacheFilePath = MainDirPath + "_Cache" + EXTENSION_CACHE;
             Directory.CreateDirectory(MainDirPath);

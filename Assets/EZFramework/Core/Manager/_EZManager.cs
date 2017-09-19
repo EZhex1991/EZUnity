@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public abstract class TEZManager<T> : EZSingleton<T>
+    public abstract class _EZManager<T> : EZSingleton<T>
         where T : MonoBehaviour
     {
         // 该管理器的初始化，可以根据需要重写

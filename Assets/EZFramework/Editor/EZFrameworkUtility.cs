@@ -10,13 +10,13 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public static class EZPathUtility
+    public static class EZFrameworkUtility
     {
-        [EZUnityTools.EZEditor.EZBundleBuilder.OnPreBuild]
+        [EZUnityEditor.EZBundleBuilder.OnPreBuild]
         public static void LuaToTxt()
         {
-            string luaDirPath = "Assets/" + EZSettings.Instance.luaDirName + "/";
-            string luaTxtDirPath = "Assets/" + EZSettings.Instance.luaDirName + "_txt/";
+            string luaDirPath = "Assets/" + EZFrameworkSettings.Instance.luaDirName + "/";
+            string luaTxtDirPath = "Assets/" + EZFrameworkSettings.Instance.luaDirName + "_txt/";
             if (!Directory.Exists(luaDirPath)) return;
             // if (Directory.Exists(luaTxtDirPath)) Directory.Delete(luaTxtDirPath, true);
             Directory.CreateDirectory(luaTxtDirPath);
@@ -31,7 +31,7 @@ namespace EZFramework
         }
         public static void ClearLuaTxt()
         {
-            string luaTxtDirPath = "Assets/" + EZSettings.Instance.luaDirName + "_txt/";
+            string luaTxtDirPath = "Assets/" + EZFrameworkSettings.Instance.luaDirName + "_txt/";
             try
             {
                 Directory.Delete(luaTxtDirPath, true);
@@ -48,7 +48,7 @@ namespace EZFramework
         {
             try
             {
-                Directory.Delete(EZUtility.streamingDirPath, true);
+                Directory.Delete(EZFacade.streamingDirPath, true);
                 Debug.Log("Streaming Directory Cleared.");
                 AssetDatabase.Refresh();
             }
@@ -62,7 +62,7 @@ namespace EZFramework
         {
             try
             {
-                Directory.Delete(EZUtility.persistentDirPath, true);
+                Directory.Delete(EZFacade.persistentDirPath, true);
                 Debug.Log("Persistent Directory Cleared.");
             }
             catch (System.Exception ex)

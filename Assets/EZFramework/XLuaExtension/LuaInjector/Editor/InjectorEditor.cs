@@ -5,6 +5,8 @@
  * 
 */
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -14,6 +16,38 @@ namespace EZFramework.LuaInjector
     [CustomEditor(typeof(Injector))]
     public class InjectorEditor : Editor
     {
+        public static List<Type> typeList = new List<Type>
+        {
+            typeof(UnityEngine.Object),
+            typeof(UnityEngine.GameObject),
+            typeof(UnityEngine.RectTransform),
+            typeof(UnityEngine.Sprite),
+            typeof(UnityEngine.Transform),
+            typeof(UnityEngine.UI.Button),
+            typeof(UnityEngine.UI.Image),
+            typeof(UnityEngine.UI.ScrollRect),
+            typeof(UnityEngine.UI.Slider),
+            typeof(UnityEngine.UI.Text),
+            typeof(UnityEngine.UI.Toggle),
+            typeof(UnityEngine.UI.ToggleGroup),
+        };
+        public Type GetType(string typeName, bool deepSearch = true)
+        {
+            foreach (Type type in typeList)
+            {
+                if (type.FullName == typeName) return type;
+            }
+            if (deepSearch)
+            {
+                foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    Type type = assembly.GetType(typeName);
+                    if (type != null) return type;
+                }
+            }
+            return null;
+        }
+
         private ReorderableList injectionList;
 
         void OnEnable()
@@ -37,9 +71,9 @@ namespace EZFramework.LuaInjector
         {
             callback += delegate { serializedObject.ApplyModifiedProperties(); };
             GenericMenu menu = new GenericMenu();
-            for (int i = 0; i < Injection.typeList.Count; i++)
+            for (int i = 0; i < typeList.Count; i++)
             {
-                string typeName = Injection.typeList[i].FullName;
+                string typeName = typeList[i].FullName;
                 menu.AddItem(new GUIContent(typeName.Replace(".", "/")), false, callback, typeName);
             }
             menu.ShowAsContext();
@@ -57,7 +91,7 @@ namespace EZFramework.LuaInjector
             SerializedProperty value = pair.FindPropertyRelative("value");
             SerializedProperty typeName = pair.FindPropertyRelative("typeName");
             if (string.IsNullOrEmpty(typeName.stringValue)) typeName.stringValue = "UnityEngine.Object";
-            Type type = Injection.GetType(typeName.stringValue);
+            Type type = GetType(typeName.stringValue);
             EditorGUI.LabelField(new Rect(rect.x, rect.y, 20, EditorGUIUtility.singleLineHeight), index.ToString("00"));
             float width = (rect.width - 20) / 3 - 5;
             if (GUI.Button(new Rect(rect.x + 25, rect.y, width, EditorGUIUtility.singleLineHeight), type.Name))

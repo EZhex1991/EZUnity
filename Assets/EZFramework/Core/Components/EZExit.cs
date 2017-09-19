@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public class ExitButtonListener : MonoBehaviour
+    public class EZExit : MonoBehaviour
     {
         public GameObject hint;
         public float repeatTime = 1.0f;

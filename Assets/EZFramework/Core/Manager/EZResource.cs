@@ -13,9 +13,9 @@ using Object = UnityEngine.Object;
 
 namespace EZFramework
 {
-    public class EZResource : TEZManager<EZResource>
+    public class EZResource : _EZManager<EZResource>
     {
-        public LoadingPanel loadingPanel;
+        public EZLoadingPanel loadingPanel;
 
         public string bundleDirPath { get; private set; }
         public string bundleExtension { get; private set; }
@@ -27,19 +27,19 @@ namespace EZFramework
         public override void Init()
         {
             base.Init();
-            switch (EZSettings.Instance.runMode)
+            switch (EZFrameworkSettings.Instance.runMode)
             {
-                case EZSettings.RunMode.Develop:
-                    bundleDirPath = EZUtility.streamingDirPath;
+                case EZFrameworkSettings.RunMode.Develop:
+                    bundleDirPath = EZFacade.streamingDirPath;
                     break;
-                case EZSettings.RunMode.Local:
-                    bundleDirPath = EZUtility.streamingDirPath;
+                case EZFrameworkSettings.RunMode.Local:
+                    bundleDirPath = EZFacade.streamingDirPath;
                     break;
-                case EZSettings.RunMode.Update:
-                    bundleDirPath = EZUtility.persistentDirPath;
+                case EZFrameworkSettings.RunMode.Update:
+                    bundleDirPath = EZFacade.persistentDirPath;
                     break;
             }
-            bundleExtension = EZSettings.Instance.bundleExtension;
+            bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
             AssetBundle bundle = AssetBundle.LoadFromFile(bundleDirPath + "StreamingAssets");
             manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
         }
