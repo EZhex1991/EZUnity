@@ -41,7 +41,10 @@ namespace EZFramework
             }
             bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
             AssetBundle bundle = AssetBundle.LoadFromFile(bundleDirPath + "StreamingAssets");
-            manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            if (bundle != null)
+            {
+                manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+            }
         }
         public override void Exit()
         {
@@ -166,6 +169,7 @@ namespace EZFramework
         }
         protected void LoadDependencies(string bundleName)
         {
+            if (manifest == null) return;
             string[] dependencies = manifest.GetAllDependencies(bundleName);
             foreach (string dep in dependencies)
             {
@@ -193,6 +197,7 @@ namespace EZFramework
         }
         IEnumerator Cor_LoadDependenciesAsync(string bundleName)
         {
+            if (manifest == null) yield break;
             yield return null;
             string[] dependencies = manifest.GetAllDependencies(bundleName);
             foreach (string dep in dependencies)
