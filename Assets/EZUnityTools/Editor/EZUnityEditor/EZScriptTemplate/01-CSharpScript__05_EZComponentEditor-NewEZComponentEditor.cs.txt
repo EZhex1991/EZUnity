@@ -1,0 +1,17 @@
+/*
+ * Author:      #AUTHORNAME#
+ * CreateTime:  #CREATETIME#
+ * Description:
+ * 
+*/
+using EZComponent;
+using UnityEngine;
+using UnityEditor;
+
+namespace EZComponentEditor
+{
+    public class #SCRIPTNAME#
+    {
+
+    }
+}

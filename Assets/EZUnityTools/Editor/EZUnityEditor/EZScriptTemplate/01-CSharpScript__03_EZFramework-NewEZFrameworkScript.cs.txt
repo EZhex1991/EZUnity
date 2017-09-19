@@ -1,0 +1,15 @@
+/*
+ * Author:      #AUTHORNAME#
+ * CreateTime:  #CREATETIME#
+ * Description:
+ * 
+*/
+using UnityEngine;
+
+namespace EZFramework
+{
+    public class #SCRIPTNAME#
+    {
+        
+    }
+}

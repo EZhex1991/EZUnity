@@ -1,0 +1,20 @@
+/*
+ * Author:      #AUTHORNAME#
+ * CreateTime:  #CREATETIME#
+ * Description:
+ * 
+*/
+using UnityEngine;
+
+public class #SCRIPTNAME# : MonoBehaviour
+{
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
+}

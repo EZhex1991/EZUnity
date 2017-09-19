@@ -1,0 +1,16 @@
+/*
+ * Author:      #AUTHORNAME#
+ * CreateTime:  #CREATETIME#
+ * Description:
+ * 
+*/
+using UnityEngine;
+using UnityEditor;
+
+namespace EZUnityEditor
+{
+    public class #SCRIPTNAME#
+    {
+
+    }
+}
