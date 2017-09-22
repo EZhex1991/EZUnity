@@ -1,6 +1,6 @@
 /*
  * Author:      熊哲
- * CreateTime:  9/11/2017 6:45:02 PM
+ * CreateTime:  9/20/2017 10:29:29 AM
  * Description:
  * 
 */
@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace EZComponent.EZProcess
 {
-    public class EZColorProcess : _EZProcess<Color, ColorPhase>
+    public class EZFloatProcess : _EZProcess<float, FloatPhase>
     {
         protected override void UpdatePhase(float lerp)
         {
-            currentValue = Color.Lerp(startValue, endValue, lerp);
+            currentValue = Mathf.Lerp(startValue, endValue, lerp);
         }
     }
 }
