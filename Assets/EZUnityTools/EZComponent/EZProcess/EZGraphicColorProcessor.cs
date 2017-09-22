@@ -27,7 +27,7 @@ namespace EZComponent.EZProcess
             }
         }
 
-        protected override void StartPhase(int index)
+        protected override void StartPhase(int index = 0)
         {
             startValue = graphic.color;
             base.StartPhase(index);
@@ -35,7 +35,7 @@ namespace EZComponent.EZProcess
         protected override void UpdatePhase(float lerp)
         {
             base.UpdatePhase(lerp);
-            graphic.color = value;
+            graphic.color = currentValue;
         }
     }
 }
