@@ -12,16 +12,17 @@ namespace EZComponentEditor.EZProcess
 {
     public abstract class _EZProcessEditor : Editor
     {
-        private SerializedProperty m_Loop;
-        private SerializedProperty m_RestartOnEnable;
-        private SerializedProperty m_StartFromOrigin;
-        private SerializedProperty m_Origin;
-        private SerializedProperty m_PhaseList;
-        private ReorderableList phaseList;
+        protected SerializedProperty m_Loop;
+        protected SerializedProperty m_RestartOnEnable;
+        protected SerializedProperty m_StartFromOrigin;
+        protected SerializedProperty m_Origin;
+        protected SerializedProperty m_PhaseList;
+        protected ReorderableList phaseList;
 
-        private float height = EditorGUIUtility.singleLineHeight;
+        protected float indent = 20;
+        protected float height = EditorGUIUtility.singleLineHeight;
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             m_Loop = serializedObject.FindProperty("m_Loop");
             m_RestartOnEnable = serializedObject.FindProperty("m_RestartOnEnable");

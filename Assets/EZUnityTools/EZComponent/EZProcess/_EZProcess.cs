@@ -43,6 +43,13 @@ namespace EZComponent.EZProcess
         }
     }
     [Serializable]
+    public class FloatPhase : Phase<float>
+    {
+        public FloatPhase(float endValue, float duration, float interval = 0, LerpMode lerpMode = LerpMode.Linear) : base(endValue, duration, interval, lerpMode)
+        {
+        }
+    }
+    [Serializable]
     public class Vector2Phase : Phase<Vector2>
     {
         public Vector2Phase(Vector2 endValue, float duration, float interval = 0, LerpMode lerpMode = LerpMode.Linear) : base(endValue, duration, interval, lerpMode)
@@ -65,6 +72,7 @@ namespace EZComponent.EZProcess
     }
 
     public abstract class _EZProcess<T, U> : MonoBehaviour
+        where T : struct
         where U : Phase<T>
     {
         [SerializeField]
@@ -79,7 +87,9 @@ namespace EZComponent.EZProcess
         private bool m_StartFromOrigin;
         public bool startFromOrigin { get { return m_StartFromOrigin; } set { m_StartFromOrigin = value; } }
 
-        public abstract T origin { get; set; }
+        [SerializeField]
+        private T m_Origin;
+        public T origin { get { return m_Origin; } set { m_Origin = value; } }
 
         [SerializeField]
         private List<U> m_PhaseList;
@@ -90,7 +100,7 @@ namespace EZComponent.EZProcess
 
         public bool started { get; private set; }
         public float lerp { get; private set; }
-        public T value { get; protected set; }
+        public T value { get { return currentValue; } }
         public event Action<T> onPhaseUpdatedEvent;
         public event Action<int> onPhaseEndEvent;
         public event Action onProcessEndEvent;
@@ -99,6 +109,7 @@ namespace EZComponent.EZProcess
         private float timeInPhase;
         protected T startValue;
         protected T endValue;
+        protected T currentValue;
 
         public void AppendPhase(U phase)
         {
@@ -116,7 +127,7 @@ namespace EZComponent.EZProcess
             if (currentIndex == 0 && startFromOrigin) startValue = origin;
             endValue = currentPhase.endValue;
             UpdatePhase(lerp);
-            if (onPhaseUpdatedEvent != null) onPhaseUpdatedEvent(value);
+            if (onPhaseUpdatedEvent != null) onPhaseUpdatedEvent(currentValue);
         }
         protected abstract void UpdatePhase(float lerp);
         protected virtual void EndPhase()
@@ -154,7 +165,7 @@ namespace EZComponent.EZProcess
             if (updating)
             {
                 UpdatePhase(lerp);
-                if (onPhaseUpdatedEvent != null) onPhaseUpdatedEvent(value);
+                if (onPhaseUpdatedEvent != null) onPhaseUpdatedEvent(currentValue);
                 if (lerp >= 1) updating = false;
             }
             else if (timeInPhase > currentPhase.duration + currentPhase.interval)
