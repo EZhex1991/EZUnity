@@ -15,14 +15,13 @@ namespace EZFramework.XLuaGen
         [LuaCallCSharp]
         public static List<Type> LuaCallCSharp = new List<Type>()
         {
-            typeof(System.Type),
+
         };
 
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
-            typeof(System.Action),
-            typeof(System.Collections.IEnumerator),
+
         };
 
         [BlackList]

@@ -25,36 +25,30 @@ namespace EZFramework.XLuaGen
             typeof(EZFramework.EZSound),
             typeof(EZFramework.EZUpdate),
             typeof(EZFramework.EZUI),
-            typeof(EZFramework.EZUIExtensions),
-
             typeof(EZFramework.EZWWWTask),
         };
-
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
             typeof(System.Action),
-            typeof(System.Action<string>),
-            typeof(System.Action<double>),
-            typeof(System.Action<float>),
-            typeof(System.Action<GameObject>),
+            typeof(System.Action<UnityEngine.Object>),
             typeof(System.Action<string, byte[]>),
-
-            typeof(System.Action<int, int>),
         };
 
         [LuaCallCSharp]
-        public static List<Type> EZComponent_CSCallLua
+        public static List<Type> EZComponent_LuaCallCSharp = new List<Type>()
         {
-            get
-            {
-                return (Assembly.Load("Assembly-CSharp").GetTypes()
-                    .Where(type => type.FullName.StartsWith("EZComponent")))
-                    .ToList();
-            }
-        }
+            typeof(EZComponent.EZProcess.EZGraphicColorProcessor),
+            typeof(EZComponent.EZProcess.EZRectTransformProcessor),
+            typeof(EZComponent.EZProcess.EZTransformProcessor),
+            typeof(EZComponent.UI.EZGridLayout2D),
+            typeof(EZComponent.UI.EZOutstand),
+            typeof(EZComponent.UI.EZScrollRect),
+            typeof(EZComponent.UI.EZSizeDriver),
+            typeof(EZComponent.UI.EZTransition),
+        };
         [CSharpCallLua]
-        public static List<Type> EZComponent_LuaCallCS = new List<Type>()
+        public static List<Type> EZComponent_CSharpCallLua = new List<Type>()
         {
             typeof(System.Action),
             typeof(System.Action<int>),
@@ -62,6 +56,7 @@ namespace EZFramework.XLuaGen
             typeof(System.Action<Color>),
             typeof(System.Action<Vector2>),
             typeof(System.Action<Vector3>),
+            typeof(System.Action<int, int>),
         };
 
         [BlackList]
