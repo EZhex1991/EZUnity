@@ -91,6 +91,10 @@ namespace EZComponent.UI
             UpdateSelectionState();
         }
 
+        protected bool IsDisabled()
+        {
+            return !(selectable.IsActive() && selectable.interactable);
+        }
         protected bool IsPressed()
         {
             return selectable.IsActive() && isPointerInside && isPointerDown;
@@ -107,10 +111,6 @@ namespace EZComponent.UI
                 result = isPointerInside;
             }
             return result;
-        }
-        protected bool IsDisabled()
-        {
-            return !(gameObject.activeInHierarchy && selectable.IsActive());
         }
 
         protected void UpdateSelectionState()
