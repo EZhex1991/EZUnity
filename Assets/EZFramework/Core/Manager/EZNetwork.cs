@@ -40,7 +40,7 @@ namespace EZFramework
         {
             EZWWWTask task = gameObject.AddComponent<EZWWWTask>();
             task.SetTask(url, postData);
-            task.onStopCallback += OnComplete;
+            task.onStopEvent += OnComplete;
             if (taskList.Count >= maxTask)
             {
                 taskQueue.Enqueue(url);

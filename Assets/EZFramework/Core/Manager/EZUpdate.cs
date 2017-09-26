@@ -336,7 +336,7 @@ namespace EZFramework
             string source = serverAddress + relativePath;
             string localPath = runtimeDirPath + relativePath;
             EZWWWTask task = EZNetwork.Instance.NewTask(source, null);
-            task.onStopCallback += delegate (string url, byte[] bytes)
+            task.onStopEvent += delegate (string url, byte[] bytes)
             {
                 if (bytes != null)
                 {

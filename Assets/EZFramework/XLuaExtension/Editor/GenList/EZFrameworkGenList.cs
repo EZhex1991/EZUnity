@@ -6,8 +6,6 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using XLua;
 
@@ -26,18 +24,7 @@ namespace EZFramework.XLuaGen
             typeof(EZFramework.EZUpdate),
             typeof(EZFramework.EZUI),
             typeof(EZFramework.EZWWWTask),
-        };
-        [CSharpCallLua]
-        public static List<Type> CSharpCallLua = new List<Type>()
-        {
-            typeof(System.Action),
-            typeof(System.Action<UnityEngine.Object>),
-            typeof(System.Action<string, byte[]>),
-        };
 
-        [LuaCallCSharp]
-        public static List<Type> EZComponent_LuaCallCSharp = new List<Type>()
-        {
             typeof(EZComponent.EZProcess.EZGraphicColorProcessor),
             typeof(EZComponent.EZProcess.EZRectTransformProcessor),
             typeof(EZComponent.EZProcess.EZTransformProcessor),
@@ -47,16 +34,24 @@ namespace EZFramework.XLuaGen
             typeof(EZComponent.UI.EZSizeDriver),
             typeof(EZComponent.UI.EZTransition),
         };
+
         [CSharpCallLua]
-        public static List<Type> EZComponent_CSharpCallLua = new List<Type>()
+        public static List<Type> CSharpCallLua = new List<Type>()
         {
-            typeof(System.Action),
-            typeof(System.Action<int>),
-            typeof(System.Action<float>),
-            typeof(System.Action<Color>),
-            typeof(System.Action<Vector2>),
-            typeof(System.Action<Vector3>),
-            typeof(System.Action<int, int>),
+            typeof(EZFramework.EZFacade.OnApplicationFocusEventHandler),
+            typeof(EZFramework.EZFacade.OnApplicationQuitEventHandler),
+            typeof(EZFramework.EZResource.OnAssetLoadedAction),
+            typeof(EZFramework.EZResource.OnSceneLoadedAction),
+            typeof(EZFramework.EZLua.LuaEntry),
+            typeof(EZFramework.EZLua.LuaCoroutineCallback),
+            typeof(EZFramework.EZWWWTask.OnProgressAction),
+            typeof(EZFramework.EZWWWTask.OnStopAction),
+
+            typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Color>),
+            typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Vector2>),
+            typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Vector3>),
+            typeof(EZComponent.UI.EZScrollRect.OnBeginScrollAction),
+            typeof(EZComponent.UI.EZScrollRect.OnEndScrollAction),
         };
 
         [BlackList]

@@ -66,15 +66,6 @@ namespace EZFramework
             base.Exit();
             SaveData();
         }
-        // 暂停时存档（iOS一般不会退出）
-        void OnApplicationFocus(bool focusStatus)
-        {
-            Log("Application Focus: " + focusStatus);
-            if (!focusStatus)
-            {
-                SaveData();
-            }
-        }
 
         public bool Add(string dataName, object key, object value)
         {
@@ -259,7 +250,7 @@ namespace EZFramework
                 LoadData(dataName);
             }
         }
-        protected void SaveData()
+        public void SaveData()
         {
             if (!File.Exists(CacheFilePath))
             {
@@ -296,7 +287,7 @@ namespace EZFramework
                 DBIndex = new DBIndex();
             }
         }
-        protected void SaveIndex()
+        public void SaveIndex()
         {
             try
             {

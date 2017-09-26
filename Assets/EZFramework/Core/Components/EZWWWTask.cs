@@ -19,8 +19,10 @@ namespace EZFramework
         public float progress { get { return www == null ? 0 : www.progress; } }
         public bool isDone { get { return www == null ? false : www.isDone; } }
 
-        public Action<float> onProgressCallback;
-        public Action<string, byte[]> onStopCallback;
+        public delegate void OnProgressAction(float progress);
+        public event OnProgressAction onProgressEvent;
+        public delegate void OnStopAction(string url, byte[] data);
+        public event OnStopAction onStopEvent;
 
         private UCoroutine cor;
         private WWW www;
@@ -37,7 +39,7 @@ namespace EZFramework
         }
         public void StopTask(bool destroy = false)
         {
-            if (onStopCallback != null) onStopCallback(url, null);
+            if (onStopEvent != null) onStopEvent(url, null);
             if (cor != null)
             {
                 StopCoroutine(cor);
@@ -63,9 +65,9 @@ namespace EZFramework
                     StopTask();
                 }
                 yield return null;
-                if (onProgressCallback != null) onProgressCallback(www.progress);
+                if (onProgressEvent != null) onProgressEvent(www.progress);
             }
-            if (onStopCallback != null) onStopCallback(url, www.error == null ? www.bytes : null);
+            if (onStopEvent != null) onStopEvent(url, www.error == null ? www.bytes : null);
         }
     }
 }

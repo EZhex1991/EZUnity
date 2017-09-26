@@ -19,8 +19,11 @@ namespace EZFramework
         public AssetBundle luaBundle { get; private set; }
 
         public LuaEnv luaEnv { get; private set; }
-        private Action luaStart;
-        private Action LuaExit;
+
+        public delegate void LuaEntry();
+        public delegate void LuaCoroutineCallback();
+        private LuaEntry luaStart;
+        private LuaEntry LuaExit;
 
         public override void Init()
         {
@@ -29,8 +32,8 @@ namespace EZFramework
             AddBuildin();
             AddLoader();
             luaEnv.DoString("require 'Main'");
-            luaStart = luaEnv.Global.Get<Action>("Start");
-            LuaExit = luaEnv.Global.Get<Action>("Exit");
+            luaStart = luaEnv.Global.Get<LuaEntry>("Start");
+            LuaExit = luaEnv.Global.Get<LuaEntry>("Exit");
             luaStart();
         }
         public override void Exit()
@@ -68,7 +71,7 @@ namespace EZFramework
             fileName = luaDirPath + fileName.Replace('.', '/');     // 返给lua调试器的路径
             try
             {
-                // File.ReadAllBytes返回值可能会带有BOM（0xEF，0xBB，0xBF），这会导致脚本加载出错（</239>）
+                // File.ReadAllBytes返回值可能会带有BOM（0xEF，0xBB，0xBF），这会导致脚本加载出错（<\239>）
                 byte[] script = System.Text.Encoding.UTF8.GetBytes(File.ReadAllText(filePath));
                 return script;
             }
@@ -84,25 +87,15 @@ namespace EZFramework
             return luaText ? luaText.bytes : null;
         }
 
-        public void Yield(object cor, Action callback)
+        public void Yield(object cor, LuaCoroutineCallback callback)
         {
             StartCoroutine(Cor(cor, callback));
         }
-        public IEnumerator Cor(object cor, Action callback)
+        public IEnumerator Cor(object cor, LuaCoroutineCallback callback)
         {
             if (cor is IEnumerator) yield return StartCoroutine((IEnumerator)cor);
             else yield return cor;
             callback();
-        }
-
-        public static bool IsNull(UnityEngine.Object o)
-        {
-            return o == null;
-        }
-
-        public static void SetItem(IDictionary dict, object key, object value)
-        {
-            dict[key] = value;
         }
     }
 }

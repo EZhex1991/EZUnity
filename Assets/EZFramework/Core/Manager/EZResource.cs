@@ -23,6 +23,10 @@ namespace EZFramework
         protected Dictionary<string, AssetBundle> bundleDict = new Dictionary<string, AssetBundle>();
         protected AssetBundleManifest manifest;
 
+        public delegate void OnAssetLoadedAction(Object asset);
+        public delegate void OnAssetLoadedAction<T>(T asset) where T : Object;
+        public delegate void OnSceneLoadedAction();
+
         // 初始化资源管理器，读取StreamingAssets的所有依赖（即所有的资源包名）
         public override void Init()
         {
@@ -65,19 +69,19 @@ namespace EZFramework
             return LoadBundle(bundleName).LoadAsset(assetName, type);
         }
         // 异步加载资源
-        public void LoadAssetAsync<T>(string bundleName, string assetName, Action<T> callback) where T : Object
+        public void LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : Object
         {
             StartCoroutine(Cor_LoadAssetAsync<T>(bundleName, assetName, callback));
         }
-        public void LoadAssetAsync(string bundleName, string assetName, Action<Object> callback)
+        public void LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<Object> callback)
         {
             StartCoroutine(Cor_LoadAssetAsync(bundleName, assetName, callback));
         }
-        public void LoadAssetAsync(string bundleName, string assetName, Type type, Action<Object> callback)
+        public void LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<Object> callback)
         {
             StartCoroutine(Cor_LoadAssetAsync(bundleName, assetName, type, callback));
         }
-        IEnumerator Cor_LoadAssetAsync<T>(string bundleName, string assetName, Action<T> callback) where T : Object
+        IEnumerator Cor_LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : Object
         {
             yield return null;
             yield return Cor_LoadBundleAsync(bundleName);
@@ -89,7 +93,7 @@ namespace EZFramework
                 if (abR.isDone) callback(abR.asset as T);
             }
         }
-        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Action<Object> callback)
+        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<Object> callback)
         {
             yield return null;
             yield return Cor_LoadBundleAsync(bundleName);
@@ -101,7 +105,7 @@ namespace EZFramework
                 if (abR.isDone) callback(abR.asset);
             }
         }
-        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Type type, Action<Object> callback)
+        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<Object> callback)
         {
             yield return null;
             yield return Cor_LoadBundleAsync(bundleName);
@@ -123,15 +127,15 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.LoadComplete();
         }
         // 异步加载场景
-        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, Action action = null)
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, OnSceneLoadedAction action = null)
         {
             StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, true, action));
         }
-        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, Action action = null)
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, OnSceneLoadedAction action = null)
         {
             StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, setActive, action));
         }
-        IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, Action action)
+        IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, OnSceneLoadedAction action)
         {
             if (loadingPanel != null) loadingPanel.ShowProgress("Loading", 0);
             yield return null;

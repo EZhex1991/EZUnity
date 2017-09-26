@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using System;
 using UnityEngine;
 
 namespace EZFramework
@@ -18,6 +19,11 @@ namespace EZFramework
         private EZFrameworkSettings.RunMode runModeInApp = EZFrameworkSettings.RunMode.Local;
 
         private ILogHandler defaultLogHandler = Debug.logger.logHandler;
+
+        public delegate void OnApplicationFocusEventHandler(bool focusStatus);
+        public event OnApplicationFocusEventHandler onApplicationFocusEvent;
+        public delegate void OnApplicationQuitEventHandler();
+        public event OnApplicationQuitEventHandler onApplicationQuitEvent;
 
         void Start()
         {
@@ -51,8 +57,18 @@ namespace EZFramework
                 EZLua.Instance.Init();
             });
         }
+        void OnApplicationFocus(bool focusStatus)
+        {
+            if (onApplicationFocusEvent != null) onApplicationFocusEvent(focusStatus);
+            if (!focusStatus)
+            {
+                // 暂停时存档（iOS一般不会退出）
+                EZDatabase.Instance.SaveData();
+            }
+        }
         void OnApplicationQuit()
         {
+            if (onApplicationQuitEvent != null) onApplicationQuitEvent();
             EZLua.Instance.Exit();
             EZSound.Instance.Exit();
             EZUI.Instance.Exit();
