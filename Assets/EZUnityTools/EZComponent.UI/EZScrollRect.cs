@@ -40,8 +40,10 @@ namespace EZComponent.UI
         public int focusingX { get; private set; }
         public int focusingY { get; private set; }
 
-        public Action onBeginScrollEvent;
-        public Action<int, int> onEndScrollEvent;
+        public delegate void OnBeginScrollAction();
+        public OnBeginScrollAction onBeginScrollEvent;
+        public delegate void OnEndScrollAction(int x, int y);
+        public OnEndScrollAction onEndScrollEvent;
 
         private Vector2 step
         {

@@ -71,6 +71,10 @@ namespace EZComponent.EZProcess
         }
     }
 
+    public delegate void OnPhaseUpdateAction<T>(T value) where T : struct;
+    public delegate void OnPhaseEndAction(int phaseIndex);
+    public delegate void OnProcessEndAction();
+
     public abstract class _EZProcess<T, U> : MonoBehaviour
         where T : struct
         where U : Phase<T>
@@ -101,9 +105,10 @@ namespace EZComponent.EZProcess
         public bool started { get; private set; }
         public float lerp { get; private set; }
         public T value { get { return currentValue; } }
-        public event Action<T> onPhaseUpdatedEvent;
-        public event Action<int> onPhaseEndEvent;
-        public event Action onProcessEndEvent;
+
+        public event OnPhaseUpdateAction<T> onPhaseUpdateEvent;
+        public event OnPhaseEndAction onPhaseEndEvent;
+        public event OnProcessEndAction onProcessEndEvent;
 
         private bool updating;
         private float timeInPhase;
@@ -127,7 +132,7 @@ namespace EZComponent.EZProcess
             if (currentIndex == 0 && startFromOrigin) startValue = origin;
             endValue = currentPhase.endValue;
             UpdatePhase(lerp);
-            if (onPhaseUpdatedEvent != null) onPhaseUpdatedEvent(currentValue);
+            if (onPhaseUpdateEvent != null) onPhaseUpdateEvent(currentValue);
         }
         protected abstract void UpdatePhase(float lerp);
         protected virtual void EndPhase()
@@ -165,7 +170,7 @@ namespace EZComponent.EZProcess
             if (updating)
             {
                 UpdatePhase(lerp);
-                if (onPhaseUpdatedEvent != null) onPhaseUpdatedEvent(currentValue);
+                if (onPhaseUpdateEvent != null) onPhaseUpdateEvent(currentValue);
                 if (lerp >= 1) updating = false;
             }
             else if (timeInPhase > currentPhase.duration + currentPhase.interval)
