@@ -6,11 +6,9 @@
 */
 using System.Collections;
 using UnityEngine;
-using XLua;
 
-namespace EZFramework
+namespace EZFramework.XLuaExtension
 {
-    [LuaCallCSharp]
     public static class LuaUtility
     {
         // 两位整数的平台ID
