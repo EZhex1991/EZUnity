@@ -4,14 +4,22 @@
  * Description:
  * 
 */
+using System;
 using UnityEngine;
 using XLua;
 
-namespace EZFramework.LuaInjector
+namespace EZFramework.XLuaExtension
 {
-    [LuaCallCSharp]
-    public class Injector : MonoBehaviour
+    public class LuaInjector : MonoBehaviour
     {
+        [Serializable]
+        public class Injection
+        {
+            public string key;
+            public UnityEngine.Object value;
+            public string typeName;
+        }
+
         public Injection[] injections;
 
         public void Inject(LuaTable self)

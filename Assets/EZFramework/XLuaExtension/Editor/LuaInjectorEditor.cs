@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using EZFramework.XLuaExtension;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,10 +12,10 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZFramework.LuaInjector
+namespace EZFramework.XLuaExtensionEditor
 {
-    [CustomEditor(typeof(Injector))]
-    public class InjectorEditor : Editor
+    [CustomEditor(typeof(LuaInjector))]
+    public class LuaInjectorEditor : Editor
     {
         public static List<Type> typeList = new List<Type>
         {
