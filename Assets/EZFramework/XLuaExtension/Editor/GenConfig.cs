@@ -4,11 +4,10 @@
  * Description:
  * 
 */
-
-using UnityEngine;
 using CSObjectWrapEditor;
+using UnityEngine;
 
-namespace EZFramework.XLuaGen
+namespace EZFramework.XLuaConfig
 {
     public static class GenConfig
     {

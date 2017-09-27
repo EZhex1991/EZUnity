@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XLua;
 
-namespace EZFramework.XLuaGen
+namespace EZFramework.XLuaConfig
 {
     public static class EZFrameworkGenList
     {
@@ -25,6 +25,22 @@ namespace EZFramework.XLuaGen
             typeof(EZFramework.EZUI),
             typeof(EZFramework.EZWWWTask),
 
+            typeof(EZFramework.XLuaExtension.LuaInjector),
+            typeof(EZFramework.XLuaExtension.ExtensionFunctions),
+            typeof(EZFramework.XLuaExtension.LuaUtility),
+            typeof(EZFramework.XLuaExtension.ActivityMessage),
+            typeof(EZFramework.XLuaExtension.ActivityMessage.ActivityEvent),
+            typeof(EZFramework.XLuaExtension.ApplicationMessage),
+            typeof(EZFramework.XLuaExtension.ApplicationMessage.ApplicationEvent),
+            typeof(EZFramework.XLuaExtension.CollisionMessage),
+            typeof(EZFramework.XLuaExtension.CollisionMessage.CollisionEvent),
+            typeof(EZFramework.XLuaExtension.MouseMessage),
+            typeof(EZFramework.XLuaExtension.MouseMessage.MouseEvent),
+            typeof(EZFramework.XLuaExtension.TriggerMessage),
+            typeof(EZFramework.XLuaExtension.TriggerMessage.TriggerEvent),
+            typeof(EZFramework.XLuaExtension.UpdateMessage),
+            typeof(EZFramework.XLuaExtension.UpdateMessage.UpdateEvent),
+
             typeof(EZComponent.EZProcess.EZGraphicColorProcessor),
             typeof(EZComponent.EZProcess.EZRectTransformProcessor),
             typeof(EZComponent.EZProcess.EZTransformProcessor),
@@ -38,14 +54,18 @@ namespace EZFramework.XLuaGen
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
-            typeof(EZFramework.EZFacade.OnApplicationFocusEventHandler),
-            typeof(EZFramework.EZFacade.OnApplicationQuitEventHandler),
+            typeof(EZFramework.EZFacade.OnApplicationFocusAction),
+            typeof(EZFramework.EZFacade.OnApplicationQuitAction),
             typeof(EZFramework.EZResource.OnAssetLoadedAction),
             typeof(EZFramework.EZResource.OnSceneLoadedAction),
             typeof(EZFramework.EZLua.LuaEntry),
             typeof(EZFramework.EZLua.LuaCoroutineCallback),
             typeof(EZFramework.EZWWWTask.OnProgressAction),
             typeof(EZFramework.EZWWWTask.OnStopAction),
+
+            typeof(EZFramework.XLuaExtension.OnMessageAction),
+            typeof(EZFramework.XLuaExtension.OnMessageAction<Collider>),
+            typeof(EZFramework.XLuaExtension.OnMessageAction<Collision>),
 
             typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Color>),
             typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Vector2>),

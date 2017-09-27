@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using XLua;
 
-namespace EZFramework.XLuaGen
+namespace EZFramework.XLuaConfig
 {
     public static class UnityEngineGenList
     {
