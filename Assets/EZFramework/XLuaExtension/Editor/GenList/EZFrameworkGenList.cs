@@ -64,6 +64,7 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.EZWWWTask.OnStopAction),
 
             typeof(EZFramework.XLuaExtension.OnMessageAction),
+            typeof(EZFramework.XLuaExtension.OnMessageAction<bool>),
             typeof(EZFramework.XLuaExtension.OnMessageAction<Collider>),
             typeof(EZFramework.XLuaExtension.OnMessageAction<Collision>),
 
