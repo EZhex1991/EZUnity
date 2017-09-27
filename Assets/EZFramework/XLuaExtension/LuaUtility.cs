@@ -38,6 +38,31 @@ namespace EZFramework.XLuaExtension
             }
         }
 
+        // lua时间精确度不太可靠
+        public static long CurrentTime
+        {
+            get
+            {
+                return System.DateTime.UtcNow.Ticks;
+            }
+        }
+        public static long DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond = 0)
+        {
+            return new System.DateTime(year, month, day, hour, minute, second, millisecond).Ticks;
+        }
+        public static double TimeSpanInMilliseconds(long ticks1, long ticks2)
+        {
+            return new System.TimeSpan(ticks2 - ticks1).TotalMilliseconds;
+        }
+        public static double RelativeTime()
+        {
+            return RelativeTime(CurrentTime);
+        }
+        public static double RelativeTime(long ticks)
+        {
+            return TimeSpanInMilliseconds(DateTime(1970, 1, 1, 0, 0, 0), ticks);
+        }
+
         // System.String只导出部分方法
         public static string FormatString(string format, params object[] args)
         {

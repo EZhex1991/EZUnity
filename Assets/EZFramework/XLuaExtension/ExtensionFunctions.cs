@@ -14,6 +14,10 @@ namespace EZFramework.XLuaExtension
         {
             return Convert.ToInt32(instance.Get(dataName, key, value));
         }
+        public static long GetLong(this EZDatabase instance, string dataName, string key, object value)
+        {
+            return Convert.ToInt64(instance.Get(dataName, key, value));
+        }
         public static float GetSingle(this EZDatabase instance, string dataName, string key, object value)
         {
             return Convert.ToSingle(instance.Get(dataName, key, value));
