@@ -22,7 +22,7 @@ Unity部分API的二次封装。
 本人QQ：361994819，可能不会及时回复，但是欢迎留言提意见。
 
 2017/09/19（重构）:
-- EZFramework升级了xLua，比较重要的是dictionary的索引方式把setter也去掉了，用EZLua.SetItem代替。
+- EZFramework升级了xLua，比较重要的是dictionary的索引方式把setter也去掉了，需要自己实现方法代替。
 - EZUnityTools分成几个部分，命名空间和目录结构都有变化，自定义编辑器扩展的命名空间和菜单栏改成了"EZUnityEditor"。
 - meta文件我是尽量没有做过删除动作，但有可能有过误操作造成meta文件重新生成的情况，不建议直接更新。
 
