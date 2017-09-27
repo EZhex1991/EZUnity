@@ -20,10 +20,10 @@ namespace EZFramework
 
         private ILogHandler defaultLogHandler = Debug.logger.logHandler;
 
-        public delegate void OnApplicationFocusEventHandler(bool focusStatus);
-        public event OnApplicationFocusEventHandler onApplicationFocusEvent;
-        public delegate void OnApplicationQuitEventHandler();
-        public event OnApplicationQuitEventHandler onApplicationQuitEvent;
+        public delegate void OnApplicationFocusAction(bool focusStatus);
+        public event OnApplicationFocusAction onApplicationFocusEvent;
+        public delegate void OnApplicationQuitAction();
+        public event OnApplicationQuitAction onApplicationQuitEvent;
 
         void Start()
         {
