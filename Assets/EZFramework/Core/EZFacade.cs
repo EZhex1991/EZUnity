@@ -4,7 +4,7 @@
  * Description:
  * 
 */
-using System;
+using System.Collections;
 using UnityEngine;
 
 namespace EZFramework
@@ -20,8 +20,9 @@ namespace EZFramework
 
         private ILogHandler defaultLogHandler = Debug.logger.logHandler;
 
-        public delegate void OnApplicationFocusAction(bool focusStatus);
-        public event OnApplicationFocusAction onApplicationFocusEvent;
+        public delegate void OnApplicationStatusAction(bool status);
+        public event OnApplicationStatusAction onApplicationPauseEvent; // 暂停时先触发pause后触发focus
+        public event OnApplicationStatusAction onApplicationFocusEvent; // 唤醒时先触发focus后触发pause
         public delegate void OnApplicationQuitAction();
         public event OnApplicationQuitAction onApplicationQuitEvent;
 
@@ -57,13 +58,32 @@ namespace EZFramework
                 EZLua.Instance.Init();
             });
         }
-        void OnApplicationFocus(bool focusStatus)
+        IEnumerator OnApplicationPause(bool pauseStatus)
         {
-            if (onApplicationFocusEvent != null) onApplicationFocusEvent(focusStatus);
-            if (!focusStatus)
+            if (pauseStatus)
             {
+                if (onApplicationPauseEvent != null) onApplicationPauseEvent(true);
                 // 暂停时存档（iOS一般不会退出）
                 EZDatabase.Instance.SaveData();
+                yield return null;
+            }
+            else
+            {
+                yield return null;
+                if (onApplicationPauseEvent != null) onApplicationPauseEvent(false);
+            }
+        }
+        IEnumerator OnApplicationFocus(bool focusStatus)
+        {
+            if (focusStatus)
+            {
+                if (onApplicationFocusEvent != null) onApplicationFocusEvent(true);
+                yield return null;
+            }
+            else
+            {
+                yield return null;
+                if (onApplicationFocusEvent != null) onApplicationFocusEvent(false);
             }
         }
         void OnApplicationQuit()

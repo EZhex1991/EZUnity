@@ -54,7 +54,7 @@ namespace EZFramework.XLuaConfig
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
-            typeof(EZFramework.EZFacade.OnApplicationFocusAction),
+            typeof(EZFramework.EZFacade.OnApplicationStatusAction),
             typeof(EZFramework.EZFacade.OnApplicationQuitAction),
             typeof(EZFramework.EZResource.OnAssetLoadedAction),
             typeof(EZFramework.EZResource.OnSceneLoadedAction),
