@@ -11,7 +11,7 @@ namespace EZFramework.XLuaExtension
 {
     public static class LuaUtility
     {
-        // 两位整数的平台ID
+        // 两位整数的平台ID，可以用来代替RuntimePlatform，如果有自定义宏也可以在这里加
         public static int PlatformID
         {
             get
@@ -61,6 +61,12 @@ namespace EZFramework.XLuaExtension
         public static double RelativeTime(long ticks)
         {
             return TimeSpanInMilliseconds(DateTime(1970, 1, 1, 0, 0, 0), ticks);
+        }
+
+        // 小数位的保留
+        public static double Round(double number, int digits = 2)
+        {
+            return System.Math.Round(number, digits);
         }
 
         // System.String只导出部分方法
