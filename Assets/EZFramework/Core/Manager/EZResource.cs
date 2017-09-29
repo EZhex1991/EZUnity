@@ -143,7 +143,7 @@ namespace EZFramework
             AsyncOperation opr = SceneManager.LoadSceneAsync(sceneName, mode);
             while (!opr.isDone)
             {
-                if (loadingPanel != null) loadingPanel.ShowProgress("Loading", opr.progress);
+                if (loadingPanel != null) loadingPanel.ShowProgress("Loading", opr.progress + 0.1f);
                 yield return null;
             }
             if (setActive) SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));

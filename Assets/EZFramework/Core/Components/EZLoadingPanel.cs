@@ -30,14 +30,14 @@ namespace EZFramework
         {
             gameObject.SetActive(true);
             slider_Progress.value = percentage;
-            text_Percentage.text = (percentage * 100).ToString("00") + "%";
+            text_Percentage.text = Mathf.RoundToInt(percentage * 100) + "%";
         }
         public void ShowProgress(string str, float percentage)
         {
             gameObject.SetActive(true);
             text_Progress.text = str;
             slider_Progress.value = percentage;
-            text_Percentage.text = (percentage * 100).ToString("00") + "%";
+            text_Percentage.text = Mathf.RoundToInt(percentage * 100) + "%";
         }
 
         public void LoadComplete()
