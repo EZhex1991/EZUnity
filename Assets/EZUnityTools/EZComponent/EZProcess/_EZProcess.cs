@@ -96,7 +96,7 @@ namespace EZComponent.EZProcess
         public T origin { get { return m_Origin; } set { m_Origin = value; } }
 
         [SerializeField]
-        private List<U> m_PhaseList;
+        private List<U> m_PhaseList = new List<U>();
         public List<U> phaseList { get { return m_PhaseList; } set { m_PhaseList = value; } }
 
         public int currentIndex { get; private set; }
@@ -123,6 +123,7 @@ namespace EZComponent.EZProcess
 
         protected virtual void StartPhase(int index = 0)
         {
+            if (index >= phaseList.Count) return;
             started = true;
             currentIndex = index;
             currentPhase = phaseList[currentIndex];
@@ -167,6 +168,7 @@ namespace EZComponent.EZProcess
         protected void Update()
         {
             if (!started) return;
+            if (currentPhase == null) return;
             if (updating)
             {
                 UpdatePhase(lerp);
