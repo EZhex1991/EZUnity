@@ -29,12 +29,14 @@ namespace EZFramework
         public void ShowProgress(float percentage)
         {
             gameObject.SetActive(true);
+            percentage = Mathf.Clamp01(percentage);
             slider_Progress.value = percentage;
             text_Percentage.text = Mathf.RoundToInt(percentage * 100) + "%";
         }
         public void ShowProgress(string str, float percentage)
         {
             gameObject.SetActive(true);
+            percentage = Mathf.Clamp01(percentage);
             text_Progress.text = str;
             slider_Progress.value = percentage;
             text_Percentage.text = Mathf.RoundToInt(percentage * 100) + "%";
