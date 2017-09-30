@@ -2,9 +2,8 @@
  * Author:      熊哲
  * CreateTime:  8/9/2017 6:08:00 PM
  * Description:
- * 
+ * 对原生ScrollRect的扩展，设置网格大小，滑动停止后自动Focus最近的点，和EZGridLayout2D配合更佳
 */
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

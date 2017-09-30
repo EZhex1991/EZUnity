@@ -2,7 +2,7 @@
  * Author:      熊哲
  * CreateTime:  1/12/2017 5:28:48 PM
  * Description:
- * 
+ * 3D的点距式网格布局
 */
 using UnityEngine;
 

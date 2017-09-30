@@ -2,7 +2,7 @@
  * Author:      熊哲
  * CreateTime:  9/30/2017 2:43:23 PM
  * Description:
- * 
+ * 用于圆形响应按钮的Image
 */
 using UnityEngine;
 using UnityEngine.UI;

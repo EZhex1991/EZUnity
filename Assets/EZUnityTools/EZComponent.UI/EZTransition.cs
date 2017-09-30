@@ -2,7 +2,7 @@
  * Author:      熊哲
  * CreateTime:  8/31/2017 7:21:33 PM
  * Description:
- * 
+ * 自定义Selectable的Transition，我只写了一个很常用的Scale，自己扩展也不难（依赖Selectable而不是继承Selectable）
 */
 using UnityEngine;
 using UnityEngine.EventSystems;

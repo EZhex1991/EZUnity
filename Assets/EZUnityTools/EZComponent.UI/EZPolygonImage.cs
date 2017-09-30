@@ -2,7 +2,7 @@
  * Author:      熊哲
  * CreateTime:  9/30/2017 1:36:20 PM
  * Description:
- * 
+ * 用于多边形响应按钮的Image
 */
 using UnityEngine;
 using UnityEngine.UI;

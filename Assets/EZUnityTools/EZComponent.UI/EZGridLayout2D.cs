@@ -2,7 +2,7 @@
  * Author:      熊哲
  * CreateTime:  1/12/2017 5:28:48 PM
  * Description:
- * 
+ * 2D的中心点距布局（UGUI原生GridLayout是边距布局）
 */
 using System;
 using System.Collections.Generic;

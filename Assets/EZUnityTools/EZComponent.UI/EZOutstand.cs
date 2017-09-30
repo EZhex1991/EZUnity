@@ -2,7 +2,7 @@
  * Author:      熊哲
  * CreateTime:  1/12/2017 5:28:48 PM
  * Description:
- * 
+ * 根据偏移量突出显示某个控件，多用于ScrollRect的滚动缩放
 */
 using System;
 using System.Collections.Generic;
