@@ -30,41 +30,90 @@ namespace EZUnityEditor
                 if (assetName.ToLower().StartsWith("sprite_"))
                 {
                     textureImporter.textureType = TextureImporterType.Sprite;
+#if UNITY_2017
+#else
                     textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+#endif
                 }
                 // sprite@_spriteName
                 else if (assetName.ToLower().StartsWith("sprite@_"))
                 {
-                    textureImporter.textureType = TextureImporterType.Advanced;
+#if UNITY_2017
+                    textureImporter.textureType = TextureImporterType.Sprite;
+#else
+                    textureImporter.textureType = TextureImporterType.Default;
                     textureImporter.npotScale = TextureImporterNPOTScale.None;
                     textureImporter.spriteImportMode = SpriteImportMode.Single;
+#endif
                 }
                 // sprite@RGBA32_spriteName
                 else if (assetName.ToLower().StartsWith("sprite@rgba32_"))
                 {
-                    textureImporter.textureType = TextureImporterType.Advanced;
+#if UNITY_2017
+                    textureImporter.textureType = TextureImporterType.Sprite;
+                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "Standalone",
+                        overridden = true,
+                        format = TextureImporterFormat.RGBA32,
+                    }); textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "iPhone",
+                        overridden = true,
+                        format = TextureImporterFormat.RGBA32,
+                    }); textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "Android",
+                        overridden = true,
+                        format = TextureImporterFormat.RGBA32,
+                    });
+#else
+                    textureImporter.textureType = TextureImporterType.Default;
                     textureImporter.npotScale = TextureImporterNPOTScale.None;
                     textureImporter.spriteImportMode = SpriteImportMode.Single;
                     textureImporter.textureFormat = TextureImporterFormat.RGBA32;
+#endif
                 }
                 // sprite@RGB24_spriteName
                 else if (assetName.ToLower().StartsWith("sprite@rgb24_"))
                 {
-                    textureImporter.textureType = TextureImporterType.Advanced;
+#if UNITY_2017
+                    textureImporter.textureType = TextureImporterType.Sprite;
+                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "Standalone",
+                        overridden = true,
+                        format = TextureImporterFormat.RGB24
+                    });
+                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "iPhone",
+                        overridden = true,
+                        format = TextureImporterFormat.RGB24
+                    });
+                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "Android",
+                        overridden = true,
+                        format = TextureImporterFormat.RGB24
+                    });
+#else
+                    textureImporter.textureType = TextureImporterType.Default;
                     textureImporter.npotScale = TextureImporterNPOTScale.None;
                     textureImporter.spriteImportMode = SpriteImportMode.Single;
                     textureImporter.textureFormat = TextureImporterFormat.RGB24;
+#endif
                 }
             }
             // textureName_normalMap
             if (assetPath.ToLower().Contains("normalmap"))
             {
-                textureImporter.textureType = TextureImporterType.Bump;
+                textureImporter.textureType = TextureImporterType.NormalMap;
             }
             // textureName_bumpMap
             else if (assetPath.ToLower().Contains("bumpmap"))
             {
-                textureImporter.textureType = TextureImporterType.Bump;
+                textureImporter.textureType = TextureImporterType.NormalMap;
                 textureImporter.convertToNormalmap = true;
             }
         }
