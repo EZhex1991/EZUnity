@@ -29,9 +29,10 @@ namespace EZUnityEditor
                 // sprite_spriteName
                 if (assetName.ToLower().StartsWith("sprite_"))
                 {
-                    textureImporter.textureType = TextureImporterType.Sprite;
 #if UNITY_2017
+                    textureImporter.textureType = TextureImporterType.Sprite;
 #else
+                    textureImporter.textureType = TextureImporterType.Sprite;
                     textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
 #endif
                 }
@@ -41,7 +42,7 @@ namespace EZUnityEditor
 #if UNITY_2017
                     textureImporter.textureType = TextureImporterType.Sprite;
 #else
-                    textureImporter.textureType = TextureImporterType.Default;
+                    textureImporter.textureType = TextureImporterType.Advanced;
                     textureImporter.npotScale = TextureImporterNPOTScale.None;
                     textureImporter.spriteImportMode = SpriteImportMode.Single;
 #endif
@@ -68,7 +69,7 @@ namespace EZUnityEditor
                         format = TextureImporterFormat.RGBA32,
                     });
 #else
-                    textureImporter.textureType = TextureImporterType.Default;
+                    textureImporter.textureType = TextureImporterType.Advanced;
                     textureImporter.npotScale = TextureImporterNPOTScale.None;
                     textureImporter.spriteImportMode = SpriteImportMode.Single;
                     textureImporter.textureFormat = TextureImporterFormat.RGBA32;
@@ -98,7 +99,7 @@ namespace EZUnityEditor
                         format = TextureImporterFormat.RGB24
                     });
 #else
-                    textureImporter.textureType = TextureImporterType.Default;
+                    textureImporter.textureType = TextureImporterType.Advanced;
                     textureImporter.npotScale = TextureImporterNPOTScale.None;
                     textureImporter.spriteImportMode = SpriteImportMode.Single;
                     textureImporter.textureFormat = TextureImporterFormat.RGB24;
@@ -108,13 +109,22 @@ namespace EZUnityEditor
             // textureName_normalMap
             if (assetPath.ToLower().Contains("normalmap"))
             {
+#if UNITY_2017
                 textureImporter.textureType = TextureImporterType.NormalMap;
+#else
+                textureImporter.textureType = TextureImporterType.Bump;
+#endif
             }
             // textureName_bumpMap
             else if (assetPath.ToLower().Contains("bumpmap"))
             {
+#if UNITY_2017
                 textureImporter.textureType = TextureImporterType.NormalMap;
                 textureImporter.convertToNormalmap = true;
+#else
+                textureImporter.textureType = TextureImporterType.Bump;
+                textureImporter.convertToNormalmap = true;
+#endif
             }
         }
         void OnPostprocessTexture(Texture2D texture)
