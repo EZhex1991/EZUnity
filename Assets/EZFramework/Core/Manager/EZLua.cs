@@ -20,10 +20,10 @@ namespace EZFramework
 
         public LuaEnv luaEnv { get; private set; }
 
-        public delegate void LuaEntry();
+        public delegate void LuaAction();
         public delegate void LuaCoroutineCallback();
-        private LuaEntry luaStart;
-        private LuaEntry LuaExit;
+        private LuaAction luaStart;
+        private LuaAction LuaExit;
 
         public override void Init()
         {
@@ -32,8 +32,8 @@ namespace EZFramework
             AddBuildin();
             AddLoader();
             luaEnv.DoString("require 'Main'");
-            luaStart = luaEnv.Global.Get<LuaEntry>("Start");
-            LuaExit = luaEnv.Global.Get<LuaEntry>("Exit");
+            luaStart = luaEnv.Global.Get<LuaAction>("Start");
+            LuaExit = luaEnv.Global.Get<LuaAction>("Exit");
             luaStart();
         }
         public override void Exit()
