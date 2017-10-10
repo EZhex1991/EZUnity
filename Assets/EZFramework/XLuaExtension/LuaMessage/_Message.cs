@@ -16,6 +16,13 @@ namespace EZFramework.XLuaExtension
     public abstract class _Message<T> : MonoBehaviour
         where T : _Message<T>
     {
+        /* 用法示例：
+         * local message = CS.EZFramework.XLuaExtension.UpdateMessage.Require(gameOject)    -- 获取
+         * message.update:AddAction(func)   -- 添加
+         * message.fixedUpdate:RemoveAction(func)   -- 移除
+         * message.lateUpdate:Clear()   -- 清空
+         * message:Dismiss()    -- 销毁，或者CS.EZFramework.XLuaExtension.UpdateMessage.Dismiss(gameOject)
+         */
         public static T Require(GameObject obj)
         {
             T transmitter = obj.GetComponent<T>();
@@ -51,6 +58,10 @@ namespace EZFramework.XLuaExtension
         {
             m_Event -= action;
         }
+        public void Clear()
+        {
+            m_Event = null;
+        }
         public void Invoke()
         {
             if (m_Event != null) m_Event.Invoke();
@@ -69,6 +80,10 @@ namespace EZFramework.XLuaExtension
         public void RemoveAction(OnMessageAction<T> action)
         {
             m_Event -= action;
+        }
+        public void Clear()
+        {
+            m_Event = null;
         }
         public void Invoke(T arg)
         {
