@@ -29,6 +29,10 @@ function M:RemoveListener(eventKey)
     self.events[eventKey] = nil;
 end
 
+function M:Clear()
+	self.events = { };
+end
+
 function M:Call(...)
     local params = { ...};
     for key, func in pairs(self.events) do
