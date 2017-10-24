@@ -49,10 +49,11 @@ namespace EZUnityEditor
             }
             AssetDatabase.Refresh();
             BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
-            BuildPipeline.BuildAssetBundles(bundleDirPath, GetBuildList(ezBundle).ToArray(), options, ezBundle.bundleTarget);
+            List<AssetBundleBuild> buildList = GetBuildList(ezBundle);
+            BuildPipeline.BuildAssetBundles(bundleDirPath, buildList.ToArray(), options, ezBundle.bundleTarget);
             if (ezBundle.createListFile) CreateFileList(bundleDirPath, ezBundle.listFileName);
             AssetDatabase.Refresh();
-            OnPostBuild();
+            OnPostBuild(buildList);
         }
         protected static void OnPreBuild()
         {
@@ -69,7 +70,7 @@ namespace EZUnityEditor
                 }
             }
         }
-        protected static void OnPostBuild()
+        protected static void OnPostBuild(IEnumerable<AssetBundleBuild> buildList)
         {
             foreach (Type type in (from type in GetAllTypes()
                                    where type.IsClass
@@ -79,7 +80,7 @@ namespace EZUnityEditor
                 {
                     if (methods.IsDefined(typeof(OnPostBuildAttribute), false))
                     {
-                        methods.Invoke(null, null);
+                        methods.Invoke(null, new object[] { buildList });
                     }
                 }
             }
