@@ -129,10 +129,6 @@ namespace EZFramework
                 yield return Cor_Extract();
                 yield return Cor_Update();
             }
-            else
-            {
-                yield return null;
-            }
             ShowLoadComplete();
             callback();
         }
