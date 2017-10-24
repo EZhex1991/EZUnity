@@ -5,6 +5,7 @@
  * 为了降低Lua和框架中其他逻辑的耦合性，部分方法使用扩展方式添加
 */
 using System;
+using UnityEngine;
 
 namespace EZFramework.XLuaExtension
 {
@@ -33,6 +34,23 @@ namespace EZFramework.XLuaExtension
         public static bool GetBool(this EZDatabase instance, string dataName, string key, object value)
         {
             return Convert.ToBoolean(instance.Get(dataName, key, value));
+        }
+
+        public static Sprite LoadSprite(this EZResource instance, string bundleName, string assetName)
+        {
+            return instance.LoadAsset<Sprite>(bundleName, assetName);
+        }
+        public static AudioClip LoadAudioClip(this EZResource instance, string bundleName, string assetName)
+        {
+            return instance.LoadAsset<AudioClip>(bundleName, assetName);
+        }
+        public static GameObject LoadGameObject(this EZResource instance, string bundleName, string assetName)
+        {
+            return instance.LoadAsset<GameObject>(bundleName, assetName);
+        }
+        public static Texture LoadTextture(this EZResource instance, string bundleName, string assetName)
+        {
+            return instance.LoadAsset<Texture>(bundleName, assetName);
         }
     }
 }
