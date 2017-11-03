@@ -1,15 +1,15 @@
 /*
  * Author:      熊哲
- * CreateTime:  9/20/2017 10:18:18 AM
+ * CreateTime:  10/31/2017 5:21:48 PM
  * Description:
  * 
 */
 using System;
 using UnityEngine;
 
-namespace EZComponent.EZProcess
+namespace EZComponent.EZAnimation
 {
-    public class EZTransformProcessor : _EZProcess<EZTransformProcessor.TransformInfo, EZTransformProcessor.TransformPhase>
+    public class EZTransformAnimation : EZAnimation<EZTransformAnimation.TransformInfo, EZTransformAnimation.Phase>
     {
         [Serializable]
         public struct TransformInfo
@@ -17,12 +17,15 @@ namespace EZComponent.EZProcess
             [SerializeField]
             private Vector3 m_Position;
             public Vector3 position { get { return m_Position; } set { m_Position = value; } }
+
             [SerializeField]
             private Vector3 m_Rotation;
             public Vector3 rotation { get { return m_Rotation; } set { m_Rotation = value; } }
+
             [SerializeField]
             private Vector3 m_Scale;
             public Vector3 scale { get { return m_Scale; } set { m_Scale = value; } }
+
             public TransformInfo(Vector3 position, Vector3 rotation, Vector3 scale)
             {
                 m_Position = position;
@@ -31,11 +34,8 @@ namespace EZComponent.EZProcess
             }
         }
         [Serializable]
-        public class TransformPhase : Phase<TransformInfo>
+        public class Phase : Phase<TransformInfo>
         {
-            public TransformPhase(TransformInfo endValue, float duration, float interval = 0, LerpMode lerpMode = LerpMode.Linear) : base(endValue, duration, interval, lerpMode)
-            {
-            }
         }
 
         [SerializeField]
@@ -48,21 +48,11 @@ namespace EZComponent.EZProcess
         private bool m_DriveScale;
         public bool driveScale { get { return m_DriveScale; } set { m_DriveScale = value; } }
 
-        protected override void StartPhase(int index = 0)
+        protected override void UpdatePhase()
         {
-            startValue.position = transform.localPosition;
-            startValue.scale = transform.localScale;
-            // Rotation比较特别，负数自动变成正数会造成非预期旋转，所以不支持从“当前位置开始旋转”
-            base.StartPhase(index);
-        }
-        protected override void UpdatePhase(float lerp)
-        {
-            currentValue.position = Vector3.Lerp(startValue.position, endValue.position, lerp);
-            currentValue.scale = Vector3.Lerp(startValue.scale, endValue.scale, lerp);
-            currentValue.rotation = Vector3.Lerp(startValue.rotation, endValue.rotation, lerp);
-            if (drivePosition) transform.localPosition = currentValue.position;
-            if (driveScale) transform.localScale = currentValue.scale;
-            if (driveRotation) transform.localRotation = Quaternion.Euler(currentValue.rotation);
+            if (drivePosition) transform.localPosition = Vector3.Lerp(currentPhase.startValue.position, currentPhase.endValue.position, frameValue);
+            if (driveRotation) transform.localEulerAngles = Vector3.Lerp(currentPhase.startValue.rotation, currentPhase.endValue.rotation, frameValue);
+            if (driveScale) transform.localScale = Vector3.Lerp(currentPhase.startValue.scale, currentPhase.endValue.scale, frameValue);
         }
     }
 }

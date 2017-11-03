@@ -1,6 +1,6 @@
 /*
  * Author:      熊哲
- * CreateTime:  9/12/2017 4:50:56 PM
+ * CreateTime:  11/2/2017 5:15:40 PM
  * Description:
  * 
 */
@@ -8,11 +8,17 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EZComponent.EZProcess
+namespace EZComponent.EZAnimation
 {
     [RequireComponent(typeof(Graphic)), DisallowMultipleComponent]
-    public class EZGraphicColorProcessor : EZColorProcess
+    public class EZGraphicColorAnimation : EZAnimation<Color, EZGraphicColorAnimation.Phase>
     {
+        [Serializable]
+        public class Phase : Phase<Color>
+        {
+
+        }
+
         [NonSerialized]
         private Graphic m_Graphic;
         private Graphic graphic
@@ -27,15 +33,9 @@ namespace EZComponent.EZProcess
             }
         }
 
-        protected override void StartPhase(int index = 0)
+        protected override void UpdatePhase()
         {
-            startValue = graphic.color;
-            base.StartPhase(index);
-        }
-        protected override void UpdatePhase(float lerp)
-        {
-            base.UpdatePhase(lerp);
-            graphic.color = currentValue;
+            graphic.color = Color.Lerp(currentPhase.startValue, currentPhase.endValue, frameValue);
         }
     }
 }

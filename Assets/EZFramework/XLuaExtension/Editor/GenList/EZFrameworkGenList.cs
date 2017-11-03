@@ -41,9 +41,10 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.XLuaExtension.UpdateMessage),
             typeof(EZFramework.XLuaExtension.UpdateMessage.UpdateEvent),
 
-            typeof(EZComponent.EZProcess.EZGraphicColorProcessor),
-            typeof(EZComponent.EZProcess.EZRectTransformProcessor),
-            typeof(EZComponent.EZProcess.EZTransformProcessor),
+            typeof(EZComponent.EZAnimation.EZGraphicColorAnimation),
+            typeof(EZComponent.EZAnimation.EZRectTransformAnimation),
+            typeof(EZComponent.EZAnimation.EZTransformAnimation),
+
             typeof(EZComponent.UI.EZGridLayout2D),
             typeof(EZComponent.UI.EZOutstand),
             typeof(EZComponent.UI.EZScrollRect),
@@ -68,9 +69,8 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.XLuaExtension.OnMessageAction<Collider>),
             typeof(EZFramework.XLuaExtension.OnMessageAction<Collision>),
 
-            typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Color>),
-            typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Vector2>),
-            typeof(EZComponent.EZProcess.OnPhaseUpdateAction<Vector3>),
+            typeof(EZComponent.EZAnimation.OnAnimationEndAction),
+
             typeof(EZComponent.UI.EZScrollRect.OnBeginScrollAction),
             typeof(EZComponent.UI.EZScrollRect.OnEndScrollAction),
         };
