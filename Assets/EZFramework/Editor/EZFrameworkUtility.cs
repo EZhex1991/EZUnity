@@ -64,6 +64,7 @@ namespace EZFramework
             {
                 Directory.Delete(EZFacade.persistentDirPath, true);
                 Debug.Log("Persistent Directory Cleared.");
+                AssetDatabase.Refresh();
             }
             catch (System.Exception ex)
             {
