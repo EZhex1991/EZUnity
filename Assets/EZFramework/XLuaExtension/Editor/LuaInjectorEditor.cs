@@ -23,6 +23,8 @@ namespace EZFramework.XLuaExtensionEditor
             typeof(UnityEngine.GameObject),
             typeof(UnityEngine.RectTransform),
             typeof(UnityEngine.Sprite),
+            typeof(UnityEngine.TextMesh),
+            typeof(UnityEngine.Texture),
             typeof(UnityEngine.Transform),
             typeof(UnityEngine.UI.Button),
             typeof(UnityEngine.UI.Image),
