@@ -11,14 +11,14 @@ namespace EZComponent
     [ExecuteInEditMode]
     public class FaceToCamera : MonoBehaviour
     {
-        public Transform cameraObject;
+        public GameObject cameraObject;
         public bool reverseZ;
 
         void LateUpdate()
         {
             if (cameraObject != null)
             {
-                transform.LookAt(cameraObject);
+                transform.LookAt(cameraObject.transform);
                 if (reverseZ) transform.Rotate(Vector3.up, 180, Space.Self);
             }
         }
