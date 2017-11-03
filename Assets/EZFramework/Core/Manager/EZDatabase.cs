@@ -158,7 +158,7 @@ namespace EZFramework
             {
                 data = new DBData();
                 DBDict.Add(dataName, data);
-                DBIndex.Add(dataName); SaveIndex();
+                DBIndex.Add(dataName);
                 Log("Create new data: " + dataName);
                 return data;
             }
@@ -177,7 +177,7 @@ namespace EZFramework
                 LogWarning("Load data from file: " + dataName + " failed");
                 LogWarning(ex.Message);
                 data = new DBData();
-                DBIndex.Add(dataName); SaveIndex();
+                DBIndex.Add(dataName);
             }
             DBDict[dataName] = data;
             return data;
@@ -204,6 +204,16 @@ namespace EZFramework
             return Convert.ToBase64String(data);
         }
 
+        protected void LoadIndex()
+        {
+            DBIndex = new DBIndex();
+            string[] files = Directory.GetFiles(MainDirPath, "*" + EXTENSION_DATA);
+            for (int i = 0; i < files.Length; i++)
+            {
+                string dataName = Path.GetFileNameWithoutExtension(files[i]);
+                DBIndex.Add(dataName);
+            }
+        }
         protected void LoadCache()
         {
             if (!File.Exists(CacheFilePath)) return;
@@ -229,7 +239,6 @@ namespace EZFramework
             }
             File.WriteAllText(CacheFilePath, string.Empty, ENCODING);
             cacheCount = 0;
-            SaveIndex();
         }
         protected void SaveCache(string cacheString)
         {
@@ -271,33 +280,6 @@ namespace EZFramework
             }
             File.WriteAllText(CacheFilePath, string.Empty, ENCODING);
             cacheCount = 0;
-            SaveIndex();
-        }
-        protected void LoadIndex()
-        {
-            try
-            {
-                Log("Load index.");
-                string data = File.ReadAllText(IndexFilePath, ENCODING);
-                DBIndex = DBIndex.LoadFromString(data);
-            }
-            catch (Exception ex)
-            {
-                LogWarning("Load index failed, Creating a new one.\n" + ex.Message);
-                DBIndex = new DBIndex();
-            }
-        }
-        public void SaveIndex()
-        {
-            try
-            {
-                Log("Save index.");
-                File.WriteAllText(IndexFilePath, DBIndex.ToString(), ENCODING);
-            }
-            catch (Exception ex)
-            {
-                LogError("Save index failed.\n" + ex.Message);
-            }
         }
     }
 
