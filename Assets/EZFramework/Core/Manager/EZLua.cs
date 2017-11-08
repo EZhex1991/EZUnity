@@ -23,7 +23,7 @@ namespace EZFramework
         public delegate void LuaAction();
         public delegate void LuaCoroutineCallback();
         private LuaAction luaStart;
-        private LuaAction LuaExit;
+        private LuaAction luaExit;
 
         public override void Init()
         {
@@ -33,13 +33,13 @@ namespace EZFramework
             AddLoader();
             luaEnv.DoString("require 'Main'");
             luaStart = luaEnv.Global.Get<LuaAction>("Start");
-            LuaExit = luaEnv.Global.Get<LuaAction>("Exit");
+            luaExit = luaEnv.Global.Get<LuaAction>("Exit");
             luaStart();
         }
         public override void Exit()
         {
             base.Exit();
-            LuaExit();
+            luaExit();
         }
 
         private void AddBuildin()
