@@ -4,8 +4,8 @@ CreateTime: #CREATETIME#
 Description:
 
 --]==]
-local moduleName = ...;
 local M = { };
+M._moduleName = ...;
 M.__index = M;
 ----- begin module -----
 
