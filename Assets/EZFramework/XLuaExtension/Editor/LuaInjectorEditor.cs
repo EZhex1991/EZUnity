@@ -20,6 +20,7 @@ namespace EZFramework.XLuaExtensionEditor
         public static List<Type> typeList = new List<Type>
         {
             typeof(UnityEngine.Object),
+            typeof(UnityEngine.Collider),
             typeof(UnityEngine.GameObject),
             typeof(UnityEngine.RectTransform),
             typeof(UnityEngine.Sprite),
