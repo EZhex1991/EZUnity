@@ -30,7 +30,7 @@ namespace EZComponent.UI
         public Vector3 highlightedScale { get { return m_HighlightedScale; } set { m_HighlightedScale = value; } }
 
         [SerializeField]
-        private Vector3 m_PressedScale = Vector3.one * 0.9f;
+        private Vector3 m_PressedScale = Vector3.one * 0.95f;
         public Vector3 pressedScale { get { return m_PressedScale; } set { m_PressedScale = value; } }
 
         [SerializeField]
