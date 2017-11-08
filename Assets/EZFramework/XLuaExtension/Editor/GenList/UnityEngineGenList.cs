@@ -145,6 +145,7 @@ namespace EZFramework.XLuaConfig
             typeof(UnityEngine.Events.UnityAction<bool>),
             typeof(UnityEngine.Events.UnityAction<float>),
             typeof(UnityEngine.Events.UnityAction<string>),
+            typeof(UnityEngine.Events.UnityAction<UnityEngine.Vector2>),
         };
 
         [BlackList]
