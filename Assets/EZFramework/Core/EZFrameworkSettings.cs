@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EZFramework
@@ -39,14 +40,36 @@ namespace EZFramework
             SystemSetting = UnityEngine.SleepTimeout.SystemSetting,
         }
 
-        public RunMode runMode = RunMode.Develop;
+        [SerializeField]
+        private RunMode m_RunMode = RunMode.Develop;
+        public RunMode runMode { get { return m_RunMode; } set { m_RunMode = value; } }
 
-        public SleepTimeout sleepTimeout = SleepTimeout.NeverSleep;
-        public bool runInBackground = true;
-        public int targetFrameRate = 45;
+        [SerializeField]
+        private SleepTimeout m_SleepTimeout = SleepTimeout.NeverSleep;
+        public SleepTimeout sleepTimeout { get { return m_SleepTimeout; } set { m_SleepTimeout = value; } }
 
-        public string updateServer = "";
-        public string bundleExtension = ".unity3d";
-        public string luaDirName = "Script_Lua";
+        [SerializeField]
+        private bool m_RunInBackground = true;
+        public bool runInBackground { get { return m_RunInBackground; } set { m_RunInBackground = value; } }
+
+        [SerializeField, Range(15, 120)]
+        private int m_TargetFrameRate = 30;
+        public int targetFrameRate { get { return m_TargetFrameRate; } set { m_TargetFrameRate = value; } }
+
+        [SerializeField]
+        private string m_UpdateServer = "";
+        public string updateServer { get { return m_UpdateServer; } set { m_UpdateServer = value; } }
+
+        [SerializeField]
+        private string m_BundleExtension = ".unity3d";
+        public string bundleExtension { get { return m_BundleExtension; } set { m_BundleExtension = value; } }
+
+        [SerializeField]
+        private List<string> m_LuaDirList = new List<string> { "Script_Lua" };
+        public List<string> luaDirList { get { return m_LuaDirList; } set { m_LuaDirList = value; } }
+
+        [SerializeField]
+        private List<string> m_LuaBundleList = new List<string> { "script_lua" };
+        public List<string> luaBundleList { get { return m_LuaBundleList; } set { m_LuaBundleList = value; } }
     }
 }

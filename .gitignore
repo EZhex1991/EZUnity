@@ -1,3 +1,5 @@
+/Assets/Example
+/Assets/Example.meta
 /Assets/EZAssets
 /Assets/EZAssets.meta
 /Assets/EZData
@@ -6,14 +8,8 @@
 /Assets/EZFramework/3rdParty/XLua/Gen
 /Assets/EZFramework/3rdParty/XLua/Gen.meta
 
-/Assets/_Temp
-/Assets/_Temp.meta
 /Assets/Resources
 /Assets/Resources.meta
-/Assets/Script_CSharp
-/Assets/Script_CSharp.meta
-/Assets/Script_Lua_txt
-/Assets/Script_Lua_txt.meta
 /Assets/StreamingAssets
 /Assets/StreamingAssets.meta
 
@@ -26,6 +22,7 @@
 *.luaproj.user
 *.userprefs
 *.config
+*.code-workspace
 
 /Library
 /obj

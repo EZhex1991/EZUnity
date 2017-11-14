@@ -4,14 +4,14 @@ CreateTime: 9/29/2017 12:52:50 PM
 Description:
 
 --]==]
-local moduleName = ...;
-local M = { };
-M.__index = M;
+local M = {}
+M._moduleName = ...
+M.__index = M
 ----- begin module -----
 -- bind(self.function, self)返回的就是 function(...) self:function(...) end，保存该值用于添加和移除delegate
-function bind(func, obj)
+function bind(func, param)
     return function(...)
-        return func(obj, ...);
+        return func(param, ...)
     end
 end
 
@@ -19,10 +19,10 @@ end
 -- 对于 condition and vtrue or vfalse 这个语句，vture会参与布尔运算而不是直接作为结果，当vtrue布尔判定为false时，该语句只能返回vfalse
 function ifsetor(condition, vtrue, vfalse)
     if condition then
-        return vtrue;
+        return vtrue
     else
-        return vfalse;
+        return vfalse
     end
 end
 ----- end -----
-return M;
+return M

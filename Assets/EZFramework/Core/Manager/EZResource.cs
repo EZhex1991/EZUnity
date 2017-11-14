@@ -194,15 +194,11 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.LoadComplete();
         }
         // 异步加载场景
-        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, OnSceneLoadedAction action = null)
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode = LoadSceneMode.Single, OnSceneLoadedAction action = null)
         {
-            StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, true, action));
+            StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, action));
         }
-        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, OnSceneLoadedAction action = null)
-        {
-            StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, setActive, action));
-        }
-        IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, bool setActive, OnSceneLoadedAction action)
+        IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, OnSceneLoadedAction action)
         {
             if (loadingPanel != null) loadingPanel.ShowProgress("Loading", 0);
             yield return null;
@@ -214,10 +210,13 @@ namespace EZFramework
                 if (loadingPanel != null) loadingPanel.ShowProgress("Loading", opr.progress + 0.1f);
                 yield return null;
             }
-            if (setActive) SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
             yield return null;
             if (loadingPanel != null) loadingPanel.LoadComplete();
             if (action != null) action();
+        }
+        public void SetActiveScene(string sceneName)
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
         }
 
         // 同步加载AssetBundle

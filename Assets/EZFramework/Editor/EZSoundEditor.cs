@@ -4,10 +4,11 @@
  * Description:
  * 
 */
+using EZFramework;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZFramework
+namespace EZFrameworkEditor
 {
     [CustomEditor(typeof(EZSound))]
     public class EZSoundEditor : Editor

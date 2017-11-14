@@ -16,14 +16,10 @@ namespace EZUnityEditor
         public const string AssetName = "EZBundle";
 
         public BuildTarget bundleTarget = BuildTarget.Android;
-
-        public bool relativePath = true;
-        public bool removeOldFiles = true;
-        public string bundleDirPath = "StreamingAssets";
+        public string bundleDirPath = "Assets/StreamingAssets";
         public string bundleExtension = ".unity3d";
-
-        public bool createListFile = true;
         public string listFileName = "files.txt";
+        public bool removeOldFiles = false;
 
         [Serializable]
         public class CopyInfo

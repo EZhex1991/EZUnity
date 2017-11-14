@@ -4,10 +4,11 @@
  * Description:
  * 
 */
+using EZFramework;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZFramework
+namespace EZFrameworkEditor
 {
     [CustomEditor(typeof(EZWWWTask))]
     public class WWWTaskEditor : Editor

@@ -26,21 +26,21 @@ namespace EZUnityEditor
 
         public static void SetKeystore(EZKeystoreObject ezKeystore)
         {
-            if (ezKeystore != null && ezKeystore.keystoreFilePath != "" && ezKeystore.keyAliasName != "")
+            if (ezKeystore != null && ezKeystore.keystoreName != "" && ezKeystore.keyAliasName != "")
             {
-                PlayerSettings.Android.keystoreName = ezKeystore.keystoreFilePath;
-                PlayerSettings.Android.keystorePass = ezKeystore.keystorePassword;
+                PlayerSettings.Android.keystoreName = ezKeystore.keystoreName;
+                PlayerSettings.Android.keystorePass = ezKeystore.keystoreName;
                 PlayerSettings.Android.keyaliasName = ezKeystore.keyAliasName;
-                PlayerSettings.Android.keyaliasPass = ezKeystore.keyAliasPassword;
+                PlayerSettings.Android.keyaliasPass = ezKeystore.keyAliasPass;
             }
         }
-        public static EZKeystoreObject CreateKeystore()
+        public static EZKeystoreObject LoadKeystore()
         {
             EZKeystoreObject ezKeystore = EZScriptableObject.Load<EZKeystoreObject>(EZKeystoreObject.AssetName, true);
-            ezKeystore.keystoreFilePath = PlayerSettings.Android.keystoreName;
-            ezKeystore.keystorePassword = PlayerSettings.Android.keystorePass;
+            ezKeystore.keystoreName = PlayerSettings.Android.keystoreName;
+            ezKeystore.keystorePass = PlayerSettings.Android.keystorePass;
             ezKeystore.keyAliasName = PlayerSettings.Android.keyaliasName;
-            ezKeystore.keyAliasPassword = PlayerSettings.Android.keyaliasPass;
+            ezKeystore.keyAliasPass = PlayerSettings.Android.keyaliasPass;
             return ezKeystore;
         }
     }

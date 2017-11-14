@@ -35,10 +35,8 @@ namespace EZUnityEditor
         public static void BuildBundle(EZBundleObject ezBundle)
         {
             OnPreBuild();
-            string bundleDirPath = ezBundle.relativePath ? "Assets/" + ezBundle.bundleDirPath : ezBundle.bundleDirPath;
-            if (!bundleDirPath.EndsWith("/")) bundleDirPath = bundleDirPath + "/";
-            if (ezBundle.removeOldFiles && Directory.Exists(bundleDirPath)) Directory.Delete(bundleDirPath, true);
-            Directory.CreateDirectory(bundleDirPath);
+            if (ezBundle.removeOldFiles && Directory.Exists(ezBundle.bundleDirPath)) Directory.Delete(ezBundle.bundleDirPath, true);
+            Directory.CreateDirectory(ezBundle.bundleDirPath);
 
             AssetDatabase.Refresh();
             foreach (EZBundleObject.CopyInfo copyInfo in ezBundle.copyList)
@@ -50,8 +48,8 @@ namespace EZUnityEditor
             AssetDatabase.Refresh();
             BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
             List<AssetBundleBuild> buildList = GetBuildList(ezBundle);
-            BuildPipeline.BuildAssetBundles(bundleDirPath, buildList.ToArray(), options, ezBundle.bundleTarget);
-            if (ezBundle.createListFile) CreateFileList(bundleDirPath, ezBundle.listFileName);
+            BuildPipeline.BuildAssetBundles(ezBundle.bundleDirPath, buildList.ToArray(), options, ezBundle.bundleTarget);
+            if (!string.IsNullOrEmpty(ezBundle.listFileName)) CreateFileList(ezBundle.bundleDirPath, ezBundle.listFileName);
             AssetDatabase.Refresh();
             OnPostBuild(buildList);
         }
@@ -126,7 +124,7 @@ namespace EZUnityEditor
         }
         protected static void CreateFileList(string dirPath, string listFileName)
         {
-            string listFilePath = dirPath + listFileName;
+            string listFilePath = Path.Combine(dirPath, listFileName);
             if (File.Exists(listFilePath)) File.Delete(listFilePath);
 
             List<string> fileList = new List<string>();

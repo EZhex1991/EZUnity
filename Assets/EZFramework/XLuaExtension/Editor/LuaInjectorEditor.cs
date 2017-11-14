@@ -19,6 +19,7 @@ namespace EZFramework.XLuaExtensionEditor
     {
         public static List<Type> typeList = new List<Type>
         {
+            typeof(EZFramework.XLuaExtension.LuaInjector), // 可嵌套使用
             typeof(UnityEngine.Object),
             typeof(UnityEngine.Collider),
             typeof(UnityEngine.GameObject),

@@ -2,13 +2,8 @@
 Author:     熊哲
 CreateTime: 4/19/2017 2:20:04 PM
 Description:
-	-- 用一个eventKey去对应一个eventFunc是为了方便在移除时直接通过key去置空，而不是遍历value存在时移除：
-	这意味着你必须用一个很特殊的值来保证eventKey不冲突，好在lua里方法本身就是一个不会冲突的key，
-	所以你可以这样：event:AddListener(func, func)
-	-- 另外eventKey会作为第一个参数传给eventFunc：
-	如果添加时使用event:AddListener(self, self.Func)，这样等价于添加了self:Func()。（ps:个人对于方法统一使用了冒号）
-	你仍然可以event:AddListener(t.Func, function() t.Func(params) end)去舍弃该参数并指定需要的参数，
-	就如同在C#中为一个Action去添加 delegate() { Function(params); } 一样。
+    obsolete！
+	请使用ezlua.event，该脚本已废弃，只是由于部分原因暂未删除
 --]==]
 local moduleName = ...;
 local M = { };

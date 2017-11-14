@@ -21,13 +21,13 @@ namespace EZUnityEditor
         [MenuItem(ROOT_NAME + "/EZKeystore", priority = 2)]
         private static void EZKeystore()
         {
-            EditorWindow.GetWindow<EZKeystoreEditorWindow>("EZKeystore").Show();
+            Selection.activeObject = EZScriptableObject.Load<EZKeystoreObject>(EZKeystoreObject.AssetName);
         }
 
         [MenuItem(ROOT_NAME + "/EZBundle", priority = 3)]
         private static void EZBundle()
         {
-            EditorWindow.GetWindow<EZBundleEditorWindow>("EZBundle").Show();
+            Selection.activeObject = EZScriptableObject.Load<EZBundleObject>(EZBundleObject.AssetName);
         }
 
         [MenuItem(ROOT_NAME + "/EZRename", priority = 4)]

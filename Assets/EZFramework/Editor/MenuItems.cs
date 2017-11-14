@@ -4,9 +4,10 @@
  * Description:
  * 
 */
+using EZFramework;
 using UnityEditor;
 
-namespace EZFramework
+namespace EZFrameworkEditor
 {
     public class MenuItems
     {
@@ -15,7 +16,7 @@ namespace EZFramework
         [MenuItem(ROOT_NAME + "/Settings", priority = 0)]
         public static void EZSettings()
         {
-            EditorWindow.GetWindow<EZFrameworkSettingsEditorWindow>("Settings").Show();
+            Selection.activeObject = EZFrameworkSettings.Instance;
         }
 
         [MenuItem(ROOT_NAME + "/Copy Lua To Text", priority = 20)]

@@ -21,7 +21,11 @@ namespace EZFramework.XLuaConfig
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
-
+            typeof(System.Action),
+            typeof(System.Action<int>),
+            typeof(System.Action<float>),
+            typeof(System.Action<string>),
+            typeof(System.Action<bool>),
         };
 
         [BlackList]
