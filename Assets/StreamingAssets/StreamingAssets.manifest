@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 3124301206
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: script_lua.unity3d
+      Dependencies: {}
+    Info_1:
+      Name: spaceshooter.unity3d
+      Dependencies: {}

@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 4029405937
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0ab04f80bc84d87288399f85365a0307
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Example/Script_Lua_txt/SpaceShooter__EnemyShip.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_GameController.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_DestroyByContact.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_DestroyByBoundary.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__Asteroid.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_EvasiveManeuver.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_BGScroller.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_RandomRotator.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_PlayerController.lua.txt
+- Assets/Example/Script_Lua_txt/Main.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_Mover.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_DestroyByTime.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter_WeaponController.lua.txt
+Dependencies: []
