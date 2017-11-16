@@ -59,6 +59,7 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.EZFacade.OnApplicationQuitAction),
             typeof(EZFramework.EZResource.OnAssetLoadedAction),
             typeof(EZFramework.EZResource.OnSceneLoadedAction),
+            typeof(EZFramework.EZResource.OnBundleLoadedAction),
             typeof(EZFramework.EZLua.LuaAction),
             typeof(EZFramework.EZLua.LuaCoroutineCallback),
             typeof(EZFramework.EZWWWTask.OnProgressAction),

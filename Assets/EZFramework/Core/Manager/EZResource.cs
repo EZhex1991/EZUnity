@@ -28,6 +28,7 @@ namespace EZFramework
         public delegate void OnAssetLoadedAction(Object asset);
         public delegate void OnAssetLoadedAction<T>(T asset) where T : Object;
         public delegate void OnSceneLoadedAction();
+        public delegate void OnBundleLoadedAction(AssetBundle bundle);
 
         // 初始化资源管理器，读取StreamingAssets的所有依赖（即所有的资源包名）
         public override void Init()
@@ -151,7 +152,7 @@ namespace EZFramework
         IEnumerator Cor_LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : Object
         {
             yield return null;
-            yield return Cor_LoadBundleAsync(bundleName);
+            yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
@@ -163,7 +164,7 @@ namespace EZFramework
         IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<Object> callback)
         {
             yield return null;
-            yield return Cor_LoadBundleAsync(bundleName);
+            yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
@@ -175,7 +176,7 @@ namespace EZFramework
         IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<Object> callback)
         {
             yield return null;
-            yield return Cor_LoadBundleAsync(bundleName);
+            yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
@@ -203,7 +204,7 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.ShowProgress("Loading", 0);
             yield return null;
             if (!(EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop))
-                yield return Cor_LoadBundleAsync(bundleName);
+                yield return Cor_LoadBundleAsync(bundleName, null);
             AsyncOperation opr = SceneManager.LoadSceneAsync(sceneName, mode);
             while (!opr.isDone)
             {
@@ -246,7 +247,11 @@ namespace EZFramework
             }
         }
         // 异步加载AssetBundle
-        IEnumerator Cor_LoadBundleAsync(string bundleName)
+        public void LoadBundleAsync(string bundleName, OnBundleLoadedAction action = null)
+        {
+            StartCoroutine(Cor_LoadBundleAsync(bundleName, action));
+        }
+        IEnumerator Cor_LoadBundleAsync(string bundleName, OnBundleLoadedAction action)
         {
             bundleName = bundleName.ToLower();
             if (!bundleName.EndsWith(bundleExtension)) bundleName += bundleExtension;
@@ -261,6 +266,7 @@ namespace EZFramework
                 if (abCR.isDone) bundleDict.Add(bundleName, abCR.assetBundle);
                 GetAssetPathFromBundle(abCR.assetBundle);
             }
+            if (action != null) action(bundleDict[bundleName]);
         }
         IEnumerator Cor_LoadDependenciesAsync(string bundleName)
         {
@@ -269,7 +275,7 @@ namespace EZFramework
             string[] dependencies = manifest.GetAllDependencies(bundleName);
             foreach (string dep in dependencies)
             {
-                yield return Cor_LoadBundleAsync(dep);
+                yield return Cor_LoadBundleAsync(dep, null);
             }
         }
 
