@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace EZComponent
 {
-    public class DisableOnPlay : MonoBehaviour
+    public class DestroyOnAwake : MonoBehaviour
     {
         void Awake()
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }
