@@ -20,7 +20,7 @@ namespace EZFrameworkEditor
             {
                 string luaDirPath = "Assets/" + dirPath + "/";
                 string txtDirPath = "Assets/" + dirPath + "_txt/";
-                if (!Directory.Exists(luaDirPath)) return;
+                if (!Directory.Exists(luaDirPath)) continue;
                 // if (Directory.Exists(luaTxtDirPath)) Directory.Delete(luaTxtDirPath, true);
                 Directory.CreateDirectory(txtDirPath);
                 string[] files = Directory.GetFiles(luaDirPath, "*.lua", SearchOption.AllDirectories);
