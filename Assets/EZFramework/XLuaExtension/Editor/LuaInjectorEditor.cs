@@ -21,8 +21,11 @@ namespace EZFramework.XLuaExtensionEditor
         {
             typeof(EZFramework.XLuaExtension.LuaInjector), // 可嵌套使用
             typeof(UnityEngine.Object),
+            typeof(UnityEngine.AudioSource),
+            typeof(UnityEngine.AudioClip),
             typeof(UnityEngine.Collider),
             typeof(UnityEngine.GameObject),
+            typeof(UnityEngine.GUIText),
             typeof(UnityEngine.RectTransform),
             typeof(UnityEngine.Sprite),
             typeof(UnityEngine.TextMesh),
