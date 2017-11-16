@@ -87,7 +87,7 @@ namespace EZFramework.XLuaExtension
             dict[key] = value;
         }
 
-        // float和int参数造成UnityEngine.Random.Range重载调用不明确
+        // float和int参数造成UnityEngine.Random.Range和UnityEngine.Mathf.Clamp重载调用不明确
         public static int RandomInt(int min, int max)
         {
             return UnityEngine.Random.Range(min, max);
@@ -95,6 +95,14 @@ namespace EZFramework.XLuaExtension
         public static float RandomFloat(float min, float max)
         {
             return UnityEngine.Random.Range(min, max);
+        }
+        public static int ClampInt(int value, int min, int max)
+        {
+            return UnityEngine.Mathf.Clamp(value, min, max);
+        }
+        public static float ClampFloat(float value, float min, float max)
+        {
+            return UnityEngine.Mathf.Clamp(value, min, max);
         }
 
         // out和ref参数造成UnityEngine.Physics.Raycast重载调用不明确
