@@ -46,20 +46,34 @@ namespace EZComponent.UI
         private List<RectTransform> m_RectChildren = new List<RectTransform>();
         protected List<RectTransform> rectChildren { get { return m_RectChildren; } }
 
+        protected DrivenRectTransformTracker m_Tracker;
+
         protected virtual void GetChildren()
         {
             rectChildren.Clear();
+            m_Tracker.Clear();
             for (int i = 0; i < transform.childCount; i++)
             {
                 RectTransform child = transform.GetChild(i).GetComponent<RectTransform>();
                 if (child == null || !child.gameObject.activeInHierarchy) continue;
                 rectChildren.Add(child);
+                m_Tracker.Add(this, child, DrivenTransformProperties.Scale);
             }
         }
 
         protected override void Awake()
         {
             GetChildren();
+        }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            GetChildren();
+        }
+        protected override void OnDisable()
+        {
+            m_Tracker.Clear();
+            base.OnDisable();
         }
 
         protected virtual void OnTransformChildrenChanged()
