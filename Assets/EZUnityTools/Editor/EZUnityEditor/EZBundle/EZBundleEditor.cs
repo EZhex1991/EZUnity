@@ -26,8 +26,8 @@ namespace EZUnityEditor
         private ReorderableList bundleList;
         private bool copyListFoldout = true;
         private bool bundleListFoldout = true;
+        private bool showAsPropertyField;
         private string saveAsName;
-        private Vector2 scrollPosition;
 
         float height = EditorGUIUtility.singleLineHeight;
 
@@ -123,7 +123,7 @@ namespace EZUnityEditor
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Save As"))
                 {
-                    if (saveAsName == "")
+                    if (string.IsNullOrEmpty(saveAsName))
                         EZScriptableObject.Create(EZBundleObject.AssetName, Object.Instantiate(target as EZBundleObject));
                     else
                         EZScriptableObject.Create(saveAsName, Object.Instantiate(target as EZBundleObject));
@@ -139,12 +139,19 @@ namespace EZUnityEditor
             EditorGUILayout.PropertyField(m_RemoveOldFiles);
 
             EditorGUILayout.Space();
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-            copyListFoldout = EditorGUILayout.Foldout(copyListFoldout, string.Format("Copy List ({0})", copyList.count));
-            if (copyListFoldout) copyList.DoLayoutList();
-            bundleListFoldout = EditorGUILayout.Foldout(bundleListFoldout, string.Format("Bundle List ({0})", bundleList.count));
-            if (bundleListFoldout) bundleList.DoLayoutList();
-            EditorGUILayout.EndScrollView();
+            showAsPropertyField = EditorGUILayout.Toggle("Show As Property Field", showAsPropertyField);
+            if (showAsPropertyField)
+            {
+                EditorGUILayout.PropertyField(m_CopyList, true);
+                EditorGUILayout.PropertyField(m_BundleList, true);
+            }
+            else
+            {
+                copyListFoldout = EditorGUILayout.Foldout(copyListFoldout, string.Format("Copy List ({0})", copyList.count));
+                if (copyListFoldout) copyList.DoLayoutList();
+                bundleListFoldout = EditorGUILayout.Foldout(bundleListFoldout, string.Format("Bundle List ({0})", bundleList.count));
+                if (bundleListFoldout) bundleList.DoLayoutList();
+            }
 
             serializedObject.ApplyModifiedProperties();
         }
