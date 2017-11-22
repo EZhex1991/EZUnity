@@ -2,8 +2,8 @@
 Author:     熊哲
 CreateTime: 4/19/2017 2:20:04 PM
 Description:
-	-- 用一个key去对应一个func是为了方便在移除时直接通过key去置空，而不是遍历_functionlist判断存在时移除：
-	这意味着你必须用一个很特殊的值来保证key不冲突，好在lua里function本身就是一个不会冲突的key，
+    -- 用一个key去对应一个func是为了方便在移除时直接通过key去置空，而不是遍历_functionlist判断存在时移除：
+    这意味着你必须用一个很特殊的值来保证key不冲突，好在lua里function本身就是一个不会冲突的key，
     所以你可以这样：event:addlistener(func, func)
     -- 使用"+","-"会直接以func本身为key添加监听，调用亦可直接用event(params)，例：
         event = require("ezlua.event"):new()
@@ -59,24 +59,6 @@ M.__sub = function(event, func)
 end
 M.__call = function(event, ...)
     event:call(...)
-end
-
--- Obsolete
-function M:New()
-    CS.UnityEngine.Debug.LogError("Obsolete! Use event:new() instead!" .. debug.traceback())
-    return M:new()
-end
-function M:AddListener(eventKey, eventFunc)
-    CS.UnityEngine.Debug.LogError("Obsolete! Use event:addlistener() instead!" .. debug.traceback())
-    self:addlistener(eventKey, eventFunc)
-end
-function M:RemoveListener(eventKey)
-    CS.UnityEngine.Debug.LogError("Obsolete! Use event:removelistener() instead!" .. debug.traceback())
-    self:removelistener(eventKey)
-end
-function M:Call(...)
-    CS.UnityEngine.Debug.LogError("Obsolete! Use event:keycall() instead!" .. debug.traceback())
-    self:keycall(...)
 end
 ----- end -----
 return M
