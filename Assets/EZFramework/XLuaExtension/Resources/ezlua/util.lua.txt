@@ -9,7 +9,7 @@ M._moduleName = ...
 M.__index = M
 ----- begin module -----
 -- bind(self.function, self)返回的就是 function(...) self:function(...) end，保存该值用于添加和移除delegate
-function bind(func, param)
+function M.bind(func, param)
     return function(...)
         return func(param, ...)
     end
@@ -17,7 +17,7 @@ end
 
 -- 三目运算
 -- 对于 condition and vtrue or vfalse 这个语句，vture会参与布尔运算而不是直接作为结果，当vtrue布尔判定为false时，该语句只能返回vfalse
-function ifsetor(condition, vtrue, vfalse)
+function M.ifsetor(condition, vtrue, vfalse)
     if condition then
         return vtrue
     else
