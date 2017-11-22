@@ -263,8 +263,11 @@ namespace EZFramework
                 string bundlePath = bundleDirPath + bundleName;
                 AssetBundleCreateRequest abCR = AssetBundle.LoadFromFileAsync(bundlePath);
                 yield return abCR;
-                if (abCR.isDone) bundleDict.Add(bundleName, abCR.assetBundle);
-                GetAssetPathFromBundle(abCR.assetBundle);
+                if (abCR.isDone && abCR.assetBundle != null)
+                {
+                    bundleDict.Add(bundleName, abCR.assetBundle);
+                    GetAssetPathFromBundle(abCR.assetBundle);
+                }
             }
             if (action != null) action(bundleDict[bundleName]);
         }
