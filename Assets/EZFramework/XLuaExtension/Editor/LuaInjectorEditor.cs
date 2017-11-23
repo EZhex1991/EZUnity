@@ -5,6 +5,7 @@
  * 
 */
 using EZFramework.XLuaExtension;
+using EZUnityEditor;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -39,7 +40,7 @@ namespace EZFramework.XLuaExtensionEditor
             typeof(UnityEngine.UI.Toggle),
             typeof(UnityEngine.UI.ToggleGroup),
         };
-        public Type GetType(string typeName, bool deepSearch = true)
+        public static Type GetType(string typeName, bool deepSearch = true)
         {
             foreach (Type type in typeList)
             {
@@ -56,11 +57,16 @@ namespace EZFramework.XLuaExtensionEditor
             return null;
         }
 
+        private SerializedProperty m_InjectionList;
         private ReorderableList injectionList;
+
+        private float space = EZEditorGUIUtility.space;
+        private float lineHeight = EditorGUIUtility.singleLineHeight;
 
         void OnEnable()
         {
-            injectionList = new ReorderableList(serializedObject, serializedObject.FindProperty("injections"), true, true, true, true);
+            m_InjectionList = serializedObject.FindProperty("injections");
+            injectionList = new ReorderableList(serializedObject, m_InjectionList, true, true, true, true);
             injectionList.drawHeaderCallback = DrawInjectionListHeader;
             injectionList.drawElementCallback = DrawInjectionListElement;
         }
@@ -68,16 +74,13 @@ namespace EZFramework.XLuaExtensionEditor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour(target as MonoBehaviour), typeof(MonoScript), false);
-            GUI.enabled = true;
+            EZEditorGUIUtility.ScriptTitle(target);
             injectionList.DoLayoutList();
             serializedObject.ApplyModifiedProperties();
         }
 
         protected void DrawTypeMenu(GenericMenu.MenuFunction2 callback)
         {
-            callback += delegate { serializedObject.ApplyModifiedProperties(); };
             GenericMenu menu = new GenericMenu();
             for (int i = 0; i < typeList.Count; i++)
             {
@@ -94,20 +97,24 @@ namespace EZFramework.XLuaExtensionEditor
         protected void DrawInjectionListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
             rect.y += 1;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_InjectionList, index);
+
             SerializedProperty pair = injectionList.serializedProperty.GetArrayElementAtIndex(index);
             SerializedProperty key = pair.FindPropertyRelative("key");
             SerializedProperty value = pair.FindPropertyRelative("value");
             SerializedProperty typeName = pair.FindPropertyRelative("typeName");
             if (string.IsNullOrEmpty(typeName.stringValue)) typeName.stringValue = "UnityEngine.Object";
             Type type = GetType(typeName.stringValue);
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, 20, EditorGUIUtility.singleLineHeight), index.ToString("00"));
-            float width = (rect.width - 20) / 3 - 5;
-            if (GUI.Button(new Rect(rect.x + 25, rect.y, width, EditorGUIUtility.singleLineHeight), type.Name))
+
+            float width = rect.width / 3;
+            if (GUI.Button(new Rect(rect.x, rect.y, width - space, lineHeight), type.Name))
             {
-                DrawTypeMenu(delegate (object name) { typeName.stringValue = (string)name; });
+                DrawTypeMenu(delegate (object name) { typeName.stringValue = (string)name; serializedObject.ApplyModifiedProperties(); });
             }
-            EditorGUI.PropertyField(new Rect(rect.x + 30 + width, rect.y, width, EditorGUIUtility.singleLineHeight), key, GUIContent.none);
-            value.objectReferenceValue = EditorGUI.ObjectField(new Rect(rect.x + 35 + width * 2, rect.y, width, EditorGUIUtility.singleLineHeight), value.objectReferenceValue, type, true);
+            rect.x += width;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - space, lineHeight), key, GUIContent.none);
+            rect.x += width;
+            value.objectReferenceValue = EditorGUI.ObjectField(new Rect(rect.x, rect.y, width - space, lineHeight), value.objectReferenceValue, type, true);
         }
     }
 }

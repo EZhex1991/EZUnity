@@ -34,11 +34,11 @@ namespace EZComponentEditor.EZAnimation
 
         protected override void DrawPhaseListHeader(Rect rect)
         {
-            rect.x += 15; rect.y += 1; rect.width -= 15;
+            rect.x += headerIndent; rect.width -= headerIndent; rect.y += 1;
             float width = rect.width / 2;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "Start Value");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Start Value");
             rect.x += width;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "End Value");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "End Value");
         }
 
         private int GetLineCount()
@@ -63,45 +63,43 @@ namespace EZComponentEditor.EZAnimation
 
             rect.y += 1; float width = rect.width / 2;
 
-            float x1 = rect.x, x2 = rect.x + width, margin = 10;
+            float x1 = rect.x, x2 = rect.x + width, space = 10;
             Color bgColor = GUI.backgroundColor;
             if (m_DrivePosition.boolValue)
             {
                 GUI.backgroundColor = positionColor;
-                EditorGUI.PropertyField(new Rect(x1, rect.y, width - margin, height), startValue.FindPropertyRelative("m_Position"), GUIContent.none);
-                EditorGUI.PropertyField(new Rect(x2, rect.y, width - margin, height), endValue.FindPropertyRelative("m_Position"), GUIContent.none);
+                EditorGUI.PropertyField(new Rect(x1, rect.y, width - space, lineHeight), startValue.FindPropertyRelative("m_Position"), GUIContent.none);
+                EditorGUI.PropertyField(new Rect(x2, rect.y, width - space, lineHeight), endValue.FindPropertyRelative("m_Position"), GUIContent.none);
                 rect.y += rect.height;
             }
             if (m_DriveRotation.boolValue)
             {
                 GUI.backgroundColor = rotationColor;
-                EditorGUI.PropertyField(new Rect(x1, rect.y, width - margin, height), startValue.FindPropertyRelative("m_Rotation"), GUIContent.none);
-                EditorGUI.PropertyField(new Rect(x2, rect.y, width - margin, height), endValue.FindPropertyRelative("m_Rotation"), GUIContent.none);
+                EditorGUI.PropertyField(new Rect(x1, rect.y, width - space, lineHeight), startValue.FindPropertyRelative("m_Rotation"), GUIContent.none);
+                EditorGUI.PropertyField(new Rect(x2, rect.y, width - space, lineHeight), endValue.FindPropertyRelative("m_Rotation"), GUIContent.none);
                 rect.y += rect.height;
             }
             if (m_DriveScale.boolValue)
             {
                 GUI.backgroundColor = scaleColor;
-                EditorGUI.PropertyField(new Rect(x1, rect.y, width - margin, height), startValue.FindPropertyRelative("m_Scale"), GUIContent.none);
-                EditorGUI.PropertyField(new Rect(x2, rect.y, width - margin, height), endValue.FindPropertyRelative("m_Scale"), GUIContent.none);
+                EditorGUI.PropertyField(new Rect(x1, rect.y, width - space, lineHeight), startValue.FindPropertyRelative("m_Scale"), GUIContent.none);
+                EditorGUI.PropertyField(new Rect(x2, rect.y, width - space, lineHeight), endValue.FindPropertyRelative("m_Scale"), GUIContent.none);
                 rect.y += rect.height;
             }
             GUI.backgroundColor = bgColor;
 
-            float labelWidth = 60; float propertyWidth = width - labelWidth - margin;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, labelWidth, height), "Duration");
-            EditorGUI.PropertyField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, height), duration, GUIContent.none);
+            float labelWidth = 60; float propertyWidth = width - labelWidth - space;
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, labelWidth, lineHeight), "Duration");
+            EditorGUI.PropertyField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, lineHeight), duration, GUIContent.none);
             rect.x += width;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, labelWidth, height), "Curve");
-            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, height), curve.animationCurveValue, Color.green, new Rect(0, 0, duration.floatValue, 1));
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, labelWidth, lineHeight), "Curve");
+            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, lineHeight), curve.animationCurveValue, Color.green, new Rect(0, 0, duration.floatValue, 1));
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour(target as MonoBehaviour), typeof(MonoScript), false);
-            GUI.enabled = true;
+            EZUnityEditor.EZEditorGUIUtility.ScriptTitle(target);
             EditorGUILayout.PropertyField(m_Loop);
             EditorGUILayout.PropertyField(m_RestartOnEnable);
             originFoldout = EditorGUILayout.Foldout(originFoldout, "Driver");

@@ -59,9 +59,7 @@ namespace EZComponentEditor.UI
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour(target as MonoBehaviour), typeof(MonoScript), false);
-            GUI.enabled = true;
+            EZUnityEditor.EZEditorGUIUtility.ScriptTitle(target);
             EditorGUILayout.PropertyField(m_Horizontal);
             EditorGUILayout.PropertyField(m_Vertical);
             slaveList.DoLayoutList();

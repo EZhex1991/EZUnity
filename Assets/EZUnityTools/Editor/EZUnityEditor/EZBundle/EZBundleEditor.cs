@@ -26,10 +26,10 @@ namespace EZUnityEditor
         private ReorderableList bundleList;
         private bool copyListFoldout = true;
         private bool bundleListFoldout = true;
-        private bool showAsPropertyField;
         private string saveAsName;
 
-        float height = EditorGUIUtility.singleLineHeight;
+        float space = EZEditorGUIUtility.space;
+        float lineHeight = EditorGUIUtility.singleLineHeight;
 
         void OnEnable()
         {
@@ -50,70 +50,76 @@ namespace EZUnityEditor
 
         private void DrawCopyListHeader(Rect rect)
         {
-            rect.x += 15; rect.y += 1; rect.width -= 15;
+            rect.y += 1;
+            rect = EZEditorGUIUtility.DrawReorderableListHeaderIndex(rect);
             float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "Destination");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Destination");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "File Pattern");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "File Pattern");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "Search Option");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Search Option");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "Source");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Source");
         }
         private void DrawCopyListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
+            rect.y += 1;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_CopyList, index);
+
             SerializedProperty m_CopyInfo = m_CopyList.GetArrayElementAtIndex(index);
             SerializedProperty m_DestDirPath = m_CopyInfo.FindPropertyRelative("destDirPath");
             SerializedProperty m_FilePattern = m_CopyInfo.FindPropertyRelative("filePattern");
             SerializedProperty m_SearchOption = m_CopyInfo.FindPropertyRelative("searchOption");
             SerializedProperty m_SrcDirPath = m_CopyInfo.FindPropertyRelative("sourDirPath");
 
-            rect.y += 1; float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - 5, height), m_DestDirPath, GUIContent.none);
+            float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_DestDirPath, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - 5, height), m_FilePattern, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_FilePattern, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - 5, height), m_SearchOption, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_SearchOption, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue * 7 - 5, height), m_SrcDirPath, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue * 7 - space, lineHeight), m_SrcDirPath, GUIContent.none);
         }
 
         private void DrawBundleListHeader(Rect rect)
         {
-            rect.x += 15; rect.y += 1; rect.width -= 15;
+            rect.y += 1;
+            rect = EZEditorGUIUtility.DrawReorderableListHeaderIndex(rect);
             float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - 5, height), "Bundle Name");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), "Bundle Name");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - 5, height), "File Pattern");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), "File Pattern");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - 5, height), "Search Option");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), "Search Option");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue * 7 - 5, height), "Source");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue * 7 - space, lineHeight), "Source");
         }
         private void DrawBundleListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
+            rect.y += 1;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_BundleList, index);
+
             SerializedProperty m_BundleInfo = m_BundleList.GetArrayElementAtIndex(index);
             SerializedProperty m_BundleName = m_BundleInfo.FindPropertyRelative("bundleName");
             SerializedProperty m_FilePattern = m_BundleInfo.FindPropertyRelative("filePattern");
             SerializedProperty m_SearchOption = m_BundleInfo.FindPropertyRelative("searchOption");
             SerializedProperty m_SrcDirPath = m_BundleInfo.FindPropertyRelative("dirPath");
 
-            rect.y += 1; float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - 5, height), m_BundleName, GUIContent.none);
+            float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_BundleName, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - 5, height), m_FilePattern, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_FilePattern, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - 5, height), m_SearchOption, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_SearchOption, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue * 7 - 5, height), m_SrcDirPath, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue * 7 - space, lineHeight), m_SrcDirPath, GUIContent.none);
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target as ScriptableObject), typeof(MonoScript), false);
-            GUI.enabled = true;
+            EZEditorGUIUtility.ScriptTitle(target);
 
             if (GUILayout.Button("Build Bundle"))
             {
@@ -139,19 +145,10 @@ namespace EZUnityEditor
             EditorGUILayout.PropertyField(m_RemoveOldFiles);
 
             EditorGUILayout.Space();
-            showAsPropertyField = EditorGUILayout.Toggle("Show As Property Field", showAsPropertyField);
-            if (showAsPropertyField)
-            {
-                EditorGUILayout.PropertyField(m_CopyList, true);
-                EditorGUILayout.PropertyField(m_BundleList, true);
-            }
-            else
-            {
-                copyListFoldout = EditorGUILayout.Foldout(copyListFoldout, string.Format("Copy List ({0})", copyList.count));
-                if (copyListFoldout) copyList.DoLayoutList();
-                bundleListFoldout = EditorGUILayout.Foldout(bundleListFoldout, string.Format("Bundle List ({0})", bundleList.count));
-                if (bundleListFoldout) bundleList.DoLayoutList();
-            }
+            copyListFoldout = EditorGUILayout.Foldout(copyListFoldout, string.Format("Copy List ({0})", copyList.count));
+            if (copyListFoldout) copyList.DoLayoutList();
+            bundleListFoldout = EditorGUILayout.Foldout(bundleListFoldout, string.Format("Bundle List ({0})", bundleList.count));
+            if (bundleListFoldout) bundleList.DoLayoutList();
 
             serializedObject.ApplyModifiedProperties();
         }

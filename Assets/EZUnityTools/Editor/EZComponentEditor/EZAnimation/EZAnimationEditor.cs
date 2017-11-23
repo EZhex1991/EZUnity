@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using EZUnityEditor;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -17,7 +18,9 @@ namespace EZComponentEditor.EZAnimation
         protected SerializedProperty m_PhaseList;
         protected ReorderableList phaseList;
 
-        protected float height = EditorGUIUtility.singleLineHeight;
+        protected float space = EZEditorGUIUtility.space;
+        protected float headerIndent = EZEditorGUIUtility.reorderableListHeaderIndent;
+        protected float lineHeight = EditorGUIUtility.singleLineHeight;
 
         protected virtual void OnEnable()
         {
@@ -31,15 +34,15 @@ namespace EZComponentEditor.EZAnimation
 
         protected virtual void DrawPhaseListHeader(Rect rect)
         {
-            rect.x += 15; rect.y += 1; rect.width -= 15;
+            rect.x += headerIndent; rect.y += 1; rect.width -= headerIndent;
             float width = rect.width / 6;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - 5, height), "Start Value");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - space, lineHeight), "Start Value");
             rect.x += width * 2;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - 5, height), "End Value");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - space, lineHeight), "End Value");
             rect.x += width * 2;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "Duration");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Duration");
             rect.x += width;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - 5, height), "Curve");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Curve");
         }
 
         protected virtual void DrawPhaseListElement(Rect rect, int index, bool isActive, bool isFocused)
@@ -51,22 +54,20 @@ namespace EZComponentEditor.EZAnimation
             SerializedProperty curve = phase.FindPropertyRelative("m_Curve");
 
             rect.y += 1; float width = rect.width / 6;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width * 2 - 5, height), startValue, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width * 2 - space, lineHeight), startValue, GUIContent.none);
             rect.x += width * 2;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width * 2 - 5, height), endValue, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width * 2 - space, lineHeight), endValue, GUIContent.none);
             rect.x += width * 2;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - 5, height), duration, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - space, lineHeight), duration, GUIContent.none);
             if (duration.floatValue <= 0) duration.floatValue = 0;
             rect.x += width;
-            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x, rect.y, width - 5, height), curve.animationCurveValue, Color.green, new Rect(0, 0, duration.floatValue, 1));
+            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x, rect.y, width - space, lineHeight), curve.animationCurveValue, Color.green, new Rect(0, 0, duration.floatValue, 1));
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour(target as MonoBehaviour), typeof(MonoScript), false);
-            GUI.enabled = true;
+            EZEditorGUIUtility.ScriptTitle(target);
             EditorGUILayout.PropertyField(m_Loop);
             EditorGUILayout.PropertyField(m_RestartOnEnable);
             phaseList.DoLayoutList();

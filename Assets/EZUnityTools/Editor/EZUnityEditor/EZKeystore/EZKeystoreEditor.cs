@@ -33,9 +33,7 @@ namespace EZUnityEditor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target as ScriptableObject), typeof(MonoScript), false);
-            GUI.enabled = true;
+            EZUnityEditor.EZEditorGUIUtility.ScriptTitle(target);
             EditorGUILayout.PropertyField(m_KeystoreName, new GUIContent("Keystore Path"));
             EditorGUILayout.PropertyField(m_KeystorePass, new GUIContent("Keystore Password"));
             EditorGUILayout.PropertyField(m_KeyAliasName, new GUIContent("Key Alias Name"));
