@@ -139,15 +139,17 @@ namespace EZUnityEditor
         void OnPreprocessModel()
         {
             ModelImporter modelImporter = (ModelImporter)assetImporter;
+            modelImporter.globalScale = 100;
+            modelImporter.importMaterials = false;
+            modelImporter.animationType = ModelImporterAnimationType.None;
             // modelName@animationName
             if (assetPath.Contains("@"))
             {
-                modelImporter.importMaterials = false;
+                modelImporter.animationType = ModelImporterAnimationType.Generic;
             }
             // modelName_collider
             if (assetPath.ToLower().Contains("collider"))
             {
-                modelImporter.importMaterials = false;
                 modelImporter.addCollider = true;
                 modelImporter.animationType = ModelImporterAnimationType.None;
             }
