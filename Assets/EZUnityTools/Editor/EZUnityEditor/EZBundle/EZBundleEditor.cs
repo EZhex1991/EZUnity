@@ -123,16 +123,14 @@ namespace EZUnityEditor
 
             if (GUILayout.Button("Build Bundle"))
             {
-                EZBundleBuilder.BuildBundle(target as EZBundleObject);
+                EditorApplication.delayCall += delegate () { EZBundleBuilder.BuildBundle(target as EZBundleObject); };
             }
             {
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Save As"))
                 {
-                    if (string.IsNullOrEmpty(saveAsName))
-                        EZScriptableObject.Create(EZBundleObject.AssetName, Object.Instantiate(target as EZBundleObject));
-                    else
-                        EZScriptableObject.Create(saveAsName, Object.Instantiate(target as EZBundleObject));
+                    if (!string.IsNullOrEmpty(saveAsName))
+                        EZScriptableObject.Create(saveAsName, Instantiate(target as EZBundleObject));
                 }
                 saveAsName = EditorGUILayout.TextField(saveAsName);
                 EditorGUILayout.EndHorizontal();
