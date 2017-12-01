@@ -65,11 +65,11 @@ namespace EZFramework
                 if (onApplicationPauseEvent != null) onApplicationPauseEvent(true);
                 // 暂停时存档（iOS一般不会退出）
                 EZDatabase.Instance.SaveData();
-                yield return null;
+                yield return null;  // 暂停完等待一帧去刷新暂停时的画面
             }
             else
             {
-                yield return null;
+                yield return null;  // 恢复前等待一帧确保回到UnityActivity并且画面正常
                 if (onApplicationPauseEvent != null) onApplicationPauseEvent(false);
             }
         }
@@ -77,13 +77,13 @@ namespace EZFramework
         {
             if (focusStatus)
             {
-                if (onApplicationFocusEvent != null) onApplicationFocusEvent(true);
                 yield return null;
+                if (onApplicationFocusEvent != null) onApplicationFocusEvent(true);
             }
             else
             {
-                yield return null;
                 if (onApplicationFocusEvent != null) onApplicationFocusEvent(false);
+                yield return null;
             }
         }
         void OnApplicationQuit()
