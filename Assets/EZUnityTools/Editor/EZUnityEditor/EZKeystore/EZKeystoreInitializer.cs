@@ -29,7 +29,7 @@ namespace EZUnityEditor
             if (ezKeystore != null && ezKeystore.keystoreName != "" && ezKeystore.keyAliasName != "")
             {
                 PlayerSettings.Android.keystoreName = ezKeystore.keystoreName;
-                PlayerSettings.Android.keystorePass = ezKeystore.keystoreName;
+                PlayerSettings.Android.keystorePass = ezKeystore.keystorePass;
                 PlayerSettings.Android.keyaliasName = ezKeystore.keyAliasName;
                 PlayerSettings.Android.keyaliasPass = ezKeystore.keyAliasPass;
             }

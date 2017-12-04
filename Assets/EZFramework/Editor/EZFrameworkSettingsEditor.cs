@@ -76,7 +76,7 @@ namespace EZFrameworkEditor
             EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target as ScriptableObject), typeof(MonoScript), false);
             GUI.enabled = true;
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Mode", subtitleStyle);
-            EditorGUILayout.PropertyField(m_RunMode);
+            EditorGUILayout.PropertyField(m_RunMode, new GUIContent("Run Mode In Editor"));
             EditorGUILayout.PropertyField(m_SleepTimeout);
             EditorGUILayout.PropertyField(m_RunInBackground);
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", subtitleStyle);

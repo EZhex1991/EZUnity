@@ -45,11 +45,11 @@ namespace EZFramework
         public RunMode runMode { get { return m_RunMode; } set { m_RunMode = value; } }
 
         [SerializeField]
-        private SleepTimeout m_SleepTimeout = SleepTimeout.NeverSleep;
+        private SleepTimeout m_SleepTimeout = SleepTimeout.SystemSetting;
         public SleepTimeout sleepTimeout { get { return m_SleepTimeout; } set { m_SleepTimeout = value; } }
 
         [SerializeField]
-        private bool m_RunInBackground = true;
+        private bool m_RunInBackground = false;
         public bool runInBackground { get { return m_RunInBackground; } set { m_RunInBackground = value; } }
 
         [SerializeField, Range(15, 120)]

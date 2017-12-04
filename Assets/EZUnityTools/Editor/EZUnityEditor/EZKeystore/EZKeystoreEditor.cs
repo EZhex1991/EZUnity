@@ -34,6 +34,10 @@ namespace EZUnityEditor
         {
             serializedObject.Update();
             EZUnityEditor.EZEditorGUIUtility.ScriptTitle(target);
+            if (GUILayout.Button("Load"))
+            {
+                EZKeystoreInitializer.LoadKeystore();
+            }
             EditorGUILayout.PropertyField(m_KeystoreName, new GUIContent("Keystore Path"));
             EditorGUILayout.PropertyField(m_KeystorePass, new GUIContent("Keystore Password"));
             EditorGUILayout.PropertyField(m_KeyAliasName, new GUIContent("Key Alias Name"));
