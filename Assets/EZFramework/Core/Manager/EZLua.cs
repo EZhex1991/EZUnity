@@ -76,6 +76,7 @@ namespace EZFramework
 
         private byte[] LoadFromFile(ref string fileName)
         {
+            if (fileName.Contains("/") || fileName.Contains("\\")) return null; // 统一符号，防止".""/"混用造成的一系列问题
             for (int i = 0; i < luaDirList.Count; i++)
             {
                 string filePath = luaDirList[i] + fileName.Replace('.', '/') + ".lua";             // lua文件的实际路径
@@ -94,9 +95,10 @@ namespace EZFramework
         }
         private byte[] LoadFromBundle(ref string fileName)
         {
+            if (fileName.Contains("/") || fileName.Contains("\\")) return null;
             for (int i = 0; i < luaBundleList.Count; i++)
             {
-                fileName = fileName.Replace("/", "_").Replace(".", "_") + ".lua.txt";
+                fileName = fileName.Replace(".", "_") + ".lua.txt";
                 TextAsset luaText = luaBundleList[i].LoadAsset<TextAsset>(fileName);
                 if (luaText != null) return luaText.bytes;
             }
