@@ -21,6 +21,11 @@ namespace EZFramework.XLuaExtensionEditor
         public static List<Type> typeList = new List<Type>
         {
             typeof(EZFramework.XLuaExtension.LuaInjector), // 可嵌套使用
+
+            typeof(EZComponent.EZAnimation.EZGraphicColorAnimation),
+            typeof(EZComponent.EZAnimation.EZRectTransformAnimation),
+            typeof(EZComponent.EZAnimation.EZTransformAnimation),
+
             typeof(UnityEngine.Object),
             typeof(UnityEngine.AudioSource),
             typeof(UnityEngine.AudioClip),
@@ -84,8 +89,10 @@ namespace EZFramework.XLuaExtensionEditor
             GenericMenu menu = new GenericMenu();
             for (int i = 0; i < typeList.Count; i++)
             {
+                string space = typeList[i].Namespace;
+                string name = typeList[i].Name;
                 string typeName = typeList[i].FullName;
-                menu.AddItem(new GUIContent(typeName.Replace(".", "/")), false, callback, typeName);
+                menu.AddItem(new GUIContent(space + "/" + name), false, callback, typeName);
             }
             menu.ShowAsContext();
         }
