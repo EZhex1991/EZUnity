@@ -17,8 +17,8 @@ namespace EZFramework
     {
         public LuaEnv luaEnv { get; private set; }
 
-        private List<string> luaDirList = new List<string>();
-        private List<AssetBundle> luaBundleList = new List<AssetBundle>();
+        private Dictionary<string, string> luaFiles = new Dictionary<string, string>();
+        private Dictionary<string, TextAsset> luaAssets = new Dictionary<string, TextAsset>();
 
         public delegate void LuaAction();
         public delegate void LuaCoroutineCallback();
@@ -48,38 +48,57 @@ namespace EZFramework
         }
         private void AddLoader()
         {
+            // require大小写敏感而文件路径大小写不敏感，还有点"."和斜线"/"的混用，会造成重复加载等一系列问题
+            // 这里提前把所有文件记录于Dictionary中，直接对CustomLoader传入的参数进行TryGetValue，保证lua侧require参数的统一
             switch (EZFrameworkSettings.Instance.runMode)
             {
                 case EZFrameworkSettings.RunMode.Develop:
                     for (int i = 0; i < EZFrameworkSettings.Instance.luaDirList.Count; i++)
                     {
-                        luaDirList.Add(EZFacade.dataDirPath + EZFrameworkSettings.Instance.luaDirList[i] + "/");
+                        string dir = EZFacade.dataDirPath + EZFrameworkSettings.Instance.luaDirList[i] + "/";
+                        string[] files = Directory.GetFiles(dir, "*.lua", SearchOption.AllDirectories);
+                        foreach (string filePath in files)
+                        {
+                            string key = filePath.Replace("\\", "/").Replace(dir, "").Replace("/", ".").Replace(".lua", "");
+                            luaFiles.Add(key, filePath);
+                        }
                     }
                     luaEnv.AddLoader(LoadFromFile);
                     break;
                 case EZFrameworkSettings.RunMode.Local:
                     for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
                     {
-                        luaBundleList.Add(AssetBundle.LoadFromFile(EZFacade.streamingDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension));
+                        AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.streamingDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
+                        TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
+                        for (int j = 0; j < assets.Length; j++)
+                        {
+                            print(assets[j].name);
+                            string key = assets[j].name.Replace("_", ".").Replace(".lua", "");
+                            luaAssets.Add(key, assets[j]);
+                        }
                     }
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
                 case EZFrameworkSettings.RunMode.Update:
                     for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
                     {
-                        luaBundleList.Add(AssetBundle.LoadFromFile(EZFacade.persistentDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension));
+                        AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.persistentDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
+                        TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
+                        for (int j = 0; j < assets.Length; j++)
+                        {
+                            string key = assets[j].name.Replace("_", ".").Replace(".lua", "");
+                            luaAssets.Add(key, assets[j]);
+                        }
                     }
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
             }
         }
 
-        private byte[] LoadFromFile(ref string fileName)
+        private byte[] LoadFromFile(ref string filePath)
         {
-            if (fileName.Contains("/") || fileName.Contains("\\")) return null; // 统一符号，防止".""/"混用造成的一系列问题
-            for (int i = 0; i < luaDirList.Count; i++)
+            if (luaFiles.TryGetValue(filePath, out filePath))
             {
-                string filePath = luaDirList[i] + fileName.Replace('.', '/') + ".lua";             // lua文件的实际路径
                 try
                 {
                     // File.ReadAllBytes返回值可能会带有BOM（0xEF，0xBB，0xBF），这会导致脚本加载出错（<\239>）
@@ -88,19 +107,17 @@ namespace EZFramework
                 }
                 catch
                 {
-                    continue;
+                    return null;
                 }
             }
             return null;
         }
-        private byte[] LoadFromBundle(ref string fileName)
+        private byte[] LoadFromBundle(ref string filePath)
         {
-            if (fileName.Contains("/") || fileName.Contains("\\")) return null;
-            for (int i = 0; i < luaBundleList.Count; i++)
+            TextAsset luaText;
+            if (luaAssets.TryGetValue(filePath, out luaText))
             {
-                fileName = fileName.Replace(".", "_") + ".lua.txt";
-                TextAsset luaText = luaBundleList[i].LoadAsset<TextAsset>(fileName);
-                if (luaText != null) return luaText.bytes;
+                return luaText.bytes;
             }
             return null;
         }
