@@ -72,8 +72,7 @@ namespace EZFramework
                         TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
                         for (int j = 0; j < assets.Length; j++)
                         {
-                            print(assets[j].name);
-                            string key = assets[j].name.Replace("_", ".").Replace(".lua", "");
+                            string key = assets[j].name.Replace("__", ".").Replace(".lua", "");
                             luaAssets.Add(key, assets[j]);
                         }
                     }
@@ -86,7 +85,7 @@ namespace EZFramework
                         TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
                         for (int j = 0; j < assets.Length; j++)
                         {
-                            string key = assets[j].name.Replace("_", ".").Replace(".lua", "");
+                            string key = assets[j].name.Replace("__", ".").Replace(".lua", "");
                             luaAssets.Add(key, assets[j]);
                         }
                     }
