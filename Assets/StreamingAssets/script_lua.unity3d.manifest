@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4029405937
+CRC: 2978801749
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0ab04f80bc84d87288399f85365a0307
+    Hash: 8b7c39906f5979175ed6954a1bc25f74
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -12,17 +12,17 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/Example/Script_Lua_txt/SpaceShooter__EnemyShip.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_GameController.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_DestroyByContact.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_DestroyByBoundary.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__Asteroid.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_EvasiveManeuver.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_BGScroller.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_RandomRotator.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_PlayerController.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter___Asteroid.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__WeaponController.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByTime.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__BGScroller.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__Mover.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__EvasiveManeuver.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__RandomRotator.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByBoundary.lua.txt
 - Assets/Example/Script_Lua_txt/Main.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_Mover.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_DestroyByTime.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter_WeaponController.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter___EnemyShip.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__PlayerController.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByContact.lua.txt
+- Assets/Example/Script_Lua_txt/SpaceShooter__GameController.lua.txt
 Dependencies: []
