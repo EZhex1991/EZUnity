@@ -26,9 +26,16 @@ namespace EZComponent.EZAnimation
         public AnimationCurve curve { get { return m_Curve; } set { m_Curve = value; } }
     }
 
+    public interface IEZAnimation
+    {
+        int currentIndex { get; }
+        float time { get; }
+        float frameValue { get; }
+    }
+
     public delegate void OnAnimationEndAction();
 
-    public abstract class EZAnimation<T, U> : MonoBehaviour
+    public abstract class EZAnimation<T, U> : MonoBehaviour, IEZAnimation
         where T : struct
         where U : Phase<T>
     {

@@ -59,6 +59,8 @@ namespace EZComponentEditor.EZAnimation
         }
         protected override void DrawPhaseListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
+            Color curveColor = anim.currentIndex == index ? Color.red : Color.green;
+
             SerializedProperty phase = phaseList.serializedProperty.GetArrayElementAtIndex(index);
             SerializedProperty startValue = phase.FindPropertyRelative("m_StartValue");
             SerializedProperty endValue = phase.FindPropertyRelative("m_EndValue");
@@ -104,7 +106,7 @@ namespace EZComponentEditor.EZAnimation
             EditorGUI.PropertyField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, lineHeight), duration, GUIContent.none);
             rect.x += width;
             EditorGUI.LabelField(new Rect(rect.x, rect.y, labelWidth, lineHeight), "Curve");
-            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, lineHeight), curve.animationCurveValue, Color.green, new Rect(0, 0, duration.floatValue, 1));
+            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, lineHeight), curve.animationCurveValue, curveColor, new Rect(0, 0, duration.floatValue, 1));
         }
 
         public override void OnInspectorGUI()

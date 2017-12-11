@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using EZComponent.EZAnimation;
 using EZUnityEditor;
 using UnityEditor;
 using UnityEditorInternal;
@@ -13,6 +14,8 @@ namespace EZComponentEditor.EZAnimation
 {
     public class EZAnimationEditor : Editor
     {
+        protected IEZAnimation anim;
+
         protected SerializedProperty m_Loop;
         protected SerializedProperty m_RestartOnEnable;
         protected SerializedProperty m_PhaseList;
@@ -24,6 +27,8 @@ namespace EZComponentEditor.EZAnimation
 
         protected virtual void OnEnable()
         {
+            anim = target as IEZAnimation;
+
             m_Loop = serializedObject.FindProperty("m_Loop");
             m_RestartOnEnable = serializedObject.FindProperty("m_RestartOnEnable");
             m_PhaseList = serializedObject.FindProperty("m_PhaseList");
@@ -47,6 +52,8 @@ namespace EZComponentEditor.EZAnimation
 
         protected virtual void DrawPhaseListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
+            Color curveColor = anim.currentIndex == index ? Color.red : Color.green;
+
             SerializedProperty phase = phaseList.serializedProperty.GetArrayElementAtIndex(index);
             SerializedProperty startValue = phase.FindPropertyRelative("m_StartValue");
             SerializedProperty endValue = phase.FindPropertyRelative("m_EndValue");
@@ -61,7 +68,7 @@ namespace EZComponentEditor.EZAnimation
             EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - space, lineHeight), duration, GUIContent.none);
             if (duration.floatValue <= 0) duration.floatValue = 0;
             rect.x += width;
-            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x, rect.y, width - space, lineHeight), curve.animationCurveValue, Color.green, new Rect(0, 0, duration.floatValue, 1));
+            curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x, rect.y, width - space, lineHeight), curve.animationCurveValue, curveColor, new Rect(0, 0, duration.floatValue, 1));
         }
 
         public override void OnInspectorGUI()
