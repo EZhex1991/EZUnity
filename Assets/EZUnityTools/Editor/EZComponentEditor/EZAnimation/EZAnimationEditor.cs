@@ -18,6 +18,7 @@ namespace EZComponentEditor.EZAnimation
 
         protected SerializedProperty m_Loop;
         protected SerializedProperty m_RestartOnEnable;
+        protected SerializedProperty m_UpdateMode;
         protected SerializedProperty m_PhaseList;
         protected ReorderableList phaseList;
 
@@ -31,6 +32,7 @@ namespace EZComponentEditor.EZAnimation
 
             m_Loop = serializedObject.FindProperty("m_Loop");
             m_RestartOnEnable = serializedObject.FindProperty("m_RestartOnEnable");
+            m_UpdateMode = serializedObject.FindProperty("m_UpdateMode");
             m_PhaseList = serializedObject.FindProperty("m_PhaseList");
             phaseList = new ReorderableList(serializedObject, m_PhaseList, true, true, true, true);
             phaseList.drawHeaderCallback = DrawPhaseListHeader;
@@ -78,6 +80,7 @@ namespace EZComponentEditor.EZAnimation
             DrawController();
             EditorGUILayout.PropertyField(m_Loop);
             EditorGUILayout.PropertyField(m_RestartOnEnable);
+            EditorGUILayout.PropertyField(m_UpdateMode);
             DrawPhaseList();
             serializedObject.ApplyModifiedProperties();
         }

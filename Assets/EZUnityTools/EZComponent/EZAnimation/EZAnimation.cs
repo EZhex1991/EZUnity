@@ -36,12 +36,16 @@ namespace EZComponent.EZAnimation
         where U : Phase<T>
     {
         [SerializeField]
-        private bool m_Loop;
+        private bool m_Loop = false;
         public bool loop { get { return m_Loop; } set { m_Loop = value; } }
 
         [SerializeField]
-        private bool m_RestartOnEnable;
+        private bool m_RestartOnEnable = false;
         public bool restartOnEnable { get { return m_RestartOnEnable; } set { m_RestartOnEnable = value; } }
+
+        [SerializeField]
+        private AnimatorUpdateMode m_UpdateMode = AnimatorUpdateMode.Normal;
+        public AnimatorUpdateMode updateMode { get { return m_UpdateMode; } set { m_UpdateMode = value; } }
 
         [SerializeField]
         private List<U> m_PhaseList = new List<U>();
@@ -129,7 +133,15 @@ namespace EZComponent.EZAnimation
         protected void Update()
         {
             if (currentPhase == null || status != Status.Running) return;
-            time += Time.deltaTime;
+            switch (updateMode)
+            {
+                case AnimatorUpdateMode.Normal:
+                    time += Time.deltaTime;
+                    break;
+                case AnimatorUpdateMode.UnscaledTime:
+                    time += Time.unscaledDeltaTime;
+                    break;
+            }
             frameValue = currentPhase.duration <= 0 ? 1 : currentPhase.curve.Evaluate(time);
             UpdatePhase();
             if (time > currentPhase.duration)
