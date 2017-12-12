@@ -14,11 +14,11 @@ Unity部分API的二次封装。
 - EZRename: 批量重命名工具，支持正则式匹配，整理资源目录很方便。
 - EZScriptTemplate: 脚本模板管理工具（之前是“添加”工具，现在可以直接在Unity里“删除”代码模板了，添加和删除模板后重启Unity才有效）。
 
-部分功能参数是用asset(ScriptableObject)存放的，可以直接选定后在Inspector界面修改，自定义EditorWindow只是提供更好的编辑界面，asset默认存放位置在Assets/EZAssets目录。
+部分功能参数是用asset(ScriptableObject)存放的，可以直接选定后在Inspector界面修改，asset默认存放位置在Assets/EZAssets目录。
 
 -----
 
-因为不是一套完整的解决方案，直接使用可能会有很多坑，所以建议仅做参考。
+因为不是一套完整的解决方案，直接使用可能会有很多坑，所以建议仅做代码参考。
 本人QQ：361994819，可能不会及时回复，但是欢迎留言提意见。
 
 2017/09/19（重构）:
