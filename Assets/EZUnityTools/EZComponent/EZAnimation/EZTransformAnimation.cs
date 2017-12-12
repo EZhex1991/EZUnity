@@ -4,55 +4,53 @@
  * Description:
  * 
 */
-using System;
 using UnityEngine;
 
 namespace EZComponent.EZAnimation
 {
-    public class EZTransformAnimation : EZAnimation<EZTransformAnimation.TransformInfo, EZTransformAnimation.Phase>
+    public class EZTransformAnimation : EZAnimation<TransformInfo, TransformPhase>
     {
-        [Serializable]
-        public struct TransformInfo
-        {
-            [SerializeField]
-            private Vector3 m_Position;
-            public Vector3 position { get { return m_Position; } set { m_Position = value; } }
-
-            [SerializeField]
-            private Vector3 m_Rotation;
-            public Vector3 rotation { get { return m_Rotation; } set { m_Rotation = value; } }
-
-            [SerializeField]
-            private Vector3 m_Scale;
-            public Vector3 scale { get { return m_Scale; } set { m_Scale = value; } }
-
-            public TransformInfo(Vector3 position, Vector3 rotation, Vector3 scale)
-            {
-                m_Position = position;
-                m_Rotation = rotation;
-                m_Scale = scale;
-            }
-        }
-        [Serializable]
-        public class Phase : Phase<TransformInfo>
-        {
-        }
-
         [SerializeField]
-        private bool m_DrivePosition;
-        public bool drivePosition { get { return m_DrivePosition; } set { m_DrivePosition = value; } }
+        private V3Driver m_PositionDriver;
+        public V3Driver positionDriver { get { return m_PositionDriver; } set { m_PositionDriver = value; } }
         [SerializeField]
-        private bool m_DriveRotation;
-        public bool driveRotation { get { return m_DriveRotation; } set { m_DriveRotation = value; } }
+        private V3Driver m_RotationDriver;
+        public V3Driver rotationDriver { get { return m_RotationDriver; } set { m_RotationDriver = value; } }
         [SerializeField]
-        private bool m_DriveScale;
-        public bool driveScale { get { return m_DriveScale; } set { m_DriveScale = value; } }
+        private V3Driver m_ScaleDriver;
+        public V3Driver scaleDriver { get { return m_ScaleDriver; } set { m_ScaleDriver = value; } }
 
         protected override void UpdatePhase()
         {
-            if (drivePosition) transform.localPosition = Vector3.Lerp(currentPhase.startValue.position, currentPhase.endValue.position, frameValue);
-            if (driveRotation) transform.localEulerAngles = Vector3.Lerp(currentPhase.startValue.rotation, currentPhase.endValue.rotation, frameValue);
-            if (driveScale) transform.localScale = Vector3.Lerp(currentPhase.startValue.scale, currentPhase.endValue.scale, frameValue);
+            if (positionDriver)
+            {
+                Vector3 position = Vector3.Lerp(currentPhase.startValue.position, currentPhase.endValue.position, frameValue);
+                Vector3 targetPosition = transform.localPosition;
+                if (positionDriver.x) targetPosition.x = position.x;
+                if (positionDriver.y) targetPosition.y = position.y;
+                if (positionDriver.z) targetPosition.z = position.z;
+                transform.localPosition = targetPosition;
+            }
+
+            if (rotationDriver)
+            {
+                Vector3 rotation = Vector3.Lerp(currentPhase.startValue.rotation, currentPhase.endValue.rotation, frameValue);
+                Vector3 targetRotation = transform.localEulerAngles;
+                if (rotationDriver.x) targetRotation.x = rotation.x;
+                if (rotationDriver.y) targetRotation.y = rotation.y;
+                if (rotationDriver.z) targetRotation.z = rotation.z;
+                transform.localEulerAngles = targetRotation;
+            }
+
+            if (scaleDriver)
+            {
+                Vector3 scale = Vector3.Lerp(currentPhase.startValue.scale, currentPhase.endValue.scale, frameValue);
+                Vector3 targetScale = transform.localScale;
+                if (scaleDriver.x) targetScale.x = scale.x;
+                if (scaleDriver.y) targetScale.y = scale.y;
+                if (scaleDriver.z) targetScale.z = scale.z;
+                transform.localScale = targetScale;
+            }
         }
     }
 }

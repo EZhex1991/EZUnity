@@ -10,42 +10,20 @@ using UnityEngine;
 namespace EZComponent.EZAnimation
 {
     [RequireComponent(typeof(RectTransform))]
-    public class EZRectTransformAnimation : EZAnimation<EZRectTransformAnimation.RectTransformInfo, EZRectTransformAnimation.Phase>
+    public class EZRectTransformAnimation : EZAnimation<RectTransformInfo, RectTransformPhase>
     {
-        [Serializable]
-        public struct RectTransformInfo
-        {
-            [SerializeField]
-            private Vector2 m_AnchoredPosition;
-            public Vector2 anchoredPosition { get { return m_AnchoredPosition; } set { m_AnchoredPosition = value; } }
-            [SerializeField]
-            private Vector2 m_SizeDelta;
-            public Vector2 sizeDelta { get { return m_SizeDelta; } set { m_SizeDelta = value; } }
-            [SerializeField]
-            private Vector3 m_Rotation;
-            public Vector3 rotation { get { return m_Rotation; } set { m_Rotation = value; } }
-            [SerializeField]
-            private Vector3 m_Scale;
-            public Vector3 scale { get { return m_Scale; } set { m_Scale = value; } }
-        }
-        [Serializable]
-        public class Phase : Phase<RectTransformInfo>
-        {
-
-        }
-
         [SerializeField]
-        private bool m_DrivePosition;
-        public bool drivePosition { get { return m_DrivePosition; } set { m_DrivePosition = value; } }
+        private V2Driver m_PositionDriver;
+        public V2Driver positionDriver { get { return m_PositionDriver; } set { m_PositionDriver = value; } }
         [SerializeField]
-        private bool m_DriveSize;
-        public bool driveSize { get { return m_DriveSize; } set { m_DriveSize = value; } }
+        private V2Driver m_SizeDriver;
+        public V2Driver sizeDriver { get { return m_SizeDriver; } set { m_SizeDriver = value; } }
         [SerializeField]
-        private bool m_DriveRotation;
-        public bool driveRotation { get { return m_DriveRotation; } set { m_DriveRotation = value; } }
+        private V3Driver m_RotationDriver;
+        public V3Driver rotationDriver { get { return m_RotationDriver; } set { m_RotationDriver = value; } }
         [SerializeField]
-        private bool m_DriveScale;
-        public bool driveScale { get { return m_DriveScale; } set { m_DriveScale = value; } }
+        private V3Driver m_ScaleDriver;
+        public V3Driver scaleDriver { get { return m_ScaleDriver; } set { m_ScaleDriver = value; } }
 
         [NonSerialized]
         private RectTransform m_RectTransform;
@@ -63,10 +41,43 @@ namespace EZComponent.EZAnimation
 
         protected override void UpdatePhase()
         {
-            if (drivePosition) rectTransform.anchoredPosition = Vector2.Lerp(currentPhase.startValue.anchoredPosition, currentPhase.endValue.anchoredPosition, frameValue);
-            if (driveSize) rectTransform.sizeDelta = Vector2.Lerp(currentPhase.startValue.sizeDelta, currentPhase.endValue.sizeDelta, frameValue);
-            if (driveRotation) rectTransform.localEulerAngles = Vector3.Lerp(currentPhase.startValue.rotation, currentPhase.endValue.rotation, frameValue);
-            if (driveScale) transform.localScale = Vector3.Lerp(currentPhase.startValue.scale, currentPhase.endValue.scale, frameValue);
+            if (positionDriver)
+            {
+                Vector2 position = Vector2.Lerp(currentPhase.startValue.anchoredPosition, currentPhase.endValue.anchoredPosition, frameValue);
+                Vector2 targetPosition = rectTransform.anchoredPosition;
+                if (positionDriver.x) targetPosition.x = position.x;
+                if (positionDriver.y) targetPosition.y = position.y;
+                rectTransform.anchoredPosition = targetPosition;
+            }
+
+            if (sizeDriver)
+            {
+                Vector2 size = Vector2.Lerp(currentPhase.startValue.sizeDelta, currentPhase.endValue.sizeDelta, frameValue);
+                Vector2 targetSize = rectTransform.sizeDelta;
+                if (sizeDriver.x) targetSize.x = size.x;
+                if (sizeDriver.y) targetSize.y = size.y;
+                rectTransform.sizeDelta = targetSize;
+            }
+
+            if (rotationDriver)
+            {
+                Vector3 rotation = Vector3.Lerp(currentPhase.startValue.rotation, currentPhase.endValue.rotation, frameValue);
+                Vector3 targetRotation = transform.localEulerAngles;
+                if (rotationDriver.x) targetRotation.x = rotation.x;
+                if (rotationDriver.y) targetRotation.y = rotation.y;
+                if (rotationDriver.z) targetRotation.z = rotation.z;
+                transform.localEulerAngles = targetRotation;
+            }
+
+            if (scaleDriver)
+            {
+                Vector3 scale = Vector3.Lerp(currentPhase.startValue.scale, currentPhase.endValue.scale, frameValue);
+                Vector3 targetScale = transform.localScale;
+                if (scaleDriver.x) targetScale.x = scale.x;
+                if (scaleDriver.y) targetScale.y = scale.y;
+                if (scaleDriver.z) targetScale.z = scale.z;
+                transform.localScale = targetScale;
+            }
         }
     }
 }

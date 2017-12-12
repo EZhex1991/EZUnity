@@ -11,14 +11,8 @@ using UnityEngine.UI;
 namespace EZComponent.EZAnimation
 {
     [RequireComponent(typeof(Graphic)), DisallowMultipleComponent]
-    public class EZGraphicColorAnimation : EZAnimation<Color, EZGraphicColorAnimation.Phase>
+    public class EZGraphicColorAnimation : EZAnimation<Color, ColorPhase>
     {
-        [Serializable]
-        public class Phase : Phase<Color>
-        {
-
-        }
-
         [NonSerialized]
         private Graphic m_Graphic;
         private Graphic graphic
