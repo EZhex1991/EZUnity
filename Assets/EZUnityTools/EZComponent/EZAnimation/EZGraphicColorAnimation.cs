@@ -27,7 +27,7 @@ namespace EZComponent.EZAnimation
             }
         }
 
-        protected override void UpdatePhase()
+        protected override void OnPhaseUpdate()
         {
             graphic.color = Color.Lerp(currentPhase.startValue, currentPhase.endValue, frameValue);
         }

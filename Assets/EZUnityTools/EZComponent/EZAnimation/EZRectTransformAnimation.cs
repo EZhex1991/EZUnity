@@ -39,7 +39,7 @@ namespace EZComponent.EZAnimation
             }
         }
 
-        protected override void UpdatePhase()
+        protected override void OnPhaseUpdate()
         {
             if (positionDriver)
             {

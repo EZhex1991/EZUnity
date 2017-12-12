@@ -68,6 +68,15 @@ namespace EZComponent.EZAnimation
             currentPhase = phaseList[currentIndex];
             OnPhaseStart();
         }
+        protected virtual void UpdatePhase()
+        {
+            frameValue = currentPhase.duration <= 0 ? 1 : currentPhase.curve.Evaluate(time);
+            OnPhaseUpdate();
+            if (time > currentPhase.duration)
+            {
+                EndPhase();
+            }
+        }
         protected virtual void EndPhase()
         {
             OnPhaseEnd();
@@ -113,10 +122,15 @@ namespace EZComponent.EZAnimation
         {
             time = 0;
         }
-        protected abstract void UpdatePhase();
+        protected abstract void OnPhaseUpdate();
         protected virtual void OnPhaseEnd()
         {
 
+        }
+
+        public bool IsRunning()
+        {
+            return currentPhase != null && status == Status.Running;
         }
 
         protected virtual void Start()
@@ -132,7 +146,8 @@ namespace EZComponent.EZAnimation
         }
         protected void Update()
         {
-            if (currentPhase == null || status != Status.Running) return;
+            if (updateMode == AnimatorUpdateMode.AnimatePhysics) return;
+            if (!IsRunning()) return;
             switch (updateMode)
             {
                 case AnimatorUpdateMode.Normal:
@@ -142,12 +157,14 @@ namespace EZComponent.EZAnimation
                     time += Time.unscaledDeltaTime;
                     break;
             }
-            frameValue = currentPhase.duration <= 0 ? 1 : currentPhase.curve.Evaluate(time);
             UpdatePhase();
-            if (time > currentPhase.duration)
-            {
-                EndPhase();
-            }
+        }
+        protected void FixedUpdate()
+        {
+            if (updateMode != AnimatorUpdateMode.AnimatePhysics) return;
+            if (!IsRunning()) return;
+            time += Time.fixedDeltaTime;
+            UpdatePhase();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace EZComponent.EZAnimation
         private V3Driver m_ScaleDriver;
         public V3Driver scaleDriver { get { return m_ScaleDriver; } set { m_ScaleDriver = value; } }
 
-        protected override void UpdatePhase()
+        protected override void OnPhaseUpdate()
         {
             if (positionDriver)
             {
