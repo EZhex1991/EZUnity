@@ -29,7 +29,7 @@ function M:New(go, n_ScoreValue)
 end
 
 function M:OnTriggerEnter(collider)
-    if collider.tag == "Boundary" or collider.tag == "Enemy" then
+    if collider.tag == "Finish" or collider.tag == "Respawn" then
         return
     end
     if self.go_Explosion ~= nil then
