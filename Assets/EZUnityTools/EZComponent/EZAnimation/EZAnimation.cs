@@ -9,11 +9,24 @@ using UnityEngine;
 
 namespace EZComponent.EZAnimation
 {
+    public enum Status
+    {
+        Running = 1,
+        Paused = 2,
+        Stopped = 3
+    }
+
     public interface IEZAnimation
     {
+        Status status { get; }
         int currentIndex { get; }
         float time { get; }
         float frameValue { get; }
+
+        void StartPhase(int index);
+        void Pause();
+        void Resume();
+        void Stop();
     }
 
     public delegate void OnAnimationEndAction();
@@ -34,6 +47,7 @@ namespace EZComponent.EZAnimation
         private List<U> m_PhaseList = new List<U>();
         public List<U> phaseList { get { return m_PhaseList; } set { m_PhaseList = value; } }
 
+        public Status status { get; protected set; }
         public int currentIndex { get; protected set; }
         public U currentPhase { get; protected set; }
 
@@ -44,8 +58,8 @@ namespace EZComponent.EZAnimation
 
         public virtual void StartPhase(int index = 0)
         {
-            enabled = true;
             if (index >= phaseList.Count) return;
+            status = Status.Running;
             currentIndex = index;
             currentPhase = phaseList[currentIndex];
             OnPhaseStart();
@@ -57,10 +71,9 @@ namespace EZComponent.EZAnimation
             if (currentIndex >= phaseList.Count)
             {
                 if (onAnimationEndEvent != null) onAnimationEndEvent();
-                currentIndex = 0;
                 if (loop)
                 {
-                    StartPhase(currentIndex);
+                    StartPhase(0);
                 }
                 else
                 {
@@ -72,15 +85,29 @@ namespace EZComponent.EZAnimation
                 StartPhase(currentIndex);
             }
         }
-        public virtual void Stop()
+
+        public void Pause()
         {
-            enabled = false;
+            if (status == Status.Running)
+                status = Status.Paused;
+        }
+        public void Resume()
+        {
+            if (status == Status.Paused)
+                status = Status.Running;
+        }
+        public void Stop()
+        {
+            status = Status.Stopped;
+            currentIndex = 0;
+            currentPhase = phaseList[currentIndex];
+            time = 0;
+            frameValue = 0;
         }
 
         protected virtual void OnPhaseStart()
         {
             time = 0;
-            frameValue = 0;
         }
         protected abstract void UpdatePhase();
         protected virtual void OnPhaseEnd()
@@ -101,7 +128,7 @@ namespace EZComponent.EZAnimation
         }
         protected void Update()
         {
-            if (currentPhase == null) return;
+            if (currentPhase == null || status != Status.Running) return;
             time += Time.deltaTime;
             frameValue = currentPhase.duration <= 0 ? 1 : currentPhase.curve.Evaluate(time);
             UpdatePhase();

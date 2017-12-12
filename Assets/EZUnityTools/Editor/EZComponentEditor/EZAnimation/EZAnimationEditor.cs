@@ -75,10 +75,41 @@ namespace EZComponentEditor.EZAnimation
         {
             serializedObject.Update();
             EZEditorGUIUtility.ScriptTitle(target);
+            DrawController();
             EditorGUILayout.PropertyField(m_Loop);
             EditorGUILayout.PropertyField(m_RestartOnEnable);
-            phaseList.DoLayoutList();
+            DrawPhaseList();
             serializedObject.ApplyModifiedProperties();
+        }
+
+        public virtual void DrawController()
+        {
+            GUI.enabled = false;
+            EditorGUILayout.EnumPopup("Status", anim.status);
+            if (Application.isPlaying) GUI.enabled = true;
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Restart"))
+            {
+                anim.StartPhase(0);
+            }
+            if (GUILayout.Button("Pause"))
+            {
+                anim.Pause();
+            }
+            if (GUILayout.Button("Resume"))
+            {
+                anim.Resume();
+            }
+            if (GUILayout.Button("Stop"))
+            {
+                anim.Stop();
+            }
+            GUILayout.EndHorizontal();
+            GUI.enabled = true;
+        }
+        public virtual void DrawPhaseList()
+        {
+            phaseList.DoLayoutList();
         }
     }
 }

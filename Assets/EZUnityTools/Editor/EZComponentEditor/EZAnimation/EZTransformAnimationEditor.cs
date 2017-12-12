@@ -115,12 +115,8 @@ namespace EZComponentEditor.EZAnimation
             curve.animationCurveValue = EditorGUI.CurveField(new Rect(rect.x + labelWidth, rect.y, propertyWidth, lineHeight), curve.animationCurveValue, curveColor, new Rect(0, 0, duration.floatValue, 1));
         }
 
-        public override void OnInspectorGUI()
+        public override void DrawPhaseList()
         {
-            serializedObject.Update();
-            EZUnityEditor.EZEditorGUIUtility.ScriptTitle(target);
-            EditorGUILayout.PropertyField(m_Loop);
-            EditorGUILayout.PropertyField(m_RestartOnEnable);
             originFoldout = EditorGUILayout.Foldout(originFoldout, "Driver");
             if (originFoldout)
             {
@@ -131,7 +127,6 @@ namespace EZComponentEditor.EZAnimation
                 EditorGUI.indentLevel--;
             }
             phaseList.DoLayoutList();
-            serializedObject.ApplyModifiedProperties();
         }
     }
 }
