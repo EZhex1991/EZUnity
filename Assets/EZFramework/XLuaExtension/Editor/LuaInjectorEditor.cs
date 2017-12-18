@@ -32,6 +32,7 @@ namespace EZFramework.XLuaExtensionEditor
             typeof(UnityEngine.Collider),
             typeof(UnityEngine.GameObject),
             typeof(UnityEngine.GUIText),
+            typeof(UnityEngine.ParticleSystem),
             typeof(UnityEngine.RectTransform),
             typeof(UnityEngine.Sprite),
             typeof(UnityEngine.TextMesh),

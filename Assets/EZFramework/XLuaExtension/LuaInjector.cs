@@ -5,8 +5,10 @@
  * 
 */
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using XLua;
+using Object = UnityEngine.Object;
 
 namespace EZFramework.XLuaExtension
 {
@@ -16,11 +18,34 @@ namespace EZFramework.XLuaExtension
         public class Injection
         {
             public string key;
-            public UnityEngine.Object value;
+            public Object value;
             public string typeName;
         }
 
         public Injection[] injections;
+
+        protected Dictionary<string, Object> dict = new Dictionary<string, Object>();
+        void Awake()
+        {
+            for (int i = 0; i < injections.Length; i++)
+            {
+                Injection pair = injections[i];
+                dict.Add(pair.key, pair.value);
+            }
+        }
+        public Object Get(string key)
+        {
+            Object value;
+            if (dict.TryGetValue(key, out value))
+            {
+                return value;
+            }
+            return null;
+        }
+        public Object Get(int index)
+        {
+            return index < injections.Length ? injections[index].value : null;
+        }
 
         public void Inject(LuaTable self)
         {
