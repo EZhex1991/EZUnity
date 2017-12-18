@@ -24,5 +24,17 @@ function M.ifsetor(condition, vtrue, vfalse)
         return vfalse
     end
 end
+
+-- 字符串分割
+function string.split(str, delimiter)
+    if str == nil or delimiter == nil or str == "" then
+        return nil
+    end
+    local result = {}
+    for match in string.gmatch(str .. delimiter, "(.-)" .. delimiter) do
+        table.insert(result, match)
+    end
+    return result
+end
 ----- end -----
 return M
