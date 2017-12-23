@@ -25,11 +25,12 @@ namespace EZFrameworkEditor
         ReorderableList luaDirList;
         ReorderableList luaBundleList;
 
-        GUIStyle subtitleStyle = new GUIStyle(GUIStyle.none) { fontStyle = FontStyle.Bold };
+        GUIStyle subtitleStyle;
         float height = EditorGUIUtility.singleLineHeight;
 
         void OnEnable()
         {
+            subtitleStyle = new GUIStyle(GUIStyle.none) { fontStyle = FontStyle.Bold };
             m_RunMode = serializedObject.FindProperty("m_RunMode");
             m_SleepTimeout = serializedObject.FindProperty("m_SleepTimeout");
             m_RunInBackground = serializedObject.FindProperty("m_RunInBackground");
