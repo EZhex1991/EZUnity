@@ -13,7 +13,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZFramework.XLuaExtensionEditor
+namespace EZFrameworkEditor.XLuaExtension
 {
     [CustomEditor(typeof(LuaInjector))]
     public class LuaInjectorEditor : Editor
