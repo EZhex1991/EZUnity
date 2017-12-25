@@ -5,7 +5,7 @@ Description:
 
 --]==]
 local M = { }
-M._moduleName = ...
+M._modulename = ...
 M.__index = M
 ----- begin module -----
 
