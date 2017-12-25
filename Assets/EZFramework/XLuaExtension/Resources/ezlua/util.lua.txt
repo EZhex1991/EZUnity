@@ -26,7 +26,7 @@ function M.ifsetor(condition, vtrue, vfalse)
 end
 
 -- 字符串分割
-function string.split(str, delimiter)
+function M.split(str, delimiter)
     if str == nil or delimiter == nil or str == "" then
         return nil
     end
@@ -35,6 +35,17 @@ function string.split(str, delimiter)
         table.insert(result, match)
     end
     return result
+end
+
+-- 数值clamp
+function M.clamp(value, min, max)
+    if value < min then
+        return min
+    elseif value > max then
+        return max
+    else
+        return value
+    end
 end
 ----- end -----
 return M
