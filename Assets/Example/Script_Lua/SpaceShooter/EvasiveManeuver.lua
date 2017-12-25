@@ -31,8 +31,8 @@ M.StartWait = {0.5, 1}
 M.ManeuverTime = {1, 2}
 M.ManeuverWait = {1, 2}
 
-local currentSpeed = 0
-local targetManeuver = 0
+M.currentSpeed = 0
+M.targetManeuver = 0
 
 function M:New(go)
     self = new(self)
@@ -40,7 +40,7 @@ function M:New(go)
     CS.EZFramework.XLuaExtension.UpdateMessage.Require(go).fixedUpdate:AddAction(bind(self.FixedUpdate, self))
     self.transform = go.transform
     self.rigidbody = go:GetComponent("Rigidbody")
-    currentSpeed = self.rigidbody.velocity.z
+    self.currentSpeed = self.rigidbody.velocity.z
     coroutine.resume(self:Evade())
     return self
 end
@@ -50,9 +50,9 @@ function M:Evade()
         function()
             WaitForSeconds(LuaUtility.RandomFloat(self.StartWait[1], self.StartWait[2]))
             while not LuaUtility.IsNull(self.gameObject) do
-                targetManeuver = LuaUtility.RandomFloat(1, self.n_Dodge) * -Mathf.Sign(self.transform.position.x)
+                self.targetManeuver = LuaUtility.RandomFloat(1, self.n_Dodge) * -Mathf.Sign(self.transform.position.x)
                 WaitForSeconds(LuaUtility.RandomFloat(self.ManeuverTime[1], self.ManeuverTime[2]))
-                targetManeuver = 0
+                self.targetManeuver = 0
                 WaitForSeconds(LuaUtility.RandomFloat(self.ManeuverWait[1], self.ManeuverWait[2]))
             end
         end
@@ -60,8 +60,9 @@ function M:Evade()
 end
 
 function M:FixedUpdate()
-    local newManeuver = Mathf.MoveTowards(self.rigidbody.velocity.x, targetManeuver, self.n_Smoothing * Time.deltaTime)
-    self.rigidbody.velocity = Vector3(newManeuver, 0, currentSpeed)
+    local newManeuver =
+        Mathf.MoveTowards(self.rigidbody.velocity.x, self.targetManeuver, self.n_Smoothing * Time.deltaTime)
+    self.rigidbody.velocity = Vector3(newManeuver, 0, self.currentSpeed)
     self.rigidbody.position =
         Vector3(
         LuaUtility.ClampFloat(self.rigidbody.position.x, Boundary.xMin, Boundary.xMax),
