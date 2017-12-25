@@ -36,15 +36,21 @@ namespace EZUnityEditor
             EditorWindow.GetWindow<EZRenameEditorWindow>("EZRename").Show();
         }
 
-        [MenuItem(ROOT_NAME + "/EZAsset Generator/Material", priority = 6)]
+        [MenuItem(ROOT_NAME + "/EZAssetGenerator/Material", priority = 6)]
         private static void GenerateMaterial()
         {
             Selection.activeObject = EZAssetGenerator.GenerateMaterial();
         }
-        [MenuItem(ROOT_NAME + "/EZAsset Generator/TextAsset", priority = 7)]
+        [MenuItem(ROOT_NAME + "/EZAssetGenerator/TextAsset", priority = 7)]
         private static void GenerateTextAsset()
         {
             Selection.activeObject = EZAssetGenerator.GenerateTextAsset();
+        }
+
+        [MenuItem(ROOT_NAME + "/EZProjectSettings/Include Built-in Shaders", priority = 9)]
+        private static void IncludeBuiltinShaders()
+        {
+            EZGraphicsSettings.IncludeBuiltinShaders();
         }
     }
 }
