@@ -1,0 +1,80 @@
+--[==[
+Author:     熊哲
+CreateTime: 12/21/2017 12:34:25 PM
+Description:
+    -- 用于延迟调用的计时器，使用schedule(delay, loop, action)方法来添加延迟事件，使用tick(deltatime)方法来计时
+    手动调用tick(deltaTime)是为了方便不同类型的计时：可传入Time.fixedDeltaTime，Time.unscaledDeltaTime
+    可以直接tick(100)来实现一些道具的倒计时修改
+    -- 一个有利有弊的地方是必须通过某个Update来调用tick
+    需要额外的代码来控制倒计时，但是也方便了与某个MonoBehaviour来同步周期，go:SetActive(false)就可以直接控制暂停
+    -- 例：
+    Start()
+        propTimer:schedule(cd, false, enableprop)
+        bulletTimer:schedule(cd, true, fire)
+        flyTimer:schedule(time, false, landing)
+    end
+    Update()
+        propTimer:tick(CS.UnityEngine.Time.deltaTime)
+        bulletTimer:tick(CS.UnityEngine.Time.deltaTime * scale)
+    end
+    FixedUpdate()
+        flyTimer:tick(CS.UnityEngine.Time.fixedDeltaTime)
+    end
+    这样就实现了道具CD、自动武器、物理飞行三种计时器，还可以通过scale单独控制武器发射频率，scale = 0就实现了武器的单独暂停
+--]==]
+local M = {}
+M._modulename = ...
+M.__index = M
+----- begin module -----
+local task = {} -- 类似于C#的嵌套类timer.task
+task.__index = task
+function task:_new()
+    local t = {}
+    setmetatable(t, self)
+    return t
+end
+function task:new(delay, loop, action)
+    self = self:_new()
+    self.delay = delay
+    self.loop = loop
+    self.action = action
+    self.dead = false
+    self.countdown = delay
+    return self
+end
+function task:reset()
+    if self.dead then
+        error("trying to reset a dead task.")
+    end
+    self.countdown = self.delay
+end
+
+function M:new()
+    local t = {}
+    setmetatable(t, self)
+    t._tasklist = {}
+    return t
+end
+
+function M:schedule(delay, loop, action)
+    local task = task:new(delay, loop, action)
+    table.insert(self._tasklist, task)
+    return task
+end
+
+function M:tick(deltatime)
+    for key, task in pairs(self._tasklist) do
+        task.countdown = task.countdown - deltatime
+        if task.countdown <= 0 then
+            task.action()
+            if task.loop then
+                task.countdown = task.delay
+            else
+                task.dead = true
+                self._tasklist[key] = nil
+            end
+        end
+    end
+end
+----- end -----
+return M
