@@ -35,19 +35,20 @@ namespace EZUnityEditor
         public static void IncludeBuiltinShaders()
         {
             serializedObject.Update();
-            List<Shader> shaders = Resources.FindObjectsOfTypeAll<Shader>()
-                .Where(shader => AssetDatabase.GetAssetPath(shader).StartsWith("Resources"))
-                .Where(shader => !shader.name.StartsWith("Hidden"))
-                .Where(shader => !shader.name.StartsWith("Legacy Shaders"))
-                .Where(shader => !blackList.Contains(shader.name))
-                .ToList();
+            List<Shader> shaders = new List<Shader>();
+            foreach (Object asset in AssetDatabase.LoadAllAssetsAtPath("Resources/unity_builtin_extra")
+                .Where(obj => obj is Shader)
+                .Where(obj => !obj.name.StartsWith("Hidden") && !obj.name.StartsWith("Legacy Shaders"))
+                .Where(obj => !blackList.Contains(obj.name)))
+            {
+                shaders.Add(asset as Shader);
+            }
             shaders.Sort((s1, s2) => { return string.Compare(s1.name, s2.name); });
-
             for (int i = 0; i < m_AlwaysIncludedShaders.arraySize; i++)
             {
-                Shader sh = m_AlwaysIncludedShaders.GetArrayElementAtIndex(i).objectReferenceValue as Shader;
-                if (sh == null || shaders.Contains(sh)) continue;
-                shaders.Add(sh);
+                Shader shader = m_AlwaysIncludedShaders.GetArrayElementAtIndex(i).objectReferenceValue as Shader;
+                if (shader == null || shaders.Contains(shader)) continue;
+                shaders.Add(shader);
             }
 
             m_AlwaysIncludedShaders.ClearArray();
@@ -55,12 +56,12 @@ namespace EZUnityEditor
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < shaders.Count; i++)
             {
-                Shader sh = shaders[i];
-                sb.AppendLine("\"" + sh.name + "\",");
-                m_AlwaysIncludedShaders.GetArrayElementAtIndex(i).objectReferenceValue = sh;
+                Shader shader = shaders[i];
+                sb.AppendLine("\"" + shader.name + "\",");
+                m_AlwaysIncludedShaders.GetArrayElementAtIndex(i).objectReferenceValue = shader;
             }
             serializedObject.ApplyModifiedProperties();
-            Debug.Log("Shaders included:\n" + sb.ToString());
+            Debug.Log(shaders.Count + " Shaders included:\n" + sb.ToString());
             Selection.activeObject = target;
         }
     }
