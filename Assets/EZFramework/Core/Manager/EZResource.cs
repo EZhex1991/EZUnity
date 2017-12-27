@@ -58,6 +58,7 @@ namespace EZFramework
             base.Exit();
         }
 
+        // 记录bundle里的资源路径，在Editor+Develop模式时可以直接从路径加载文件
         private void GetAssetPathFromBundle(AssetBundle bundle)
         {
             if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
@@ -81,62 +82,72 @@ namespace EZFramework
             if (!bundleName.EndsWith(bundleExtension)) bundleName += bundleExtension;
             return bundleName + "-" + assetName;
         }
+
         // 同步加载资源
         public T LoadAsset<T>(string bundleName, string assetName) where T : Object
         {
+            AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            LoadBundle(bundleName);
             if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
                 if (!assetPathDict.TryGetValue(assetKey, out assetPath))
-                    Debug.LogWarning(assetKey + " not exist.");
+                {
+                    LogWarning(assetKey + " not exist.");
+                    return null;
+                }
                 else
+                {
                     return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(assetPath);
+                }
             }
-            return LoadBundle(bundleName).LoadAsset<T>(assetName);
-#else
-            return LoadBundle(bundleName).LoadAsset<T>(assetName);
 #endif
+            return bundle.LoadAsset<T>(assetName);
         }
         public Object LoadAsset(string bundleName, string assetName)
         {
+            AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            LoadBundle(bundleName);
             if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
                 if (!assetPathDict.TryGetValue(assetKey, out assetPath))
-                    Debug.LogWarning(assetKey + " not exist.");
+                {
+                    LogWarning(assetKey + " not exist.");
+                    return null;
+                }
                 else
+                {
                     return UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Object));
+                }
             }
-            return LoadBundle(bundleName).LoadAsset(assetName);
-#else
-            return LoadBundle(bundleName).LoadAsset(assetName);
 #endif
+            return bundle.LoadAsset(assetName);
         }
         public Object LoadAsset(string bundleName, string assetName, Type type)
         {
+            AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            LoadBundle(bundleName);
             if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
                 if (assetPathDict.TryGetValue(assetKey, out assetPath))
-                    Debug.LogWarning(assetKey + " not exist.");
+                {
+                    LogWarning(assetKey + " not exist.");
+                    return null;
+                }
                 else
+                {
                     return UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, type);
+                }
             }
-            return LoadBundle(bundleName).LoadAsset(assetName, type);
-#else
-            return LoadBundle(bundleName).LoadAsset(assetName, type);
 #endif
+            return bundle.LoadAsset(assetName, type);
         }
-        // 异步加载资源
+        // 异步加载资源，把异步封装成了同步+回调，Editor+Develop模式会变成同步加载，可能复现不了一些异步问题
         public void LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : Object
         {
             StartCoroutine(Cor_LoadAssetAsync<T>(bundleName, assetName, callback));
@@ -151,40 +162,101 @@ namespace EZFramework
         }
         IEnumerator Cor_LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : Object
         {
-            yield return null;
             yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
+#if UNITY_EDITOR
+                if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+                {
+                    string assetKey = GetAssetKey(bundleName, assetName);
+                    string assetPath;
+                    if (!assetPathDict.TryGetValue(assetKey, out assetPath))
+                    {
+                        LogWarning(assetKey + " not exist.");
+                        callback(null);
+                    }
+                    else
+                    {
+                        callback(UnityEditor.AssetDatabase.LoadAssetAtPath<T>(assetPath));
+                    }
+                    yield break;
+                }
+#endif
                 AssetBundleRequest abR = bundle.LoadAssetAsync<T>(assetName);
                 yield return abR;
                 if (abR.isDone) callback(abR.asset as T);
             }
+            else
+            {
+                LogError("Bundle not loaded: " + bundleName);
+            }
         }
         IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<Object> callback)
         {
-            yield return null;
             yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
+#if UNITY_EDITOR
+                if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+                {
+                    string assetKey = GetAssetKey(bundleName, assetName);
+                    string assetPath;
+                    if (!assetPathDict.TryGetValue(assetKey, out assetPath))
+                    {
+                        LogWarning(assetKey + " not exist.");
+                        callback(null);
+                    }
+                    else
+                    {
+                        callback(UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Object)));
+                    }
+                    yield break;
+                }
+#endif
                 AssetBundleRequest abR = bundle.LoadAssetAsync(assetName);
                 yield return abR;
                 if (abR.isDone) callback(abR.asset);
             }
+            else
+            {
+                LogError("Bundle not loaded: " + bundleName);
+            }
         }
         IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<Object> callback)
         {
-            yield return null;
             yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
+#if UNITY_EDITOR
+                if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+                {
+                    string assetKey = GetAssetKey(bundleName, assetName);
+                    string assetPath;
+                    if (assetPathDict.TryGetValue(assetKey, out assetPath))
+                    {
+                        LogWarning(assetKey + " not exist.");
+                        callback(null);
+                    }
+                    else
+                    {
+                        callback(UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, type));
+                    }
+                    yield break;
+                }
+#endif
                 AssetBundleRequest abR = bundle.LoadAssetAsync(assetName, type);
                 yield return abR;
                 if (abR.isDone) callback(abR.asset);
             }
+            else
+            {
+                LogError("Bundle not loaded: " + bundleName);
+            }
         }
+
         // 同步加载场景，经测试5.3.5为同步非阻塞，基本没有实际用途
         public void LoadScene(string bundleName, string sceneName, LoadSceneMode mode, bool setActive = true)
         {
@@ -194,7 +266,7 @@ namespace EZFramework
             if (setActive) SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName)); // 这里并非同步阻塞，该语句执行不了
             if (loadingPanel != null) loadingPanel.LoadComplete();
         }
-        // 异步加载场景
+        // 异步加载场景，把异步封装成了同步+回调
         public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode = LoadSceneMode.Single, OnSceneLoadedAction action = null)
         {
             StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, action));
@@ -203,7 +275,9 @@ namespace EZFramework
         {
             if (loadingPanel != null) loadingPanel.ShowProgress("Loading", 0);
             yield return null;
-            if (!(EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop))
+#if UNITY_EDITOR    // Editor+Develop模式下不加载bundle，直接读场景文件（需要将场景加到BuildSettings，打包时取消勾选）
+            if (EZFrameworkSettings.Instance.runMode != EZFrameworkSettings.RunMode.Develop)
+#endif
                 yield return Cor_LoadBundleAsync(bundleName, null);
             AsyncOperation opr = SceneManager.LoadSceneAsync(sceneName, mode);
             while (!opr.isDone)
@@ -215,6 +289,12 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.LoadComplete();
             if (action != null) action();
         }
+        // 卸载场景
+        public void UnloadScene(string sceneName)
+        {
+            SceneManager.UnloadScene(sceneName);
+        }
+        // 场景切换，多场景的项目在加载和卸载场景后指定当前活动场景
         public void SetActiveScene(string sceneName)
         {
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
@@ -282,11 +362,6 @@ namespace EZFramework
             }
         }
 
-        // 卸载场景
-        public void UnloadScene(string sceneName)
-        {
-            SceneManager.UnloadScene(sceneName);
-        }
         // 卸载AssetBundle
         public void UnloadBundle(string bundleName, bool unloadAll = false)
         {
