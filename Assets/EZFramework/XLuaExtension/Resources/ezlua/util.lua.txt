@@ -47,5 +47,11 @@ function M.clamp(value, min, max)
         return value
     end
 end
+
+-- 数值random，max inclusive
+function M.randomint(min, max)
+    math.randomseed(tostring(os.time()):reverse():sub(1, 6))
+    return math.random(min, max)
+end
 ----- end -----
 return M
