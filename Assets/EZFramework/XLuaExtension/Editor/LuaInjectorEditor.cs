@@ -8,6 +8,7 @@ using EZFramework.XLuaExtension;
 using EZUnityEditor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditorInternal;
@@ -18,34 +19,7 @@ namespace EZFrameworkEditor.XLuaExtension
     [CustomEditor(typeof(LuaInjector))]
     public class LuaInjectorEditor : Editor
     {
-        public static List<Type> typeList = new List<Type>
-        {
-            typeof(EZFramework.XLuaExtension.LuaInjector), // 可嵌套使用
-
-            typeof(EZComponent.EZAnimation.EZGraphicColorAnimation),
-            typeof(EZComponent.EZAnimation.EZRectTransformAnimation),
-            typeof(EZComponent.EZAnimation.EZTransformAnimation),
-
-            typeof(UnityEngine.Object),
-            typeof(UnityEngine.AudioSource),
-            typeof(UnityEngine.AudioClip),
-            typeof(UnityEngine.Collider),
-            typeof(UnityEngine.GameObject),
-            typeof(UnityEngine.GUIText),
-            typeof(UnityEngine.ParticleSystem),
-            typeof(UnityEngine.RectTransform),
-            typeof(UnityEngine.Sprite),
-            typeof(UnityEngine.TextMesh),
-            typeof(UnityEngine.Texture),
-            typeof(UnityEngine.Transform),
-            typeof(UnityEngine.UI.Button),
-            typeof(UnityEngine.UI.Image),
-            typeof(UnityEngine.UI.ScrollRect),
-            typeof(UnityEngine.UI.Slider),
-            typeof(UnityEngine.UI.Text),
-            typeof(UnityEngine.UI.Toggle),
-            typeof(UnityEngine.UI.ToggleGroup),
-        };
+        public static List<Type> typeList = new List<Type>();
         public static Type GetType(string typeName, bool deepSearch = true)
         {
             foreach (Type type in typeList)
@@ -61,6 +35,23 @@ namespace EZFrameworkEditor.XLuaExtension
                 }
             }
             return null;
+        }
+        static LuaInjectorEditor()
+        {
+            List<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where((assembly) => assembly.FullName.StartsWith("UnityEngine") || assembly.GetName().Name == "Assembly-CSharp")
+                .ToList();
+            foreach (Assembly assembly in assemblies)
+            {
+                foreach (Type type in assembly.GetExportedTypes())
+                {
+                    if (type.IsSubclassOf(typeof(UnityEngine.Object)) && !type.IsAbstract && !type.IsGenericType)
+                    {
+                        typeList.Add(type);
+                    }
+                }
+            }
+            typeList.Sort((t1, t2) => (string.Compare(t1.FullName, t2.FullName)));
         }
 
         private SerializedProperty m_InjectionList;
@@ -92,8 +83,24 @@ namespace EZFrameworkEditor.XLuaExtension
             {
                 string space = typeList[i].Namespace;
                 string name = typeList[i].Name;
-                string typeName = typeList[i].FullName;
-                menu.AddItem(new GUIContent(space + "/" + name), false, callback, typeName);
+                string fullName = typeList[i].FullName;
+                if (string.IsNullOrEmpty(space))
+                {
+                    space = "No Namespace";
+                }
+                else if (space == "UnityEngine")
+                {
+                    string firstCase = name.Substring(0, 1);
+                    if (firstCase.CompareTo("B") <= 0)
+                        space = "UnityEngine/A~B";
+                    else if (firstCase.CompareTo("H") <= 0)
+                        space = "UnityEngine/C~H";
+                    else if (firstCase.CompareTo("P") <= 0)
+                        space = "UnityEngine/I~P";
+                    else
+                        space = "UnityEngine/Q~Z";
+                }
+                menu.AddItem(new GUIContent(space + "/" + name), false, callback, fullName);
             }
             menu.ShowAsContext();
         }
