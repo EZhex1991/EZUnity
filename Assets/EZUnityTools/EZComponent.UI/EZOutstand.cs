@@ -90,7 +90,8 @@ namespace EZComponent.UI
                 float tiltAngleX = Mathf.Clamp(vec.y / focusRange, -1, 1) * -tiltAngle;
                 float tiltAngleY = Mathf.Clamp(vec.x / focusRange, -1, 1) * tiltAngle;
                 child.localRotation = Quaternion.Euler(tiltAngleX, tiltAngleY, 0);
-                child.localScale = Vector2.one * Mathf.Lerp(sizeRange.y, sizeRange.x, vec.magnitude / focusRange);
+                float lerp = Mathf.Lerp(sizeRange.y, sizeRange.x, vec.magnitude / focusRange);
+                child.localScale = new Vector3(lerp, lerp, 1);
             }
         }
 
