@@ -21,8 +21,10 @@ namespace EZFramework
         public string bundleExtension { get; private set; }
         // Develop模式下用到的源文件路径
         protected Dictionary<string, string> assetPathDict = new Dictionary<string, string>();
-        // 记录已加载过的资源包
+        // 记录已加载过的bundle
         protected Dictionary<string, AssetBundle> bundleDict = new Dictionary<string, AssetBundle>();
+        // 记录正在加载的bundle
+        protected Dictionary<string, AssetBundleCreateRequest> abcrDict = new Dictionary<string, AssetBundleCreateRequest>();
         protected AssetBundleManifest manifest;
 
         public delegate void OnAssetLoadedAction(Object asset);
@@ -285,9 +287,9 @@ namespace EZFramework
                 if (loadingPanel != null) loadingPanel.ShowProgress("Loading", opr.progress + 0.1f);
                 yield return null;
             }
+            if (action != null) action();
             yield return null;
             if (loadingPanel != null) loadingPanel.LoadComplete();
-            if (action != null) action();
         }
         // 卸载场景
         public void UnloadScene(string sceneName)
@@ -312,7 +314,7 @@ namespace EZFramework
                 Log("Load bundle from file: " + bundleName);
                 string bundlePath = bundleDirPath + bundleName;
                 bundle = AssetBundle.LoadFromFile(bundlePath);
-                bundleDict.Add(bundleName, bundle);
+                bundleDict[bundleName] = bundle;
                 GetAssetPathFromBundle(bundle);
             }
             return bundle;
@@ -335,21 +337,31 @@ namespace EZFramework
         {
             bundleName = bundleName.ToLower();
             if (!bundleName.EndsWith(bundleExtension)) bundleName += bundleExtension;
-            yield return null;
             yield return Cor_LoadDependenciesAsync(bundleName);
-            if (!bundleDict.ContainsKey(bundleName))
+            AssetBundle bundle;
+            if (!bundleDict.TryGetValue(bundleName, out bundle)) // 是否已加载
             {
-                Log("Load bundle from file async: " + bundleName);
-                string bundlePath = bundleDirPath + bundleName;
-                AssetBundleCreateRequest abCR = AssetBundle.LoadFromFileAsync(bundlePath);
-                yield return abCR;
-                if (abCR.isDone && abCR.assetBundle != null)
+                AssetBundleCreateRequest abcr;
+                if (!abcrDict.TryGetValue(bundleName, out abcr)) // 是否正在加载
                 {
-                    bundleDict.Add(bundleName, abCR.assetBundle);
-                    GetAssetPathFromBundle(abCR.assetBundle);
+                    Log("Load bundle from file async: " + bundleName);
+                    string bundlePath = bundleDirPath + bundleName;
+                    abcr = AssetBundle.LoadFromFileAsync(bundlePath);
+                    abcrDict[bundleName] = abcr;
+                }
+                while (!abcr.isDone)
+                {
+                    yield return null;
+                }
+                abcrDict.Remove(bundleName); // 不管加载是否成功都需要移除
+                if (abcr.isDone && abcr.assetBundle != null)
+                {
+                    bundle = abcr.assetBundle;
+                    bundleDict[bundleName] = bundle;
+                    GetAssetPathFromBundle(bundle);
                 }
             }
-            if (action != null) action(bundleDict[bundleName]);
+            if (action != null) action(bundle);
         }
         IEnumerator Cor_LoadDependenciesAsync(string bundleName)
         {
