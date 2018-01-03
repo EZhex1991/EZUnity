@@ -5,7 +5,7 @@ Description:
 
 --]==]
 local M = {}
-M._moduleName = ...
+M._modulename = ...
 M.__index = M
 ----- begin module -----
 -- bind(self.function, self)返回的就是 function(...) self:function(...) end，保存该值用于添加和移除delegate
