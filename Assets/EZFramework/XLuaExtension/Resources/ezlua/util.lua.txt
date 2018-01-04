@@ -15,8 +15,8 @@ function M.bind(func, param)
     end
 end
 
--- 三目运算
 -- 对于 condition and vtrue or vfalse 这个语句，vture会参与布尔运算而不是直接作为结果，当vtrue布尔判定为false时，该语句只能返回vfalse
+-- 该方法并不等同于三目运算符，当vtrue或vfalse为表达式时，lua会先计算表达式然后传过来，所以该方法做不到“短路求值”，不能代替if...else...
 function M.ifsetor(condition, vtrue, vfalse)
     if condition then
         return vtrue
@@ -48,10 +48,20 @@ function M.clamp(value, min, max)
     end
 end
 
--- 数值random，max inclusive
+local seed = 0
+local function setseed()
+    seed = seed + tostring(os.time()):reverse():sub(1, 6)
+    math.randomseed(seed)
+end
+-- 整数random，max inclusive
 function M.randomint(min, max)
-    math.randomseed(tostring(os.time()):reverse():sub(1, 6))
+    setseed()
     return math.random(min, max)
+end
+-- 浮点数random, max exclusive
+function M.randomfloat(min, max)
+    setseed()
+    return math.random() * (max - min) + min
 end
 ----- end -----
 return M
