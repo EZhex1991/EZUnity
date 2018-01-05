@@ -6,6 +6,7 @@
 */
 using EZFramework;
 using UnityEditor;
+using UnityEngine;
 
 namespace EZFrameworkEditor
 {
@@ -16,7 +17,15 @@ namespace EZFrameworkEditor
         [MenuItem(ROOT_NAME + "/Settings", priority = 0)]
         public static void EZSettings()
         {
-            Selection.activeObject = EZFrameworkSettings.Instance;
+            string assetPath = EZFrameworkSettings.AssetDirPath + EZFrameworkSettings.AssetName + ".asset";
+            EZFrameworkSettings target = AssetDatabase.LoadAssetAtPath<EZFrameworkSettings>(assetPath);
+            if (target == null)
+            {
+                target = ScriptableObject.CreateInstance<EZFrameworkSettings>();
+                AssetDatabase.CreateAsset(target, assetPath);
+                AssetDatabase.Refresh();
+            }
+            Selection.activeObject = target;
         }
 
         [MenuItem(ROOT_NAME + "/Copy Lua To Text", priority = 20)]
