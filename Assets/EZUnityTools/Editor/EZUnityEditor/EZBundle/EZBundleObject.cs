@@ -25,8 +25,6 @@ namespace EZUnityEditor
         public class CopyInfo
         {
             public string destDirPath = "";
-            public string filePattern = "*.*";
-            public SearchOption searchOption = SearchOption.AllDirectories;
             public string sourDirPath = "";
         }
         [Serializable]

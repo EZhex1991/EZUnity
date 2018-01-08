@@ -36,21 +36,16 @@ namespace EZUnityEditor
             OnPreBuild();
             if (ezBundle.removeOldFiles && Directory.Exists(ezBundle.bundleDirPath)) Directory.Delete(ezBundle.bundleDirPath, true);
             Directory.CreateDirectory(ezBundle.bundleDirPath);
-
             AssetDatabase.Refresh();
-            foreach (EZBundleObject.CopyInfo copyInfo in ezBundle.copyList)
-            {
-                if (copyInfo.sourDirPath == "") continue;
-                if (copyInfo.filePattern == "") copyInfo.filePattern = "*.*";
-                DirCopy("Assets/" + copyInfo.sourDirPath, "Assets/" + copyInfo.destDirPath + "/" + copyInfo.sourDirPath, copyInfo.filePattern, copyInfo.searchOption);
-            }
+            CopyDirectories(ezBundle);
             AssetDatabase.Refresh();
-            BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
             List<AssetBundleBuild> buildList = GetBuildList(ezBundle);
+            BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
             BuildPipeline.BuildAssetBundles(ezBundle.bundleDirPath, buildList.ToArray(), options, ezBundle.bundleTarget);
             if (!string.IsNullOrEmpty(ezBundle.listFileName)) CreateFileList(ezBundle.bundleDirPath, ezBundle.listFileName);
             AssetDatabase.Refresh();
             OnPostBuild(buildList);
+            Debug.Log("build complete.");
         }
         protected static void OnPreBuild()
         {
@@ -89,17 +84,23 @@ namespace EZUnityEditor
                    select type;
         }
 
-        protected static void DirCopy(string source, string destination, string pattern, SearchOption searchOption)
+        protected static void CopyDirectories(EZBundleObject ezBundle)
         {
-            if (!Directory.Exists(source)) return;
-            Directory.CreateDirectory(destination);
-            string[] files = Directory.GetFiles(source, pattern, searchOption);
-            foreach (string filePath in files)
+            foreach (EZBundleObject.CopyInfo copyInfo in ezBundle.copyList)
             {
-                if (filePath.EndsWith(".meta")) continue;
-                string newPath = destination + filePath.Replace(source, "");
-                Directory.CreateDirectory(Path.GetDirectoryName(newPath));
-                File.Copy(filePath, newPath, true);
+                string sour = copyInfo.sourDirPath;
+                string dest = copyInfo.destDirPath;
+                if (string.IsNullOrEmpty(sour) || string.IsNullOrEmpty(dest)) continue;
+                if (!Directory.Exists(sour)) return;
+                Directory.CreateDirectory(dest);
+                string[] files = Directory.GetFiles(sour);
+                foreach (string filePath in files)
+                {
+                    if (filePath.EndsWith(".meta")) continue;
+                    string newPath = dest + filePath.Replace(sour, "");
+                    Directory.CreateDirectory(Path.GetDirectoryName(newPath));
+                    File.Copy(filePath, newPath, true);
+                }
             }
         }
         protected static List<AssetBundleBuild> GetBuildList(EZBundleObject ezBundle)
