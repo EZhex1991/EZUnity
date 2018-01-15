@@ -191,6 +191,10 @@ namespace EZFramework.UniSDK
         {
             if (onBannerLoadedEvent != null) onBannerLoadedEvent(info, msg);
         }
+        protected virtual void m_OnBannerLoadFailed(string info, string msg)
+        {
+            if (onBannerLoadFailedEvent != null) onBannerLoadFailedEvent(info, msg);
+        }
         protected virtual void m_OnBannerShow(string info, string msg)
         {
             if (onBannerShowEvent != null) onBannerShowEvent(info, msg);
@@ -207,6 +211,10 @@ namespace EZFramework.UniSDK
         protected virtual void m_OnExitAdLoaded(string info, string msg)
         {
             if (onExitAdLoadedEvent != null) onExitAdLoadedEvent(info, msg);
+        }
+        protected virtual void m_OnExitAdLoadFailed(string info, string msg)
+        {
+            if (onExitAdLoadFailedEvent != null) onExitAdLoadFailedEvent(info, msg);
         }
         protected virtual void m_OnExitAdShow(string msg)
         {
