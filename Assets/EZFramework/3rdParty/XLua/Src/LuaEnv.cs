@@ -57,11 +57,11 @@ namespace XLua
         }
 #endif
 
-        const int LIB_VERSION_EXPECT = 103;
+        const int LIB_VERSION_EXPECT = 104;
 
         public LuaEnv()
         {
-            if (LuaAPI.xlua_get_lib_version() != LIB_VERSION_EXPECT && LuaAPI.xlua_get_lib_version() != (LIB_VERSION_EXPECT -1))
+            if (LuaAPI.xlua_get_lib_version() != LIB_VERSION_EXPECT)
             {
                 throw new InvalidProgramException("wrong lib version expect:"
                     + LIB_VERSION_EXPECT + " but got:" + LuaAPI.xlua_get_lib_version());
@@ -397,10 +397,10 @@ namespace XLua
                 {
                     throw new InvalidOperationException("try to dispose a LuaEnv with C# callback!");
                 }
+                
+                ObjectTranslatorPool.Instance.Remove(L);
 
                 LuaAPI.lua_close(L);
-
-                ObjectTranslatorPool.Instance.Remove(L);
                 translator = null;
 
                 rawL = IntPtr.Zero;
