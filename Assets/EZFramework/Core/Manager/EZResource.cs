@@ -294,7 +294,7 @@ namespace EZFramework
         // 卸载场景
         public void UnloadScene(string sceneName)
         {
-            SceneManager.UnloadScene(sceneName);
+            SceneManager.UnloadSceneAsync(sceneName);
         }
         // 场景切换，多场景的项目在加载和卸载场景后指定当前活动场景
         public void SetActiveScene(string sceneName)

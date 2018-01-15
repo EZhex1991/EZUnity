@@ -38,13 +38,11 @@ namespace EZFramework
             {
                 return ShowPanel(panelName);
             }
-            GameObject panel = Instantiate(panelPrefab);
-            panel.transform.SetParent(UICanvas.transform, false);
+            GameObject panel = Instantiate(panelPrefab, UICanvas.transform);
+            panel.transform.localPosition = Vector3.zero;
             panel.transform.SetAsLastSibling();
             panel.name = panelName;
             panel.layer = LayerMask.NameToLayer("UI");
-            panel.transform.localScale = Vector3.one;
-            panel.transform.localPosition = Vector3.zero;
             panelDict.Add(panelName, panel);
             panelList.AddFirst(panelName);
             RefreshOrder();

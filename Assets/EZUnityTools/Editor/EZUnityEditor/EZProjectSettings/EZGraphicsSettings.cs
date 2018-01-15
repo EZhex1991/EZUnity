@@ -22,6 +22,8 @@ namespace EZUnityEditor
 
         public static List<string> blackList = new List<string>()
         {
+            "Standard",
+            "Standard (Specular setup)",
             "FX/Flare",
         };
 
@@ -38,7 +40,7 @@ namespace EZUnityEditor
             List<Shader> shaders = new List<Shader>();
             foreach (Object asset in AssetDatabase.LoadAllAssetsAtPath("Resources/unity_builtin_extra")
                 .Where(obj => obj is Shader)
-                .Where(obj => !obj.name.StartsWith("Hidden") && !obj.name.StartsWith("Legacy Shaders"))
+                .Where(obj => !obj.name.StartsWith("Hidden") && !obj.name.StartsWith("Legacy Shaders") && !obj.name.StartsWith("VR") && !obj.name.StartsWith("Nature"))
                 .Where(obj => !blackList.Contains(obj.name)))
             {
                 shaders.Add(asset as Shader);

@@ -55,6 +55,7 @@ namespace EZComponent.UI
         }
         private Vector2 sourcePosition;
         private Vector2 reposition;
+        private Vector2 distance;
         private float inversedRepositionTime;
         private float lerp;
 
@@ -99,8 +100,25 @@ namespace EZComponent.UI
                 case Status.Repositioning:
                     // 当行数或列数为1时，normalizedPosition的位置可能在0和1两者间变化，此时MoveTowards会出现异常（以0-0计算的无效速度去做1-0的移动）
                     lerp = lerp + Time.deltaTime;
-                    normalizedPosition = Vector2.Lerp(sourcePosition, reposition, lerp * inversedRepositionTime);
-                    if ((normalizedPosition - reposition).sqrMagnitude <= 1e-6)
+                    if (step.x != 0)
+                    {
+                        horizontalNormalizedPosition = Mathf.Lerp(sourcePosition.x, reposition.x, lerp * inversedRepositionTime);
+                        distance.x = horizontalNormalizedPosition - reposition.x;
+                    }
+                    else
+                    {
+                        distance.x = 0;
+                    }
+                    if (step.y != 0)
+                    {
+                        verticalNormalizedPosition = Mathf.Lerp(sourcePosition.y, reposition.y, lerp * inversedRepositionTime);
+                        distance.y = verticalNormalizedPosition - reposition.y;
+                    }
+                    else
+                    {
+                        distance.y = 0;
+                    }
+                    if (distance.sqrMagnitude <= 1e-6)
                     {
                         lerp = 0;
                         StopMovement();
