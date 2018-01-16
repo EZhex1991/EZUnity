@@ -29,7 +29,7 @@ namespace EZFramework
 
         public delegate void OnAssetLoadedAction(Object asset);
         public delegate void OnAssetLoadedAction<T>(T asset) where T : Object;
-        public delegate void OnSceneLoadedAction();
+        public delegate void OnSceneChangedAction();
         public delegate void OnBundleLoadedAction(AssetBundle bundle);
 
         // 初始化资源管理器，读取StreamingAssets的所有依赖（即所有的资源包名）
@@ -269,11 +269,11 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.LoadComplete();
         }
         // 异步加载场景，把异步封装成了同步+回调
-        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode = LoadSceneMode.Single, OnSceneLoadedAction action = null)
+        public void LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode = LoadSceneMode.Single, OnSceneChangedAction action = null)
         {
             StartCoroutine(Cor_LoadSceneAsync(bundleName, sceneName, mode, action));
         }
-        IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, OnSceneLoadedAction action)
+        IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode mode, OnSceneChangedAction action)
         {
             if (loadingPanel != null) loadingPanel.ShowProgress("Loading", 0);
             yield return null;
@@ -292,9 +292,15 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.LoadComplete();
         }
         // 卸载场景
-        public void UnloadScene(string sceneName)
+        public void UnloadSceneAsync(string sceneName, OnSceneChangedAction action = null)
         {
-            SceneManager.UnloadSceneAsync(sceneName);
+            StartCoroutine(Cor_UnloadSceneAsync(sceneName, action));
+        }
+        IEnumerator Cor_UnloadSceneAsync(string sceneName, OnSceneChangedAction action)
+        {
+            AsyncOperation opr = SceneManager.UnloadSceneAsync(sceneName);
+            yield return opr;
+            if (action != null) action();
         }
         // 场景切换，多场景的项目在加载和卸载场景后指定当前活动场景
         public void SetActiveScene(string sceneName)
