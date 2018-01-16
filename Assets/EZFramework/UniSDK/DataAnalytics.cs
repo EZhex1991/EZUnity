@@ -5,14 +5,13 @@
  * 
 */
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace EZFramework.UniSDK
 {
     public class DataAnalytics : EZSingleton<DataAnalytics>
     {
-        public const string LOG_TAG = "DA ---> ";
-
         public class CustomEvent
         {
             public string eventName { get; private set; }
@@ -40,19 +39,25 @@ namespace EZFramework.UniSDK
 
         public virtual void SetUserInfo(string userId, int gender = 2, int birthYear = 0)
         {
-            Debug.Log(LOG_TAG + "Set user info");
+            Log("Set user info");
         }
         public virtual void Transaction(string productId, decimal amount, string currency)
         {
-            Debug.Log(LOG_TAG + "Transaction");
+            Log("Transaction");
         }
         public virtual void Transaction(string productId, decimal amount, string currency, string receiptPurchaseData, string signature)
         {
-            Debug.Log(LOG_TAG + "Transaction");
+            Log("Transaction");
         }
         public virtual void Submit(CustomEvent customEvent)
         {
-            Debug.Log(LOG_TAG + "CustomEvent: " + customEvent.eventName);
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("CustomEvent: " + customEvent.eventName);
+            foreach (var data in customEvent.eventData)
+            {
+                sb.AppendLine(data.Key + ": " + data.Value);
+            }
+            Log(sb.ToString());
         }
     }
 }

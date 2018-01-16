@@ -5,15 +5,18 @@
  * 
 */
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace EZFramework.UniSDK
 {
     public class InAppPurchase : EZSingleton<InAppPurchase>
     {
+        [TextArea(5, 10)]
+        public string googlePlayPublicKey;
         public bool positiveEvent = true;
+
         public bool inProgress { get; protected set; }
 
-        public const string LOG_TAG = "IAP ---> ";
         public delegate void OnEventCallback(string info, string msg);
 
         public event OnEventCallback onInitSucceededEvent;
@@ -49,6 +52,7 @@ namespace EZFramework.UniSDK
         public virtual void Purchase(string productId, string payload = "")
         {
             inProgress = true;
+            Log(string.Format("{0}\n{1}\n{2}", "Purchase", productId, payload));
             if (positiveEvent) m_OnPurchaseSucceeded(productId, payload);
             else m_OnPurchaseFailed(productId, "IAP disabled");
         }

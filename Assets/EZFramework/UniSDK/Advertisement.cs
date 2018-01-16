@@ -37,8 +37,6 @@ namespace EZFramework.UniSDK
     public class Advertisement : EZSingleton<Advertisement>
     {
         public bool positiveEvent = true;
-
-        public const string LOG_TAG = "AD ---> ";
         public delegate void OnEventCallback(string info, string msg);
         // init
         public event OnEventCallback onInitSucceededEvent;
@@ -82,7 +80,7 @@ namespace EZFramework.UniSDK
         }
         public virtual void ShowRewardVideo(string info = "", string msg = "")
         {
-            Debug.Log(string.Format("{0}\n{1}\n{2}", LOG_TAG + "Show RewardVideo", info, msg));
+            Log(string.Format("{0}\n{1}\n{2}", "Show RewardVideo", info, msg));
             if (positiveEvent)
             {
                 m_OnRewardVideoShow(info, msg);
@@ -91,22 +89,29 @@ namespace EZFramework.UniSDK
             }
             else
             {
+                m_OnRewardVideoShow(info, msg);
                 m_OnRewardVideoAbandon(info, msg);
+                m_OnRewardVideoClose(info, msg);
             }
         }
         public virtual void ShowInterstitial(string info = "", string msg = "")
         {
-            Debug.Log(string.Format("{0}\n{1}\n{2}", LOG_TAG + "Show Interstitial", info, msg));
-            if (positiveEvent) m_OnInterstitialShow(info, msg);
+            Log(string.Format("{0}\n{1}\n{2}", "Show Interstitial", info, msg));
+            if (positiveEvent)
+            {
+                m_OnInterstitialShow(info, msg);
+                m_OnInterstitialClose(info, msg);
+            }
         }
         public virtual void ShowBanner(string info = "", string msg = "")
         {
-            Debug.Log(string.Format("{0}\n{1}\n{2}", LOG_TAG + "Show Banner", info, msg));
+            Log(string.Format("{0}\n{1}\n{2}", "Show Banner", info, msg));
             if (positiveEvent) m_OnBannerShow(info, msg);
         }
         public virtual void RemoveBanner(string info = "", string msg = "")
         {
-            Debug.Log(string.Format("{0}\n{1}\n{2}", LOG_TAG + "Remove Banner", info, msg));
+            Log(string.Format("{0}\n{1}\n{2}", "Remove Banner", info, msg));
+            if (positiveEvent) m_OnBannerClose(info, msg);
         }
 
         public virtual bool IsRewardVideoReady(string info = "")
