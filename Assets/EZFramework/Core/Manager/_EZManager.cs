@@ -23,17 +23,5 @@ namespace EZFramework
         {
             Log("Exit");
         }
-
-        // 是否显示该管理器的日志， 由于程序中管理器可能会很多，所以做了一个这样的开关
-        public bool showLog = true;
-#if UNITY_EDITOR
-        protected void Log(string log) { if (showLog) Debug.logger.Log(typeof(T).Name, log); }
-        protected void LogWarning(string log) { if (showLog) Debug.logger.LogWarning(typeof(T).Name, log); }
-        protected void LogError(string log) { if (showLog) Debug.logger.LogError(typeof(T).Name, log); }
-#else
-        protected void Log(string log) { Debug.logger.Log(typeof(T).Name, log); }
-        protected void LogWarning(string log) { Debug.logger.LogWarning(typeof(T).Name, log); }
-        protected void LogError(string log) { Debug.logger.LogError(typeof(T).Name, log); }
-#endif
     }
 }

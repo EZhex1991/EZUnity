@@ -11,6 +11,8 @@ namespace EZFramework
     public class EZSingleton<T> : MonoBehaviour
         where T : MonoBehaviour
     {
+        private static string LogTag = typeof(T).Name;
+
         private static T instance;
         public static T Instance
         {
@@ -25,6 +27,20 @@ namespace EZFramework
                     }
                 }
                 return instance;
+            }
+        }
+
+        [SerializeField]
+        private bool m_ShowLog = true;
+        public bool showLog
+        {
+            get
+            {
+#if UNITY_EDITOR
+                return m_ShowLog;
+#else
+                return true;
+#endif
             }
         }
 
@@ -46,5 +62,9 @@ namespace EZFramework
                 DontDestroyOnLoad(gameObject);  // 单例在游戏中不要销毁
             }
         }
+
+        protected void Log(string log) { if (showLog) Debug.logger.Log(LogTag, log, Instance); }
+        protected void LogWarning(string log) { if (showLog) Debug.logger.LogWarning(LogTag, log, Instance); }
+        protected void LogError(string log) { if (showLog) Debug.logger.LogError(LogTag, log, Instance); }
     }
 }
