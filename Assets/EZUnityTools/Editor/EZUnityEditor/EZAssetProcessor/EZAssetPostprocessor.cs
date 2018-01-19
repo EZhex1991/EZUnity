@@ -34,51 +34,8 @@ namespace EZUnityEditor
                 // sprite@_spriteName
                 else if (assetName.ToLower().StartsWith("sprite@_"))
                 {
-                    textureImporter.textureType = TextureImporterType.Sprite;
-                }
-                // sprite@RGBA32_spriteName
-                else if (assetName.ToLower().StartsWith("sprite@rgba32_"))
-                {
-                    textureImporter.textureType = TextureImporterType.Sprite;
-                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
-                    {
-                        name = "Standalone",
-                        overridden = true,
-                        format = TextureImporterFormat.RGBA32,
-                    }); textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
-                    {
-                        name = "iPhone",
-                        overridden = true,
-                        format = TextureImporterFormat.RGBA32,
-                    }); textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
-                    {
-                        name = "Android",
-                        overridden = true,
-                        format = TextureImporterFormat.RGBA32,
-                    });
-                }
-                // sprite@RGB24_spriteName
-                else if (assetName.ToLower().StartsWith("sprite@rgb24_"))
-                {
-                    textureImporter.textureType = TextureImporterType.Sprite;
-                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
-                    {
-                        name = "Standalone",
-                        overridden = true,
-                        format = TextureImporterFormat.RGB24
-                    });
-                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
-                    {
-                        name = "iPhone",
-                        overridden = true,
-                        format = TextureImporterFormat.RGB24
-                    });
-                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
-                    {
-                        name = "Android",
-                        overridden = true,
-                        format = TextureImporterFormat.RGB24
-                    });
+                    //这句会造成npot的设置被还原
+                    //textureImporter.textureType = TextureImporterType.Sprite;
                 }
             }
             // textureName_normalMap
