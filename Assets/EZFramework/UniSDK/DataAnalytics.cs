@@ -39,15 +39,15 @@ namespace EZFramework.UniSDK
 
         public virtual void SetUserInfo(string userId, int gender = 2, int birthYear = 0)
         {
-            Log("Set user info");
+            Log(string.Format("{0}\n{1}\n{2}\n{3}", "SetUserInfo", userId, gender, birthYear));
         }
         public virtual void Transaction(string productId, decimal amount, string currency)
         {
-            Log("Transaction");
+            Log(string.Format("{0}\n{1}\n{2}\n{3}", "Transaction", productId, amount, currency));
         }
         public virtual void Transaction(string productId, decimal amount, string currency, string receiptPurchaseData, string signature)
         {
-            Log("Transaction");
+            Log(string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", "Transaction", productId, amount, currency, receiptPurchaseData, signature));
         }
         public virtual void Submit(CustomEvent customEvent)
         {

@@ -12,9 +12,7 @@ namespace EZFramework.UniSDK
     {
         public bool positiveEvent;
 
-        public const string LOG_TAG = "AC ---> ";
         public delegate void OnEventCallback(string msg);
-
         public event OnEventCallback onInitSucceededEvent;
         public event OnEventCallback onInitFailedEvent;
         public event OnEventCallback onLoginSucceededEvent;
@@ -22,6 +20,7 @@ namespace EZFramework.UniSDK
 
         public virtual void Init()
         {
+            Log("Init");
             if (positiveEvent) m_OnInitSucceeded("Account disabled, positive events will be triggered.");
             else m_OnInitFailed("Account disabled, negative events will be triggered.");
         }
@@ -33,6 +32,7 @@ namespace EZFramework.UniSDK
 
         public virtual void Login()
         {
+            Log("Login");
             if (positiveEvent)
             {
                 m_OnLoginSucceeded("");
@@ -45,18 +45,22 @@ namespace EZFramework.UniSDK
 
         public virtual string GetNickName()
         {
+            Log("GetNickName");
             return "Guest";
         }
         public virtual string GetRealName()
         {
+            Log("GetRealName");
             return "Guest";
         }
         public virtual int GetGender()
         {
+            Log("GetGender");
             return 2;
         }
         public virtual Texture GetIcon()
         {
+            Log("GetIcon");
             return new Texture();
         }
 

@@ -68,13 +68,27 @@ namespace EZFramework.UniSDK
         public event OnEventCallback onExitAdCloseEvent;
         public event OnEventCallback onExitAdClickEvent;
 
+        private float timeScale;
+        private void PauseTime()
+        {
+            if (Time.timeScale == 0) return;
+            timeScale = Time.timeScale;
+            Time.timeScale = 0;
+        }
+        private void ResumeTime()
+        {
+            Time.timeScale = timeScale;
+        }
+
         public virtual void Init()
         {
+            Log("Init");
             if (positiveEvent) m_OnInitSucceeded("", "Ad disabled, positive events will be triggered.");
             else m_OnInitFailed("", "Ad disabled, negative events will be triggered.");
         }
         public virtual void LoadRewardVideo()
         {
+            Log("LoadRewardVideo");
             if (positiveEvent) m_OnRewardVideoLoaded("", "");
             else m_OnRewardVideoLoadFailed("", "");
         }
@@ -96,7 +110,7 @@ namespace EZFramework.UniSDK
         }
         public virtual void ShowInterstitial(string info = "", string msg = "")
         {
-            Log(string.Format("{0}\n{1}\n{2}", "Show Interstitial", info, msg));
+            Log(string.Format("{0}\n{1}\n{2}", "ShowInterstitial", info, msg));
             if (positiveEvent)
             {
                 m_OnInterstitialShow(info, msg);
@@ -105,29 +119,33 @@ namespace EZFramework.UniSDK
         }
         public virtual void ShowBanner(string info = "", string msg = "")
         {
-            Log(string.Format("{0}\n{1}\n{2}", "Show Banner", info, msg));
+            Log(string.Format("{0}\n{1}\n{2}", "ShowBanner", info, msg));
             if (positiveEvent) m_OnBannerShow(info, msg);
         }
         public virtual void RemoveBanner(string info = "", string msg = "")
         {
-            Log(string.Format("{0}\n{1}\n{2}", "Remove Banner", info, msg));
+            Log(string.Format("{0}\n{1}\n{2}", "RemoveBanner", info, msg));
             if (positiveEvent) m_OnBannerClose(info, msg);
         }
 
         public virtual bool IsRewardVideoReady(string info = "")
         {
+            Log(string.Format("{0}\n{1}", "IsRewardVideoReady", info));
             return positiveEvent;
         }
         public virtual bool IsInterstitialReady(string info = "")
         {
+            Log(string.Format("{0}\n{1}", "IsInterstitialReady", info));
             return positiveEvent;
         }
         public virtual bool IsBannerReady(string info = "")
         {
+            Log(string.Format("{0}\n{1}", "IsBannerReady", info));
             return positiveEvent;
         }
         public virtual bool IsExitAdReady(string info = "")
         {
+            Log(string.Format("{0}\n{1}", "IsExitAdReady", info));
             return positiveEvent;
         }
 
@@ -153,10 +171,16 @@ namespace EZFramework.UniSDK
         protected virtual void m_OnRewardVideoShow(string info, string msg)
         {
             if (onRewardVideoShowEvent != null) onRewardVideoShowEvent(info, msg);
+#if UNITY_IOS
+            PauseTime();
+#endif
         }
         protected virtual void m_OnRewardVideoClose(string info, string msg)
         {
             if (onRewardVideoCloseEvent != null) onRewardVideoCloseEvent(info, msg);
+#if UNITY_IOS
+            ResumeTime();
+#endif
         }
         protected virtual void m_OnRewardVideoClick(string info, string msg)
         {
@@ -182,10 +206,16 @@ namespace EZFramework.UniSDK
         protected virtual void m_OnInterstitialShow(string info, string msg)
         {
             if (onInterstitialShowEvent != null) onInterstitialShowEvent(info, msg);
+#if UNITY_IOS
+            PauseTime();
+#endif
         }
         protected virtual void m_OnInterstitialClose(string info, string msg)
         {
             if (onInterstitialCloseEvent != null) onInterstitialCloseEvent(info, msg);
+#if UNITY_IOS
+            ResumeTime();
+#endif
         }
         protected virtual void m_OnInterstitialClick(string info, string msg)
         {

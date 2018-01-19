@@ -46,6 +46,7 @@ namespace EZFramework.UniSDK
 
         public virtual void Init(List<CustomProduct> products)
         {
+            Log("Init");
             if (positiveEvent) m_OnInitSucceeded("", "IAP disabled, positive events will be triggered.");
             else m_OnInitFailed("", "IAP disabled, negative events will be triggered.");
         }
