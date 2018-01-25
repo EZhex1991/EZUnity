@@ -38,6 +38,11 @@ namespace EZUnityEditor
                     //textureImporter.textureType = TextureImporterType.Sprite;
                 }
             }
+            if (assetName.ToLower().StartsWith("tex2D_"))
+            {
+                textureImporter.textureType = TextureImporterType.Default;
+                textureImporter.mipmapEnabled = false;
+            }
             // textureName_normalMap
             if (assetPath.ToLower().Contains("normalmap"))
             {
