@@ -50,7 +50,7 @@ end
 
 local seed = 0
 local function setseed()
-    seed = seed + tostring(os.time()):reverse():sub(1, 6)
+    seed = math.random(1, 100000) + tostring(os.time()):reverse():sub(1, 6)
     math.randomseed(seed)
 end
 -- 整数random，max inclusive
