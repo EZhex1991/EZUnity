@@ -110,14 +110,4 @@ namespace EZFramework
             return panelDict[panelName].activeSelf;
         }
     }
-
-    public static class EZUIExtensions
-    {
-        public static Vector2 GetSize(this RectTransform recttransform)
-        {
-            Vector2 anchorDistance = recttransform.anchorMax - recttransform.anchorMin;
-            Vector2 rectSize = new Vector2(recttransform.rect.size.x * anchorDistance.x, recttransform.rect.size.y * anchorDistance.y);
-            return rectSize + recttransform.sizeDelta;
-        }
-    }
 }

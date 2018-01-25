@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace EZFrameworkEditor
 {
-    public static class EZFrameworkUtility
+    public static class EZFrameworkEditorUtility
     {
         [EZUnityEditor.EZBundleBuilder.OnPreBuild]
         public static void LuaToTxt()
