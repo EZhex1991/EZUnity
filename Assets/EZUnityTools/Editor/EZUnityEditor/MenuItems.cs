@@ -52,5 +52,11 @@ namespace EZUnityEditor
         {
             EZGraphicsSettings.IncludeBuiltinShaders();
         }
+
+        [MenuItem(ROOT_NAME + "/EZPlayerPrefsEditor", priority = 10)]
+        private static void PlayerPrefsEditor()
+        {
+            EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefsEditor").Show();
+        }
     }
 }
