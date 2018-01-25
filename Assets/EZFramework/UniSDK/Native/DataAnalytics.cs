@@ -35,7 +35,7 @@ namespace EZFramework.UniSDK.UnityNative
         {
             if (result != UnityEngine.Analytics.AnalyticsResult.Ok)
             {
-                Log("AnalyticsResult: " + result);
+                LogWarning("AnalyticsResult: " + result);
             }
         }
 #endif
