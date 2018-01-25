@@ -11,6 +11,10 @@ namespace EZFramework
 {
     public class EZLoadingPanel : MonoBehaviour
     {
+        public RawImage background;
+        public RawImage mainImage;
+        public Text title;
+
         public Slider slider_Progress;
         public Text text_Percentage;
         public Text text_Progress;
