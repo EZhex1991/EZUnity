@@ -67,6 +67,9 @@ namespace EZFramework.UniSDK
         public event OnEventCallback onExitAdShowEvent;
         public event OnEventCallback onExitAdCloseEvent;
         public event OnEventCallback onExitAdClickEvent;
+        // native ad
+        public event OnEventCallback onNativeAdLoadedEvent;
+        public event OnEventCallback onNativeAdLoadFailedEvent;
 
         private float timeScale;
         private void PauseTime()
@@ -86,6 +89,7 @@ namespace EZFramework.UniSDK
             if (positiveEvent) m_OnInitSucceeded("", "Ad disabled, positive events will be triggered.");
             else m_OnInitFailed("", "Ad disabled, negative events will be triggered.");
         }
+
         public virtual void LoadRewardVideo()
         {
             Log("LoadRewardVideo");
@@ -108,6 +112,7 @@ namespace EZFramework.UniSDK
                 m_OnRewardVideoClose(info, msg);
             }
         }
+
         public virtual void ShowInterstitial(string info = "", string msg = "")
         {
             Log(string.Format("{0}\n{1}\n{2}", "ShowInterstitial", info, msg));
@@ -117,6 +122,7 @@ namespace EZFramework.UniSDK
                 m_OnInterstitialClose(info, msg);
             }
         }
+
         public virtual void ShowBanner(string info = "", string msg = "")
         {
             Log(string.Format("{0}\n{1}\n{2}", "ShowBanner", info, msg));
@@ -126,6 +132,25 @@ namespace EZFramework.UniSDK
         {
             Log(string.Format("{0}\n{1}\n{2}", "RemoveBanner", info, msg));
             if (positiveEvent) m_OnBannerClose(info, msg);
+        }
+
+        public virtual void LoadNativeAd(string info = "", string msg = "")
+        {
+            Log(string.Format("{0}\n{1}\n{2}", "LoadNativeAd", info, msg));
+            if (positiveEvent) m_OnNativeAdLoaded(info, msg);
+            else m_OnNativeAdLoadFailed(info, msg);
+        }
+        public virtual Texture2D GetNativeAdTexture(string info = "")
+        {
+            return new Texture2D(100, 100);
+        }
+        public virtual string GetNativeAdText(string info = "")
+        {
+            return info;
+        }
+        public virtual void PerformClick(string info = "")
+        {
+            Log(string.Format("{0}\n{1}", "PerformClick", info));
         }
 
         public virtual bool IsRewardVideoReady(string info = "")
@@ -262,6 +287,15 @@ namespace EZFramework.UniSDK
         protected virtual void m_OnExitAdClick(string msg)
         {
             if (onExitAdClickEvent != null) onExitAdClickEvent("", msg);
+        }
+        // native ad
+        protected virtual void m_OnNativeAdLoaded(string info, string msg)
+        {
+            if (onNativeAdLoadedEvent != null) onNativeAdLoadedEvent(info, msg);
+        }
+        protected virtual void m_OnNativeAdLoadFailed(string info, string msg)
+        {
+            if (onNativeAdLoadFailedEvent != null) onNativeAdLoadFailedEvent(info, msg);
         }
     }
 }
