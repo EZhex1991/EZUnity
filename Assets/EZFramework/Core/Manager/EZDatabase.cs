@@ -191,7 +191,7 @@ namespace EZFramework
         }
         public DBData LoadDataFromBase64String(string dataName, string base64String)
         {
-            string dataString = Encoding.ASCII.GetString(Convert.FromBase64String(base64String));
+            string dataString = Encoding.UTF8.GetString(Convert.FromBase64String(base64String));
             return LoadDataFromString(dataName, dataString);
         }
         public string GetDataString(string dataName)
@@ -200,7 +200,7 @@ namespace EZFramework
         }
         public string GetDataBase64String(string dataName)
         {
-            byte[] data = Encoding.ASCII.GetBytes(GetDataString(dataName));
+            byte[] data = Encoding.UTF8.GetBytes(GetDataString(dataName));
             return Convert.ToBase64String(data);
         }
 
@@ -351,23 +351,29 @@ namespace EZFramework
     // 这个封装是为了方便替换数据的实现方式，其实Hashtable挺好用的
     public class DBData
     {
+        private const string TIME_FORMAT = "yyyyMMddHHmmss";
+
         public Hashtable data { get; private set; }
+        public string timeModified { get; private set; }
 
         public bool Add(object key, object value)
         {
             if (data.ContainsKey(key)) return false;
             else data.Add(key, value);
+            timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
             return true;
         }
         public bool Set(object key, object value)
         {
             data[key] = value;
+            timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
             return true;
         }
         public bool Del(object key)
         {
             if (!data.ContainsKey(key)) return false;
             data.Remove(key);
+            timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
             return true;
         }
         public object Get(object key, object value)
@@ -389,6 +395,7 @@ namespace EZFramework
         public DBData()
         {
             this.data = new Hashtable();
+            this.timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
         }
         public static DBData LoadFromString(string dataString)
         {
