@@ -1,4 +1,4 @@
---[==[
+﻿--[==[
 Author:     熊哲
 CreateTime: 9/29/2017 12:52:50 PM
 Description:
@@ -50,7 +50,7 @@ end
 
 local seed = 0
 local function setseed()
-    seed = math.random(1, 100000) + tostring(os.time()):reverse():sub(1, 6)
+    seed = math.random(1e4, 1e6) + tostring(os.time()):reverse():sub(1, 6)
     math.randomseed(seed)
 end
 -- 整数random，max inclusive
