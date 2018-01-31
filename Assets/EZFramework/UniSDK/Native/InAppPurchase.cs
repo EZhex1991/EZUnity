@@ -6,7 +6,7 @@
 */
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_PURCHASING
+#if UNITYPURCHASING
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Security;
 #endif
@@ -14,11 +14,11 @@ using UnityEngine.Purchasing.Security;
 namespace EZFramework.UniSDK.UnityNative
 {
     public class InAppPurchase : UniSDK.InAppPurchase
-#if UNITY_PURCHASING
+#if UNITYPURCHASING
     , IStoreListener
 #endif
     {
-#if UNITY_PURCHASING
+#if UNITYPURCHASING
         private IStoreController m_Controller;
         private IAppleExtensions m_AppleExtensions;
 
@@ -77,6 +77,7 @@ namespace EZFramework.UniSDK.UnityNative
             }
             Log("Starting Purchase Flow...");
             inProgress = true;
+            m_OnPurchaseFlowStarted(product.definition.id, payload);
             m_Controller.InitiatePurchase(product, payload);
         }
 
@@ -126,7 +127,7 @@ namespace EZFramework.UniSDK.UnityNative
             if (Validate(e))
             {
                 Log("Purchase Succeed.");
-                m_OnPurchaseSucceeded(e.purchasedProduct.definition.id);
+                m_OnPurchaseSucceeded(e.purchasedProduct.definition.id, e.purchasedProduct.receipt);
             }
             else
             {
@@ -148,25 +149,25 @@ namespace EZFramework.UniSDK.UnityNative
         }
         private bool Validate(PurchaseEventArgs e)
         {
-#if UNITY_EDITOR
-            Log(string.Format("{0}, {1}", e.purchasedProduct.definition.id, e.purchasedProduct.receipt));
-            return true;
-#else
+            Log(string.Format("definitionId: {0}, receipt: {1}", e.purchasedProduct.definition.id, e.purchasedProduct.receipt));
             try
             {
                 CrossPlatformValidator validator = new CrossPlatformValidator(GooglePlayTangle.Data(), AppleTangle.Data(), Application.identifier);
                 IPurchaseReceipt[] result = validator.Validate(e.purchasedProduct.receipt);
                 foreach (IPurchaseReceipt productReceipt in result)
                 {
-                    Log(string.Format("{0}, {1}, {2}", productReceipt.productID, productReceipt.purchaseDate, productReceipt.transactionID));
+                    Log(string.Format("productId: {0}, purchaseDate: {1}, transactionId: {2}", productReceipt.productID, productReceipt.purchaseDate, productReceipt.transactionID));
                 }
                 return true;
             }
             catch (IAPSecurityException)
             {
+#if UNITY_EDITOR
+                return positiveEvent;
+#else
                 return false;
-            }
 #endif
+            }
         }
 #endif
     }
