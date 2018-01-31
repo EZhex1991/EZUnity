@@ -182,6 +182,16 @@ namespace EZFramework
             DBDict[dataName] = data;
             return data;
         }
+
+        public static string ToBase64String(string rawString)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(rawString));
+        }
+        public static string FromBase64String(string base64String)
+        {
+            return Encoding.UTF8.GetString(Convert.FromBase64String(base64String));
+        }
+
         public DBData LoadDataFromString(string dataName, string dataString)
         {
             DBData data = DBData.LoadFromString(dataString);
@@ -191,8 +201,7 @@ namespace EZFramework
         }
         public DBData LoadDataFromBase64String(string dataName, string base64String)
         {
-            string dataString = Encoding.UTF8.GetString(Convert.FromBase64String(base64String));
-            return LoadDataFromString(dataName, dataString);
+            return LoadDataFromString(dataName, FromBase64String(base64String));
         }
         public string GetDataString(string dataName)
         {
@@ -200,8 +209,7 @@ namespace EZFramework
         }
         public string GetDataBase64String(string dataName)
         {
-            byte[] data = Encoding.UTF8.GetBytes(GetDataString(dataName));
-            return Convert.ToBase64String(data);
+            return ToBase64String(GetDataString(dataName));
         }
 
         protected void LoadIndex()
