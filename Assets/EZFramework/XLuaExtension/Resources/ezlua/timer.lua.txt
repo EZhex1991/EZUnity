@@ -26,14 +26,14 @@ local M = {}
 M._modulename = ...
 M.__index = M
 ----- begin module -----
-local task = {} -- 类似于C#的嵌套类timer.task
-task.__index = task
-function task:_new()
+M.task = {} -- 类似于C#的嵌套类timer.task
+M.task.__index = M.task
+function M.task:_new()
     local t = {}
     setmetatable(t, self)
     return t
 end
-function task:new(delay, loop, action)
+function M.task:new(delay, loop, action)
     self = self:_new()
     self.delay = delay
     self.loop = loop
@@ -42,7 +42,7 @@ function task:new(delay, loop, action)
     self.countdown = delay
     return self
 end
-function task:reset()
+function M.task:reset()
     if self.dead then
         error("trying to reset a dead task.")
     end
@@ -57,7 +57,7 @@ function M:new()
 end
 
 function M:schedule(delay, loop, action)
-    local task = task:new(delay, loop, action)
+    local task = M.task:new(delay, loop, action)
     table.insert(self._tasklist, task)
     return task
 end
