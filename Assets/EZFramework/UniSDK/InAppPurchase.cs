@@ -13,6 +13,7 @@ namespace EZFramework.UniSDK
     {
         [TextArea(5, 10)]
         public string googlePlayPublicKey;
+
         public bool positiveEvent = true;
 
         public bool inProgress { get; protected set; }
@@ -23,6 +24,7 @@ namespace EZFramework.UniSDK
         public event OnEventCallback onInitFailedEvent;
         public event OnEventCallback onProductInfoEvent;
 
+        public event OnEventCallback onPurchaseFlowStartedEvent;
         public event OnEventCallback onPurchaseSucceededEvent;
         public event OnEventCallback onPurchaseFailedEvent;
         public event OnEventCallback onDeferredEvent;
@@ -70,6 +72,10 @@ namespace EZFramework.UniSDK
         {
             if (onProductInfoEvent != null) onProductInfoEvent(info, msg);
         }
+        protected virtual void m_OnPurchaseFlowStarted(string info = "", string msg = "")
+        {
+            if (onPurchaseFlowStartedEvent != null) onPurchaseFlowStartedEvent(info, msg);
+        }
         protected virtual void m_OnPurchaseSucceeded(string info = "", string msg = "")
         {
             if (onPurchaseSucceededEvent != null) onPurchaseSucceededEvent(info, msg);
@@ -83,6 +89,40 @@ namespace EZFramework.UniSDK
         protected virtual void m_OnDeferred(string info = "", string msg = "")
         {
             if (onDeferredEvent != null) onDeferredEvent(info, msg);
+        }
+
+        public class ReceiptContent
+        {
+            public string Store;
+            public string TransactionID;
+            public string Payload;
+        }
+        public class PayloadContent
+        {
+            public string json;
+            public string signature;
+        }
+        public class JsonContent
+        {
+            public string orderId;
+            public string packageName;
+            public string productId;
+            public System.DateTime purchaseTime;
+            public int purchaseState;
+            public string developerPayload;
+            public string purchaseToken;
+        }
+        public static ReceiptContent DecodeReceipt(string receiptText)
+        {
+            return JsonUtility.FromJson<ReceiptContent>(receiptText);
+        }
+        public static PayloadContent DecodePayload(string payloadText)
+        {
+            return JsonUtility.FromJson<PayloadContent>(payloadText);
+        }
+        public static JsonContent DecodeJson(string jsonText)
+        {
+            return JsonUtility.FromJson<JsonContent>(jsonText);
         }
     }
 }
