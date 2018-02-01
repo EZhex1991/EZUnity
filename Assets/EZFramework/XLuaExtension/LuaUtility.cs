@@ -11,29 +11,32 @@ namespace EZFramework.XLuaExtension
 {
     public static class LuaUtility
     {
-        // 两位整数的平台ID，可以用来代替RuntimePlatform，如果有自定义宏也可以在这里加
+        public const int UNITY_EDITOR = 1;
+        public const int UNITY_STANDALONE = 2;
+        public const int UNITY_WIN = 4;
+        public const int UNITY_OSX = 8;
+        public const int UNITY_ANDROID = 16;
+        public const int UNITY_IOS = 32;
         public static int PlatformID
         {
             get
             {
 #if UNITY_EDITOR_WIN
-                return 1;
+                return UNITY_EDITOR | UNITY_WIN;
 #elif UNITY_EDITOR_OSX
-                return 2;
+                return UNITY_EDITOR | UNITY_OSX;
 #elif UNITY_EDITOR
-                return 10;
+                return UNITY_EDITOR;
 #elif UNITY_STANDALONE_WIN
-                return 11;
+                return UNITY_STANDALONE | UNITY_WIN;
 #elif UNITY_STANDALONE_OSX
-                return 12;
-#elif UNITY_STANDALONE_LINUX
-                return 13;
+                return UNITY_STANDALONE | UNITY_OSX;
 #elif UNITY_STANDALONE
-                return 20;
+                return UNITY_STANDALONE;
 #elif UNITY_ANDROID
-                return 30;
+                return UNITY_ANDROID;
 #elif UNITY_IOS
-                return 40;
+                return UNITY_IOS;
 #endif
             }
         }
