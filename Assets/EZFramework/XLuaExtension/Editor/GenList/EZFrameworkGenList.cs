@@ -44,6 +44,10 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.XLuaExtension.UpdateMessage),
             typeof(EZFramework.XLuaExtension.UpdateMessage.UpdateEvent),
 
+            typeof(EZComponent.EZTimer),
+            typeof(EZComponent.EZTimer.Task),
+            typeof(EZComponent.EZTimer.TickMode),
+
             typeof(EZComponent.EZAnimation.EZGraphicColorAnimation),
             typeof(EZComponent.EZAnimation.EZRectTransformAnimation),
             typeof(EZComponent.EZAnimation.EZTransformAnimation),
