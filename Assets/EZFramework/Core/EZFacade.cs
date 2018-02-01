@@ -118,14 +118,5 @@ namespace EZFramework
 #endif
             }
         }
-
-        public static bool IsNetAvailable
-        {
-            get { return Application.internetReachability != NetworkReachability.NotReachable; }
-        }
-        public static bool IsNetLocal
-        {
-            get { return Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork; }
-        }
     }
 }

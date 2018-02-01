@@ -205,7 +205,7 @@ namespace EZFramework
         }
         private IEnumerator Cor_Update()
         {
-            if (!EZFacade.IsNetAvailable)
+            if (!EZUtility.IsNetAvailable)
             {
                 Log("Network Error!");
                 yield return Cor_LoadFileList();

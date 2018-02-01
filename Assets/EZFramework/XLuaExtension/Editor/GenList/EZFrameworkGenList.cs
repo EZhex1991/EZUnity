@@ -25,7 +25,8 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.EZUI),
             typeof(EZFramework.EZWWWTask),
             typeof(EZFramework.EZLoadingPanel),
-            typeof(EZFrameworkUtility),
+            typeof(EZFramework.EZUtility),
+            typeof(EZFramework.EZExtensions),
 
             typeof(EZFramework.XLuaExtension.LuaInjector),
             typeof(EZFramework.XLuaExtension.ExtensionFunctions),

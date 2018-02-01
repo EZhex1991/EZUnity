@@ -1,6 +1,6 @@
 /*
  * Author:      熊哲
- * CreateTime:  1/24/2018 2:53:33 PM
+ * CreateTime:  2/1/2018 10:51:36 AM
  * Description:
  * 
 */
@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public static class EZFrameworkUtility
+    public static class EZExtensions
     {
         public static Vector2 GetSize(this RectTransform rt)
         {
