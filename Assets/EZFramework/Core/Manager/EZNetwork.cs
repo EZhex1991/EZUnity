@@ -29,11 +29,11 @@ namespace EZFramework
         }
         public override void Exit()
         {
-            base.Exit();
             foreach (string taskname in taskList)
             {
-                taskDict[taskname].StopTask();
+                if (taskDict[taskname] != null) taskDict[taskname].StopTask();
             }
+            base.Exit();
         }
 
         public EZWWWTask NewTask(string url, byte[] postData)
