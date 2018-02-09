@@ -11,6 +11,13 @@ using UnityEditor;
 
 namespace EZUnityEditor
 {
+    public enum BundleDependenciesShowOption
+    {
+        DontShow = 0,
+        Direct = 1,
+        Recursive = 2,
+    }
+
     public class EZBundleObject : EZScriptableObject
     {
         public const string AssetName = "EZBundle";
@@ -19,7 +26,8 @@ namespace EZUnityEditor
         public string bundleDirPath = "Assets/StreamingAssets";
         public string bundleExtension = ".unity3d";
         public string listFileName = "files.txt";
-        public bool removeOldFiles = false;
+        public bool managerMode = false;
+        public bool forceRebuild = false;
 
         [Serializable]
         public class CopyInfo
@@ -37,5 +45,10 @@ namespace EZUnityEditor
         }
         public List<CopyInfo> copyList = new List<CopyInfo>();
         public List<BundleInfo> bundleList = new List<BundleInfo>();
+
+        // view options
+        public bool copyListFoldout = true;
+        public bool bundleListFoldout = true;
+        public BundleDependenciesShowOption showDependencies;
     }
 }

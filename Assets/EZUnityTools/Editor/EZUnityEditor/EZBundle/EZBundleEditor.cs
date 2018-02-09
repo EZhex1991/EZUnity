@@ -14,18 +14,20 @@ namespace EZUnityEditor
     public class EZBundleEditor : Editor
     {
         private SerializedProperty m_BundleTarget;
-        private SerializedProperty m_RelativePath;
-        private SerializedProperty m_RemoveOldFiles;
         private SerializedProperty m_BundleDirPath;
         private SerializedProperty m_BundleExtension;
         private SerializedProperty m_ListFileName;
+        private SerializedProperty m_ManagerMode;
+        private SerializedProperty m_ForceRebuild;
         private SerializedProperty m_CopyList;
         private SerializedProperty m_BundleList;
 
+        private SerializedProperty m_CopyListFoldout;
+        private SerializedProperty m_BundleListFoldout;
+        private SerializedProperty m_ShowDependencies;
+
         private ReorderableList copyList;
         private ReorderableList bundleList;
-        private bool copyListFoldout = true;
-        private bool bundleListFoldout = true;
         private string saveAsName;
 
         float space = EZEditorGUIUtility.space;
@@ -37,15 +39,81 @@ namespace EZUnityEditor
             m_BundleDirPath = serializedObject.FindProperty("bundleDirPath");
             m_BundleExtension = serializedObject.FindProperty("bundleExtension");
             m_ListFileName = serializedObject.FindProperty("listFileName");
-            m_RemoveOldFiles = serializedObject.FindProperty("removeOldFiles");
+            m_ManagerMode = serializedObject.FindProperty("managerMode");
+            m_ForceRebuild = serializedObject.FindProperty("forceRebuild");
             m_CopyList = serializedObject.FindProperty("copyList");
             m_BundleList = serializedObject.FindProperty("bundleList");
+            m_CopyListFoldout = serializedObject.FindProperty("copyListFoldout");
+            m_BundleListFoldout = serializedObject.FindProperty("bundleListFoldout");
+            m_ShowDependencies = serializedObject.FindProperty("showDependencies");
             copyList = new ReorderableList(serializedObject, m_CopyList, true, true, true, true);
             copyList.drawHeaderCallback = DrawCopyListHeader;
             copyList.drawElementCallback = DrawCopyListElement;
             bundleList = new ReorderableList(serializedObject, m_BundleList, true, true, true, true);
             bundleList.drawHeaderCallback = DrawBundleListHeader;
             bundleList.drawElementCallback = DrawBundleListElement;
+        }
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+            EZEditorGUIUtility.ScriptTitle(target);
+
+            DrawFunctionButtons();
+            DrawBaseProperties();
+
+            EditorGUILayout.Space();
+            if (m_CopyListFoldout.boolValue = EditorGUILayout.Foldout(m_CopyListFoldout.boolValue, string.Format("Copy List ({0})", copyList.count)))
+            {
+                copyList.DoLayoutList();
+            }
+
+            if (m_ManagerMode.boolValue)
+            {
+                EditorGUILayout.BeginHorizontal();
+                string label = string.Format("Bundle List ({0})", AssetDatabase.GetAllAssetBundleNames().Length);
+                m_BundleListFoldout.boolValue = EditorGUILayout.Foldout(m_BundleListFoldout.boolValue, label);
+                EditorGUILayout.EndHorizontal();
+                if (m_BundleListFoldout.boolValue)
+                    DrawAssetBundleManager();
+            }
+            else
+            {
+                EditorGUILayout.BeginHorizontal();
+                string label = string.Format("Bundle List ({0})", bundleList.count);
+                m_BundleListFoldout.boolValue = EditorGUILayout.Foldout(m_BundleListFoldout.boolValue, label);
+                EditorGUILayout.EndHorizontal();
+                if (m_BundleListFoldout.boolValue)
+                    bundleList.DoLayoutList();
+            }
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        private void DrawFunctionButtons()
+        {
+            if (GUILayout.Button("Build Bundle"))
+            {
+                EditorApplication.delayCall += delegate () { EZBundleBuilder.BuildBundle(target as EZBundleObject, m_ManagerMode.boolValue); };
+            }
+            {
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Save As"))
+                {
+                    if (!string.IsNullOrEmpty(saveAsName))
+                        EZScriptableObject.Create(saveAsName, Instantiate(target as EZBundleObject));
+                }
+                saveAsName = EditorGUILayout.TextField(saveAsName);
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+        private void DrawBaseProperties()
+        {
+            EditorGUILayout.PropertyField(m_BundleTarget);
+            EditorGUILayout.PropertyField(m_BundleDirPath);
+            EditorGUILayout.PropertyField(m_BundleExtension);
+            EditorGUILayout.PropertyField(m_ListFileName);
+            EditorGUILayout.PropertyField(m_ForceRebuild);
+            EditorGUILayout.PropertyField(m_ManagerMode);
         }
 
         private void DrawCopyListHeader(Rect rect)
@@ -106,39 +174,10 @@ namespace EZUnityEditor
             EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue * 7 - space, lineHeight), m_SrcDirPath, GUIContent.none);
         }
 
-        public override void OnInspectorGUI()
+        private void DrawAssetBundleManager()
         {
-            serializedObject.Update();
-            EZEditorGUIUtility.ScriptTitle(target);
-
-            if (GUILayout.Button("Build Bundle"))
-            {
-                EditorApplication.delayCall += delegate () { EZBundleBuilder.BuildBundle(target as EZBundleObject); };
-            }
-            {
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Save As"))
-                {
-                    if (!string.IsNullOrEmpty(saveAsName))
-                        EZScriptableObject.Create(saveAsName, Instantiate(target as EZBundleObject));
-                }
-                saveAsName = EditorGUILayout.TextField(saveAsName);
-                EditorGUILayout.EndHorizontal();
-            }
-
-            EditorGUILayout.PropertyField(m_BundleTarget);
-            EditorGUILayout.PropertyField(m_BundleDirPath);
-            EditorGUILayout.PropertyField(m_BundleExtension);
-            EditorGUILayout.PropertyField(m_ListFileName);
-            EditorGUILayout.PropertyField(m_RemoveOldFiles);
-
-            EditorGUILayout.Space();
-            copyListFoldout = EditorGUILayout.Foldout(copyListFoldout, string.Format("Copy List ({0})", copyList.count));
-            if (copyListFoldout) copyList.DoLayoutList();
-            bundleListFoldout = EditorGUILayout.Foldout(bundleListFoldout, string.Format("Bundle List ({0})", bundleList.count));
-            if (bundleListFoldout) bundleList.DoLayoutList();
-
-            serializedObject.ApplyModifiedProperties();
+            EditorGUILayout.PropertyField(m_ShowDependencies);
+            EZBundleManager.DrawAssetBundleManager((BundleDependenciesShowOption)m_ShowDependencies.enumValueIndex);
         }
     }
 }

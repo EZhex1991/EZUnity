@@ -30,21 +30,28 @@ namespace EZUnityEditor
         }
 
         protected const char DELIMITER = '|';
+        protected static BuildAssetBundleOptions buildOptions = BuildAssetBundleOptions.DeterministicAssetBundle;
 
-        public static void BuildBundle(EZBundleObject ezBundle)
+        public static void BuildBundle(EZBundleObject ezBundle, bool managerMode)
         {
             OnPreBuild();
-            if (ezBundle.removeOldFiles && Directory.Exists(ezBundle.bundleDirPath)) Directory.Delete(ezBundle.bundleDirPath, true);
+            if (ezBundle.forceRebuild && Directory.Exists(ezBundle.bundleDirPath)) Directory.Delete(ezBundle.bundleDirPath, true);
             Directory.CreateDirectory(ezBundle.bundleDirPath);
             AssetDatabase.Refresh();
             CopyDirectories(ezBundle);
+
             AssetDatabase.Refresh();
-            List<AssetBundleBuild> buildList = GetBuildList(ezBundle);
-            BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
-            BuildPipeline.BuildAssetBundles(ezBundle.bundleDirPath, buildList.ToArray(), options, ezBundle.bundleTarget);
+            if (managerMode)
+            {
+                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.bundleDirPath, buildOptions, ezBundle.bundleTarget));
+            }
+            else
+            {
+                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.bundleDirPath, GetBuildList(ezBundle), buildOptions, ezBundle.bundleTarget));
+            }
             if (!string.IsNullOrEmpty(ezBundle.listFileName)) CreateFileList(ezBundle.bundleDirPath, ezBundle.listFileName);
             AssetDatabase.Refresh();
-            OnPostBuild(buildList);
+
             Debug.Log("build complete.");
         }
         protected static void OnPreBuild()
@@ -62,7 +69,7 @@ namespace EZUnityEditor
                 }
             }
         }
-        protected static void OnPostBuild(IEnumerable<AssetBundleBuild> buildList)
+        protected static void OnPostBuild(AssetBundleManifest manifest)
         {
             foreach (Type type in (from type in GetAllTypes()
                                    where type.IsClass
@@ -72,7 +79,7 @@ namespace EZUnityEditor
                 {
                     if (methods.IsDefined(typeof(OnPostBuildAttribute), false))
                     {
-                        methods.Invoke(null, new object[] { buildList });
+                        methods.Invoke(null, new object[] { manifest });
                     }
                 }
             }
@@ -103,7 +110,7 @@ namespace EZUnityEditor
                 }
             }
         }
-        protected static List<AssetBundleBuild> GetBuildList(EZBundleObject ezBundle)
+        protected static AssetBundleBuild[] GetBuildList(EZBundleObject ezBundle)
         {
             List<AssetBundleBuild> buildList = new List<AssetBundleBuild>();
             foreach (EZBundleObject.BundleInfo ezBundleInfo in ezBundle.bundleList)
@@ -120,7 +127,7 @@ namespace EZUnityEditor
                 build.assetNames = files;
                 buildList.Add(build);
             }
-            return buildList;
+            return buildList.ToArray();
         }
         protected static void CreateFileList(string dirPath, string listFileName)
         {
