@@ -89,21 +89,21 @@ namespace EZComponentEditor.EZAnimation
                 GUI.backgroundColor = positionColor;
                 EditorGUI.PropertyField(new Rect(x1, rect.y, width - space, lineHeight), startValue.FindPropertyRelative("m_Position"), GUIContent.none);
                 EditorGUI.PropertyField(new Rect(x2, rect.y, width - space, lineHeight), endValue.FindPropertyRelative("m_Position"), GUIContent.none);
-                rect.y += rect.height;
+                rect.y += phaseList.elementHeight;
             }
             if (driveRotation)
             {
                 GUI.backgroundColor = rotationColor;
                 EditorGUI.PropertyField(new Rect(x1, rect.y, width - space, lineHeight), startValue.FindPropertyRelative("m_Rotation"), GUIContent.none);
                 EditorGUI.PropertyField(new Rect(x2, rect.y, width - space, lineHeight), endValue.FindPropertyRelative("m_Rotation"), GUIContent.none);
-                rect.y += rect.height;
+                rect.y += phaseList.elementHeight;
             }
             if (driveScale)
             {
                 GUI.backgroundColor = scaleColor;
                 EditorGUI.PropertyField(new Rect(x1, rect.y, width - space, lineHeight), startValue.FindPropertyRelative("m_Scale"), GUIContent.none);
                 EditorGUI.PropertyField(new Rect(x2, rect.y, width - space, lineHeight), endValue.FindPropertyRelative("m_Scale"), GUIContent.none);
-                rect.y += rect.height;
+                rect.y += phaseList.elementHeight;
             }
             GUI.backgroundColor = bgColor;
 
