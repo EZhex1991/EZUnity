@@ -1,11 +1,11 @@
 ### EZBundle
 
 Unity5.x中Bundle的build可以说是非常简单了，但是却没有一个官方的管理工具。
-大部分项目在打包上都是通过单个资源设置，然后代码中一句`BuildAssetBundles(string outputPath, BuildAssetBundleOptions assetBundleOptions, BuildTarget targetPlatform)`然后做成一个MenuItem，对于buildTarget、outputPath、后缀名等都是写死在代码中，通用性很差。
+大部分项目使用bundle都是通过单个资源设置，然后代码中一句`BuildAssetBundles(string outputPath, BuildAssetBundleOptions assetBundleOptions, BuildTarget targetPlatform)`然后做成一个MenuItem，对于buildTarget、outputPath、后缀名等都是写死在代码中，通用性很差。
 
 EZBundle会用一个*.asset文件保存Build偏好如：buildTarget, outputPath, fileExtension。选定该asset就可以编辑这些偏好，并且在Inspector界面中可以直接通过点击“Build Bundle”按钮进行build，并且还有SaveAs按钮可以将这个asset文件备份后进行修改，在测试时相当方便。(下面有图)
 
-很多时候在build之后我们会需要将build的文件做一个list（方便热更新的文件检查，当然如果你不需要可以忽略），这个可以在Inspector界面中指定文件名，打包完成后会自动生成一个包含文件名称，md5值，还有文件大小的文件清单。
+很多时候在build之后我们会需要将build的文件做一个list（方便热更新的文件检查，当然如果你不需要可以忽略），这个可以在Inspector界面中指定文件名，build完成后会自动生成一个包含文件名称，md5值，还有文件大小的文件清单。
 
 有些时候需要在build前清除老的文件，ForceRebuild选项就是这个意思。
 
@@ -13,7 +13,7 @@ EZBundle会用一个*.asset文件保存Build偏好如：buildTarget, outputPath,
 
 大多数人熟知的bundle设置方式是对单个资源指定AssetBundleName，然后Build Bundle。通俗点说就是：**我要把这个asset，加入到这个Bundle里面，思维方式偏向于自底向上**。
 
-而我个人在项目中对目录结构进行了规划，目录结构就决定了bundle的结构，期望的打包方式是：**我要Build一个Bundle，它包含某个目录下的所有满足条件的asset，思维方式偏向于自顶向下**。好在Unity提供了另一个重载方法`BuildAssetBundles(string outputPath, AssetBundleBuild[] builds, BuildAssetBundleOptions assetBundleOptions, BuildTarget targetPlatform)`，这个方法不用在编辑器的Inspector界面中去挨个指定单个asset的AssetBundleName，而是可以自己通过代码去“收集”和“分类”想要打包的asset。
+而我个人在项目中对目录结构进行了规划，目录结构就决定了bundle的结构，期望的bundle管理方式是：**我要Build一个Bundle，它包含某个目录下的所有满足条件的asset，思维方式偏向于自顶向下**。好在Unity提供了另一个重载方法`BuildAssetBundles(string outputPath, AssetBundleBuild[] builds, BuildAssetBundleOptions assetBundleOptions, BuildTarget targetPlatform)`，这个方法不用在编辑器的Inspector界面中去挨个指定单个asset的AssetBundleName，而是可以自己通过代码去“收集”和“分类”想要build的asset。
 
 **EZBundle可以在两种Build方式间随意切换**。
 

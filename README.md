@@ -12,8 +12,8 @@ Unity部分API的二次封装。
 - [EZScriptTemplate](Assets/EZUnityTools/Editor/EZUnityEditor/EZScriptTemplate): 脚本模板管理工具（之前是“添加”工具，现在可以直接在Unity里“删除”代码模板了，添加和删除模板后重启Unity才有效）。
 - [EZProjectSettings](Assets/EZUnityTools/Editor/EZUnityEditor/EZProjectSettings): 目前只有两个功能，保存并自动设置keystore的密码（有点Bug，不打算修复）和一键添加built-in shader到GraphicsSettings。
 - [EZAssetProcessor](Assets/EZUnityTools/Editor/EZUnityEditor/EZAssetProcessor): 用于对命名满足一定规范的资源进行默认的导入参数修改，命名规则比较有主观性，通用性不高，仅可作为代码参考（为了防止对别人的项目造成破坏，这个需要加宏`EZASSETPOSTPROCESSOR`启用）。菜单项用于新建特定的资源。
-- [EZBundle](Assets/EZUnityTools/Editor/EZUnityEditor/EZBundle): AssetBundle build工具，可以保存打包选项（还可以用SaveAs备份）。两种模式：  
-  * EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行打包。
+- [EZBundle](Assets/EZUnityTools/Editor/EZUnityEditor/EZBundle): AssetBundle build工具，可以保存build选项（还可以用SaveAs备份）。两种模式：  
+  * EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行build。
   * Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
 
 -----
