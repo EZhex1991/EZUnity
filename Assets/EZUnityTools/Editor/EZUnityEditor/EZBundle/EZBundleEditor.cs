@@ -52,11 +52,7 @@ namespace EZUnityEditor
             bundleList = new ReorderableList(serializedObject, m_BundleList, true, true, true, true);
             bundleList.drawHeaderCallback = DrawBundleListHeader;
             bundleList.drawElementCallback = DrawBundleListElement;
-        }
-        void OnFocus()
-        {
             EZBundleManager.Refresh();
-            Repaint();
         }
         public override void OnInspectorGUI()
         {
