@@ -34,3 +34,9 @@ EZBundle会用一个*.asset文件保存Build偏好如：buildTarget, outputPath,
 例如：该工程下的EZFramework使用了xlua，为了方便开发，所有的lua文件都以.lua为后缀，但是.lua文件是不会被build到bundle中的，所以在bundle前需要将这些文件拷贝并添加.txt后缀，为了方便读取还将路径中的slash改成了双下划线（PS: CopyList只能复制，做不到改名啥的），这个改名的工作也用方法进行了封装并做了一个菜单项，但每次在build前都需要点一下这个，也实在是有点浪费我右手的ATP和APM，于是我将该方法标记了`OnPreBuild`，这时候build前就会自动拷贝覆盖掉老的.lua.txt文件，节省了时间，还避免了遗忘导致build进去的是老代码的情况。  
 而某个SDK，在安卓平台打包前需要将一些文件拷贝覆盖到StreamingAssets目录下，这时候只需要将原路径和目的路径添加在CopyList中，每次点击build bundle时这个事情就自动完成了。  
 至于`OnPostBuild`，由于目前项目中没有使用，所以一直没测试过，据说有Bug。。。
+
+### EZBundleViewer
+
+顾名思义，用来查看某个Bundle里包含了那些文件。
+
+当我们build bundle时，每个bundle都会生成一个对应的manifest文件，这个文件可以用记事本打开，其内容是Yaml格式，记录该bundle相关的信息。当你打开EZBundleViewer窗口并选择任意一个bundle后，如果在该bundle下找到其对应的manifest文件，那么Viewer将会读取该manifest并进行解析，获取其中的Assets和Dependencies信息，如果不存在对应的manifest文件，那么你可以勾选force load，Viewer将会默认选中的DefaultAsset为一个bundle文件并使用`AssetBundle.LoadFromFile`进行加载，并获取其中的Assets路径，这种情况经常会因为选取的文件不是bundle文件而报错，虽然目前并没有碰到什么诡异的状况，但仍然需要谨慎使用（其实好像并没有什么鸟用）。
