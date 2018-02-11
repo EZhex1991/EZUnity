@@ -3,13 +3,17 @@
 Unity5.x中Bundle的build可以说是非常简单了，但是却没有一个官方的管理工具。
 大部分项目在打包上都是通过单个资源设置，然后代码中一句`BuildAssetBundles(string outputPath, BuildAssetBundleOptions assetBundleOptions, BuildTarget targetPlatform)`然后做成一个MenuItem，对于buildTarget、outputPath、后缀名等都是写死在代码中，通用性很差。
 
-EZBundle会用一个*.asset文件保存Build偏好如：buildTarget, outputPath, extensionName。选定该asset就可以编辑这些偏好，并且在Inspector界面中可以直接通过点击“Build Bundle”按钮进行build，并且还有SaveAs按钮可以将这个asset文件备份后进行修改，在测试时相当方便。
+EZBundle会用一个*.asset文件保存Build偏好如：buildTarget, outputPath, fileExtension。选定该asset就可以编辑这些偏好，并且在Inspector界面中可以直接通过点击“Build Bundle”按钮进行build，并且还有SaveAs按钮可以将这个asset文件备份后进行修改，在测试时相当方便。
+
+![](.SamplePicture/ManagerMode.png)
 
 很多时候在build之后我们会需要将build的文件做一个list（方便热更新的文件检查，当然如果你不需要可以忽略），这个可以在Inspector界面中指定文件名，打包完成后会自动生成一个包含文件名称，md5值，还有文件大小的文件清单。
 
 有些时候需要在build前清除老的文件，ForceRebuild选项就是这个意思。
 
 ### Manager Mode 和 EZBundle Mode
+
+![](.SamplePicture/EZBundleMode.png)
 
 大多数人熟知的bundle设置方式是对单个资源指定AssetBundleName，然后Build Bundle。通俗点说就是：**我要把这个asset，加入到这个Bundle里面，思维方式偏向于自底向上**。
 
