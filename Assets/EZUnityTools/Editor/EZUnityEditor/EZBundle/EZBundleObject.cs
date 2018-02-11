@@ -22,9 +22,9 @@ namespace EZUnityEditor
     {
         public const string AssetName = "EZBundle";
 
-        public BuildTarget bundleTarget = BuildTarget.Android;
-        public string bundleDirPath = "Assets/StreamingAssets";
-        public string bundleExtension = ".unity3d";
+        public BuildTarget buildTarget = BuildTarget.Android;
+        public string outputPath = "Assets/StreamingAssets";
+        public string fileExtension = ".unity3d";
         public string listFileName = "files.txt";
         public bool managerMode = false;
         public bool forceRebuild = false;

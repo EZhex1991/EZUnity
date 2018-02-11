@@ -35,21 +35,21 @@ namespace EZUnityEditor
         public static void BuildBundle(EZBundleObject ezBundle, bool managerMode)
         {
             OnPreBuild();
-            if (ezBundle.forceRebuild && Directory.Exists(ezBundle.bundleDirPath)) Directory.Delete(ezBundle.bundleDirPath, true);
-            Directory.CreateDirectory(ezBundle.bundleDirPath);
+            if (ezBundle.forceRebuild && Directory.Exists(ezBundle.outputPath)) Directory.Delete(ezBundle.outputPath, true);
+            Directory.CreateDirectory(ezBundle.outputPath);
             AssetDatabase.Refresh();
             CopyDirectories(ezBundle);
 
             AssetDatabase.Refresh();
             if (managerMode)
             {
-                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.bundleDirPath, buildOptions, ezBundle.bundleTarget));
+                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.outputPath, buildOptions, ezBundle.buildTarget));
             }
             else
             {
-                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.bundleDirPath, GetBuildList(ezBundle), buildOptions, ezBundle.bundleTarget));
+                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.outputPath, GetBuildList(ezBundle), buildOptions, ezBundle.buildTarget));
             }
-            if (!string.IsNullOrEmpty(ezBundle.listFileName)) CreateFileList(ezBundle.bundleDirPath, ezBundle.listFileName);
+            if (!string.IsNullOrEmpty(ezBundle.listFileName)) CreateFileList(ezBundle.outputPath, ezBundle.listFileName);
             AssetDatabase.Refresh();
 
             Debug.Log("build complete.");
@@ -123,7 +123,7 @@ namespace EZUnityEditor
                     files[i] = files[i].Replace('\\', '/');
                 }
                 AssetBundleBuild build = new AssetBundleBuild();
-                build.assetBundleName = ezBundleInfo.bundleName + ezBundle.bundleExtension;
+                build.assetBundleName = ezBundleInfo.bundleName + ezBundle.fileExtension;
                 build.assetNames = files;
                 buildList.Add(build);
             }

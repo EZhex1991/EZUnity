@@ -13,9 +13,9 @@ namespace EZUnityEditor
     [CustomEditor(typeof(EZBundleObject))]
     public class EZBundleEditor : Editor
     {
-        private SerializedProperty m_BundleTarget;
-        private SerializedProperty m_BundleDirPath;
-        private SerializedProperty m_BundleExtension;
+        private SerializedProperty m_BuildTarget;
+        private SerializedProperty m_OutputPath;
+        private SerializedProperty m_FileExtension;
         private SerializedProperty m_ListFileName;
         private SerializedProperty m_ManagerMode;
         private SerializedProperty m_ForceRebuild;
@@ -35,9 +35,9 @@ namespace EZUnityEditor
 
         void OnEnable()
         {
-            m_BundleTarget = serializedObject.FindProperty("bundleTarget");
-            m_BundleDirPath = serializedObject.FindProperty("bundleDirPath");
-            m_BundleExtension = serializedObject.FindProperty("bundleExtension");
+            m_BuildTarget = serializedObject.FindProperty("buildTarget");
+            m_OutputPath = serializedObject.FindProperty("outputPath");
+            m_FileExtension = serializedObject.FindProperty("fileExtension");
             m_ListFileName = serializedObject.FindProperty("listFileName");
             m_ManagerMode = serializedObject.FindProperty("managerMode");
             m_ForceRebuild = serializedObject.FindProperty("forceRebuild");
@@ -108,9 +108,9 @@ namespace EZUnityEditor
         }
         private void DrawBaseProperties()
         {
-            EditorGUILayout.PropertyField(m_BundleTarget);
-            EditorGUILayout.PropertyField(m_BundleDirPath);
-            EditorGUILayout.PropertyField(m_BundleExtension);
+            EditorGUILayout.PropertyField(m_BuildTarget);
+            EditorGUILayout.PropertyField(m_OutputPath);
+            EditorGUILayout.PropertyField(m_FileExtension);
             EditorGUILayout.PropertyField(m_ListFileName);
             EditorGUILayout.PropertyField(m_ForceRebuild);
             EditorGUILayout.PropertyField(m_ManagerMode);
