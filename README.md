@@ -8,12 +8,12 @@ Unity部分API的二次封装。
 
 编辑器扩展(namespace EZUnityEditor)  
 - [EZRename](Assets/EZUnityTools/Editor/EZUnityEditor/EZRename): 批量重命名工具，支持正则式匹配，整理资源目录很方便。
-- [EZPlayerPrefsEditor](Assets/EZUnityTools/Editor/EZUnityEditor/EZPlayerPrefs): 用于在编辑器下对PlayerPrefs进行编辑，目前只有Win下5.x版本可以用。
+- [EZPlayerPrefsEditor](Assets/EZUnityTools/Editor/EZUnityEditor/EZPlayerPrefs): 用于在编辑器下对PlayerPrefs进行编辑，目前只有Win下5.x以上版本可以用。
 - [EZScriptTemplate](Assets/EZUnityTools/Editor/EZUnityEditor/EZScriptTemplate): 脚本模板管理工具（之前是“添加”工具，现在可以直接在Unity里“删除”代码模板了，添加和删除模板后重启Unity才有效）。
-- [EZProjectSettings](Assets/EZUnityTools/Editor/EZUnityEditor/EZProjectSettings): 目前只有两个功能，自动设置keystore的密码（有点Bug，不打算修复）和一键添加built-in shader到GraphicsSettings。
+- [EZProjectSettings](Assets/EZUnityTools/Editor/EZUnityEditor/EZProjectSettings): 目前只有两个功能，保存并自动设置keystore的密码（有点Bug，不打算修复）和一键添加built-in shader到GraphicsSettings。
 - [EZAssetProcessor](Assets/EZUnityTools/Editor/EZUnityEditor/EZAssetProcessor): 用于对命名满足一定规范的资源进行默认的导入参数修改，命名规则比较有主观性，通用性不高，仅可作为代码参考。菜单项用于新建特定的资源。
 - [EZBundle](Assets/EZUnityTools/Editor/EZUnityEditor/EZBundle): AssetBundle build工具，可以保存打包选项（还可以用SaveAs备份）。两种模式：  
-  * EZBundle Mode: 偏向资源结构管理，设置bundle名称、路径和文件搜索条件去进行打包。
+  * EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行打包。
   * Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
 
 -----
