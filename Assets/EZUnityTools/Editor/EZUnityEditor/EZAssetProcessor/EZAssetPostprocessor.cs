@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace EZUnityEditor
 {
+#if EZASSETPOSTPROCESSOR
     public class EZAssetPostprocessor : UnityEditor.AssetPostprocessor
     {
         string dirPath { get { return Path.GetDirectoryName(assetPath); } }
@@ -122,4 +123,5 @@ namespace EZUnityEditor
             }
         }
     }
+#endif
 }
