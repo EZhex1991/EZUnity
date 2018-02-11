@@ -11,7 +11,13 @@ using UnityEditor;
 
 namespace EZUnityEditor
 {
-    public enum BundleDependenciesShowOption
+    public enum AssetsViewOption
+    {
+        Object = 0,
+        Path = 1,
+        PathAndObject = 2,
+    }
+    public enum BundleDependenciesViewOption
     {
         DontShow = 0,
         Direct = 1,
@@ -49,6 +55,7 @@ namespace EZUnityEditor
         // view options
         public bool copyListFoldout = true;
         public bool bundleListFoldout = true;
-        public BundleDependenciesShowOption showDependencies;
+        public AssetsViewOption showAssets = AssetsViewOption.Object;
+        public BundleDependenciesViewOption showDependencies = BundleDependenciesViewOption.Recursive;
     }
 }

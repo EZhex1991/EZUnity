@@ -16,28 +16,36 @@ namespace EZUnityEditor
         public class BundleInfo
         {
             public string bundleName;
-            public Object[] assets;
+            public string[] assetPaths;
+            public Object[] assetObjects;
             public string[] dependencies;
             public string[] recursiveDependencies;
-            public BundleInfo(string bundleName, Object[] assets, string[] dependencies, string[] recursiveDependencies)
+            public BundleInfo(string bundleName, string[] assetPaths, string[] dependencies, string[] recursiveDependencies)
             {
                 this.bundleName = bundleName;
-                this.assets = assets;
+                this.assetPaths = assetPaths;
+                this.assetObjects = new Object[assetPaths.Length];
+                for (int i = 0; i < assetPaths.Length; i++)
+                {
+                    this.assetObjects[i] = AssetDatabase.LoadAssetAtPath(assetPaths[i], typeof(Object));
+                }
                 this.dependencies = dependencies;
                 this.recursiveDependencies = recursiveDependencies;
             }
         }
         private static List<BundleInfo> bundleList = new List<BundleInfo>();
 
-        private BundleDependenciesShowOption m_ShowDependencies = BundleDependenciesShowOption.Recursive;
+        private AssetsViewOption showAssets = AssetsViewOption.Object;
+        private BundleDependenciesViewOption showDependencies = BundleDependenciesViewOption.Recursive;
         private Vector2 scrollPosition;
 
         protected override void OnGUI()
         {
             base.OnGUI();
-            m_ShowDependencies = (BundleDependenciesShowOption)EditorGUILayout.EnumPopup("Show Dependencies", m_ShowDependencies);
+            showAssets = (AssetsViewOption)EditorGUILayout.EnumPopup("Show Assets", showAssets);
+            showDependencies = (BundleDependenciesViewOption)EditorGUILayout.EnumPopup("Show Dependencies", showDependencies);
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-            DrawAssetBundleManager(m_ShowDependencies);
+            DrawAssetBundleManager(showAssets, showDependencies);
             EditorGUILayout.EndScrollView();
         }
         protected override void OnFocus()
@@ -47,7 +55,7 @@ namespace EZUnityEditor
             Repaint();
         }
 
-        public static void DrawAssetBundleManager(BundleDependenciesShowOption showDependencies)
+        public static void DrawAssetBundleManager(AssetsViewOption showAssets, BundleDependenciesViewOption showDependencies)
         {
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Refresh"))
@@ -64,15 +72,26 @@ namespace EZUnityEditor
             {
                 EditorGUILayout.LabelField(bundleInfo.bundleName);
                 EditorGUI.indentLevel++;
-                DrawAssetCollection("", bundleInfo.assets);
+                switch (showAssets)
+                {
+                    case AssetsViewOption.Object:
+                        DrawAssetCollection("", bundleInfo.assetObjects);
+                        break;
+                    case AssetsViewOption.Path:
+                        DrawStringCollection("", bundleInfo.assetPaths);
+                        break;
+                    case AssetsViewOption.PathAndObject:
+                        DrawAssetList("", bundleInfo.assetPaths, bundleInfo.assetObjects);
+                        break;
+                }
                 switch (showDependencies)
                 {
-                    case BundleDependenciesShowOption.DontShow:
+                    case BundleDependenciesViewOption.DontShow:
                         break;
-                    case BundleDependenciesShowOption.Direct:
+                    case BundleDependenciesViewOption.Direct:
                         DrawStringCollection("Dependencies", bundleInfo.dependencies);
                         break;
-                    case BundleDependenciesShowOption.Recursive:
+                    case BundleDependenciesViewOption.Recursive:
                         DrawStringCollection("Dependencies", bundleInfo.recursiveDependencies);
                         break;
                 }
@@ -84,23 +103,38 @@ namespace EZUnityEditor
             bundleList.Clear();
             foreach (string bundleName in AssetDatabase.GetAllAssetBundleNames())
             {
-                Object[] assets = (from assetPath in AssetDatabase.GetAssetPathsFromAssetBundle(bundleName)
-                                   where true
-                                   select AssetDatabase.LoadAssetAtPath(assetPath, typeof(Object))).ToArray();
-                BundleInfo bundleInfo = new BundleInfo(bundleName, assets,
+                BundleInfo bundleInfo = new BundleInfo(bundleName, AssetDatabase.GetAssetPathsFromAssetBundle(bundleName),
                     AssetDatabase.GetAssetBundleDependencies(bundleName, false),
                     AssetDatabase.GetAssetBundleDependencies(bundleName, true));
                 bundleList.Add(bundleInfo);
             }
         }
-        public static void DrawAssetCollection(string title, ICollection<Object> collection)
+        public static void DrawAssetList(string title, string[] stringList, Object[] objectList)
         {
-            if (collection != null && collection.Count > 0)
+            if (stringList != null && stringList.Length > 0)
             {
                 if (!string.IsNullOrEmpty(title)) EditorGUILayout.LabelField(title);
                 EditorGUI.indentLevel++;
                 GUI.enabled = false;
-                foreach (Object asset in collection)
+                for (int i = 0; i < stringList.Length; i++)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.TextField(stringList[i]);
+                    EditorGUILayout.ObjectField(objectList[i], typeof(Object), false);
+                    EditorGUILayout.EndHorizontal();
+                }
+                GUI.enabled = true;
+                EditorGUI.indentLevel--;
+            }
+        }
+        public static void DrawAssetCollection(string title, ICollection<Object> objectCollection)
+        {
+            if (objectCollection != null && objectCollection.Count > 0)
+            {
+                if (!string.IsNullOrEmpty(title)) EditorGUILayout.LabelField(title);
+                EditorGUI.indentLevel++;
+                GUI.enabled = false;
+                foreach (Object asset in objectCollection)
                 {
                     EditorGUILayout.ObjectField(asset, typeof(Object), false);
                 }
@@ -108,13 +142,13 @@ namespace EZUnityEditor
                 EditorGUI.indentLevel--;
             }
         }
-        public static void DrawStringCollection(string title, ICollection<string> collection)
+        public static void DrawStringCollection(string title, ICollection<string> stringCollection)
         {
-            if (collection != null && collection.Count > 0)
+            if (stringCollection != null && stringCollection.Count > 0)
             {
                 if (!string.IsNullOrEmpty(title)) EditorGUILayout.LabelField(title);
                 EditorGUI.indentLevel++;
-                foreach (string text in collection)
+                foreach (string text in stringCollection)
                 {
                     EditorGUILayout.TextField(text);
                 }

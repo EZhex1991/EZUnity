@@ -24,6 +24,7 @@ namespace EZUnityEditor
 
         private SerializedProperty m_CopyListFoldout;
         private SerializedProperty m_BundleListFoldout;
+        private SerializedProperty m_ShowAssets;
         private SerializedProperty m_ShowDependencies;
 
         private ReorderableList copyList;
@@ -45,6 +46,7 @@ namespace EZUnityEditor
             m_BundleList = serializedObject.FindProperty("bundleList");
             m_CopyListFoldout = serializedObject.FindProperty("copyListFoldout");
             m_BundleListFoldout = serializedObject.FindProperty("bundleListFoldout");
+            m_ShowAssets = serializedObject.FindProperty("showAssets");
             m_ShowDependencies = serializedObject.FindProperty("showDependencies");
             copyList = new ReorderableList(serializedObject, m_CopyList, true, true, true, true);
             copyList.drawHeaderCallback = DrawCopyListHeader;
@@ -177,8 +179,9 @@ namespace EZUnityEditor
 
         private void DrawAssetBundleManager()
         {
+            EditorGUILayout.PropertyField(m_ShowAssets);
             EditorGUILayout.PropertyField(m_ShowDependencies);
-            EZBundleManager.DrawAssetBundleManager((BundleDependenciesShowOption)m_ShowDependencies.enumValueIndex);
+            EZBundleManager.DrawAssetBundleManager((AssetsViewOption)m_ShowAssets.enumValueIndex, (BundleDependenciesViewOption)m_ShowDependencies.enumValueIndex);
         }
     }
 }
