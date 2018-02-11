@@ -19,6 +19,12 @@ namespace EZUnityEditor
             Assets = UnityEditor.SelectionMode.Assets,
             SceneObjects = UnityEditor.SelectionMode.TopLevel | UnityEditor.SelectionMode.OnlyUserModifiable,
         }
+        public enum CaseConversion
+        {
+            None = 0,
+            ToUpper = 1,
+            ToLower = 2,
+        }
 
         private SelectionMode m_SelectionMode = SelectionMode.Assets;
         private SelectionMode selectionMode
@@ -33,7 +39,7 @@ namespace EZUnityEditor
                 GetObjects();
             }
         }
-        private bool toLower, toUpper;
+        private CaseConversion caseConversion = CaseConversion.None;
         private string oldValue, newValue;
         private string prefix, suffix;
 
@@ -50,7 +56,7 @@ namespace EZUnityEditor
         private void Reset()
         {
             GUI.FocusControl(null);
-            toLower = false; toUpper = false;
+            caseConversion = CaseConversion.None;
             oldValue = ""; newValue = "";
             prefix = ""; suffix = "";
         }
@@ -74,8 +80,17 @@ namespace EZUnityEditor
         }
         private string GetNewName(string name)
         {
-            if (toLower) name = name.ToLower();
-            if (toUpper) name = name.ToUpper();
+            switch (caseConversion)
+            {
+                case CaseConversion.None:
+                    break;
+                case CaseConversion.ToUpper:
+                    name = name.ToUpper();
+                    break;
+                case CaseConversion.ToLower:
+                    name = name.ToLower();
+                    break;
+            }
             if (oldValue != "")
             {
                 try
@@ -162,16 +177,7 @@ namespace EZUnityEditor
         private void DrawConfig()
         {
             selectionMode = (SelectionMode)EditorGUILayout.EnumPopup("Selection Mode", selectionMode);
-            {
-                EditorGUILayout.BeginHorizontal();
-                if (toUpper) GUI.enabled = false;
-                toLower = EditorGUILayout.Toggle("ToLower", toLower);
-                GUI.enabled = true;
-                if (toLower) GUI.enabled = false;
-                toUpper = EditorGUILayout.Toggle("ToUpper", toUpper);
-                GUI.enabled = true;
-                EditorGUILayout.EndHorizontal();
-            }
+            caseConversion = (CaseConversion)EditorGUILayout.EnumPopup("Case Conversion", caseConversion);
             {
                 EditorGUILayout.BeginHorizontal();
                 oldValue = EditorGUILayout.TextField("Old Value", oldValue);
