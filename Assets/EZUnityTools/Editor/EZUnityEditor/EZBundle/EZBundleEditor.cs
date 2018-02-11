@@ -53,6 +53,11 @@ namespace EZUnityEditor
             bundleList.drawHeaderCallback = DrawBundleListHeader;
             bundleList.drawElementCallback = DrawBundleListElement;
         }
+        void OnFocus()
+        {
+            EZBundleManager.Refresh();
+            Repaint();
+        }
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
