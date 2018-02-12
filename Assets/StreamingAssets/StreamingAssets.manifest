@@ -1,10 +1,14 @@
 ManifestFileVersion: 0
-CRC: 1387848718
+CRC: 3429606898
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: script_lua.unity3d
-      Dependencies: {}
+      Name: spaceshooter
+      Dependencies:
+        Dependency_0: done_prefabs
     Info_1:
-      Name: spaceshooter.unity3d
+      Name: done_prefabs
+      Dependencies: {}
+    Info_2:
+      Name: script_lua
       Dependencies: {}

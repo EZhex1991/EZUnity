@@ -1,3 +1,4 @@
-/script_lua.unity3d|b41e750cce4f0b9a137b024f0425cb49|3
-/spaceshooter.unity3d|b44a142c1c7ced4db9e771700cbb6a21|2360
-/StreamingAssets|03d9e68ecb8097f5a7e1381cebc57329|0
+/done_prefabs|581872b5d9f9da843f8a32f86e374c68|1874
+/script_lua|9965ec9cffe117e8a93b30d0dff3b765|3
+/spaceshooter|15fbb2311d55b38d01faa9775121eb29|1384
+/StreamingAssets|3e099406fc215d61000131418de40021|0

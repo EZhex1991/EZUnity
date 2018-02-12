@@ -1,19 +1,17 @@
 ManifestFileVersion: 0
-CRC: 1402285797
+CRC: 2691733799
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: aaeb919e280cd105e64a8633053b3a71
+    Hash: 92689f0d0ba3d3baeea0eabbce4141ff
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 1ec401f0527b361c53c1f5b0ff869d73
+    Hash: b4da6c4e24c83870f26a9e3ea6e4bdb9
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
 - Class: 4
-  Script: {instanceID: 0}
-- Class: 20
   Script: {instanceID: 0}
 - Class: 21
   Script: {instanceID: 0}
@@ -31,40 +29,31 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 64
   Script: {instanceID: 0}
-- Class: 65
-  Script: {instanceID: 0}
-- Class: 81
-  Script: {instanceID: 0}
 - Class: 82
   Script: {instanceID: 0}
 - Class: 83
-  Script: {instanceID: 0}
-- Class: 92
-  Script: {instanceID: 0}
-- Class: 104
-  Script: {instanceID: 0}
-- Class: 108
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: f89a894f7a09b4f429394ac6229fe24b, type: 3}
 - Class: 115
   Script: {instanceID: 0}
-- Class: 124
-  Script: {instanceID: 0}
-- Class: 128
-  Script: {instanceID: 0}
-- Class: 132
-  Script: {instanceID: 0}
 - Class: 135
   Script: {instanceID: 0}
 - Class: 136
-  Script: {instanceID: 0}
-- Class: 157
   Script: {instanceID: 0}
 - Class: 198
   Script: {instanceID: 0}
 - Class: 199
   Script: {instanceID: 0}
 Assets:
-- Assets/Example/SpaceShooter_Done/SpaceShooter.unity
+- Assets/Example/SpaceShooter_Done/Asteroid 02.prefab
+- Assets/Example/SpaceShooter_Done/explosion_enemy.prefab
+- Assets/Example/SpaceShooter_Done/Bolt.prefab
+- Assets/Example/SpaceShooter_Done/Asteroid 01.prefab
+- Assets/Example/SpaceShooter_Done/Enemy Ship.prefab
+- Assets/Example/SpaceShooter_Done/Bolt-Enemy.prefab
+- Assets/Example/SpaceShooter_Done/Asteroid 03.prefab
+- Assets/Example/SpaceShooter_Done/explosion_player.prefab
+- Assets/Example/SpaceShooter_Done/Player.prefab
+- Assets/Example/SpaceShooter_Done/explosion_asteroid.prefab
 Dependencies: []
