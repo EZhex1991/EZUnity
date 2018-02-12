@@ -61,7 +61,7 @@ namespace EZFramework
         public string updateServer { get { return m_UpdateServer; } set { m_UpdateServer = value; } }
 
         [SerializeField]
-        private string m_BundleExtension = ".unity3d";
+        private string m_BundleExtension = "";
         public string bundleExtension { get { return m_BundleExtension; } set { m_BundleExtension = value; } }
 
         [SerializeField]
