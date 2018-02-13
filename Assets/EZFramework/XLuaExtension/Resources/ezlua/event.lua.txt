@@ -1,7 +1,8 @@
 --[==[
-Author:     熊哲
-CreateTime: 4/19/2017 2:20:04 PM
-Description:
+- Author:       熊哲
+- CreateTime:   4/19/2017 2:20:04 PM
+- Orgnization:  #ORGNIZATION#
+- Description:  
     -- 用一个key去对应一个func是为了方便在移除时直接通过key去置空，而不是遍历_functionlist判断存在时移除：
     这意味着你必须用一个很特殊的值来保证key不冲突，好在lua里function本身就是一个不会冲突的key，
     所以你可以这样：event:addlistener(func, func)
@@ -14,15 +15,12 @@ Description:
     你还可以这样：添加时使用event:addlistener(self, self.func)，调用时使用event:keycall(params)
     这样key会作为func的第一个参数，也就实现了调用self.func(self, ...)，缺点就是一个table(key)只能对应一个listener(func)
 --]==]
-local M = {}
-M._modulename = ...
-M.__index = M
------ begin module -----
+local M = require("ezlua.module"):module()
+----- CODE -----
 function M:new()
-    local t = {}
-    setmetatable(t, self)
-    t._functionlist = {}
-    return t
+    self = getmetatable(M).new(self)
+    self._functionlist = {}
+    return self
 end
 
 function M:addlistener(key, func)
@@ -60,5 +58,5 @@ end
 M.__call = function(event, ...)
     event:call(...)
 end
------ end -----
+----- CODE -----
 return M

@@ -1,7 +1,8 @@
 --[==[
-Author:     熊哲
-CreateTime: 12/21/2017 12:34:25 PM
-Description:
+- Author:       熊哲
+- CreateTime:   12/21/2017 12:34:25 PM
+- Orgnization:  #ORGNIZATION#
+- Description:  
     -- 用于延迟调用的计时器，使用schedule(delay, loop, action)方法来添加延迟事件，使用tick(deltatime)方法来计时
     手动调用tick(deltaTime)是为了方便不同类型的计时：可传入Time.fixedDeltaTime，Time.unscaledDeltaTime
     可以直接tick(100)来实现一些道具的倒计时修改
@@ -22,19 +23,11 @@ Description:
     end
     这样就实现了道具CD、自动武器、物理飞行三种计时器，还可以通过scale单独控制武器发射频率，scale = 0就实现了武器的单独暂停
 --]==]
-local M = {}
-M._modulename = ...
-M.__index = M
------ begin module -----
-M.task = {} -- 类似于C#的嵌套类timer.task
-M.task.__index = M.task
-function M.task:_new()
-    local t = {}
-    setmetatable(t, self)
-    return t
-end
+local M = require("ezlua.module"):module()
+M.task = require("ezlua.module"):module() -- 类似于C#的嵌套类timer.task
+----- CODE -----
 function M.task:new(delay, loop, action)
-    self = self:_new()
+    self = getmetatable(M.task).new(self)
     self.delay = delay
     self.loop = loop
     self.action = action
@@ -50,18 +43,15 @@ function M.task:reset()
 end
 
 function M:new()
-    local t = {}
-    setmetatable(t, self)
-    t._tasklist = {}
-    return t
+    self = getmetatable(M).new(self)
+    self._tasklist = {}
+    return self
 end
-
 function M:schedule(delay, loop, action)
     local task = M.task:new(delay, loop, action)
     table.insert(self._tasklist, task)
     return task
 end
-
 function M:tick(deltatime)
     for key, task in pairs(self._tasklist) do
         task.countdown = task.countdown - deltatime
@@ -76,5 +66,5 @@ function M:tick(deltatime)
         end
     end
 end
------ end -----
+----- CODE -----
 return M

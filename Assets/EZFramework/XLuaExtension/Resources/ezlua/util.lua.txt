@@ -1,13 +1,11 @@
 ﻿--[==[
-Author:     熊哲
-CreateTime: 9/29/2017 12:52:50 PM
-Description:
-
+- Author:       熊哲
+- CreateTime:   9/29/2017 12:52:50 PM
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
 local M = {}
-M._modulename = ...
-M.__index = M
------ begin module -----
+----- CODE -----
 -- bind(self.function, self)返回的就是 function(...) self:function(...) end，保存该值用于添加和移除delegate
 function M.bind(func, param)
     return function(...)
@@ -63,5 +61,5 @@ function M.randomfloat(min, max)
     setseed()
     return math.random() * (max - min) + min
 end
------ end -----
+----- CODE -----
 return M
