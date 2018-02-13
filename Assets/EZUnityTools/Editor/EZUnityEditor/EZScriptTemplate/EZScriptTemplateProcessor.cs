@@ -1,15 +1,22 @@
-/*
- * Author:      РЬХЬ
- * CreateTime:  3/7/2017 6:44:14 PM
- * Description:
- * 
-*/
+/* Author:          з†Ље“І
+ * CreateTime:      2017-07-03 18:44:14
+ * Orgnization:     #ORGNIZATION#
+ * Description:     
+ */
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace EZUnityEditor
 {
     public class EZScriptTemplateProcessor : UnityEditor.AssetModificationProcessor
     {
+        public enum CheckResult
+        {
+            Unknow = 0,
+            Template = 1,
+            Script = 2,
+        }
+
         private static void OnWillCreateAsset(string metaPath)
         {
             string filePath = metaPath.Replace(".meta", "");
@@ -22,29 +29,35 @@ namespace EZUnityEditor
 
         public static void Replace(string filePath, EZScriptTemplateObject ezScriptTemplate)
         {
-            if (!IsEZScriptAsset(filePath, ezScriptTemplate)) return;
-            string content = File.ReadAllText(filePath);
-            content = content.Replace("#SCRIPTNAME", Path.GetFileNameWithoutExtension(filePath));
-            content = content.Replace("#CREATETIME#", System.DateTime.Now.ToString());
-            foreach (EZScriptTemplateObject.Pattern pattern in ezScriptTemplate.patternList)
+            if (CheckTemplate(filePath, ezScriptTemplate) == CheckResult.Script)
             {
-                content = content.Replace(pattern.Key, pattern.Value);
+                string content = File.ReadAllText(filePath);
+                content = content.Replace("#SCRIPTNAME", Path.GetFileNameWithoutExtension(filePath));
+                content = content.Replace("#CREATETIME#", System.DateTime.Now.ToString(ezScriptTemplate.timeFormat));
+                foreach (EZScriptTemplateObject.Pattern pattern in ezScriptTemplate.patternList)
+                {
+                    if (!string.IsNullOrEmpty(pattern.Value)) content = content.Replace(pattern.Key, pattern.Value);
+                }
+                File.WriteAllText(filePath, content);
             }
-            File.WriteAllText(filePath, content);
         }
 
-        private static bool IsEZScriptAsset(string filePath, EZScriptTemplateObject ezScriptTemplate)
+        public static CheckResult CheckTemplate(string filePath, EZScriptTemplateObject ezScriptTemplate)
         {
-            string lowerName = filePath.ToLower();
-            foreach (string ext in ezScriptTemplate.extensionList)
+            string fileName = Path.GetFileName(filePath.ToLower());
+            string[] info = fileName.Split('-');
+            if (info.Length == 3 && Regex.IsMatch(info[0], @"^[0-9]{1,2}$"))
             {
-                if (lowerName.EndsWith(ext + ".txt")) return false;
+                foreach (string ext in ezScriptTemplate.extensionList)
+                {
+                    if (info[2].EndsWith(ext + ".txt")) return CheckResult.Template;
+                }
             }
             foreach (string ext in ezScriptTemplate.extensionList)
             {
-                if (lowerName.EndsWith(ext)) return true;
+                if (fileName.EndsWith(ext)) return CheckResult.Script;
             }
-            return false;
+            return CheckResult.Unknow;
         }
     }
 }

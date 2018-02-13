@@ -16,17 +16,12 @@ namespace EZUnityEditor
         [MenuItem(ROOT_NAME + "/EZRename", false, PRIORITY + 1)]
         private static void EZRename()
         {
-            EditorWindow.GetWindow<EZRenameEditorWindow>("EZRename").Show();
+            EditorWindow.GetWindow<EZRenameEditorWindow>("Rename").Show();
         }
         [MenuItem(ROOT_NAME + "/EZPlayerPrefsEditor", false, PRIORITY + 2)]
         private static void PlayerPrefsEditor()
         {
-            EditorWindow.GetWindow<EZPlayerPrefsEditor>("EZPlayerPrefsEditor").Show();
-        }
-        [MenuItem(ROOT_NAME + "/EZScriptTemplate", false, PRIORITY + 3)]
-        private static void EZScriptTemplate()
-        {
-            EditorWindow.GetWindow<EZScriptTemplateEditorWindow>("EZScriptTemplate").Show();
+            EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefs Editor").Show();
         }
 
         [MenuItem(ROOT_NAME + "/EZProjectSettings/EZKeystore", false, PRIORITY + 101)]
@@ -56,15 +51,26 @@ namespace EZUnityEditor
         {
             Selection.activeObject = EZScriptableObject.Load<EZBundleObject>(EZBundleObject.AssetName);
         }
-        [MenuItem(ROOT_NAME + "/EZBundle/EZBundleManager", false, PRIORITY + 122)]
+        [MenuItem(ROOT_NAME + "/EZBundle/Bundle Manager", false, PRIORITY + 122)]
         private static void EZBundleManager()
         {
-            EditorWindow.GetWindow<EZBundleManager>("EZBundleManager").Show();
+            EditorWindow.GetWindow<EZBundleManager>("Bundle Manager").Show();
         }
-        [MenuItem(ROOT_NAME + "/EZBundle/EZBundleViewer", false, PRIORITY + 123)]
+        [MenuItem(ROOT_NAME + "/EZBundle/Bundle Viewer", false, PRIORITY + 123)]
         private static void EZBundleViewer()
         {
-            EditorWindow.GetWindow<EZBundleViewer>("EZBundleViewer").Show();
+            EditorWindow.GetWindow<EZBundleViewer>("Bundle Viewer").Show();
+        }
+
+        [MenuItem(ROOT_NAME + "/EZScriptTemplate/Templates Manager", false, PRIORITY + 131)]
+        private static void EZScriptTemplate()
+        {
+            EditorWindow.GetWindow<EZScriptTemplateManager>("Templates Manager").Show();
+        }
+        [MenuItem(ROOT_NAME + "/EZScriptTemplate/Script Statistics", false, PRIORITY + 132)]
+        private static void EZScriptStatistics()
+        {
+            EditorWindow.GetWindow<EZScriptStatistics>("Script Statistics").Show();
         }
     }
 }

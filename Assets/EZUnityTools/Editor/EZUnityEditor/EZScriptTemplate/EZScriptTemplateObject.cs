@@ -14,6 +14,7 @@ namespace EZUnityEditor
     {
         public const string AssetName = "EZScriptTemplate";
 
+        public string timeFormat = "yyyy-MM-dd HH:mm:ss";
         public List<string> extensionList = new List<string> { ".cs", ".lua", ".txt", };
 
         [Serializable]
