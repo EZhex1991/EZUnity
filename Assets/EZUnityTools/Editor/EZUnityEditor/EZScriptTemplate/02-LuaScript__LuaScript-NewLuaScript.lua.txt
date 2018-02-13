@@ -1,13 +1,11 @@
---[==[
-Author:     #AUTHORNAME#
-CreateTime: #CREATETIME#
-Description:
-
+﻿--[==[
+- Author:       #AUTHORNAME#
+- CreateTime:   #CREATETIME#
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
-local M = { }
-M._modulename = ...
-M.__index = M
------ begin module -----
+local M = {}
+----- CODE -----
 
------ end -----
+----- CODE -----
 return M

@@ -1,9 +1,8 @@
-/*
- * Author:      #AUTHORNAME#
- * CreateTime:  #CREATETIME#
- * Description:
- * 
-*/
+/* Author:          #AUTHORNAME#
+ * CreateTime:      #CREATETIME#
+ * Orgnization:     #ORGNIZATION#
+ * Description:     
+ */
 using UnityEngine;
 
 public class #SCRIPTNAME# : MonoBehaviour

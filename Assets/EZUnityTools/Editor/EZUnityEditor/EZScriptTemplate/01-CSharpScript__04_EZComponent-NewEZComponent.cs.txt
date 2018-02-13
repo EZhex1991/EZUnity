@@ -1,9 +1,8 @@
-/*
- * Author:      #AUTHORNAME#
- * CreateTime:  #CREATETIME#
+/* Author:          #AUTHORNAME#
+ * CreateTime:      #CREATETIME#
+ * Orgnization:     #ORGNIZATION#
  * Description:
- * 
-*/
+ */
 using UnityEngine;
 
 namespace EZComponent
