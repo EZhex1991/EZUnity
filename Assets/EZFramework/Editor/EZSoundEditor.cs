@@ -1,9 +1,8 @@
-/*
- * Author:      ÐÜÕÜ
- * CreateTime:  12/26/2016 4:54:18 PM
- * Description:
- * 
-*/
+ï»¿/* Author:          ç†Šå“²
+ * CreateTime:      2016-12-26 16:54:18
+ * Orgnization:     #ORGNIZATION#
+ * Description:     
+ */
 using EZFramework;
 using UnityEditor;
 using UnityEngine;
