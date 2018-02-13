@@ -1,9 +1,8 @@
-/*
- * Author:      ÐÜÕÜ
- * CreateTime:  2/9/2017 6:23:42 PM
- * Description:
- * 
-*/
+ï»¿/* Author:          ç†Šå“²
+ * CreateTime:      2017-09-02 18:23:42
+ * Orgnization:     #ORGNIZATION#
+ * Description:     
+ */
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
