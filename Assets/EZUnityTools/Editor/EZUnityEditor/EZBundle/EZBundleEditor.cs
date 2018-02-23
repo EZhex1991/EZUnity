@@ -59,7 +59,6 @@ namespace EZUnityEditor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            EZEditorGUIUtility.ScriptTitle(target);
 
             DrawFunctionButtons();
             DrawBaseProperties();

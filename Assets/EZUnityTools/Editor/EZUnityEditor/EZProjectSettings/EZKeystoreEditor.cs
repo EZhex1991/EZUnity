@@ -33,7 +33,6 @@ namespace EZUnityEditor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            EZUnityEditor.EZEditorGUIUtility.ScriptTitle(target);
             if (GUILayout.Button("Load"))
             {
                 EZKeystoreInitializer.LoadKeystore();

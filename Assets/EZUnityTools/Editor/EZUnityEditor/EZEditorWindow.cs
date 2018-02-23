@@ -11,16 +11,6 @@ namespace EZUnityEditor
 {
     public abstract class EZEditorWindow : EditorWindow
     {
-        protected GUIStyle titleStyle = new GUIStyle();
-        protected GUIStyle subtitleStyle = new GUIStyle();
-
-        protected virtual void Awake()
-        {
-            titleStyle.fontSize = 12;
-            titleStyle.fontStyle = FontStyle.Bold;
-            titleStyle.alignment = TextAnchor.MiddleCenter;
-            subtitleStyle.fontStyle = FontStyle.Bold;
-        }
         protected virtual void OnEnable() { }
 
         protected virtual void OnFocus() { }
@@ -33,7 +23,7 @@ namespace EZUnityEditor
         protected virtual void OnGUI()
         {
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField(titleContent.text, titleStyle);
+            EditorGUILayout.LabelField(titleContent.text, EditorStyles.centeredGreyMiniLabel);
             EditorGUILayout.Space();
         }
         protected virtual void Update() { }

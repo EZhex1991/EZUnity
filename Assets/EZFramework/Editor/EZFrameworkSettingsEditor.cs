@@ -25,12 +25,10 @@ namespace EZFrameworkEditor
         ReorderableList luaDirList;
         ReorderableList luaBundleList;
 
-        GUIStyle subtitleStyle;
         float height = EditorGUIUtility.singleLineHeight;
 
         void OnEnable()
         {
-            subtitleStyle = new GUIStyle(GUIStyle.none) { fontStyle = FontStyle.Bold };
             m_RunMode = serializedObject.FindProperty("m_RunMode");
             m_SleepTimeout = serializedObject.FindProperty("m_SleepTimeout");
             m_RunInBackground = serializedObject.FindProperty("m_RunInBackground");
@@ -76,17 +74,17 @@ namespace EZFrameworkEditor
             GUI.enabled = false;
             EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target as ScriptableObject), typeof(MonoScript), false);
             GUI.enabled = true;
-            EditorGUILayout.Space(); EditorGUILayout.LabelField("Mode", subtitleStyle);
+            EditorGUILayout.Space(); EditorGUILayout.LabelField("Mode", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_RunMode, new GUIContent("Run Mode In Editor"));
             EditorGUILayout.PropertyField(m_SleepTimeout);
             EditorGUILayout.PropertyField(m_RunInBackground);
-            EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", subtitleStyle);
+            EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_TargetFrameRate);
-            EditorGUILayout.Space(); EditorGUILayout.LabelField("Network", subtitleStyle);
+            EditorGUILayout.Space(); EditorGUILayout.LabelField("Network", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_UpdateServer);
-            EditorGUILayout.Space(); EditorGUILayout.LabelField("Asset Bundle", subtitleStyle);
+            EditorGUILayout.Space(); EditorGUILayout.LabelField("Asset Bundle", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_BundleExtension);
-            EditorGUILayout.Space(); EditorGUILayout.LabelField("Lua", subtitleStyle);
+            EditorGUILayout.Space(); EditorGUILayout.LabelField("Lua", EditorStyles.boldLabel);
             float labelWidth = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 30;
             luaDirList.DoLayoutList();
