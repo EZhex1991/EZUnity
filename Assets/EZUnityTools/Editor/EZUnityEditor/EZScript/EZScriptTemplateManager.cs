@@ -70,7 +70,7 @@ namespace EZUnityEditor
 
         protected void DrawTemplateList()
         {
-            EditorGUILayout.LabelField("Template List", subtitleStyle);
+            EditorGUILayout.LabelField("Template List", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("File Name Format: [priority]-[menu text]__[submenu text]-[default name].[ext].txt");
             DrawAddTemplates();
             templatesFoldout = EditorGUILayout.Foldout(templatesFoldout, "Templates in UnityEditor");
@@ -88,7 +88,7 @@ namespace EZUnityEditor
         }
         protected void DrawPatternList()
         {
-            EditorGUILayout.LabelField("Pattern", subtitleStyle);
+            EditorGUILayout.LabelField("Pattern", EditorStyles.boldLabel);
 
             if (GUILayout.Button("Handle patterns in selected file"))
             {

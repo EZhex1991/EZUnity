@@ -13,12 +13,18 @@ namespace EZUnityEditor
         private const string ROOT_NAME = "EZUnityEditor";
         private const int PRIORITY = 12000;
 
-        [MenuItem(ROOT_NAME + "/EZRename", false, PRIORITY + 1)]
+        [MenuItem(ROOT_NAME + "/Refresh AssetDatabase", false, PRIORITY + 1)]
+        private static void RefreshAssetDatabase()
+        {
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem(ROOT_NAME + "/EZRename", false, PRIORITY + 51)]
         private static void EZRename()
         {
             EditorWindow.GetWindow<EZRenameEditorWindow>("Rename").Show();
         }
-        [MenuItem(ROOT_NAME + "/EZPlayerPrefsEditor", false, PRIORITY + 2)]
+        [MenuItem(ROOT_NAME + "/EZPlayerPrefsEditor", false, PRIORITY + 52)]
         private static void PlayerPrefsEditor()
         {
             EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefs Editor").Show();
@@ -70,7 +76,7 @@ namespace EZUnityEditor
         [MenuItem(ROOT_NAME + "/EZScriptTemplate/Script Statistics", false, PRIORITY + 132)]
         private static void EZScriptStatistics()
         {
-            EditorWindow.GetWindow<EZScriptStatistics>("Script Statistics").Show();
+            Selection.activeObject = EZScriptableObject.Load<EZScriptStatisticsObject>(EZScriptStatisticsObject.AssetName);
         }
     }
 }
