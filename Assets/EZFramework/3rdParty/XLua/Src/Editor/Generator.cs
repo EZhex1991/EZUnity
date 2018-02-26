@@ -353,7 +353,7 @@ namespace CSObjectWrapEditor
 
             parameters.Set("getters", type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.DeclaredOnly)
                 
-                .Where(prop => prop.CanRead && (prop.GetGetMethod() != null)  && prop.Name != "Item" && !isObsolete(prop) && !isMemberInBlackList(prop)).Select(prop => new { prop.Name, IsStatic = prop.GetGetMethod().IsStatic, ReadOnly = false, Type = prop.PropertyType })
+                .Where(prop => prop.CanRead && (prop.GetGetMethod() != null)  && prop.Name != "Item" && !isObsolete(prop) && !isObsolete(prop.GetGetMethod()) && !isMemberInBlackList(prop) && !isMemberInBlackList(prop.GetGetMethod())).Select(prop => new { prop.Name, IsStatic = prop.GetGetMethod().IsStatic, ReadOnly = false, Type = prop.PropertyType })
                 .Concat(
                     type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.DeclaredOnly)
                     .Where(field => !isObsolete(field) && !isMemberInBlackList(field))
@@ -361,7 +361,7 @@ namespace CSObjectWrapEditor
                 ).Where(info => !IsDoNotGen(type, info.Name))/*.Where(getter => !typeof(Delegate).IsAssignableFrom(getter.Type))*/.ToList());
 
             parameters.Set("setters", type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.DeclaredOnly)
-                .Where(prop => prop.CanWrite && (prop.GetSetMethod() != null) && prop.Name != "Item" && !isObsolete(prop) && !isMemberInBlackList(prop)).Select(prop => new { prop.Name, IsStatic = prop.GetSetMethod().IsStatic, Type = prop.PropertyType, IsProperty = true })
+                .Where(prop => prop.CanWrite && (prop.GetSetMethod() != null) && prop.Name != "Item" && !isObsolete(prop) && !isObsolete(prop.GetSetMethod()) && !isMemberInBlackList(prop) && !isMemberInBlackList(prop.GetSetMethod())).Select(prop => new { prop.Name, IsStatic = prop.GetSetMethod().IsStatic, Type = prop.PropertyType, IsProperty = true })
                 .Concat(
                     type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.DeclaredOnly)
                     .Where(field => !isObsolete(field) && !isMemberInBlackList(field) && !field.IsInitOnly && !field.IsLiteral)
@@ -1598,28 +1598,45 @@ namespace CSObjectWrapEditor
 
         private static bool isSupportedGenericMethod(MethodInfo method)
         {
+
             if (!method.ContainsGenericParameters)
                 return true;
             var methodParameters = method.GetParameters();
-            var hasGenericParameter = false;
+            var _hasGenericParameter = false;
             for (var i = 0; i < methodParameters.Length; i++)
             {
                 var parameterType = methodParameters[i].ParameterType;
-                if (parameterType.IsGenericParameter)
+                if (!isSupportGenericParameter(parameterType, true, ref _hasGenericParameter))
+                    return false;
+            }
+            return _hasGenericParameter;
+        }
+        private static bool isSupportGenericParameter(Type parameterType,bool checkConstraint, ref bool _hasGenericParameter)
+        {
+
+            if (parameterType.IsGenericParameter)
+            {
+                if (!checkConstraint)
+                    return false;
+                var parameterConstraints = parameterType.GetGenericParameterConstraints();
+                if (parameterConstraints.Length == 0) return false;
+                foreach (var parameterConstraint in parameterConstraints)
                 {
-                    var parameterConstraints = parameterType.GetGenericParameterConstraints();
-                    if (parameterConstraints.Length == 0) return false;
-                    foreach (var parameterConstraint in parameterConstraints)
-                    {
-                        if (!parameterConstraint.IsClass || (parameterConstraint == typeof(ValueType)) || Generator.hasGenericParameter(parameterConstraint))
-                            return false;
-                    }
-                    hasGenericParameter = true;
+                    if (!parameterConstraint.IsClass || (parameterConstraint == typeof(ValueType)) || Generator.hasGenericParameter(parameterConstraint))
+                        return false;
+                }
+                _hasGenericParameter = true;
+            }
+            else if(parameterType.IsGenericType())
+            {
+                foreach (var argument in parameterType.GetGenericArguments())
+                {
+                    if (!isSupportGenericParameter(argument,false, ref _hasGenericParameter))
+                        return false;
                 }
             }
-            return hasGenericParameter;
+            return true;
         }
-
 #if !XLUA_GENERAL
         [UnityEditor.Callbacks.PostProcessScene]
         public static void CheckGenrate()
