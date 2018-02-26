@@ -19,7 +19,6 @@ namespace EZFramework.XLuaConfig
             typeof(DG.Tweening.Tween),
             typeof(DG.Tweening.Sequence),
             typeof(DG.Tweening.Tweener),
-            typeof(DG.Tweening.TweenCallback),
             typeof(DG.Tweening.Ease),
             typeof(DG.Tweening.LoopType),
             typeof(DG.Tweening.PathMode),
@@ -38,7 +37,6 @@ namespace EZFramework.XLuaConfig
         public static List<Type> CSharpCallLua = new List<Type>()
         {
             typeof(DG.Tweening.TweenCallback),
-            typeof(DG.Tweening.TweenCallback<>),
         };
 
         [BlackList]
