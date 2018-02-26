@@ -19,13 +19,30 @@ namespace EZFramework
 
         public string bundleDirPath { get; private set; }
         public string bundleExtension { get; private set; }
+
         // Develop模式下用到的源文件路径
-        protected Dictionary<string, string> assetPathDict = new Dictionary<string, string>();
+        private Dictionary<string, string> assetPathDict = new Dictionary<string, string>();
         // 记录已加载过的bundle
-        protected Dictionary<string, AssetBundle> bundleDict = new Dictionary<string, AssetBundle>();
+        private Dictionary<string, AssetBundle> bundleDict = new Dictionary<string, AssetBundle>();
         // 记录正在加载的bundle
-        protected Dictionary<string, AssetBundleCreateRequest> abcrDict = new Dictionary<string, AssetBundleCreateRequest>();
-        protected AssetBundleManifest manifest;
+        private Dictionary<string, AssetBundleCreateRequest> abcrDict = new Dictionary<string, AssetBundleCreateRequest>();
+
+        private AssetBundleManifest m_Manifest;
+        private AssetBundleManifest manifest
+        {
+            get
+            {
+                if (m_Manifest == null)
+                {
+                    AssetBundle bundle = AssetBundle.LoadFromFile(bundleDirPath + "StreamingAssets");
+                    if (bundle != null)
+                    {
+                        m_Manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
+                    }
+                }
+                return m_Manifest;
+            }
+        }
 
         public delegate void OnAssetLoadedAction(Object asset);
         public delegate void OnAssetLoadedAction<T>(T asset) where T : Object;
@@ -33,9 +50,9 @@ namespace EZFramework
         public delegate void OnBundleLoadedAction(AssetBundle bundle);
 
         // 初始化资源管理器，读取StreamingAssets的所有依赖（即所有的资源包名）
-        public override void Init()
+        protected override void Awake()
         {
-            base.Init();
+            base.Awake();
             switch (EZFrameworkSettings.Instance.runMode)
             {
                 case EZFrameworkSettings.RunMode.Develop:
@@ -49,15 +66,6 @@ namespace EZFramework
                     break;
             }
             bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
-            AssetBundle bundle = AssetBundle.LoadFromFile(bundleDirPath + "StreamingAssets");
-            if (bundle != null)
-            {
-                manifest = bundle.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
-            }
-        }
-        public override void Exit()
-        {
-            base.Exit();
         }
 
         // 记录bundle里的资源路径，在Editor+Develop模式时可以直接从路径加载文件

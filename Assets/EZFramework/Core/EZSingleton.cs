@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EZFramework
 {
-    public class EZSingleton<T> : MonoBehaviour
+    public abstract class EZSingleton<T> : MonoBehaviour
         where T : MonoBehaviour
     {
         private static string LogTag = typeof(T).Name;
@@ -61,6 +61,10 @@ namespace EZFramework
             {
                 DontDestroyOnLoad(gameObject);  // 单例在游戏中不要销毁
             }
+        }
+        protected virtual void OnDestroy()
+        {
+            instance = null;
         }
 
         protected void Log(string log) { if (showLog) Debug.logger.Log(LogTag, log, Instance); }

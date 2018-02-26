@@ -10,9 +10,12 @@ using System.IO;
 using UnityEngine;
 using XLua;
 
-namespace EZFramework
+namespace EZFramework.XLuaExtension
 {
-    [LuaCallCSharp]
+    public delegate LuaTable LuaRequire(string moduleName);
+    public delegate void LuaAction();
+    public delegate void LuaCoroutineCallback();
+
     public class EZLua : _EZManager<EZLua>
     {
         public LuaEnv luaEnv { get; private set; }
@@ -20,25 +23,28 @@ namespace EZFramework
         private Dictionary<string, string> luaFiles = new Dictionary<string, string>();
         private Dictionary<string, TextAsset> luaAssets = new Dictionary<string, TextAsset>();
 
-        public delegate void LuaAction();
-        public delegate void LuaCoroutineCallback();
+        public LuaRequire luaRequire;
         private LuaAction luaStart;
         private LuaAction luaExit;
 
-        public override void Init()
+        protected override void Awake()
         {
-            base.Init();
+            base.Awake();
             luaEnv = new LuaEnv();
             AddBuildin();
             AddLoader();
+            luaRequire = luaEnv.Global.Get<LuaRequire>("require");
+        }
+
+        public void StartLua()
+        {
             luaEnv.DoString("require 'Main'");
             luaStart = luaEnv.Global.Get<LuaAction>("Start");
             luaExit = luaEnv.Global.Get<LuaAction>("Exit");
             if (luaStart != null) luaStart();
         }
-        public override void Exit()
+        public void ExitLua()
         {
-            base.Exit();
             if (luaExit != null) luaExit();
         }
 

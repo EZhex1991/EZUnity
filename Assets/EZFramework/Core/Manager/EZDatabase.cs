@@ -50,9 +50,9 @@ namespace EZFramework
             public const string Del = "D";
         }
 
-        public override void Init()
+        protected override void Awake()
         {
-            base.Init();
+            base.Awake();
             MainDirPath = EZFacade.persistentDirPath + "EZDatabase/";
             IndexFilePath = MainDirPath + "_DBIndex" + EXTENSION_INDEX;
             CacheFilePath = MainDirPath + "_Cache" + EXTENSION_CACHE;
@@ -61,10 +61,10 @@ namespace EZFramework
             LoadIndex();
             LoadCache();
         }
-        public override void Exit()
+        protected override void OnDestroy()
         {
-            base.Exit();
             SaveData();
+            base.OnDestroy();
         }
 
         public bool Add(string dataName, object key, object value)

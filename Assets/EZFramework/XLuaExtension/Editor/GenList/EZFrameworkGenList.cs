@@ -28,6 +28,8 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.EZUtility),
             typeof(EZFramework.EZExtensions),
 
+            typeof(EZFramework.XLuaExtension.EZLua),
+            typeof(EZFramework.XLuaExtension.LuaBehaviour),
             typeof(EZFramework.XLuaExtension.LuaInjector),
             typeof(EZFramework.XLuaExtension.ExtensionFunctions),
             typeof(EZFramework.XLuaExtension.LuaUtility),
@@ -62,16 +64,18 @@ namespace EZFramework.XLuaConfig
         [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
+            typeof(EZFramework.EZFacade.OnApplicationAction),
             typeof(EZFramework.EZFacade.OnApplicationStatusAction),
-            typeof(EZFramework.EZFacade.OnApplicationQuitAction),
             typeof(EZFramework.EZResource.OnAssetLoadedAction),
             typeof(EZFramework.EZResource.OnSceneChangedAction),
             typeof(EZFramework.EZResource.OnBundleLoadedAction),
-            typeof(EZFramework.EZLua.LuaAction),
-            typeof(EZFramework.EZLua.LuaCoroutineCallback),
             typeof(EZFramework.EZWWWTask.OnProgressAction),
             typeof(EZFramework.EZWWWTask.OnStopAction),
 
+            typeof(EZFramework.XLuaExtension.LuaBehaviour.Binder),
+            typeof(EZFramework.XLuaExtension.LuaRequire),
+            typeof(EZFramework.XLuaExtension.LuaAction),
+            typeof(EZFramework.XLuaExtension.LuaCoroutineCallback),
             typeof(EZFramework.XLuaExtension.OnMessageAction),
             typeof(EZFramework.XLuaExtension.OnMessageAction<bool>),
             typeof(EZFramework.XLuaExtension.OnMessageAction<Collider>),

@@ -20,14 +20,16 @@ namespace EZFramework
 
         private ILogHandler defaultLogHandler = Debug.logger.logHandler;
 
+        public delegate void OnApplicationAction();
+        public event OnApplicationAction onApplicationStartEvent;
+        public event OnApplicationAction onApplicationQuitEvent;
         public delegate void OnApplicationStatusAction(bool status);
         public event OnApplicationStatusAction onApplicationPauseEvent; // 暂停时先触发pause后触发focus
         public event OnApplicationStatusAction onApplicationFocusEvent; // 唤醒时先触发focus后触发pause
-        public delegate void OnApplicationQuitAction();
-        public event OnApplicationQuitAction onApplicationQuitEvent;
 
-        void Start()
+        protected override void Awake()
         {
+            base.Awake();
 #if !UNITY_EDITOR
             if (runModeInApp == EZFrameworkSettings.RunMode.Develop) runModeInApp = EZFrameworkSettings.RunMode.Local;
             EZFrameworkSettings.Instance.runMode = runModeInApp;
@@ -47,17 +49,19 @@ namespace EZFramework
             Application.runInBackground = EZFrameworkSettings.Instance.runInBackground;
             Application.targetFrameRate = EZFrameworkSettings.Instance.targetFrameRate;
 
-            EZNetwork.Instance.Init();
-            EZUpdate.Instance.Init();
             EZUpdate.Instance.StartUpdate(delegate ()
             {
-                EZDatabase.Instance.Init();
-                EZResource.Instance.Init();
-                EZUI.Instance.Init();
-                EZSound.Instance.Init();
-                EZLua.Instance.Init();
+                XLuaExtension.EZLua.Instance.StartLua();
             });
+            if (onApplicationStartEvent != null) onApplicationStartEvent();
         }
+        void OnApplicationQuit()
+        {
+            if (onApplicationQuitEvent != null) onApplicationQuitEvent();
+            XLuaExtension.EZLua.Instance.ExitLua();
+            Debug.logger.logHandler = defaultLogHandler;
+        }
+
         IEnumerator OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus)
@@ -85,18 +89,6 @@ namespace EZFramework
                 if (onApplicationFocusEvent != null) onApplicationFocusEvent(false);
                 yield return null;
             }
-        }
-        void OnApplicationQuit()
-        {
-            if (onApplicationQuitEvent != null) onApplicationQuitEvent();
-            EZLua.Instance.Exit();
-            EZSound.Instance.Exit();
-            EZUI.Instance.Exit();
-            EZResource.Instance.Exit();
-            EZDatabase.Instance.Exit();
-            EZUpdate.Instance.Exit();
-            EZNetwork.Instance.Exit();
-            Debug.logger.logHandler = defaultLogHandler;
         }
 
         public static string dataDirPath

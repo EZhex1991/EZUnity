@@ -23,13 +23,9 @@ namespace EZFramework
         protected Dictionary<string, GameObject> panelDict = new Dictionary<string, GameObject>();
         protected LinkedList<string> panelList = new LinkedList<string>();
 
-        public override void Init()
+        protected override void Awake()
         {
-            base.Init();
-        }
-        public override void Exit()
-        {
-            base.Exit();
+            base.Awake();
         }
 
         public GameObject ShowPanel(string panelName, GameObject panelPrefab)

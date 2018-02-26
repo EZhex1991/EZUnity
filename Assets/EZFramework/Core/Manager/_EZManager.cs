@@ -11,17 +11,17 @@ namespace EZFramework
     public abstract class _EZManager<T> : EZSingleton<T>
         where T : MonoBehaviour
     {
-        // 该管理器的初始化，可以根据需要重写
-        public virtual void Init()
+        protected override void Awake()
         {
+            base.Awake();
             transform.SetParent(EZFacade.Instance.transform);
             gameObject.hideFlags = EZFacade.Instance.gameObject.hideFlags;
             Log("Activated");
         }
-        // 程序退出时管理器需要执行的逻辑，单例一般不建议手动销毁
-        public virtual void Exit()
+        protected override void OnDestroy()
         {
-            Log("Exit");
+            Log("Destroyed");
+            base.OnDestroy();
         }
     }
 }

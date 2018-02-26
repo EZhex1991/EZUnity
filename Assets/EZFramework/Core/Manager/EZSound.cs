@@ -66,16 +66,16 @@ namespace EZFramework
             set { PlayerPrefs.SetFloat("EfxVolume", value); }
         }
 
-        public override void Init()
+        protected override void Awake()
         {
-            base.Init();
+            base.Awake();
             audioSource.mute = !BgmActive;
             audioSource.volume = BgmVolume;
         }
-        public override void Exit()
+        protected override void OnDestroy()
         {
-            base.Exit();
             PlayerPrefs.Save();
+            base.OnDestroy();
         }
 
         public void SetAudioListener(GameObject go)

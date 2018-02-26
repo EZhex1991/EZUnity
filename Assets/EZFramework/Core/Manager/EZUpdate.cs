@@ -60,9 +60,9 @@ namespace EZFramework
 
         private bool updateMode;
 
-        public override void Init()
+        protected override void Awake()
         {
-            base.Init();
+            base.Awake();
             fileList = new Dictionary<string, FileInfo>();
             sourceDirPath = EZFacade.streamingDirPath;
             switch (EZFrameworkSettings.Instance.runMode)
@@ -85,10 +85,6 @@ namespace EZFramework
             }
             bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
             timeTag = "?v=" + DateTime.Now.ToString("yyyymmddhhmmss");
-        }
-        public override void Exit()
-        {
-            base.Exit();
         }
 
         private void ShowLoadProgress(string str)

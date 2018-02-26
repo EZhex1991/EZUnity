@@ -20,20 +20,20 @@ namespace EZFramework
         private Queue<string> taskQueue;    //记录等待的任务
         private Dictionary<string, EZWWWTask> taskDict;  //任务名和任务对象的词典
 
-        public override void Init()
+        protected override void Awake()
         {
-            base.Init();
+            base.Awake();
             taskList = new List<string>();
             taskQueue = new Queue<string>();
             taskDict = new Dictionary<string, EZWWWTask>();
         }
-        public override void Exit()
+        protected override void OnDestroy()
         {
             foreach (string taskname in taskList)
             {
                 if (taskDict[taskname] != null) taskDict[taskname].StopTask();
             }
-            base.Exit();
+            base.OnDestroy();
         }
 
         public EZWWWTask NewTask(string url, byte[] postData)
