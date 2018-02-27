@@ -48,17 +48,14 @@ namespace EZFramework
             Screen.sleepTimeout = (int)EZFrameworkSettings.Instance.sleepTimeout;
             Application.runInBackground = EZFrameworkSettings.Instance.runInBackground;
             Application.targetFrameRate = EZFrameworkSettings.Instance.targetFrameRate;
-
-            EZUpdate.Instance.StartUpdate(delegate ()
-            {
-                XLuaExtension.EZLua.Instance.StartLua();
-            });
+        }
+        void Start()
+        {
             if (onApplicationStartEvent != null) onApplicationStartEvent();
         }
         void OnApplicationQuit()
         {
             if (onApplicationQuitEvent != null) onApplicationQuitEvent();
-            XLuaExtension.EZLua.Instance.ExitLua();
             Debug.logger.logHandler = defaultLogHandler;
         }
 

@@ -21,6 +21,9 @@ namespace EZFramework.XLuaExtension
         public LuaEnv luaEnv { get; private set; }
 
         private Dictionary<string, string> luaFiles = new Dictionary<string, string>();
+
+        // require大小写敏感而文件路径大小写不敏感，还有点"."和斜线"/"的混用，会造成重复加载等一系列问题
+        // 这里提前把所有文件记录于Dictionary中，直接对CustomLoader传入的参数进行TryGetValue，保证lua侧require参数的统一
         private Dictionary<string, TextAsset> luaAssets = new Dictionary<string, TextAsset>();
 
         public LuaRequire luaRequire;
@@ -32,8 +35,26 @@ namespace EZFramework.XLuaExtension
             base.Awake();
             luaEnv = new LuaEnv();
             AddBuildin();
-            AddLoader();
             luaRequire = luaEnv.Global.Get<LuaRequire>("require");
+            switch (EZFrameworkSettings.Instance.runMode)
+            {
+                case EZFrameworkSettings.RunMode.Develop:
+                    AddDevelopLoader();
+                    EZFacade.Instance.onApplicationStartEvent += StartLua;
+                    break;
+                case EZFrameworkSettings.RunMode.Local:
+                    AddLocalLoader();
+                    EZFacade.Instance.onApplicationStartEvent += StartLua;
+                    break;
+                case EZFrameworkSettings.RunMode.Update:
+                    EZUpdate.Instance.onUpdateCompleteEvent += delegate ()
+                    {
+                        AddUpdateLoader();  // Update模式下需要先更新再添加Loader
+                        StartLua();
+                    };
+                    break;
+            }
+            EZFacade.Instance.onApplicationQuitEvent += ExitLua;
         }
 
         public void StartLua()
@@ -52,52 +73,49 @@ namespace EZFramework.XLuaExtension
         {
             //luaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         }
-        private void AddLoader()
+        private void AddDevelopLoader()
         {
-            // require大小写敏感而文件路径大小写不敏感，还有点"."和斜线"/"的混用，会造成重复加载等一系列问题
-            // 这里提前把所有文件记录于Dictionary中，直接对CustomLoader传入的参数进行TryGetValue，保证lua侧require参数的统一
-            switch (EZFrameworkSettings.Instance.runMode)
+            for (int i = 0; i < EZFrameworkSettings.Instance.luaDirList.Count; i++)
             {
-                case EZFrameworkSettings.RunMode.Develop:
-                    for (int i = 0; i < EZFrameworkSettings.Instance.luaDirList.Count; i++)
-                    {
-                        string dir = EZFacade.dataDirPath + EZFrameworkSettings.Instance.luaDirList[i] + "/";
-                        string[] files = Directory.GetFiles(dir, "*.lua", SearchOption.AllDirectories);
-                        foreach (string filePath in files)
-                        {
-                            string key = filePath.Replace("\\", "/").Replace(dir, "").Replace("/", ".").Replace(".lua", "");
-                            luaFiles.Add(key, filePath);
-                        }
-                    }
-                    luaEnv.AddLoader(LoadFromFile);
-                    break;
-                case EZFrameworkSettings.RunMode.Local:
-                    for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
-                    {
-                        AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.streamingDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
-                        TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
-                        for (int j = 0; j < assets.Length; j++)
-                        {
-                            string key = assets[j].name.Replace("__", ".").Replace(".lua", "");
-                            luaAssets.Add(key, assets[j]);
-                        }
-                    }
-                    luaEnv.AddLoader(LoadFromBundle);
-                    break;
-                case EZFrameworkSettings.RunMode.Update:
-                    for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
-                    {
-                        AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.persistentDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
-                        TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
-                        for (int j = 0; j < assets.Length; j++)
-                        {
-                            string key = assets[j].name.Replace("__", ".").Replace(".lua", "");
-                            luaAssets.Add(key, assets[j]);
-                        }
-                    }
-                    luaEnv.AddLoader(LoadFromBundle);
-                    break;
+                string dir = EZFacade.dataDirPath + EZFrameworkSettings.Instance.luaDirList[i] + "/";
+                string[] files = Directory.GetFiles(dir, "*.lua", SearchOption.AllDirectories);
+                foreach (string filePath in files)
+                {
+                    string key = filePath.Replace("\\", "/").Replace(dir, "").Replace("/", ".").Replace(".lua", "");
+                    luaFiles.Add(key, filePath);
+                }
             }
+            luaEnv.AddLoader(LoadFromFile);
+        }
+        private void AddLocalLoader()
+        {
+            for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
+            {
+                AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.streamingDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
+                if (bundle == null) continue;
+                TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
+                for (int j = 0; j < assets.Length; j++)
+                {
+                    string key = assets[j].name.Replace("__", ".").Replace(".lua", "");
+                    luaAssets.Add(key, assets[j]);
+                }
+            }
+            luaEnv.AddLoader(LoadFromBundle);
+        }
+        private void AddUpdateLoader()
+        {
+            for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
+            {
+                AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.persistentDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
+                if (bundle == null) continue;
+                TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
+                for (int j = 0; j < assets.Length; j++)
+                {
+                    string key = assets[j].name.Replace("__", ".").Replace(".lua", "");
+                    luaAssets.Add(key, assets[j]);
+                }
+            }
+            luaEnv.AddLoader(LoadFromBundle);
         }
 
         private byte[] LoadFromFile(ref string filePath)

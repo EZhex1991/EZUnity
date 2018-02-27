@@ -38,6 +38,9 @@ namespace EZFramework
         public string bundleExtension { get; private set; }
         public string timeTag { get; private set; }
 
+        public delegate void OnUpdateCompleteAction();
+        public event OnUpdateCompleteAction onUpdateCompleteEvent;
+
         protected const string EXTRACTED_FLAG = "EZUpdate_Extracted";
         protected const char DELIMITER = '|';
         protected class FileInfo
@@ -86,6 +89,10 @@ namespace EZFramework
             bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
             timeTag = "?v=" + DateTime.Now.ToString("yyyymmddhhmmss");
         }
+        void Start()
+        {
+            StartUpdate();
+        }
 
         private void ShowLoadProgress(string str)
         {
@@ -112,11 +119,11 @@ namespace EZFramework
         /// 开始进行更新，并在完成后执行回调
         /// </summary>
         /// <param name="callback">更新完成后的回调</param>
-        public void StartUpdate(Action callback)
+        public void StartUpdate()
         {
-            StartCoroutine(Cor_StartUpdate(callback));
+            StartCoroutine(Cor_StartUpdate());
         }
-        private IEnumerator Cor_StartUpdate(Action callback)
+        private IEnumerator Cor_StartUpdate()
         {
             ShowLoadProgress("", 0);
             yield return null;
@@ -126,7 +133,7 @@ namespace EZFramework
                 yield return Cor_Update();
             }
             ShowLoadComplete();
-            callback();
+            if (onUpdateCompleteEvent != null) onUpdateCompleteEvent();
         }
         private IEnumerator Cor_LoadFileList()
         {
