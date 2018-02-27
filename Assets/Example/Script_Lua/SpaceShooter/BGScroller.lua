@@ -1,38 +1,35 @@
 --[==[
-Author:     熊哲
-CreateTime: 11/14/2017 1:46:08 PM
-Description:
-
+- Author:       熊哲
+- CreateTime:   11/14/2017 1:46:08 PM
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
-local M = {}
-M._moduleName = ...
-M.__index = M
------ begin module -----
 local Mathf = CS.UnityEngine.Mathf
 local Time = CS.UnityEngine.Time
 local Vector3 = CS.UnityEngine.Vector3
+local ActivityMessage = CS.EZFramework.XLuaExtension.ActivityMessage
 local UpdateMessage = CS.EZFramework.XLuaExtension.UpdateMessage
 local bind = require("xlua.util").bind
 
-M.gameObject = nil
-M.transform = nil
-M.v3_StartPosition = nil
-
-M.n_ScrollSpeed = -0.25
-M.n_TileSizeZ = 30
-
-function M:New(go)
-    self = new(self)
-    self.gameObject = go
-    self.transform = go.transform
-    self.v3_StartPosition = go.transform.position
-    UpdateMessage.Require(go).update:AddAction(bind(self.Update, self))
+local M = require("ezlua.module"):module()
+----- CODE -----
+function M.LCBinder(injector)
+    local self = M:new()
+    injector:Inject(self)
+    self.gameObject = injector.gameObject
+    self.transform = self.gameObject.transform
+    ActivityMessage.Require(self.gameObject).start:AddAction(bind(self.Start, self))
+    UpdateMessage.Require(self.gameObject).update:AddAction(bind(self.Update, self))
     return self
 end
 
-function M:Update()
-    local offset = Mathf.Repeat(Time.time * self.n_ScrollSpeed, self.n_TileSizeZ)
-    self.transform.position = self.v3_StartPosition + Vector3.forward * offset
+function M:Start()
+    self.v3_StartPosition = self.transform.position
 end
------ end -----
+
+function M:Update()
+    local newPosition = Mathf.Repeat(Time.time * self.n_ScrollSpeed, self.n_TileSizeZ)
+    self.transform.position = self.v3_StartPosition + Vector3.forward * newPosition
+end
+----- CODE -----
 return M

@@ -1,49 +1,46 @@
 --[==[
-Author:     熊哲
-CreateTime: 11/15/2017 7:11:43 PM
-Description:
-
+- Author:       熊哲
+- CreateTime:   11/15/2017 7:11:43 PM
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
-local M = {}
-M._moduleName = ...
-M.__index = M
------ begin module -----
 local Object = CS.UnityEngine.Object
+local TriggerMessage = CS.EZFramework.XLuaExtension.TriggerMessage
+local LuaUtility = CS.EZFramework.XLuaExtension.LuaUtility
 local bind = require("xlua.util").bind
-local GameController = require("SpaceShooter.GameController")
 
-M.gameObject = nil
-M.transform = nil
-M.go_Explosion = nil
-M.go_PlayerExplosion = nil
-M.n_ScoreValue = 0
-
-function M:New(go, n_ScoreValue)
-    self = new(self)
-    self.gameObject = go
-    go:GetComponent("LuaInjector"):Inject(self)
-    self.transform = go.transform
-    self.n_ScoreValue = n_ScoreValue
-    CS.EZFramework.XLuaExtension.TriggerMessage.Require(go).onTriggerEnter:AddAction(bind(self.OnTriggerEnter, self))
+local M = require("ezlua.module"):module()
+----- CODE -----
+function M.LCBinder(injector)
+    self = M:new()
+    injector:Inject(self)
+    self.gameObject = injector.gameObject
+    self.transform = self.gameObject.transform
+    TriggerMessage.Require(self.gameObject).onTriggerEnter:AddAction(bind(self.OnTriggerEnter, self))
+    self:Start()
     return self
 end
 
+function M:Start()
+    self.gameController = require("SpaceShooter.GameController")
+end
+
 function M:OnTriggerEnter(collider)
-    if collider.tag == "Finish" or collider.tag == "Respawn" then
+    if collider.tag == "Boundary" or collider.tag == "Enemy" then
         return
     end
-    if self.go_Explosion ~= nil then
+    if not LuaUtility.IsNull(self.go_Explosion) then
         local go = Object.Instantiate(self.go_Explosion, self.transform.position, self.transform.rotation)
-        require("SpaceShooter.DestroyByTime"):New(go, 2)
+        require("SpaceShooter.DestroyByTime"):new(go, 2)
     end
     if collider.tag == "Player" then
         local go = Object.Instantiate(self.go_PlayerExplosion, collider.transform.position, collider.transform.rotation)
-        require("SpaceShooter.DestroyByTime"):New(go, 2)
-        GameController:GameOver()
+        require("SpaceShooter.DestroyByTime"):new(go, 2)
+        self.gameController:GameOver()
     end
-    GameController:AddScore(self.n_ScoreValue)
+    self.gameController:AddScore(self.n_ScoreValue)
     Object.Destroy(collider.gameObject)
     Object.Destroy(self.gameObject)
 end
------ end -----
+----- CODE -----
 return M

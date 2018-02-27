@@ -1,14 +1,14 @@
 ManifestFileVersion: 0
-CRC: 1497589415
+CRC: 1845126967
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: spaceshooter
       Dependencies:
-        Dependency_0: done_prefabs
+        Dependency_0: spaceshooter_assets
     Info_1:
-      Name: done_prefabs
+      Name: script_lua
       Dependencies: {}
     Info_2:
-      Name: script_lua
+      Name: spaceshooter_assets
       Dependencies: {}

@@ -1,55 +1,49 @@
 --[==[
-Author:     熊哲
-CreateTime: 11/14/2017 1:53:24 PM
-Description:
-
+- Author:       熊哲
+- CreateTime:   11/14/2017 1:53:24 PM
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
-local M = {}
-M._moduleName = ...
-M.__index = M
------ begin module -----
 local Vector3 = CS.UnityEngine.Vector3
 local LuaUtility = CS.EZFramework.XLuaExtension.LuaUtility
-local bind = require("xlua.util").bind
+local ActivityMessage = CS.EZFramework.XLuaExtension.ActivityMessage
+local UpdateMessage = CS.EZFramework.XLuaExtension.UpdateMessage
+local ezutil = require("ezlua.util")
 
-M.gameObject = nil
-
-M.v3_SpawnPosition = Vector3(6, 0, 16)
-M.n_HazardCount = 10
-M.n_SpawnWait = 0.75
-M.n_StartWait = 1
-M.n_WaveWait = 4
-
+local M = {}
+----- CODE -----
+M.Hazards = {}
 M.b_GameOver = false
 M.b_Restart = false
 M.n_Score = 0
 
+-- 重新开始时的场景加载，可以忽略
 function M:Init()
     CS.EZFramework.EZResource.Instance:LoadSceneAsync(
         "spaceshooter",
         "SpaceShooter",
-        CS.UnityEngine.SceneManagement.LoadSceneMode.Single,
-        bind(self.InitScene, self)
+        CS.UnityEngine.SceneManagement.LoadSceneMode.Single
     )
 end
-function M:InitScene()
-    self.gameObject = CS.UnityEngine.GameObject.Find("GameController_SpaceShooter")
-    self.Hazards = {}
-    self.gameObject:GetComponent("LuaInjector"):Inject(self)
-    CS.EZFramework.XLuaExtension.UpdateMessage.Require(self.gameObject).update:AddAction(bind(self.Update, self))
-    require("SpaceShooter.BGScroller"):New(self.go_Background)
-    require("SpaceShooter.DestroyByBoundary"):New(self.go_Boundary)
-    require("SpaceShooter.PlayerController"):New(self.go_Player)
-    self:InitGame()
+-- LuaBehaviour的Lua-CSharp逻辑绑定，Awake逻辑也写在这里
+function M.LCBinder(injector)
+    local self = M
+    injector:Inject(self)
+    self.gameObject = injector.gameObject
+    -- 一般情况下可以直接调用self:Start()，但对于active=false的gameObject来说这和事件绑定是有区别的
+    ActivityMessage.Require(self.gameObject).start:AddAction(ezutil.bind(self.Start, self))
+    UpdateMessage.Require(self.gameObject).update:AddAction(ezutil.bind(self.Update, self))
+    return self
 end
-function M:InitGame()
+
+function M:Start()
     self.b_GameOver = false
     self.b_Restart = false
     self.text_Restart.text = ""
     self.text_GameOver.text = ""
     self.n_Score = 0
     self:UpdateScore()
-    coroutine.resume(self:Cor_SpawnWaves())
+    ezutil.startcoroutine(self:Cor_SpawnWaves())
 end
 
 function M:Update()
@@ -61,32 +55,25 @@ function M:Update()
 end
 
 function M:Cor_SpawnWaves()
-    return coroutine.create(
-        function()
-            WaitForSeconds(self.n_StartWait)
-            while (true) do
-                for i = 1, self.n_HazardCount do
-                    local index = LuaUtility.RandomInt(0, #self.Hazards) + 1 -- CS.UnityEngine.Random会得到小数
-                    local x = LuaUtility.RandomFloat(-self.v3_SpawnPosition.x, self.v3_SpawnPosition.x)
-                    local position = Vector3(x, self.v3_SpawnPosition.y, self.v3_SpawnPosition.z)
-                    local rotation = CS.UnityEngine.Quaternion.identity
-                    local hazard = CS.UnityEngine.Object.Instantiate(self.Hazards[index], position, rotation)
-                    if self.Hazards[index].name == "Enemy Ship" then
-                        require("SpaceShooter._EnemyShip"):New(hazard)
-                    else
-                        require("SpaceShooter._Asteroid"):New(hazard)
-                    end
-                    WaitForSeconds(self.n_SpawnWait)
-                end
-                WaitForSeconds(self.n_WaveWait)
-                if self.b_GameOver then
-                    self.text_Restart.text = "Press 'R' for Restart"
-                    self.b_Restart = true
-                    break
-                end
+    return function()
+        ezutil.waitforseconds(self.n_StartWait)
+        while (true) do
+            for i = 1, self.n_HazardCount do
+                local index = LuaUtility.RandomInt(0, #self.Hazards) + 1 -- CS.UnityEngine.Random会得到小数
+                local x = LuaUtility.RandomFloat(-self.v3_SpawnValues.x, self.v3_SpawnValues.x)
+                local position = Vector3(x, self.v3_SpawnValues.y, self.v3_SpawnValues.z)
+                local rotation = CS.UnityEngine.Quaternion.identity
+                local hazard = CS.UnityEngine.Object.Instantiate(self.Hazards[index], position, rotation)
+                ezutil.waitforseconds(self.n_SpawnWait)
+            end
+            ezutil.waitforseconds(self.n_WaveWait)
+            if self.b_GameOver then
+                self.text_Restart.text = "Press 'R' for Restart"
+                self.b_Restart = true
+                break
             end
         end
-    )
+    end
 end
 
 function M:AddScore(n_NewScoreValue)
@@ -102,5 +89,5 @@ function M:GameOver()
     self.text_GameOver.text = "Game Over!"
     self.b_GameOver = true
 end
------ end -----
+----- CODE -----
 return M

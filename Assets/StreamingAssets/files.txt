@@ -1,4 +1,4 @@
-/done_prefabs|0027b5c904f35418188cf1da2cf95261|1874
-/script_lua|9965ec9cffe117e8a93b30d0dff3b765|3
-/spaceshooter|15fbb2311d55b38d01faa9775121eb29|1384
-/StreamingAssets|985b5355f67e050c1810d18b391e42e5|0
+/script_lua|a1633f099cbc60251b1a5e31ba590547|3
+/spaceshooter|857969df408fed26799890693b2dc67d|1385
+/spaceshooter_assets|27006cda8e5eb31369ea917d5585d691|1875
+/StreamingAssets|746cae71cb125e0e27d890ae5b4358eb|0
