@@ -72,7 +72,7 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.EZWWWTask.OnProgressAction),
             typeof(EZFramework.EZWWWTask.OnStopAction),
 
-            typeof(EZFramework.XLuaExtension.LuaBehaviour.Binder),
+            typeof(EZFramework.XLuaExtension.LuaBehaviour.LCBinder),
             typeof(EZFramework.XLuaExtension.LuaRequire),
             typeof(EZFramework.XLuaExtension.LuaAction),
             typeof(EZFramework.XLuaExtension.LuaCoroutineCallback),

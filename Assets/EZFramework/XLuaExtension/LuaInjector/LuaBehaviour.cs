@@ -3,13 +3,11 @@
  * Orgnization:     #ORGNIZATION#
  * Description:     
  */
-using UnityEngine;
 using XLua;
 
 namespace EZFramework.XLuaExtension
 {
-    [RequireComponent(typeof(LuaInjector))]
-    public class LuaBehaviour : MonoBehaviour
+    public class LuaBehaviour : LuaInjector
     {
         public string moduleName;
 
@@ -29,24 +27,15 @@ namespace EZFramework.XLuaExtension
         private LuaTable m_LuaTable;
         public LuaTable luaTable { get { return m_LuaTable; } private set { m_LuaTable = value; } }
 
-        private LuaInjector m_LuaInjector;
-        public LuaInjector luaInjector
-        {
-            get
-            {
-                if (m_LuaInjector == null)
-                {
-                    m_LuaInjector = GetComponent<LuaInjector>();
-                }
-                return m_LuaInjector;
-            }
-        }
-
-        public delegate LuaTable Binder(LuaInjector injector);
+        public delegate LuaTable LCBinder(LuaInjector injector);
 
         void Awake()
         {
-            luaTable = luaModule.Get<Binder>("LuaBinder").Invoke(luaInjector);
+            LCBinder binder = luaModule.Get<LCBinder>("LCBinder");
+            if (binder == null)
+                this.luaTable = luaModule;
+            else
+                this.luaTable = binder.Invoke(this);
         }
     }
 }

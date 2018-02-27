@@ -61,5 +61,25 @@ function M.randomfloat(min, max)
     setseed()
     return math.random() * (max - min) + min
 end
+
+-- coroutine
+M.csyield =
+    (require "xlua.util").async_to_sync(
+    function(yield, callback)
+        CS.EZFramework.XLuaExtension.EZLua.Instance:Yield(yield, callback)
+    end
+)
+function M.waitforendofframe()
+    M.csyield(CS.UnityEngine.WaitForEndOfFrame())
+end
+function M.waitforfixedupdate()
+    M.csyield(CS.UnityEngine.WaitForFixedUpdate())
+end
+function M.waitforseconds(sec)
+    M.csyield(CS.UnityEngine.WaitForSeconds(sec))
+end
+function M.startcoroutine(func)
+    assert(coroutine.resume(coroutine.create(func)))
+end
 ----- CODE -----
 return M

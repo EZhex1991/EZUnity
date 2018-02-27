@@ -16,27 +16,20 @@ using UnityEngine;
 
 namespace EZFrameworkEditor.XLuaExtension
 {
-    [CustomEditor(typeof(LuaInjector))]
-    public class LuaInjectorEditor : Editor
+    public static class InjectionType
     {
-        public static List<Type> typeList = new List<Type>();
-        public static Type GetType(string typeName, bool deepSearch = true)
+        public static List<Type> typeList = new List<Type>()
         {
-            foreach (Type type in typeList)
-            {
-                if (type.FullName == typeName) return type;
-            }
-            if (deepSearch)
-            {
-                foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    Type type = assembly.GetType(typeName);
-                    if (type != null) return type;
-                }
-            }
-            return null;
-        }
-        static LuaInjectorEditor()
+            typeof(int),
+            typeof(float),
+            typeof(bool),
+            typeof(string),
+            typeof(Vector2),
+            typeof(Vector3),
+            typeof(Vector4),
+            typeof(AnimationCurve),
+        };
+        static InjectionType()
         {
             List<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where((assembly) => assembly.FullName.StartsWith("UnityEngine") || assembly.GetName().Name == "Assembly-CSharp")
@@ -53,38 +46,83 @@ namespace EZFrameworkEditor.XLuaExtension
             }
             typeList.Sort((t1, t2) => (string.Compare(t1.FullName, t2.FullName)));
         }
-
-        private SerializedProperty m_InjectionList;
-        private ReorderableList injectionList;
-
-        private float space = EZEditorGUIUtility.space;
-        private float lineHeight = EditorGUIUtility.singleLineHeight;
-
-        void OnEnable()
+        public static Type GetType(string typeName)
         {
-            m_InjectionList = serializedObject.FindProperty("injections");
-            injectionList = new ReorderableList(serializedObject, m_InjectionList, true, true, true, true);
-            injectionList.drawHeaderCallback = DrawInjectionListHeader;
-            injectionList.drawElementCallback = DrawInjectionListElement;
+            foreach (Type type in typeList)
+            {
+                if (type.FullName == typeName) return type;
+            }
+            return null;
         }
+    }
 
-        public override void OnInspectorGUI()
+    [CustomPropertyDrawer(typeof(Injection))]
+    public class InjectionDrawer : PropertyDrawer
+    {
+        float lineHeight = EditorGUIUtility.singleLineHeight;
+
+        public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {
-            serializedObject.Update();
-            EZEditorGUIUtility.ScriptTitle(target);
-            injectionList.DoLayoutList();
-            serializedObject.ApplyModifiedProperties();
-        }
+            EditorGUI.BeginProperty(rect, label, property);
+            SerializedProperty typeName = property.FindPropertyRelative("typeName");
+            SerializedProperty key = property.FindPropertyRelative("key");
+            SerializedProperty value = property.FindPropertyRelative("value");
+            SerializedProperty nonObjectValue = property.FindPropertyRelative("nonObjectValue");
 
+            Type type = InjectionType.GetType(typeName.stringValue);
+            if (type == null)
+            {
+                type = typeof(UnityEngine.GameObject);
+                typeName.stringValue = type.FullName;
+            }
+
+            float width = rect.width / 3, space = 5;
+            rect.width = width - space; rect.height = lineHeight;
+            if (GUI.Button(rect, type.Name))
+            {
+                DrawTypeMenu(delegate (object name)
+                {
+                    typeName.stringValue = (string)name;
+                    property.serializedObject.ApplyModifiedProperties();
+                });
+            }
+            rect.x += width;
+            EditorGUI.PropertyField(rect, key, GUIContent.none);
+            rect.x += width;
+            if (type.IsSubclassOf(typeof(UnityEngine.Object)))
+            {
+                value.objectReferenceValue = EditorGUI.ObjectField(rect, GUIContent.none, value.objectReferenceValue, type, true);
+            }
+            else
+            {
+                SerializedProperty valueProperty = value;
+                if (type == typeof(int)) { valueProperty = nonObjectValue.FindPropertyRelative("intValue"); }
+                else if (type == typeof(float)) { valueProperty = nonObjectValue.FindPropertyRelative("floatValue"); }
+                else if (type == typeof(bool)) { valueProperty = nonObjectValue.FindPropertyRelative("boolValue"); }
+                else if (type == typeof(string)) { valueProperty = nonObjectValue.FindPropertyRelative("stringValue"); }
+                else if (type == typeof(Vector2)) { valueProperty = nonObjectValue.FindPropertyRelative("v2Value"); }
+                else if (type == typeof(Vector3)) { valueProperty = nonObjectValue.FindPropertyRelative("v3Value"); }
+                else if (type == typeof(Vector4)) { valueProperty = nonObjectValue.FindPropertyRelative("v4Value"); }
+                else if (type == typeof(AnimationCurve)) { valueProperty = nonObjectValue.FindPropertyRelative("animationCurveValue"); }
+                EditorGUI.PropertyField(rect, valueProperty, GUIContent.none);
+            }
+            EditorGUI.EndProperty();
+            property.serializedObject.ApplyModifiedProperties();
+        }
         protected void DrawTypeMenu(GenericMenu.MenuFunction2 callback)
         {
             GenericMenu menu = new GenericMenu();
-            for (int i = 0; i < typeList.Count; i++)
+            for (int i = 0; i < InjectionType.typeList.Count; i++)
             {
-                string space = typeList[i].Namespace;
-                string name = typeList[i].Name;
-                string fullName = typeList[i].FullName;
-                if (string.IsNullOrEmpty(space))
+                string space = InjectionType.typeList[i].Namespace;
+                string name = InjectionType.typeList[i].Name;
+                string fullName = InjectionType.typeList[i].FullName;
+                if (!InjectionType.typeList[i].IsSubclassOf(typeof(UnityEngine.Object)))
+                {
+                    space = "Non-Object";
+                    name = fullName;
+                }
+                else if (string.IsNullOrEmpty(space))
                 {
                     space = "No Namespace";
                 }
@@ -104,6 +142,32 @@ namespace EZFrameworkEditor.XLuaExtension
             }
             menu.ShowAsContext();
         }
+    }
+
+    [CustomEditor(typeof(LuaInjector))]
+    public class LuaInjectorEditor : Editor
+    {
+        protected SerializedProperty m_InjectionList;
+        protected ReorderableList injectionList;
+
+        private float space = EZEditorGUIUtility.space;
+        private float lineHeight = EditorGUIUtility.singleLineHeight;
+
+        protected virtual void OnEnable()
+        {
+            m_InjectionList = serializedObject.FindProperty("injections");
+            injectionList = new ReorderableList(serializedObject, m_InjectionList, true, true, true, true);
+            injectionList.drawHeaderCallback = DrawInjectionListHeader;
+            injectionList.drawElementCallback = DrawInjectionListElement;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            EZEditorGUIUtility.ScriptTitle(target);
+            serializedObject.Update();
+            injectionList.DoLayoutList();
+            serializedObject.ApplyModifiedProperties();
+        }
 
         protected void DrawInjectionListHeader(Rect rect)
         {
@@ -115,21 +179,7 @@ namespace EZFrameworkEditor.XLuaExtension
             rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_InjectionList, index);
 
             SerializedProperty pair = injectionList.serializedProperty.GetArrayElementAtIndex(index);
-            SerializedProperty key = pair.FindPropertyRelative("key");
-            SerializedProperty value = pair.FindPropertyRelative("value");
-            SerializedProperty typeName = pair.FindPropertyRelative("typeName");
-            if (string.IsNullOrEmpty(typeName.stringValue)) typeName.stringValue = "UnityEngine.Object";
-            Type type = GetType(typeName.stringValue);
-
-            float width = rect.width / 3;
-            if (GUI.Button(new Rect(rect.x, rect.y, width - space, lineHeight), type.Name))
-            {
-                DrawTypeMenu(delegate (object name) { typeName.stringValue = (string)name; serializedObject.ApplyModifiedProperties(); });
-            }
-            rect.x += width;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - space, lineHeight), key, GUIContent.none);
-            rect.x += width;
-            value.objectReferenceValue = EditorGUI.ObjectField(new Rect(rect.x, rect.y, width - space, lineHeight), value.objectReferenceValue, type, true);
+            EditorGUI.PropertyField(rect, pair);
         }
     }
 }

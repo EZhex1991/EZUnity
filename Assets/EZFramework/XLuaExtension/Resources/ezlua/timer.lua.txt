@@ -48,7 +48,19 @@ function M:new()
     return self
 end
 function M:schedule(delay, loop, action)
+    debug.error("Obsolete, use 'invoke(delay, action)' or 'invokerepeat(delay, repeatRate, action)' instead")
     local task = M.task:new(delay, loop, action)
+    table.insert(self._tasklist, task)
+    return task
+end
+function M:invoke(delay, action)
+    local task = M.task:new(delay, false, action)
+    table.insert(self._tasklist, task)
+    return task
+end
+function M:invokerepeat(delay, repeatRate, action)
+    local task = M.task:new(repeatRate, true, action)
+    task.countdown = delay
     table.insert(self._tasklist, task)
     return task
 end
