@@ -3,16 +3,16 @@
 - CreateTime:   12/21/2017 12:34:25 PM
 - Orgnization:  #ORGNIZATION#
 - Description:  
-    -- 用于延迟调用的计时器，使用schedule(delay, loop, action)方法来添加延迟事件，使用tick(deltatime)方法来计时
-    手动调用tick(deltaTime)是为了方便不同类型的计时：可传入Time.fixedDeltaTime，Time.unscaledDeltaTime
-    可以直接tick(100)来实现一些道具的倒计时修改
-    -- 一个有利有弊的地方是必须通过某个Update来调用tick
-    需要额外的代码来控制倒计时，但是也方便了与某个MonoBehaviour来同步周期，go:SetActive(false)就可以直接控制暂停
+    -- 用于延迟调用的计时器，使用invoke(delay, action)方法来添加延迟事件，使用tick(deltatime)方法来计时
+    手动调用tick(deltaTime)是为了方便不同类型的计时：
+    可在Update中传入Time.deltaTime计时，也可以直接传入1计帧，用法更灵活
+    -- 一个有利有弊的地方是必须通过某个Update来调用tick，需要额外的代码来控制倒计时
+    但是这也方便了与某个MonoBehaviour来同步周期，go:SetActive(false)就可以直接控制暂停
     -- 例：
     Start()
-        propTimer:schedule(cd, false, enableprop)
-        bulletTimer:schedule(cd, true, fire)
-        flyTimer:schedule(time, false, landing)
+        propTimer:invoke(cd, enableprop)
+        bulletTimer:invokerepeat(delay, cd, fire)
+        flyTimer:invoke(duration, landing)
     end
     Update()
         propTimer:tick(CS.UnityEngine.Time.deltaTime)
@@ -46,12 +46,6 @@ function M:new()
     self = getmetatable(M).new(self)
     self._tasklist = {}
     return self
-end
-function M:schedule(delay, loop, action)
-    debug.error("Obsolete, use 'invoke(delay, action)' or 'invokerepeat(delay, repeatRate, action)' instead")
-    local task = M.task:new(delay, loop, action)
-    table.insert(self._tasklist, task)
-    return task
 end
 function M:invoke(delay, action)
     local task = M.task:new(delay, false, action)
