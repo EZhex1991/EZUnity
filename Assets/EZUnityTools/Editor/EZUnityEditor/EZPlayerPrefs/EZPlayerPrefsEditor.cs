@@ -42,15 +42,24 @@ namespace EZUnityEditor
                 for (int i = 0; i < valueNames.Length; i++)
                 {
                     string valueName = valueNames[i];
-                    if (valueName.StartsWith("unity.")) continue;
+                    if (valueName.ToLower().StartsWith("unity")) continue;
+                    if (valueName.StartsWith("PackageUpdater")) continue;
                     string key = valueName.Substring(0, valueName.LastIndexOf("_"));
                     Type type = registryKey.GetValue(valueName).GetType();
                     if (type == typeof(byte[]))
                         pairList.Add(new KeyTypePair(key, ValueType.String));
+                    // it doesn't work...
+                    //else if (type == typeof(float)) 
+                    //    pairList.Add(new KeyTypePair(key, ValueType.Float));
                     else if (type == typeof(int))
-                        pairList.Add(new KeyTypePair(key, ValueType.Int));
-                    else if (type == typeof(float))
-                        pairList.Add(new KeyTypePair(key, ValueType.Float));
+                    {
+                        // int value could not be "-1" and "0" at the same time
+                        // if it does, it's definitely not a int value
+                        if (PlayerPrefs.GetInt(key, -1) == -1 && PlayerPrefs.GetInt(key, 0) == 0)
+                            pairList.Add(new KeyTypePair(key, ValueType.Float));
+                        else
+                            pairList.Add(new KeyTypePair(key, ValueType.Int));
+                    }
                 }
             }
         }
