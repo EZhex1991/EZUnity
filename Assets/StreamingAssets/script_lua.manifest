@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1969329469
+CRC: 2518804658
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5e8037afc5227cf928d570be71300548
+    Hash: 9e35eddc3359409bca2cb5d55a27d641
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -14,11 +14,14 @@ ClassTypes:
 Assets:
 - Assets/Example/Script_Lua_txt/SpaceShooter___Asteroid.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter__WeaponController.lua.txt
+- Assets/Example/Script_Lua_txt/Menu.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByTime.lua.txt
+- Assets/Example/Script_Lua_txt/LuckyBall__Triggers.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter__BGScroller.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter__Mover.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter__EvasiveManeuver.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter__RandomRotator.lua.txt
+- Assets/Example/Script_Lua_txt/LuckyBall__LuckyBall.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByBoundary.lua.txt
 - Assets/Example/Script_Lua_txt/Main.lua.txt
 - Assets/Example/Script_Lua_txt/SpaceShooter___EnemyShip.lua.txt

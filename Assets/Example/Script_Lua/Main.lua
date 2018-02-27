@@ -8,6 +8,7 @@ local M = {}
 ----- CODE -----
 function Start()
     print("Start")
+    CS.UnityEngine.SceneManagement.SceneManager.LoadScene("Menu")
 end
 
 function Exit()

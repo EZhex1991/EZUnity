@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 742513323
+CRC: 3560914001
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4d07ee245e4ee49aede847ee1a7a43f6
+    Hash: 719f0db1fa395e1f91c529bfeaacb429
   TypeTreeHash:
     serializedVersion: 2
     Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
 HashAppended: 0
 ClassTypes: []
 Assets:
-- Assets/Example/SpaceShooter.unity
+- Assets/Example/02_SpaceShooter/_Complete-Lua/SpaceShooter.unity
 Dependencies:
 - D:/Workspace/Unity/EZFramework/Assets/StreamingAssets/spaceshooter_assets
