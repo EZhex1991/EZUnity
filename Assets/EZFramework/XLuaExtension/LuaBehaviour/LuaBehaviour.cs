@@ -11,19 +11,6 @@ namespace EZFramework.XLuaExtension
     {
         public string moduleName;
 
-        private LuaTable m_LuaModule;
-        private LuaTable luaModule
-        {
-            get
-            {
-                if (m_LuaModule == null)
-                {
-                    m_LuaModule = EZLua.Instance.luaRequire(moduleName);
-                }
-                return m_LuaModule;
-            }
-        }
-
         private LuaTable m_LuaTable;
         public LuaTable luaTable { get { return m_LuaTable; } private set { m_LuaTable = value; } }
 
@@ -32,11 +19,16 @@ namespace EZFramework.XLuaExtension
         protected override void Awake()
         {
             base.Awake();
+            LuaTable luaModule = EZLua.Instance.luaRequire(moduleName);
             LCBinder binder = luaModule.Get<LCBinder>("LCBinder");
             if (binder == null)
                 this.luaTable = luaModule;
             else
                 this.luaTable = binder.Invoke(this);
+        }
+        protected virtual void OnDestory()
+        {
+            luaTable.Dispose();
         }
     }
 }
