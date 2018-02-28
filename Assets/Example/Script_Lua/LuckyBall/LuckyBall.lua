@@ -18,31 +18,31 @@ local M = {}
 function M.LCBinder(injector) -- bind lua(table) with C#(MonoBehaviour)
     CS.UnityEngine.Physics.gravity = Vector3(0, -98, 0)
     injector:Inject(M)
-    UpdateMessage.Require(injector.gameObject).update:AddAction(ezutil.bind(M.Update, M))
+    UpdateMessage.Require(injector.gameObject).update:AddAction(M.Update)
     return M
 end
 
-function M:Update()
+function M.Update()
     if Input.GetMouseButtonDown(0) then
-        local ray = self.camera:ScreenPointToRay(Input.mousePosition)
+        local ray = M.camera:ScreenPointToRay(Input.mousePosition)
         local hit, hitInfo = LuaUtility.Raycast(ray)
         if hit then
             local position = hitInfo.point
-            position.x = Mathf.Clamp(position.x, self.v2_XRange[0], self.v2_XRange[1])
-            position.y = self.n_Height
-            local ball = GameObject.Instantiate(self.go_Ball, position, Quaternion.identity)
+            position.x = Mathf.Clamp(position.x, M.v2_XRange[0], M.v2_XRange[1])
+            position.y = M.n_Height
+            local ball = GameObject.Instantiate(M.go_Ball, position, Quaternion.identity)
             ball:GetComponent("Rigidbody").angularVelocity =
-                Vector3.forward * ezutil.randomfloat(self.v2_AngularVelocity[0], self.v2_AngularVelocity[1])
+                Vector3.forward * ezutil.randomfloat(M.v2_AngularVelocity[0], M.v2_AngularVelocity[1])
         end
     end
 end
 
 local current = 0
-function M:ShowResult(result)
+function M.ShowResult(result)
     if result ~= current then
         print("Lucky Ball!")
         current = result
-        self.text_Result.text = result
+        M.text_Result.text = result
     end
 end
 ----- CODE -----

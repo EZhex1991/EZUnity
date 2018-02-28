@@ -7,7 +7,6 @@
 local Object = CS.UnityEngine.Object
 local ActivityMessage = CS.EZFramework.XLuaExtension.ActivityMessage
 local TriggerMessage = CS.EZFramework.XLuaExtension.TriggerMessage
-local ezutil = require("ezlua.util")
 
 local M = {}
 ----- CODE -----
@@ -15,34 +14,34 @@ function M.LCBinder(injector) -- bind lua(table) with C#(MonoBehaviour)
     injector:Inject(M)
     M.gameObject = injector.gameObject
     M.transform = M.gameObject.transform
-    ActivityMessage.Require(M.gameObject).start:AddAction(ezutil.bind(M.Start, M))
+    ActivityMessage.Require(M.gameObject).start:AddAction(M.Start)
     return M
 end
 
-function M:Start()
-    self.Triggers = {}
-    for i = 1, self.transform.childCount do
-        local go = self.transform:GetChild(i - 1).gameObject
+function M.Start()
+    M.Triggers = {}
+    for i = 1, M.transform.childCount do
+        local go = M.transform:GetChild(i - 1).gameObject
         TriggerMessage.Require(go).onTriggerEnter:AddAction(
             function(other)
                 if (other.name == "Ball(Clone)") then
                     Object.Destroy(other.gameObject, 2)
                 end
                 go:GetComponent("MeshRenderer").enabled = true
-                self:Judge(i)
+                M.Judge(i)
             end
         )
-        self.Triggers[i] = false
+        M.Triggers[i] = false
     end
 end
 
-function M:Judge(i)
-    self.Triggers[i] = true
+function M.Judge(i)
+    M.Triggers[i] = true
     local p = 0
     local q = 0
     local count = 0
-    for i = 1, #self.Triggers do
-        if self.Triggers[i] then
+    for i = 1, #M.Triggers do
+        if M.Triggers[i] then
             q = i
         else
             count = math.max(q - p, count)
@@ -51,7 +50,7 @@ function M:Judge(i)
         end
         count = math.max(q - p, count)
     end
-    self.gameMgr:GetComponent("LuaBehaviour").luaTable:ShowResult(count)
+    M.gameMgr:GetComponent("LuaBehaviour").luaTable.ShowResult(count)
 end
 ----- CODE -----
 return M
