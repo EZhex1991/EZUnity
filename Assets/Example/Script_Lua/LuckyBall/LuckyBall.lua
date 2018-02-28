@@ -13,14 +13,13 @@ local UpdateMessage = CS.EZFramework.XLuaExtension.UpdateMessage
 local LuaUtility = CS.EZFramework.XLuaExtension.LuaUtility
 local ezutil = require("ezlua.util")
 
-local M = require("ezlua.module"):module()
+local M = {}
 ----- CODE -----
 function M.LCBinder(injector) -- bind lua(table) with C#(MonoBehaviour)
     CS.UnityEngine.Physics.gravity = Vector3(0, -98, 0)
-    local self = M:new()
-    injector:Inject(self)
-    UpdateMessage.Require(injector.gameObject).update:AddAction(ezutil.bind(self.Update, self))
-    return self
+    injector:Inject(M)
+    UpdateMessage.Require(injector.gameObject).update:AddAction(ezutil.bind(M.Update, M))
+    return M
 end
 
 function M:Update()

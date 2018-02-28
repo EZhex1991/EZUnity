@@ -9,15 +9,14 @@ local ActivityMessage = CS.EZFramework.XLuaExtension.ActivityMessage
 local TriggerMessage = CS.EZFramework.XLuaExtension.TriggerMessage
 local ezutil = require("ezlua.util")
 
-local M = require("ezlua.module"):module()
+local M = {}
 ----- CODE -----
 function M.LCBinder(injector) -- bind lua(table) with C#(MonoBehaviour)
-    local self = M:new()
-    injector:Inject(self)
-    self.gameObject = injector.gameObject
-    self.transform = self.gameObject.transform
-    ActivityMessage.Require(self.gameObject).start:AddAction(ezutil.bind(self.Start, self))
-    return self
+    injector:Inject(M)
+    M.gameObject = injector.gameObject
+    M.transform = M.gameObject.transform
+    ActivityMessage.Require(M.gameObject).start:AddAction(ezutil.bind(M.Start, M))
+    return M
 end
 
 function M:Start()
