@@ -15,7 +15,8 @@ namespace EZFramework.XLuaExtension
         public Injection[] injections;
 
         protected Dictionary<string, object> dict = new Dictionary<string, object>();
-        void Awake()
+
+        protected virtual void Awake()
         {
             for (int i = 0; i < injections.Length; i++)
             {
@@ -23,6 +24,7 @@ namespace EZFramework.XLuaExtension
                 dict.Add(pair.key, pair.value);
             }
         }
+
         public object Get(string key)
         {
             object value;

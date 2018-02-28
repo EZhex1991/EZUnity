@@ -29,8 +29,9 @@ namespace EZFramework.XLuaExtension
 
         public delegate LuaTable LCBinder(LuaInjector injector);
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             LCBinder binder = luaModule.Get<LCBinder>("LCBinder");
             if (binder == null)
                 this.luaTable = luaModule;
