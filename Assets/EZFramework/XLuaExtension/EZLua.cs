@@ -145,6 +145,14 @@ namespace EZFramework.XLuaExtension
             return null;
         }
 
+        void Update()
+        {
+            if (luaEnv != null)
+            {
+                luaEnv.Tick();
+            }
+        }
+
         public void Yield(object cor, LuaCoroutineCallback callback)
         {
             StartCoroutine(Cor(cor, callback));
