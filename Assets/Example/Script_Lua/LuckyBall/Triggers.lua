@@ -52,7 +52,7 @@ function M:Judge(i)
         end
         count = math.max(q - p, count)
     end
-    self.text_Result.text = count
+    self.gameMgr:GetComponent("LuaBehaviour").luaTable:ShowResult(count)
 end
 ----- CODE -----
 return M

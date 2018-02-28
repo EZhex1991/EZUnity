@@ -37,5 +37,14 @@ function M:Update()
         end
     end
 end
+
+local current = 0
+function M:ShowResult(result)
+    if result ~= current then
+        print("Lucky Ball!")
+        current = result
+        self.text_Result.text = result
+    end
+end
 ----- CODE -----
 return M
