@@ -11,7 +11,7 @@ local ezutil = require("ezlua.util")
 
 local M = require("ezlua.module"):module()
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LCBinder(injector) -- bind lua(table) with C#(MonoBehaviour)
     local self = M:new()
     injector:Inject(self)
     self.gameObject = injector.gameObject

@@ -15,7 +15,7 @@ local ezutil = require("ezlua.util")
 
 local M = require("ezlua.module"):module()
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LCBinder(injector) -- bind lua(table) with C#(MonoBehaviour)
     CS.UnityEngine.Physics.gravity = Vector3(0, -98, 0)
     local self = M:new()
     injector:Inject(self)
