@@ -39,8 +39,8 @@ end
 
 function M:Judge(i)
     self.Triggers[i] = true
-    local p = 1
-    local q = 1
+    local p = 0
+    local q = 0
     local count = 0
     for i = 1, #self.Triggers do
         if self.Triggers[i] then
