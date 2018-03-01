@@ -20,10 +20,6 @@ namespace EZUnityEditor
         public int infoLineCount = 5;
         public string authorRegex = @"^\W*Author:\s*(\S[\s\S]*)$";
         public string createTimeRegex = @"^\W*CreateTime:\s*(\S[\s\S]*)$";
-        /// <summary>
-        /// @"^\W*(\w+)[\S\s]*$" line contains word character
-        /// @"^\W*(\S+)[\S\s]*$" line contains non-white-space character
-        /// </summary>
         public string validLineRegex = @"^\W*(\S+)[\S\s]*$";
 
         public bool autoBackup = true;

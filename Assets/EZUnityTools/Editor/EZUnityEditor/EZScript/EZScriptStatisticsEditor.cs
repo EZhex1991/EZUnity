@@ -75,6 +75,10 @@ namespace EZUnityEditor
             EditorGUILayout.PropertyField(m_AuthorRegex);
             EditorGUILayout.PropertyField(m_CreateTimeRegex);
             EditorGUILayout.PropertyField(m_ValidLineRegex);
+            EditorGUILayout.HelpBox(new StringBuilder()
+                .AppendLine(@"'^\W*(\w+)[\S\s]*$': line contains word characters")
+                .AppendLine(@"'^\W*(\S+)[\S\s]*$': line contains non-white-space characters")
+                .ToString(), MessageType.Info);
             EditorGUI.indentLevel--;
             EditorGUILayout.PropertyField(m_AutoBackup);
             serializedObject.ApplyModifiedProperties();
