@@ -50,7 +50,13 @@ function M.Judge(i)
         end
         count = math.max(q - p, count)
     end
-    M.gameMgr:GetComponent("LuaBehaviour").luaTable.ShowResult(count)
+    M.controllerObj:GetComponent("LuaBehaviour").luaTable.ShowResult(count)
+    -- 以下为封装过的扩展方法，一个GameObject上有多个LuaBehaviour时可通过制定moduleName获取特定behaviour或者table
+    -- moduleName可指定短名称"GameController"或者完整名称"LuckyBall.GameController"
+    M.controllerObj:GetLuaBehaviour("GameController").luaTable.ShowResult(count)
+    M.controllerObj:GetLuaBehaviour("LuckyBall.GameController").luaTable.ShowResult(count)
+    M.controllerObj:GetLuaTable("GameController").ShowResult(count)
+    M.controllerObj:GetLuaTable("LuckyBall.GameController").ShowResult(count)
 end
 ----- CODE -----
 return M
