@@ -30,30 +30,52 @@ namespace EZUnityEditor
                 // sprite_spriteName
                 if (assetName.ToLower().StartsWith("sprite_"))
                 {
+#if UNITY_5_6
                     textureImporter.textureType = TextureImporterType.Sprite;
+                    textureImporter.npotScale = TextureImporterNPOTScale.None;
+                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "iPhone",
+                        overridden = true,
+                        format = TextureImporterFormat.RGBA32,
+                    });
+#endif
                 }
                 // sprite@_spriteName
                 else if (assetName.ToLower().StartsWith("sprite@_"))
                 {
-                    //这句会造成npot的设置被还原
-                    //textureImporter.textureType = TextureImporterType.Sprite;
+#if UNITY_5_6
+                    textureImporter.textureType = TextureImporterType.Sprite;
+                    textureImporter.npotScale = TextureImporterNPOTScale.None;
+                    textureImporter.SetPlatformTextureSettings(new TextureImporterPlatformSettings
+                    {
+                        name = "iPhone",
+                        overridden = true,
+                    });
+#endif
                 }
             }
             if (assetName.ToLower().StartsWith("tex2D_"))
             {
+#if UNITY_5_6
                 textureImporter.textureType = TextureImporterType.Default;
                 textureImporter.mipmapEnabled = false;
+#endif
             }
             // textureName_normalMap
             if (assetPath.ToLower().Contains("normalmap"))
             {
+#if UNITY_5_6
                 textureImporter.textureType = TextureImporterType.NormalMap;
+#endif
             }
             // textureName_bumpMap
             else if (assetPath.ToLower().Contains("bumpmap"))
             {
+#if UNITY_5_6
                 textureImporter.textureType = TextureImporterType.NormalMap;
                 textureImporter.convertToNormalmap = true;
+#endif
             }
         }
         void OnPostprocessTexture(Texture2D texture)
