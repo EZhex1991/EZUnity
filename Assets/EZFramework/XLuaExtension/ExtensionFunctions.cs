@@ -7,6 +7,7 @@
 using EZFramework.UniSDK;
 using System;
 using UnityEngine;
+using XLua;
 
 namespace EZFramework.XLuaExtension
 {
@@ -65,6 +66,39 @@ namespace EZFramework.XLuaExtension
         public static void SetString(this DataAnalytics.CustomEvent customEvent, string key, string value)
         {
             customEvent.SetData<string>(key, value);
+        }
+
+        public static LuaBehaviour GetLuaBehaviour(this GameObject go, string moduleName)
+        {
+            LuaBehaviour[] behaviours = go.GetComponents<LuaBehaviour>();
+            if (moduleName.Contains("."))
+            {
+                for (int i = 0; i < behaviours.Length; i++)
+                {
+                    if (behaviours[i].moduleName == moduleName)
+                    {
+                        return behaviours[i];
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < behaviours.Length; i++)
+                {
+                    string shortName = behaviours[i].moduleName;
+                    if (shortName.Contains(".")) shortName = shortName.Substring(shortName.LastIndexOf(".") + 1);
+                    if (shortName == moduleName)
+                    {
+                        return behaviours[i];
+                    }
+                }
+            }
+            return null;
+        }
+        public static LuaTable GetLuaTable(this GameObject go, string moduleName)
+        {
+            LuaBehaviour behaviour = go.GetLuaBehaviour(moduleName);
+            return behaviour ? behaviour.luaTable : null;
         }
     }
 }
