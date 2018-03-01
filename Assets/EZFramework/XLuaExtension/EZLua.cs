@@ -18,6 +18,10 @@ namespace EZFramework.XLuaExtension
 
     public class EZLua : _EZManager<EZLua>
     {
+        public string bootModule;
+        public string entrance;
+        public string exit;
+
         public LuaEnv luaEnv { get; private set; }
 
         private Dictionary<string, string> luaFiles = new Dictionary<string, string>();
@@ -59,9 +63,12 @@ namespace EZFramework.XLuaExtension
 
         public void StartLua()
         {
-            luaEnv.DoString("require 'Main'");
-            luaStart = luaEnv.Global.Get<LuaAction>("Start");
-            luaExit = luaEnv.Global.Get<LuaAction>("Exit");
+            if (!string.IsNullOrEmpty(bootModule))
+            {
+                luaRequire(bootModule);
+                luaStart = luaEnv.Global.Get<LuaAction>(entrance);
+                luaExit = luaEnv.Global.Get<LuaAction>(exit);
+            }
             if (luaStart != null) luaStart();
         }
         public void ExitLua()
