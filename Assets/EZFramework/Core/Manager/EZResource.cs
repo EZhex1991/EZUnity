@@ -56,13 +56,13 @@ namespace EZFramework
             switch (EZFrameworkSettings.Instance.runMode)
             {
                 case EZFrameworkSettings.RunMode.Develop:
-                    bundleDirPath = EZFacade.streamingDirPath;
+                    bundleDirPath = EZFacade.Instance.streamingDirPath;
                     break;
                 case EZFrameworkSettings.RunMode.Local:
-                    bundleDirPath = EZFacade.streamingDirPath;
+                    bundleDirPath = EZFacade.Instance.streamingDirPath;
                     break;
                 case EZFrameworkSettings.RunMode.Update:
-                    bundleDirPath = EZFacade.persistentDirPath;
+                    bundleDirPath = EZFacade.Instance.persistentDirPath;
                     break;
             }
             bundleExtension = EZFrameworkSettings.Instance.bundleExtension;

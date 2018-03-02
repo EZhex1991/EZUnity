@@ -14,12 +14,16 @@ namespace EZFramework
         [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
         private EZFrameworkSettings.RunMode runModeInApp = EZFrameworkSettings.RunMode.Local;
 
+        public string dataDirPath;
+        public string streamingDirPath;
+        public string persistentDirPath;
+
 #if UNITY_5
         private static ILogger unityLogger = Debug.logger;
 #else
         private static ILogger unityLogger = Debug.unityLogger;
 #endif
-        private EZLogHandler ezLogHandler = new EZLogHandler(persistentDirPath + "EZLog/");
+        private static ILogHandler unityLogHandler = unityLogger.logHandler;
 
         public delegate void OnApplicationAction();
         public event OnApplicationAction onApplicationStartEvent;
@@ -31,11 +35,18 @@ namespace EZFramework
         protected override void Awake()
         {
             base.Awake();
-#if !UNITY_EDITOR
+
+            dataDirPath = Application.dataPath + "/";
+            streamingDirPath = Application.streamingAssetsPath + "/";
+#if UNITY_EDITOR
+            persistentDirPath = Application.dataPath + "/EZData/";
+#else
+            persistentDirPath = Application.persistentDataPath + "/Data/";   // persistent没有删除权限，建立子文件夹读写更方便
             if (runModeInApp == EZFrameworkSettings.RunMode.Develop) runModeInApp = EZFrameworkSettings.RunMode.Local;
             EZFrameworkSettings.Instance.runMode = runModeInApp;
 #endif
-            unityLogger.logHandler = ezLogHandler;
+
+            unityLogger.logHandler = new EZLogHandler(persistentDirPath + "EZLog/");
 
             Screen.sleepTimeout = (int)EZFrameworkSettings.Instance.sleepTimeout;
             Application.runInBackground = EZFrameworkSettings.Instance.runInBackground;
@@ -48,7 +59,7 @@ namespace EZFramework
         void OnApplicationQuit()
         {
             if (onApplicationQuitEvent != null) onApplicationQuitEvent();
-            unityLogger.logHandler = ezLogHandler.unityLogHandler;
+            unityLogger.logHandler = unityLogHandler;
         }
 
         IEnumerator OnApplicationPause(bool pauseStatus)
@@ -77,26 +88,6 @@ namespace EZFramework
             {
                 if (onApplicationFocusEvent != null) onApplicationFocusEvent(false);
                 yield return null;
-            }
-        }
-
-        public static string dataDirPath
-        {
-            get { return Application.dataPath + "/"; }
-        }
-        public static string streamingDirPath
-        {
-            get { return Application.streamingAssetsPath + "/"; }
-        }
-        public static string persistentDirPath
-        {
-            get
-            {
-#if UNITY_EDITOR
-                return Application.dataPath + "/EZData/";
-#else
-                return Application.persistentDataPath + "/Data/";   // persistent没有删除权限，建立子文件夹读写更方便
-#endif
             }
         }
     }

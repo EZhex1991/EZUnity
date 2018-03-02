@@ -53,7 +53,7 @@ namespace EZFramework
         protected override void Awake()
         {
             base.Awake();
-            MainDirPath = EZFacade.persistentDirPath + "EZDatabase/";
+            MainDirPath = EZFacade.Instance.persistentDirPath + "EZDatabase/";
             IndexFilePath = MainDirPath + "_DBIndex" + EXTENSION_INDEX;
             CacheFilePath = MainDirPath + "_Cache" + EXTENSION_CACHE;
             Directory.CreateDirectory(MainDirPath);

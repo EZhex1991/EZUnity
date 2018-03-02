@@ -67,21 +67,21 @@ namespace EZFramework
         {
             base.Awake();
             fileList = new Dictionary<string, FileInfo>();
-            sourceDirPath = EZFacade.streamingDirPath;
+            sourceDirPath = EZFacade.Instance.streamingDirPath;
             switch (EZFrameworkSettings.Instance.runMode)
             {
                 case EZFrameworkSettings.RunMode.Develop:
-                    runtimeDirPath = EZFacade.streamingDirPath;
+                    runtimeDirPath = EZFacade.Instance.streamingDirPath;
                     serverAddress = "";
                     updateMode = false;
                     break;
                 case EZFrameworkSettings.RunMode.Local:
-                    runtimeDirPath = EZFacade.streamingDirPath;
+                    runtimeDirPath = EZFacade.Instance.streamingDirPath;
                     serverAddress = "";
                     updateMode = false;
                     break;
                 case EZFrameworkSettings.RunMode.Update:
-                    runtimeDirPath = EZFacade.persistentDirPath;
+                    runtimeDirPath = EZFacade.Instance.persistentDirPath;
                     serverAddress = EZFrameworkSettings.Instance.updateServer;
                     updateMode = true;
                     break;

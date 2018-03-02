@@ -84,7 +84,7 @@ namespace EZFramework.XLuaExtension
         {
             for (int i = 0; i < EZFrameworkSettings.Instance.luaDirList.Count; i++)
             {
-                string dir = EZFacade.dataDirPath + EZFrameworkSettings.Instance.luaDirList[i] + "/";
+                string dir = EZFacade.Instance.dataDirPath + EZFrameworkSettings.Instance.luaDirList[i] + "/";
                 string[] files = Directory.GetFiles(dir, "*.lua", SearchOption.AllDirectories);
                 foreach (string filePath in files)
                 {
@@ -98,7 +98,7 @@ namespace EZFramework.XLuaExtension
         {
             for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
             {
-                AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.streamingDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
+                AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.Instance.streamingDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
                 if (bundle == null) continue;
                 TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
                 for (int j = 0; j < assets.Length; j++)
@@ -113,7 +113,7 @@ namespace EZFramework.XLuaExtension
         {
             for (int i = 0; i < EZFrameworkSettings.Instance.luaBundleList.Count; i++)
             {
-                AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.persistentDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
+                AssetBundle bundle = AssetBundle.LoadFromFile(EZFacade.Instance.persistentDirPath + EZFrameworkSettings.Instance.luaBundleList[i].ToLower() + EZFrameworkSettings.Instance.bundleExtension);
                 if (bundle == null) continue;
                 TextAsset[] assets = bundle.LoadAllAssets<TextAsset>();
                 for (int j = 0; j < assets.Length; j++)
