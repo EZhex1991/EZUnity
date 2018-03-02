@@ -60,6 +60,14 @@ namespace EZFramework
             DBDict = new Dictionary<string, DBData>();
             LoadIndex();
             LoadCache();
+            // 暂停时存档（iOS一般不会退出）
+            EZFacade.Instance.onApplicationPauseEvent += delegate (bool pauseStatus)
+            {
+                if (pauseStatus)
+                {
+                    SaveData();
+                }
+            };
         }
         protected override void OnDestroy()
         {

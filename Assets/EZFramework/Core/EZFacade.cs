@@ -65,8 +65,6 @@ namespace EZFramework
             if (pauseStatus)
             {
                 if (onApplicationPauseEvent != null) onApplicationPauseEvent(true);
-                // 暂停时存档（iOS一般不会退出）
-                EZDatabase.Instance.SaveData();
                 yield return null;  // 暂停完等待一帧去刷新暂停时的画面
             }
             else
