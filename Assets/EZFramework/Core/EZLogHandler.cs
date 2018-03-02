@@ -14,10 +14,10 @@ namespace EZFramework
 {
     public class EZLogHandler : ILogHandler
     {
-#if UNITY_2017
-        private static ILogHandler m_UnityLogHandler = Debug.unityLogger.logHandler;
+#if UNITY_5
+        private static ILogHandler m_UnityLogHandler = Debug.logger.logHandler;
 #else
-        private static ILogHandler m_UnityLogHandler = Debug.Logger.logHandler;
+        private static ILogHandler m_UnityLogHandler = Debug.unityLogger.logHandler;
 #endif
         public ILogHandler unityLogHandler { get { return m_UnityLogHandler; } }
 

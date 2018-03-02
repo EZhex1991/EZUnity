@@ -16,10 +16,10 @@ namespace EZFramework
         [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
         private EZFrameworkSettings.RunMode runModeInApp = EZFrameworkSettings.RunMode.Local;
 
-#if UNITY_2017
-        private static ILogger unityLogger = Debug.unityLogger;
-#else
+#if UNITY_5
         private static ILogger unityLogger = Debug.logger;
+#else
+        private static ILogger unityLogger = Debug.unityLogger;
 #endif
         private EZLogHandler ezLogHandler = new EZLogHandler(persistentDirPath + "EZLog/");
 

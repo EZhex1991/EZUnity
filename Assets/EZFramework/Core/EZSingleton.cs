@@ -67,8 +67,14 @@ namespace EZFramework
             instance = null;
         }
 
+#if UNITY_5
         protected void Log(string log) { if (showLog) Debug.logger.Log(LogTag, log, Instance); }
         protected void LogWarning(string log) { if (showLog) Debug.logger.LogWarning(LogTag, log, Instance); }
         protected void LogError(string log) { if (showLog) Debug.logger.LogError(LogTag, log, Instance); }
+#else
+        protected void Log(string log) { if (showLog) Debug.unityLogger.Log(LogTag, log, Instance); }
+        protected void LogWarning(string log) { if (showLog) Debug.unityLogger.LogWarning(LogTag, log, Instance); }
+        protected void LogError(string log) { if (showLog) Debug.unityLogger.LogError(LogTag, log, Instance); }
+#endif
     }
 }
