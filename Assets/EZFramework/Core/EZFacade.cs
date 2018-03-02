@@ -13,12 +13,15 @@ namespace EZFramework
     {
         [SerializeField]
         private bool hideFacade = false;
-        [SerializeField]
-        private bool useDefaultLogHandler = true;
         [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
         private EZFrameworkSettings.RunMode runModeInApp = EZFrameworkSettings.RunMode.Local;
 
-        private ILogHandler defaultLogHandler = Debug.logger.logHandler;
+#if UNITY_2017
+        private static ILogger unityLogger = Debug.unityLogger;
+#else
+        private static ILogger unityLogger = Debug.logger;
+#endif
+        private EZLogHandler ezLogHandler = new EZLogHandler(persistentDirPath + "EZLog/");
 
         public delegate void OnApplicationAction();
         public event OnApplicationAction onApplicationStartEvent;
@@ -35,15 +38,7 @@ namespace EZFramework
             EZFrameworkSettings.Instance.runMode = runModeInApp;
 #endif
             gameObject.hideFlags = hideFacade ? HideFlags.HideInHierarchy : HideFlags.None;
-            if (useDefaultLogHandler)
-            {
-                Debug.logger.logHandler = defaultLogHandler;
-            }
-            else
-            {
-                string logPath = EZFacade.persistentDirPath + "EZLog/";
-                Debug.logger.logHandler = new EZLogHandler(logPath);
-            }
+            unityLogger.logHandler = ezLogHandler;
 
             Screen.sleepTimeout = (int)EZFrameworkSettings.Instance.sleepTimeout;
             Application.runInBackground = EZFrameworkSettings.Instance.runInBackground;
@@ -56,7 +51,7 @@ namespace EZFramework
         void OnApplicationQuit()
         {
             if (onApplicationQuitEvent != null) onApplicationQuitEvent();
-            Debug.logger.logHandler = defaultLogHandler;
+            unityLogger.logHandler = ezLogHandler.unityLogHandler;
         }
 
         IEnumerator OnApplicationPause(bool pauseStatus)
