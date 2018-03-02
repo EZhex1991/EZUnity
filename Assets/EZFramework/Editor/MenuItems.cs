@@ -40,15 +40,10 @@ namespace EZFrameworkEditor
             EZFrameworkEditorUtility.ClearLuaTxt();
         }
 
-        [MenuItem(ROOT_NAME + "/Clear Persistent Path", false, PRIORITY + 201)]
-        public static void ClearPersistent()
+        [MenuItem(ROOT_NAME + "/Clear Persistent Data", false, PRIORITY + 201)]
+        public static void ClearPersistentData()
         {
-            EZFrameworkEditorUtility.ClearPersistent();
-        }
-        [MenuItem(ROOT_NAME + "/Clear StreamingAssets Path", false, PRIORITY + 202)]
-        public static void ClearStreamingAssets()
-        {
-            EZFrameworkEditorUtility.ClearStreamingAssets();
+            EZFrameworkEditorUtility.ClearPersistentData();
         }
         [MenuItem(ROOT_NAME + "/Clear PlayerPrefs", false, PRIORITY + 203)]
         public static void ClearPlayerPrefs()

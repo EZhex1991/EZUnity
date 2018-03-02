@@ -50,26 +50,12 @@ namespace EZFrameworkEditor
             }
         }
 
-        public static void ClearStreamingAssets()
+        public static void ClearPersistentData()
         {
             try
             {
-                Directory.Delete(EZFacade.streamingDirPath, true);
-                Debug.Log("Streaming Directory Cleared.");
-                AssetDatabase.Refresh();
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError(ex.Message);
-            }
-        }
-
-        public static void ClearPersistent()
-        {
-            try
-            {
-                Directory.Delete(EZFacade.persistentDirPath, true);
-                Debug.Log("Persistent Directory Cleared.");
+                Directory.Delete(Application.persistentDataPath, true);
+                Debug.Log("PersistentData Cleared.");
                 AssetDatabase.Refresh();
             }
             catch (System.Exception ex)
