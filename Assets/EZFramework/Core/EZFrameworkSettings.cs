@@ -9,6 +9,13 @@ using UnityEngine;
 
 namespace EZFramework
 {
+    public enum RunMode
+    {
+        Develop,
+        Local,
+        Update,
+    }
+
     public class EZFrameworkSettings : ScriptableObject
     {
         // 必须放置在Resources目录下！
@@ -28,12 +35,6 @@ namespace EZFramework
             }
         }
 
-        public enum RunMode
-        {
-            Develop,
-            Local,
-            Update,
-        }
         public enum SleepTimeout
         {
             NeverSleep = UnityEngine.SleepTimeout.NeverSleep,
@@ -41,8 +42,19 @@ namespace EZFramework
         }
 
         [SerializeField]
-        private RunMode m_RunMode = RunMode.Develop;
-        public RunMode runMode { get { return m_RunMode; } set { m_RunMode = value; } }
+        private RunMode m_RunModeInEditor = RunMode.Develop;
+        [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
+        private RunMode m_RunModeInApp = RunMode.Local;
+        public RunMode runMode
+        {
+#if UNITY_EDITOR
+            get { return m_RunModeInEditor; }
+            set { m_RunModeInEditor = value; }
+#else
+            get { return m_RunModeInApp; }
+            set { m_RunModeInApp = value; }
+#endif
+        }
 
         [SerializeField]
         private SleepTimeout m_SleepTimeout = SleepTimeout.SystemSetting;

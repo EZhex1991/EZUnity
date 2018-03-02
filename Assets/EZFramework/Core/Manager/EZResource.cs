@@ -55,13 +55,13 @@ namespace EZFramework
             base.Awake();
             switch (EZFrameworkSettings.Instance.runMode)
             {
-                case EZFrameworkSettings.RunMode.Develop:
+                case RunMode.Develop:
                     bundleDirPath = EZFacade.Instance.streamingDirPath;
                     break;
-                case EZFrameworkSettings.RunMode.Local:
+                case RunMode.Local:
                     bundleDirPath = EZFacade.Instance.streamingDirPath;
                     break;
-                case EZFrameworkSettings.RunMode.Update:
+                case RunMode.Update:
                     bundleDirPath = EZFacade.Instance.persistentDirPath;
                     break;
             }
@@ -71,7 +71,7 @@ namespace EZFramework
         // 记录bundle里的资源路径，在Editor+Develop模式时可以直接从路径加载文件
         private void GetAssetPathFromBundle(AssetBundle bundle)
         {
-            if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+            if (EZFrameworkSettings.Instance.runMode == RunMode.Develop)
             {
                 foreach (string filePath in bundle.GetAllAssetNames())
                 {
@@ -98,7 +98,7 @@ namespace EZFramework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+            if (EZFrameworkSettings.Instance.runMode == RunMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
@@ -119,7 +119,7 @@ namespace EZFramework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+            if (EZFrameworkSettings.Instance.runMode == RunMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
@@ -140,7 +140,7 @@ namespace EZFramework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+            if (EZFrameworkSettings.Instance.runMode == RunMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
@@ -177,7 +177,7 @@ namespace EZFramework
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
 #if UNITY_EDITOR
-                if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+                if (EZFrameworkSettings.Instance.runMode == RunMode.Develop)
                 {
                     string assetKey = GetAssetKey(bundleName, assetName);
                     string assetPath;
@@ -209,7 +209,7 @@ namespace EZFramework
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
 #if UNITY_EDITOR
-                if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+                if (EZFrameworkSettings.Instance.runMode == RunMode.Develop)
                 {
                     string assetKey = GetAssetKey(bundleName, assetName);
                     string assetPath;
@@ -241,7 +241,7 @@ namespace EZFramework
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
 #if UNITY_EDITOR
-                if (EZFrameworkSettings.Instance.runMode == EZFrameworkSettings.RunMode.Develop)
+                if (EZFrameworkSettings.Instance.runMode == RunMode.Develop)
                 {
                     string assetKey = GetAssetKey(bundleName, assetName);
                     string assetPath;
@@ -286,7 +286,7 @@ namespace EZFramework
             if (loadingPanel != null) loadingPanel.ShowProgress("Loading", 0);
             yield return null;
 #if UNITY_EDITOR    // Editor+Develop模式下不加载bundle，直接读场景文件（需要将场景加到BuildSettings，打包时取消勾选）
-            if (EZFrameworkSettings.Instance.runMode != EZFrameworkSettings.RunMode.Develop)
+            if (EZFrameworkSettings.Instance.runMode != RunMode.Develop)
 #endif
                 yield return Cor_LoadBundleAsync(bundleName, null);
             AsyncOperation opr = SceneManager.LoadSceneAsync(sceneName, mode);

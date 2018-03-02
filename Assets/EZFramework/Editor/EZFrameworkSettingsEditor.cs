@@ -14,7 +14,8 @@ namespace EZFrameworkEditor
     [CustomEditor(typeof(EZFrameworkSettings))]
     public class EZFrameworkSettingsEditor : Editor
     {
-        SerializedProperty m_RunMode;
+        SerializedProperty m_RunModeInEditor;
+        SerializedProperty m_RunModeInApp;
         SerializedProperty m_SleepTimeout;
         SerializedProperty m_RunInBackground;
         SerializedProperty m_TargetFrameRate;
@@ -29,7 +30,8 @@ namespace EZFrameworkEditor
 
         void OnEnable()
         {
-            m_RunMode = serializedObject.FindProperty("m_RunMode");
+            m_RunModeInEditor = serializedObject.FindProperty("m_RunModeInEditor");
+            m_RunModeInApp = serializedObject.FindProperty("m_RunModeInApp");
             m_SleepTimeout = serializedObject.FindProperty("m_SleepTimeout");
             m_RunInBackground = serializedObject.FindProperty("m_RunInBackground");
             m_TargetFrameRate = serializedObject.FindProperty("m_TargetFrameRate");
@@ -37,12 +39,16 @@ namespace EZFrameworkEditor
             m_BundleExtension = serializedObject.FindProperty("m_BundleExtension");
             m_LuaDirList = serializedObject.FindProperty("m_LuaDirList");
             m_LuaBundleList = serializedObject.FindProperty("m_LuaBundleList");
-            luaDirList = new ReorderableList(serializedObject, m_LuaDirList, true, true, true, true);
-            luaDirList.drawHeaderCallback = DrawLuaDirListHeader;
-            luaDirList.drawElementCallback = DrawLuaDirListElement;
-            luaBundleList = new ReorderableList(serializedObject, m_LuaBundleList, true, true, true, true);
-            luaBundleList.drawHeaderCallback = DrawLuaBundleListHeader;
-            luaBundleList.drawElementCallback = DrawLuaBundleListElement;
+            luaDirList = new ReorderableList(serializedObject, m_LuaDirList, true, true, true, true)
+            {
+                drawHeaderCallback = DrawLuaDirListHeader,
+                drawElementCallback = DrawLuaDirListElement
+            };
+            luaBundleList = new ReorderableList(serializedObject, m_LuaBundleList, true, true, true, true)
+            {
+                drawHeaderCallback = DrawLuaBundleListHeader,
+                drawElementCallback = DrawLuaBundleListElement
+            };
         }
 
         private void DrawLuaDirListHeader(Rect rect)
@@ -75,10 +81,12 @@ namespace EZFrameworkEditor
             EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target as ScriptableObject), typeof(MonoScript), false);
             GUI.enabled = true;
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Mode", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(m_RunMode, new GUIContent("Run Mode In Editor"));
+            EditorGUILayout.PropertyField(m_RunModeInEditor);
+            EditorGUILayout.PropertyField(m_RunModeInApp);
+            if (m_RunModeInApp.enumValueIndex == (int)RunMode.Develop) m_RunModeInApp.enumValueIndex = (int)RunMode.Local;
+            EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_SleepTimeout);
             EditorGUILayout.PropertyField(m_RunInBackground);
-            EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_TargetFrameRate);
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Network", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_UpdateServer);

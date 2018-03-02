@@ -9,14 +9,24 @@ using UnityEngine;
 
 namespace EZFramework
 {
+    // 任何初始化放在Awake里的field都需要改ExecuteOrder才能保证其能在其它Manager的Awake里正常调用
+    // 所以，要么使用property，要么把field放到EZFrameworkSettings里通过Instance调用
     public class EZFacade : EZSingleton<EZFacade>
     {
-        [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
-        private EZFrameworkSettings.RunMode runModeInApp = EZFrameworkSettings.RunMode.Local;
-
-        public string dataDirPath;
-        public string streamingDirPath;
-        public string persistentDirPath;
+        // 不能再static或者constructor里调用Application.dataPath
+        public string dataDirPath { get { return Application.dataPath + "/"; } }
+        public string streamingDirPath { get { return Application.streamingAssetsPath + "/"; } }
+        public string persistentDirPath
+        {
+            get
+            {
+#if UNITY_EDITOR
+                return Application.dataPath + "/EZData/";
+#else
+                return Application.persistentDataPath + "/Data/"; // 部分设备persistent没有删除权限，建立子文件夹读写更方便
+#endif
+            }
+        }
 
 #if UNITY_5
         private static ILogger unityLogger = Debug.logger;
@@ -35,19 +45,7 @@ namespace EZFramework
         protected override void Awake()
         {
             base.Awake();
-
-            dataDirPath = Application.dataPath + "/";
-            streamingDirPath = Application.streamingAssetsPath + "/";
-#if UNITY_EDITOR
-            persistentDirPath = Application.dataPath + "/EZData/";
-#else
-            persistentDirPath = Application.persistentDataPath + "/Data/";   // persistent没有删除权限，建立子文件夹读写更方便
-            if (runModeInApp == EZFrameworkSettings.RunMode.Develop) runModeInApp = EZFrameworkSettings.RunMode.Local;
-            EZFrameworkSettings.Instance.runMode = runModeInApp;
-#endif
-
             unityLogger.logHandler = new EZLogHandler(persistentDirPath + "EZLog/");
-
             Screen.sleepTimeout = (int)EZFrameworkSettings.Instance.sleepTimeout;
             Application.runInBackground = EZFrameworkSettings.Instance.runInBackground;
             Application.targetFrameRate = EZFrameworkSettings.Instance.targetFrameRate;
@@ -77,6 +75,8 @@ namespace EZFramework
                 if (onApplicationPauseEvent != null) onApplicationPauseEvent(false);
             }
         }
+        // On Android, when the on-screen keyboard is enabled, it causes a OnApplicationFocus( false ) event.
+        // Additionally, if you press Home at the moment the keyboard is enabled, the OnApplicationFocus() event is not called, but OnApplicationPause() is called instead.
         IEnumerator OnApplicationFocus(bool focusStatus)
         {
             if (focusStatus)

@@ -70,17 +70,17 @@ namespace EZFramework
             sourceDirPath = EZFacade.Instance.streamingDirPath;
             switch (EZFrameworkSettings.Instance.runMode)
             {
-                case EZFrameworkSettings.RunMode.Develop:
+                case RunMode.Develop:
                     runtimeDirPath = EZFacade.Instance.streamingDirPath;
                     serverAddress = "";
                     updateMode = false;
                     break;
-                case EZFrameworkSettings.RunMode.Local:
+                case RunMode.Local:
                     runtimeDirPath = EZFacade.Instance.streamingDirPath;
                     serverAddress = "";
                     updateMode = false;
                     break;
-                case EZFrameworkSettings.RunMode.Update:
+                case RunMode.Update:
                     runtimeDirPath = EZFacade.Instance.persistentDirPath;
                     serverAddress = EZFrameworkSettings.Instance.updateServer;
                     updateMode = true;

@@ -42,15 +42,15 @@ namespace EZFramework.XLuaExtension
             luaRequire = luaEnv.Global.Get<LuaRequire>("require");
             switch (EZFrameworkSettings.Instance.runMode)
             {
-                case EZFrameworkSettings.RunMode.Develop:
+                case RunMode.Develop:
                     AddDevelopLoader();
                     EZFacade.Instance.onApplicationStartEvent += StartLua;
                     break;
-                case EZFrameworkSettings.RunMode.Local:
+                case RunMode.Local:
                     AddLocalLoader();
                     EZFacade.Instance.onApplicationStartEvent += StartLua;
                     break;
-                case EZFrameworkSettings.RunMode.Update:
+                case RunMode.Update:
                     EZUpdate.Instance.onUpdateCompleteEvent += delegate ()
                     {
                         AddUpdateLoader();  // Update模式下需要先更新再添加Loader
