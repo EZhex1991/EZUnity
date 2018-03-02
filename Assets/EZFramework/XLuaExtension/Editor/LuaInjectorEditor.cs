@@ -150,9 +150,6 @@ namespace EZFrameworkEditor.XLuaExtension
         protected SerializedProperty m_InjectionList;
         protected ReorderableList injectionList;
 
-        private float space = EZEditorGUIUtility.space;
-        private float lineHeight = EditorGUIUtility.singleLineHeight;
-
         protected virtual void OnEnable()
         {
             m_InjectionList = serializedObject.FindProperty("injections");
