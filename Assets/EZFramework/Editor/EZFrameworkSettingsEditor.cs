@@ -20,7 +20,6 @@ namespace EZFrameworkEditor
         SerializedProperty m_RunInBackground;
         SerializedProperty m_TargetFrameRate;
         SerializedProperty m_UpdateServer;
-        SerializedProperty m_BundleExtension;
         SerializedProperty m_LuaDirList;
         SerializedProperty m_LuaBundleList;
         ReorderableList luaDirList;
@@ -36,7 +35,6 @@ namespace EZFrameworkEditor
             m_RunInBackground = serializedObject.FindProperty("m_RunInBackground");
             m_TargetFrameRate = serializedObject.FindProperty("m_TargetFrameRate");
             m_UpdateServer = serializedObject.FindProperty("m_UpdateServer");
-            m_BundleExtension = serializedObject.FindProperty("m_BundleExtension");
             m_LuaDirList = serializedObject.FindProperty("m_LuaDirList");
             m_LuaBundleList = serializedObject.FindProperty("m_LuaBundleList");
             luaDirList = new ReorderableList(serializedObject, m_LuaDirList, true, true, true, true)
@@ -91,8 +89,6 @@ namespace EZFrameworkEditor
             EditorGUILayout.PropertyField(m_TargetFrameRate);
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Network", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_UpdateServer);
-            EditorGUILayout.Space(); EditorGUILayout.LabelField("Asset Bundle", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(m_BundleExtension);
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Lua", EditorStyles.boldLabel);
             float labelWidth = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 30;

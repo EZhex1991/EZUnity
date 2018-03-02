@@ -35,7 +35,6 @@ namespace EZFramework
         public string sourceDirPath { get; private set; }
         public string runtimeDirPath { get; private set; }
         public string serverAddress { get; private set; }
-        public string bundleExtension { get; private set; }
         public string timeTag { get; private set; }
 
         public delegate void OnUpdateCompleteAction();
@@ -86,7 +85,6 @@ namespace EZFramework
                     updateMode = true;
                     break;
             }
-            bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
             timeTag = "?v=" + DateTime.Now.ToString("yyyymmddhhmmss");
         }
         void Start()
@@ -269,9 +267,7 @@ namespace EZFramework
         // -1：服务器无此文件；0：不需要更新；1：本地文件不存在；2：存在并需要更新；
         public int CheckUpdate(string relativePath)
         {
-            relativePath = relativePath.EndsWith(bundleExtension)
-                        ? relativePath.ToLower()
-                        : relativePath.ToLower() + bundleExtension;
+            relativePath = relativePath.ToLower();
             if (!updateMode)
             {
                 Log("Checked in non-update mode: " + relativePath);
@@ -329,9 +325,7 @@ namespace EZFramework
         public EZWWWTask Download(string relativePath)
         {
             if (!updateMode) return null;
-            relativePath = relativePath.EndsWith(bundleExtension)
-                        ? relativePath.ToLower()
-                        : relativePath.ToLower() + bundleExtension;
+            relativePath = relativePath.ToLower();
             string source = serverAddress + relativePath;
             string localPath = runtimeDirPath + relativePath;
             EZWWWTask task = EZNetwork.Instance.NewTask(source, null);

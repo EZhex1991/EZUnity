@@ -73,10 +73,6 @@ namespace EZFramework
         public string updateServer { get { return m_UpdateServer; } set { m_UpdateServer = value; } }
 
         [SerializeField]
-        private string m_BundleExtension = "";
-        public string bundleExtension { get { return m_BundleExtension; } set { m_BundleExtension = value; } }
-
-        [SerializeField]
         private List<string> m_LuaDirList = new List<string> { "Script_Lua" };
         public List<string> luaDirList { get { return m_LuaDirList; } set { m_LuaDirList = value; } }
 

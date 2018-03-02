@@ -18,7 +18,6 @@ namespace EZFramework
         public EZLoadingPanel loadingPanel;
 
         public string bundleDirPath { get; private set; }
-        public string bundleExtension { get; private set; }
 
         // Develop模式下用到的源文件路径
         private Dictionary<string, string> assetPathDict = new Dictionary<string, string>();
@@ -65,7 +64,6 @@ namespace EZFramework
                     bundleDirPath = EZFacade.Instance.persistentDirPath;
                     break;
             }
-            bundleExtension = EZFrameworkSettings.Instance.bundleExtension;
         }
 
         // 记录bundle里的资源路径，在Editor+Develop模式时可以直接从路径加载文件
@@ -89,7 +87,6 @@ namespace EZFramework
         {
             bundleName = bundleName.ToLower();
             assetName = assetName.ToLower();
-            if (!bundleName.EndsWith(bundleExtension)) bundleName += bundleExtension;
             return bundleName + "-" + assetName;
         }
 
@@ -320,7 +317,6 @@ namespace EZFramework
         public AssetBundle LoadBundle(string bundleName)
         {
             bundleName = bundleName.ToLower();
-            if (!bundleName.EndsWith(bundleExtension)) bundleName += bundleExtension;
             LoadDependencies(bundleName);
             AssetBundle bundle;
             if (!bundleDict.TryGetValue(bundleName, out bundle))
@@ -350,7 +346,6 @@ namespace EZFramework
         IEnumerator Cor_LoadBundleAsync(string bundleName, OnBundleLoadedAction action)
         {
             bundleName = bundleName.ToLower();
-            if (!bundleName.EndsWith(bundleExtension)) bundleName += bundleExtension;
             yield return Cor_LoadDependenciesAsync(bundleName);
             AssetBundle bundle;
             if (!bundleDict.TryGetValue(bundleName, out bundle)) // 是否已加载
@@ -392,7 +387,6 @@ namespace EZFramework
         public void UnloadBundle(string bundleName, bool unloadAll = false)
         {
             bundleName = bundleName.ToLower();
-            if (!bundleName.EndsWith(bundleExtension)) bundleName += bundleExtension;
             AssetBundle bundle;
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
