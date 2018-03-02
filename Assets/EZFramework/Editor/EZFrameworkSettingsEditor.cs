@@ -83,6 +83,7 @@ namespace EZFrameworkEditor
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Mode", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_RunModeInEditor);
             EditorGUILayout.PropertyField(m_RunModeInApp);
+            EditorGUILayout.HelpBox("Develop Mode is only available in Editor", MessageType.Info);
             if (m_RunModeInApp.enumValueIndex == (int)RunMode.Develop) m_RunModeInApp.enumValueIndex = (int)RunMode.Local;
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_SleepTimeout);
