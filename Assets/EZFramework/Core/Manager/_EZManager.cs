@@ -15,7 +15,6 @@ namespace EZFramework
         {
             base.Awake();
             transform.SetParent(EZFacade.Instance.transform);
-            gameObject.hideFlags = EZFacade.Instance.gameObject.hideFlags;
             Log("Activated");
         }
         protected override void OnDestroy()

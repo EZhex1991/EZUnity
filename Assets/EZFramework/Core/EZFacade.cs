@@ -11,8 +11,6 @@ namespace EZFramework
 {
     public class EZFacade : EZSingleton<EZFacade>
     {
-        [SerializeField]
-        private bool hideFacade = false;
         [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
         private EZFrameworkSettings.RunMode runModeInApp = EZFrameworkSettings.RunMode.Local;
 
@@ -37,7 +35,6 @@ namespace EZFramework
             if (runModeInApp == EZFrameworkSettings.RunMode.Develop) runModeInApp = EZFrameworkSettings.RunMode.Local;
             EZFrameworkSettings.Instance.runMode = runModeInApp;
 #endif
-            gameObject.hideFlags = hideFacade ? HideFlags.HideInHierarchy : HideFlags.None;
             unityLogger.logHandler = ezLogHandler;
 
             Screen.sleepTimeout = (int)EZFrameworkSettings.Instance.sleepTimeout;
