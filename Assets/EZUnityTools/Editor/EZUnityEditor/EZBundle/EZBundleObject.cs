@@ -30,7 +30,6 @@ namespace EZUnityEditor
 
         public BuildTarget buildTarget = BuildTarget.Android;
         public string outputPath = "Assets/StreamingAssets";
-        public string fileExtension = "";
         public string listFileName = "files.txt";
         public bool managerMode = false;
         public bool forceRebuild = false;

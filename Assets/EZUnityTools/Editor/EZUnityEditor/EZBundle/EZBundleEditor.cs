@@ -15,7 +15,6 @@ namespace EZUnityEditor
     {
         private SerializedProperty m_BuildTarget;
         private SerializedProperty m_OutputPath;
-        private SerializedProperty m_FileExtension;
         private SerializedProperty m_ListFileName;
         private SerializedProperty m_ManagerMode;
         private SerializedProperty m_ForceRebuild;
@@ -38,7 +37,6 @@ namespace EZUnityEditor
         {
             m_BuildTarget = serializedObject.FindProperty("buildTarget");
             m_OutputPath = serializedObject.FindProperty("outputPath");
-            m_FileExtension = serializedObject.FindProperty("fileExtension");
             m_ListFileName = serializedObject.FindProperty("listFileName");
             m_ManagerMode = serializedObject.FindProperty("managerMode");
             m_ForceRebuild = serializedObject.FindProperty("forceRebuild");
@@ -112,7 +110,6 @@ namespace EZUnityEditor
         {
             EditorGUILayout.PropertyField(m_BuildTarget);
             EditorGUILayout.PropertyField(m_OutputPath);
-            EditorGUILayout.PropertyField(m_FileExtension);
             EditorGUILayout.PropertyField(m_ListFileName);
             EditorGUILayout.PropertyField(m_ForceRebuild);
             EditorGUILayout.PropertyField(m_ManagerMode);

@@ -123,7 +123,7 @@ namespace EZUnityEditor
                     files[i] = files[i].Replace('\\', '/');
                 }
                 AssetBundleBuild build = new AssetBundleBuild();
-                build.assetBundleName = ezBundleInfo.bundleName + ezBundle.fileExtension;
+                build.assetBundleName = ezBundleInfo.bundleName;
                 build.assetNames = files;
                 buildList.Add(build);
             }
