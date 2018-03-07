@@ -1,35 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  1/8/2018 6:19:35 PM
- * Description:
- * 1. 统一广告的接入方式和事件传递的参数类型，保证SDK更换后接口不用重新设计
- * 2. 对Editor模式做特殊处理，保证业务逻辑在不依赖SDK相关文件的情况下能正常执行
- * 3. 使用时继承该类，在自定义宏中对方法进行重写，宏定义即为启用SDK的开关（宏的使用请在Unity Manual中搜索Scripting Define Symbols）。
- * 例：
- * public class ADSDK : Advertisement
- * {
- * #if ADSDK // 不加宏就会使用默认逻辑，不会依赖到SDK相关文件
- *      public override void Init()
- *      {
- *          ADSDK.Init();
- *          ADSDK.onAdOpen = (placeId, rewardType, rewardAmount)=>
- *          {
- *              // 自己对参数进行处理
- *              OnRewardVideoShow(placeId, string.Format("{0}, {1}", rewardType, rewardAmount));
- *          }
- *      }
- *      public override void ShowRewardVideo(string placeId, string msg)
- *      {
- *          // 无用参数可以舍弃
- *          ADSDK.ShowRewardVideo(placeId);
- *      }
- *      public override void OnRewardVideoShow(string info, string msg)
- *      {
- *          Debug.Log("ADSDK");
- *      }
- * #endif
- * }
-*/
+/* Author:          熊哲
+ * CreateTime:      2018-01-08 18:19:35
+ * Orgnization:     #ORGNIZATION#
+ * Description:     
+ */
 using UnityEngine;
 
 namespace EZFramework.UniSDK
@@ -37,12 +10,12 @@ namespace EZFramework.UniSDK
     public class Advertisement : EZSingleton<Advertisement>
     {
         public bool positiveEvent = true;
+        public delegate void OnInitResultCallback(bool result, string msg);
         public delegate void OnEventCallback(string info, string msg);
         // init
-        public event OnEventCallback onInitSucceededEvent;
-        public event OnEventCallback onInitFailedEvent;
+        public event OnInitResultCallback onInitFinishedEvent;
         // reward video
-        public event OnEventCallback onRewardVideoLoadedEvent;
+        public event OnEventCallback onRewardVideoLoadSucceedEvent;
         public event OnEventCallback onRewardVideoLoadFailedEvent;
         public event OnEventCallback onRewardVideoShowEvent;
         public event OnEventCallback onRewardVideoCloseEvent;
@@ -50,26 +23,13 @@ namespace EZFramework.UniSDK
         public event OnEventCallback onRewardVideoRewardEvent;
         public event OnEventCallback onRewardVideoAbandonEvent;
         // interstitial
-        public event OnEventCallback onInterstitialLoadedEvent;
-        public event OnEventCallback onInterstitialLoadFailedEvent;
         public event OnEventCallback onInterstitialShowEvent;
         public event OnEventCallback onInterstitialCloseEvent;
         public event OnEventCallback onInterstitialClickEvent;
         // banner
-        public event OnEventCallback onBannerLoadedEvent;
-        public event OnEventCallback onBannerLoadFailedEvent;
         public event OnEventCallback onBannerShowEvent;
-        public event OnEventCallback onBannerCloseEvent;
+        public event OnEventCallback onBannerRemoveEvent;
         public event OnEventCallback onBannerClickEvent;
-        // exit ad
-        public event OnEventCallback onExitAdLoadedEvent;
-        public event OnEventCallback onExitAdLoadFailedEvent;
-        public event OnEventCallback onExitAdShowEvent;
-        public event OnEventCallback onExitAdCloseEvent;
-        public event OnEventCallback onExitAdClickEvent;
-        // native ad
-        public event OnEventCallback onNativeAdLoadedEvent;
-        public event OnEventCallback onNativeAdLoadFailedEvent;
 
         private float timeScale;
         private void PauseTime()
@@ -86,216 +46,145 @@ namespace EZFramework.UniSDK
         public virtual void Init()
         {
             Log("Init");
-            if (positiveEvent) m_OnInitSucceeded("", "Ad disabled, positive events will be triggered.");
-            else m_OnInitFailed("", "Ad disabled, negative events will be triggered.");
+            _OnInitFinished(positiveEvent, "Test Mode");
         }
 
-        public virtual void LoadRewardVideo()
+        public virtual bool IsRewardVideoReady()
         {
-            Log("LoadRewardVideo");
-            if (positiveEvent) m_OnRewardVideoLoaded("", "");
-            else m_OnRewardVideoLoadFailed("", "");
+            Log("IsRewardVideoReady");
+            return positiveEvent;
         }
-        public virtual void ShowRewardVideo(string info = "", string msg = "")
+        public virtual bool IsInterstitialReady(string placeId)
         {
-            Log(string.Format("{0}\n{1}\n{2}", "Show RewardVideo", info, msg));
+            Log(string.Format("IsInterstitialReady:\n placeId: {0}", placeId));
+            return positiveEvent;
+        }
+
+        public virtual void ShowRewardVideo(string placeId)
+        {
+            Log(string.Format("ShowRewardVideo:\n placeId: {0}", placeId));
             if (positiveEvent)
             {
-                m_OnRewardVideoShow(info, msg);
-                m_OnRewardVideoReward(info, msg);
-                m_OnRewardVideoClose(info, msg);
+                _OnRewardVideoShow(placeId, "Test Mode");
+                _OnRewardVideoReward(placeId, "Test Mode");
+                _OnRewardVideoClose(placeId, "Test Mode");
             }
             else
             {
-                m_OnRewardVideoShow(info, msg);
-                m_OnRewardVideoAbandon(info, msg);
-                m_OnRewardVideoClose(info, msg);
+                _OnRewardVideoShow(placeId, "Test Mode");
+                _OnRewardVideoAbandon(placeId, "Test Mode");
+                _OnRewardVideoClose(placeId, "Test Mode");
             }
         }
 
-        public virtual void ShowInterstitial(string info = "", string msg = "")
+        public virtual void ShowInterstitial(string placeId)
         {
-            Log(string.Format("{0}\n{1}\n{2}", "ShowInterstitial", info, msg));
+            Log(string.Format("ShowInterstitial:\n placeId: {0}", placeId));
             if (positiveEvent)
             {
-                m_OnInterstitialShow(info, msg);
-                m_OnInterstitialClose(info, msg);
+                _OnInterstitialShow(placeId, "Test Mode");
+                _OnInterstitialClose(placeId, "Test Mode");
             }
         }
 
-        public virtual void ShowBanner(string info = "", string msg = "")
+        public virtual void ShowBannerAtTop(string placeId)
         {
-            Log(string.Format("{0}\n{1}\n{2}", "ShowBanner", info, msg));
-            if (positiveEvent) m_OnBannerShow(info, msg);
+            Log(string.Format("ShowBannerAtTop:\n placeId: {0}", placeId));
+            if (positiveEvent) _OnBannerShow(placeId, "Test Mode");
         }
-        public virtual void RemoveBanner(string info = "", string msg = "")
+        public virtual void ShowBannerAtBottom(string placeId)
         {
-            Log(string.Format("{0}\n{1}\n{2}", "RemoveBanner", info, msg));
-            if (positiveEvent) m_OnBannerClose(info, msg);
+            Log(string.Format("ShowBannerAtBottom:\n placeId: {0}", placeId));
+            if (positiveEvent) _OnBannerShow(placeId, "Test Mode");
         }
-
-        public virtual void LoadNativeAd(string info = "", string msg = "")
+        public virtual void RemoveBanner(string placeId)
         {
-            Log(string.Format("{0}\n{1}\n{2}", "LoadNativeAd", info, msg));
-            if (positiveEvent) m_OnNativeAdLoaded(info, msg);
-            else m_OnNativeAdLoadFailed(info, msg);
-        }
-        public virtual Texture2D GetNativeAdTexture(string info = "")
-        {
-            return new Texture2D(100, 100);
-        }
-        public virtual string GetNativeAdText(string info = "")
-        {
-            return info;
-        }
-        public virtual void PerformClick(string info = "")
-        {
-            Log(string.Format("{0}\n{1}", "PerformClick", info));
+            Log(string.Format("RemoveBanner:\n placeId: {0}", placeId));
+            if (positiveEvent) _OnBannerRemove(placeId, "Test Mode");
         }
 
-        public virtual bool IsRewardVideoReady(string info = "")
+        public virtual void InitConfig(string accountId, bool completeTask, int isPaid, string channel, string gender, int age)
         {
-            Log(string.Format("{0}\n{1}", "IsRewardVideoReady", info));
-            return positiveEvent;
+            Log(string.Format("InitConfig:\n accountId: {0}\n completeTask: {1}\n isPaid: {2}\n channel: {3}\n gender: {4}\n age: {5}",
+                accountId, completeTask, isPaid, channel, gender, age));
         }
-        public virtual bool IsInterstitialReady(string info = "")
+        public virtual string GetConfig(string placeId)
         {
-            Log(string.Format("{0}\n{1}", "IsInterstitialReady", info));
-            return positiveEvent;
-        }
-        public virtual bool IsBannerReady(string info = "")
-        {
-            Log(string.Format("{0}\n{1}", "IsBannerReady", info));
-            return positiveEvent;
-        }
-        public virtual bool IsExitAdReady(string info = "")
-        {
-            Log(string.Format("{0}\n{1}", "IsExitAdReady", info));
-            return positiveEvent;
+            Log(string.Format("GetConfig:\n placeId: {0}", placeId));
+            return null;
         }
 
-        // 统一事件传递方式
         // init
-        protected virtual void m_OnInitSucceeded(string info, string msg)
+        protected virtual void _OnInitFinished(bool result, string msg)
         {
-            if (onInitSucceededEvent != null) onInitSucceededEvent("", msg);
-        }
-        protected virtual void m_OnInitFailed(string info, string msg)
-        {
-            if (onInitFailedEvent != null) onInitFailedEvent("", msg);
+            if (onInitFinishedEvent != null) onInitFinishedEvent(result, msg);
         }
         // reward video
-        protected virtual void m_OnRewardVideoLoaded(string info, string msg)
+        protected virtual void _OnRewardVideoLoadSucceed(string placeId, string msg)
         {
-            if (onRewardVideoLoadedEvent != null) onRewardVideoLoadedEvent(info, msg);
+            if (onRewardVideoLoadSucceedEvent != null) onRewardVideoLoadSucceedEvent(placeId, msg);
         }
-        protected virtual void m_OnRewardVideoLoadFailed(string info, string msg)
+        protected virtual void _OnRewardVideoLoadFailed(string placeId, string msg)
         {
-            if (onRewardVideoLoadFailedEvent != null) onRewardVideoLoadFailedEvent(info, msg);
+            if (onRewardVideoLoadFailedEvent != null) onRewardVideoLoadFailedEvent(placeId, msg);
         }
-        protected virtual void m_OnRewardVideoShow(string info, string msg)
+        protected virtual void _OnRewardVideoShow(string placeId, string msg)
         {
-            if (onRewardVideoShowEvent != null) onRewardVideoShowEvent(info, msg);
+            if (onRewardVideoShowEvent != null) onRewardVideoShowEvent(placeId, msg);
 #if UNITY_IOS
             PauseTime();
 #endif
         }
-        protected virtual void m_OnRewardVideoClose(string info, string msg)
+        protected virtual void _OnRewardVideoClose(string placeId, string msg)
         {
-            if (onRewardVideoCloseEvent != null) onRewardVideoCloseEvent(info, msg);
+            if (onRewardVideoCloseEvent != null) onRewardVideoCloseEvent(placeId, msg);
 #if UNITY_IOS
             ResumeTime();
 #endif
         }
-        protected virtual void m_OnRewardVideoClick(string info, string msg)
+        protected virtual void _OnRewardVideoClick(string placeId, string msg)
         {
-            if (onRewardVideoClickEvent != null) onRewardVideoClickEvent(info, msg);
+            if (onRewardVideoClickEvent != null) onRewardVideoClickEvent(placeId, msg);
         }
-        protected virtual void m_OnRewardVideoReward(string info, string msg)
+        protected virtual void _OnRewardVideoReward(string placeId, string msg)
         {
-            if (onRewardVideoRewardEvent != null) onRewardVideoRewardEvent(info, msg);
+            if (onRewardVideoRewardEvent != null) onRewardVideoRewardEvent(placeId, msg);
         }
-        protected virtual void m_OnRewardVideoAbandon(string info, string msg)
+        protected virtual void _OnRewardVideoAbandon(string placeId, string msg)
         {
-            if (onRewardVideoAbandonEvent != null) onRewardVideoAbandonEvent(info, msg);
+            if (onRewardVideoAbandonEvent != null) onRewardVideoAbandonEvent(placeId, msg);
         }
         // interstitial
-        protected virtual void m_OnInterstitialLoaded(string info, string msg)
+        protected virtual void _OnInterstitialShow(string placeId, string msg)
         {
-            if (onInterstitialLoadedEvent != null) onInterstitialLoadedEvent(info, msg);
-        }
-        protected virtual void m_OnInterstitialLoadFailed(string info, string msg)
-        {
-            if (onInterstitialLoadFailedEvent != null) onInterstitialLoadFailedEvent(info, msg);
-        }
-        protected virtual void m_OnInterstitialShow(string info, string msg)
-        {
-            if (onInterstitialShowEvent != null) onInterstitialShowEvent(info, msg);
+            if (onInterstitialShowEvent != null) onInterstitialShowEvent(placeId, msg);
 #if UNITY_IOS
             PauseTime();
 #endif
         }
-        protected virtual void m_OnInterstitialClose(string info, string msg)
+        protected virtual void _OnInterstitialClose(string placeId, string msg)
         {
-            if (onInterstitialCloseEvent != null) onInterstitialCloseEvent(info, msg);
+            if (onInterstitialCloseEvent != null) onInterstitialCloseEvent(placeId, msg);
 #if UNITY_IOS
             ResumeTime();
 #endif
         }
-        protected virtual void m_OnInterstitialClick(string info, string msg)
+        protected virtual void _OnInterstitialClick(string placeId, string msg)
         {
-            if (onInterstitialClickEvent != null) onInterstitialClickEvent(info, msg);
+            if (onInterstitialClickEvent != null) onInterstitialClickEvent(placeId, msg);
         }
         // banner
-        protected virtual void m_OnBannerLoaded(string info, string msg)
+        protected virtual void _OnBannerShow(string placeId, string msg)
         {
-            if (onBannerLoadedEvent != null) onBannerLoadedEvent(info, msg);
+            if (onBannerShowEvent != null) onBannerShowEvent(placeId, msg);
         }
-        protected virtual void m_OnBannerLoadFailed(string info, string msg)
+        protected virtual void _OnBannerRemove(string placeId, string msg)
         {
-            if (onBannerLoadFailedEvent != null) onBannerLoadFailedEvent(info, msg);
+            if (onBannerRemoveEvent != null) onBannerRemoveEvent(placeId, msg);
         }
-        protected virtual void m_OnBannerShow(string info, string msg)
+        protected virtual void _OnBannerClick(string placeId, string msg)
         {
-            if (onBannerShowEvent != null) onBannerShowEvent(info, msg);
-        }
-        protected virtual void m_OnBannerClose(string info, string msg)
-        {
-            if (onBannerCloseEvent != null) onBannerCloseEvent(info, msg);
-        }
-        protected virtual void m_OnBannerClick(string info, string msg)
-        {
-            if (onBannerClickEvent != null) onBannerClickEvent(info, msg);
-        }
-        // exit ad
-        protected virtual void m_OnExitAdLoaded(string info, string msg)
-        {
-            if (onExitAdLoadedEvent != null) onExitAdLoadedEvent(info, msg);
-        }
-        protected virtual void m_OnExitAdLoadFailed(string info, string msg)
-        {
-            if (onExitAdLoadFailedEvent != null) onExitAdLoadFailedEvent(info, msg);
-        }
-        protected virtual void m_OnExitAdShow(string msg)
-        {
-            if (onExitAdShowEvent != null) onExitAdShowEvent("", msg);
-        }
-        protected virtual void m_OnExitAdClose(string msg)
-        {
-            if (onExitAdCloseEvent != null) onExitAdCloseEvent("", msg);
-        }
-        protected virtual void m_OnExitAdClick(string msg)
-        {
-            if (onExitAdClickEvent != null) onExitAdClickEvent("", msg);
-        }
-        // native ad
-        protected virtual void m_OnNativeAdLoaded(string info, string msg)
-        {
-            if (onNativeAdLoadedEvent != null) onNativeAdLoadedEvent(info, msg);
-        }
-        protected virtual void m_OnNativeAdLoadFailed(string info, string msg)
-        {
-            if (onNativeAdLoadFailedEvent != null) onNativeAdLoadFailedEvent(info, msg);
+            if (onBannerClickEvent != null) onBannerClickEvent(placeId, msg);
         }
     }
 }
