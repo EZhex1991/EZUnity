@@ -73,7 +73,7 @@ namespace EZFramework.XLuaConfig
             //typeof(UnityEngine.SpringJoint),
             typeof(UnityEngine.Sprite),
             typeof(UnityEngine.SpriteRenderer),
-            //typeof(UnityEngine.SystemInfo),
+            typeof(UnityEngine.SystemInfo),
             typeof(UnityEngine.TextAnchor),
             typeof(UnityEngine.TextAsset),
             typeof(UnityEngine.TextMesh),
