@@ -53,6 +53,10 @@ function M:invoke(delay, action)
     return task
 end
 function M:invokerepeat(delay, repeatRate, action)
+    if repeatRate <= 0 then
+        print("invalid repeat rate: " .. debug.traceback())
+        return
+    end
     local task = M.task:new(repeatRate, true, action)
     task.countdown = delay
     table.insert(self._tasklist, task)
