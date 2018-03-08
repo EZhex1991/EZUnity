@@ -10,9 +10,14 @@ function M.LCBinder(injector)
     local self = M
     self.btns = {}
     injector:Inject(self)
-    self.btns[1].onClick:AddListener(self.LuckyBall)
-    self.btns[2].onClick:AddListener(self.SpaceShooter)
+    self.btns[1].onClick:AddListener(self.LuaBehaviour)
+    self.btns[2].onClick:AddListener(self.LuckyBall)
+    self.btns[3].onClick:AddListener(self.SpaceShooter)
     return self
+end
+
+function M.LuaBehaviour()
+    CS.UnityEngine.SceneManagement.SceneManager.LoadScene("LuaBehaviour")
 end
 
 function M.LuckyBall()
