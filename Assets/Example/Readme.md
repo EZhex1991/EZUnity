@@ -2,13 +2,13 @@
 1. LuaBehaviour的基本使用；
 1. 知识点：如何在lua和C#之前传递数据，LuaBehaviour之间如何相互调用；
 1. 与xLua的官方例子区别很大，先了解如何用，然后再去看如何实现；
-1. LuaBehaviour脚本位于[Assets/Example/XLuaExtension/LuaBehaviour](Assets/EZFramework/XLuaExtension/LuaBehaviour)目录下，LuaBehaviour继承于LuaInjector，LuaInjector实现变量的注入，LuaBehaviour实现Lua的脚本的启动；
+1. LuaBehaviour脚本位于Assets/Example/XLuaExtension/LuaBehaviour目录下，LuaBehaviour继承于LuaInjector，LuaInjector实现变量的注入，LuaBehaviour实现Lua的脚本的启动；
 1. lua脚本位于[Assets/Example/Script_Lua/LuaBehaviour](Script_Lua/LuaBehaviour)目录下；
 
 ### Example 01: Lucky Ball
 1. 很普通的一个Demo，点击屏幕投球即可；
 1. 知识点：如何为LuaBehaviour绑定Start、OnTrigger之类的MonoBehaviour消息；
-1. MonoBehaviour消息已经进行了分类封装，详见[Assets/Example/XLuaExtension/LuaMessage](Assets/EZFramework/XLuaExtension/LuaMessage)；
+1. MonoBehaviour消息已经进行了分类封装，详见Assets/Example/XLuaExtension/LuaMessage；
 1. lua脚本位于[Assets/Example/Script_Lua/LuckBall](Script_Lua/LuckyBall)目录下；
 1. 脚本外其它资源在[Assets/Example/01_LuckyBall](01_LuckyBall)目录下；
 
