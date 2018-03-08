@@ -12,23 +12,31 @@ namespace EZFramework.XLuaExtension
         public string moduleName;
 
         private LuaTable m_LuaTable;
-        public LuaTable luaTable { get { return m_LuaTable; } private set { m_LuaTable = value; } }
+        public LuaTable luaTable
+        {
+            get
+            {
+                // Awake时会自动Bind，但如果调用发生在Awake之前，那么就提前进行Bind
+                if (m_LuaTable == null) Bind();
+                return m_LuaTable;
+            }
+        }
 
         public delegate LuaTable LCBinder(LuaInjector injector);
-
-        protected override void Awake()
+        private void Bind()
         {
-            base.Awake();
             LuaTable luaModule = EZLua.Instance.luaRequire(moduleName);
             LCBinder binder = luaModule.Get<LCBinder>("LCBinder");
-            if (binder == null)
-                this.luaTable = luaModule;
-            else
-                this.luaTable = binder.Invoke(this);
+            m_LuaTable = binder == null ? luaModule : binder.Invoke(this);
+        }
+
+        protected virtual void Awake()
+        {
+            if (m_LuaTable == null) Bind();
         }
         protected virtual void OnDestory()
         {
-            luaTable.Dispose();
+            if (m_LuaTable != null) m_LuaTable.Dispose();
         }
     }
 }

@@ -4,7 +4,6 @@
  * Description:
  * 
 */
-using System.Collections.Generic;
 using UnityEngine;
 using XLua;
 
@@ -13,31 +12,6 @@ namespace EZFramework.XLuaExtension
     public class LuaInjector : MonoBehaviour
     {
         public Injection[] injections;
-
-        protected Dictionary<string, object> dict = new Dictionary<string, object>();
-
-        protected virtual void Awake()
-        {
-            for (int i = 0; i < injections.Length; i++)
-            {
-                Injection pair = injections[i];
-                dict.Add(pair.key, pair.value);
-            }
-        }
-
-        public object Get(string key)
-        {
-            object value;
-            if (dict.TryGetValue(key, out value))
-            {
-                return value;
-            }
-            return null;
-        }
-        public object Get(int index)
-        {
-            return index < injections.Length ? injections[index].value : null;
-        }
 
         public void Inject(LuaTable self)
         {
@@ -64,7 +38,6 @@ namespace EZFramework.XLuaExtension
                 }
             }
         }
-
         private void SetByType<T>(LuaTable table, T key, Injection injection)
         {
             if (injection.typeName == typeof(int).FullName)
