@@ -68,10 +68,10 @@ namespace EZUnityEditor
             EditorWindow.GetWindow<EZBundleViewer>("Bundle Viewer").Show();
         }
 
-        [MenuItem(ROOT_NAME + "/EZScriptTemplate/Templates Manager", false, PRIORITY + 131)]
+        [MenuItem(ROOT_NAME + "/EZScriptTemplate/Template Manager", false, PRIORITY + 131)]
         private static void EZScriptTemplate()
         {
-            EditorWindow.GetWindow<EZScriptTemplateManager>("Templates Manager").Show();
+            EditorWindow.GetWindow<EZScriptTemplateManager>("Template Manager").Show();
         }
         [MenuItem(ROOT_NAME + "/EZScriptTemplate/Script Statistics", false, PRIORITY + 132)]
         private static void EZScriptStatistics()
