@@ -22,7 +22,20 @@ namespace EZFramework.XLuaExtension
         public string entrance;
         public string exit;
 
-        public LuaEnv luaEnv { get; private set; }
+        private LuaEnv m_LuaEnv = new LuaEnv();
+        public LuaEnv luaEnv { get { return m_LuaEnv; } }
+        private LuaRequire m_LuaRequire;
+        public LuaRequire luaRequire
+        {
+            get
+            {
+                if (m_LuaRequire == null)
+                {
+                    m_LuaRequire = luaEnv.Global.Get<LuaRequire>("require");
+                }
+                return m_LuaRequire;
+            }
+        }
 
         private Dictionary<string, string> luaFiles = new Dictionary<string, string>();
 
@@ -30,16 +43,13 @@ namespace EZFramework.XLuaExtension
         // 这里提前把所有文件记录于Dictionary中，直接对CustomLoader传入的参数进行TryGetValue，保证lua侧require参数的统一
         private Dictionary<string, TextAsset> luaAssets = new Dictionary<string, TextAsset>();
 
-        public LuaRequire luaRequire;
         private LuaAction luaStart;
         private LuaAction luaExit;
 
         protected override void Awake()
         {
             base.Awake();
-            luaEnv = new LuaEnv();
             AddBuildin();
-            luaRequire = luaEnv.Global.Get<LuaRequire>("require");
             switch (EZFrameworkSettings.Instance.runMode)
             {
                 case RunMode.Develop:
