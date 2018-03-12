@@ -28,6 +28,16 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.EZUtility),
             typeof(EZFramework.EZExtensions),
 
+            typeof(EZFramework.UniSDK.Base.PolyAD),
+            typeof(EZFramework.UniSDK.Base.Notification),
+            typeof(EZFramework.UniSDK.Base.UnityAnalytics),
+            typeof(EZFramework.UniSDK.Base.UnityAnalytics.CustomEvent),
+            typeof(EZFramework.UniSDK.Base.UnityPurchasing),
+            typeof(EZFramework.UniSDK.Base.UnityPurchasing.CustomProduct),
+            typeof(EZFramework.UniSDK.Base.UnityPurchasing.ReceiptContent),
+            typeof(EZFramework.UniSDK.Base.UnityPurchasing.PayloadContent),
+            typeof(EZFramework.UniSDK.Base.UnityPurchasing.JsonContent),
+
             typeof(EZFramework.XLuaExtension.EZLua),
             typeof(EZFramework.XLuaExtension.LuaBehaviour),
             typeof(EZFramework.XLuaExtension.LuaInjector),
@@ -71,6 +81,12 @@ namespace EZFramework.XLuaConfig
             typeof(EZFramework.EZResource.OnBundleLoadedAction),
             typeof(EZFramework.EZWWWTask.OnProgressAction),
             typeof(EZFramework.EZWWWTask.OnStopAction),
+
+            typeof(EZFramework.UniSDK.Base.OnResultCallback),
+            typeof(EZFramework.UniSDK.Base.OnDataCallback),
+            typeof(EZFramework.UniSDK.Base.OnEventCallback1),
+            typeof(EZFramework.UniSDK.Base.OnEventCallback2),
+            typeof(EZFramework.UniSDK.Base.Notification.NotificationProvider),
 
             typeof(EZFramework.XLuaExtension.LuaBehaviour.LCBinder),
             typeof(EZFramework.XLuaExtension.LuaRequire),

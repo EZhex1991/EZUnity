@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace EZFramework.UniSDK
+namespace EZFramework.UniSDK.Base
 {
-    public class DataAnalytics : EZSingleton<DataAnalytics>
+    public class UnityAnalytics : EZSingleton<UnityAnalytics>
     {
         public class CustomEvent
         {
@@ -39,15 +39,16 @@ namespace EZFramework.UniSDK
 
         public virtual void SetUserInfo(string userId, int gender = 2, int birthYear = 0)
         {
-            Log(string.Format("{0}\n{1}\n{2}\n{3}", "SetUserInfo", userId, gender, birthYear));
+            Log(string.Format("SetUserInfo:\n userId={0}\n gender={1}\n birthYear={2}", userId, gender, birthYear));
         }
         public virtual void Transaction(string productId, decimal amount, string currency)
         {
-            Log(string.Format("{0}\n{1}\n{2}\n{3}", "Transaction", productId, amount, currency));
+            Log(string.Format("Transaction:\n productId={0}\n amount={1}\n currency={2}", productId, amount, currency));
         }
         public virtual void Transaction(string productId, decimal amount, string currency, string receiptPurchaseData, string signature)
         {
-            Log(string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", "Transaction", productId, amount, currency, receiptPurchaseData, signature));
+            Log(string.Format("Transaction:\n productId={0}\n amount={1}\n currency={2}\n receiptPurchaseData={3}\n signature={4}",
+                productId, amount, currency, receiptPurchaseData, signature));
         }
         public virtual void Submit(CustomEvent customEvent)
         {
@@ -55,7 +56,7 @@ namespace EZFramework.UniSDK
             sb.AppendLine("CustomEvent: " + customEvent.eventName);
             foreach (var data in customEvent.eventData)
             {
-                sb.AppendLine(data.Key + ": " + data.Value);
+                sb.AppendLine(data.Key + "=" + data.Value);
             }
             Log(sb.ToString());
         }

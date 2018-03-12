@@ -11,9 +11,9 @@ using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Security;
 #endif
 
-namespace EZFramework.UniSDK.UnityNative
+namespace EZFramework.UniSDK
 {
-    public class InAppPurchase : UniSDK.InAppPurchase
+    public class UnityPurchasing : Base.UnityPurchasing
 #if UNITYPURCHASING
     , IStoreListener
 #endif
@@ -31,7 +31,7 @@ namespace EZFramework.UniSDK.UnityNative
             {
                 builder.AddProduct(product.id, (ProductType)product.type, GetStoreIDs(product));
             }
-            UnityPurchasing.Initialize(this, builder);
+            UnityEngine.Purchasing.UnityPurchasing.Initialize(this, builder);
         }
         private IDs GetStoreIDs(CustomProduct product)
         {
@@ -48,36 +48,22 @@ namespace EZFramework.UniSDK.UnityNative
         {
             if (m_Controller == null)
             {
-                Log("Purchase Failed. Not Initialized.");
-                m_OnPurchaseFailed("Null", "Not Initialized.");
+                _OnPurchaseFailed(productId, "Not Initialized.");
                 return;
             }
             Product product = m_Controller.products.WithID(productId);
-            Purchase(product, payload);
-        }
-        private void Purchase(Product product, string payload = "")
-        {
-            if (m_Controller == null)
-            {
-                Log("Purchase Failed. Not Initialized.");
-                m_OnPurchaseFailed("Null", "Not Initialized.");
-                return;
-            }
             if (product == null || !product.availableToPurchase)
             {
-                Log("Purchase Failed. Product not available.");
-                m_OnPurchaseFailed("Null", "Product not available.");
+                _OnPurchaseFailed(product.definition.id, "Product not available.");
                 return;
             }
             if (inProgress == true)
             {
-                Log("Purchase Failed. Purchasing in progress.");
-                m_OnPurchaseFailed("Null", "Purchasing in progress.");
+                _OnPurchaseFailed(product.definition.id, "Purchasing in progress.");
                 return;
             }
-            Log("Starting Purchase Flow...");
             inProgress = true;
-            m_OnPurchaseFlowStarted(product.definition.id, payload);
+            _OnPurchaseFlowStarted(product.definition.id, payload);
             m_Controller.InitiatePurchase(product, payload);
         }
 
@@ -90,7 +76,7 @@ namespace EZFramework.UniSDK.UnityNative
             {
                 if (product.availableToPurchase)
                 {
-                    m_OnProductInfo(string.Join(" - ", new string[]{
+                    Log(string.Join(" - ", new string[]{
                         product.metadata.localizedTitle,
                         product.metadata.localizedDescription,
                         product.metadata.isoCurrencyCode,
@@ -101,62 +87,43 @@ namespace EZFramework.UniSDK.UnityNative
                     }));
                 }
             }
-            Log("Initialize Complete.");
-            m_OnInitSucceeded();
+            _OnInitFinished(true, "");
         }
         public void OnInitializeFailed(InitializationFailureReason error)
         {
-            string message = "Billing failed to initialize!\n";
-            switch (error)
-            {
-                case InitializationFailureReason.AppNotKnown:
-                    message += "Is your App correctly uploaded on the relevant publisher console?";
-                    break;
-                case InitializationFailureReason.PurchasingUnavailable:
-                    message += "Billing disabled!";
-                    break;
-                case InitializationFailureReason.NoProductsAvailable:
-                    message += "No products available for purchase!";
-                    break;
-            }
-            Log("Initialize Failed. " + message);
-            m_OnInitFailed("", message);
+            _OnInitFinished(false, error.ToString());
         }
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
         {
             if (Validate(e))
             {
-                Log("Purchase Succeed.");
-                m_OnPurchaseSucceeded(e.purchasedProduct.definition.id, e.purchasedProduct.receipt);
+                _OnPurchaseSucceeded(e.purchasedProduct.definition.id, e.purchasedProduct.receipt);
             }
             else
             {
-                Log("Invalid receipt!");
-                m_OnPurchaseFailed(e.purchasedProduct.definition.id, "Invalid receipt!");
+                _OnPurchaseFailed(e.purchasedProduct.definition.id, "Invalid receipt!");
             }
             return PurchaseProcessingResult.Complete;
         }
         public void OnPurchaseFailed(Product product, PurchaseFailureReason reason)
         {
-            Log("Purchase Failed. product=" + product.definition.id + ", reason=" + reason);
-            m_OnPurchaseFailed(product.definition.id, reason.ToString());
+            _OnPurchaseFailed(product.definition.id, reason.ToString());
         }
 
         private void OnDeferred(Product product)
         {
-            Log("Deferred.");
-            m_OnDeferred(product.definition.id);
+            _OnDeferred(product.definition.id);
         }
         private bool Validate(PurchaseEventArgs e)
         {
-            Log(string.Format("definitionId: {0}, receipt: {1}", e.purchasedProduct.definition.id, e.purchasedProduct.receipt));
+            Log(string.Format("Validate:\n definitionId={0}\n receipt={1}", e.purchasedProduct.definition.id, e.purchasedProduct.receipt));
             try
             {
                 CrossPlatformValidator validator = new CrossPlatformValidator(GooglePlayTangle.Data(), AppleTangle.Data(), Application.identifier);
                 IPurchaseReceipt[] result = validator.Validate(e.purchasedProduct.receipt);
                 foreach (IPurchaseReceipt productReceipt in result)
                 {
-                    Log(string.Format("productId: {0}, purchaseDate: {1}, transactionId: {2}", productReceipt.productID, productReceipt.purchaseDate, productReceipt.transactionID));
+                    Log(string.Format("Validate Result:\n productId={0}\n purchaseDate={1}\n transactionId={2}", productReceipt.productID, productReceipt.purchaseDate, productReceipt.transactionID));
                 }
                 return true;
             }

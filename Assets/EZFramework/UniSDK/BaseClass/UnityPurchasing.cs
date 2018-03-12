@@ -7,9 +7,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZFramework.UniSDK
+namespace EZFramework.UniSDK.Base
 {
-    public class InAppPurchase : EZSingleton<InAppPurchase>
+    public class UnityPurchasing : EZSingleton<UnityPurchasing>
     {
         [TextArea(5, 10)]
         public string googlePlayPublicKey;
@@ -18,16 +18,11 @@ namespace EZFramework.UniSDK
 
         public bool inProgress { get; protected set; }
 
-        public delegate void OnEventCallback(string info, string msg);
-
-        public event OnEventCallback onInitSucceededEvent;
-        public event OnEventCallback onInitFailedEvent;
-        public event OnEventCallback onProductInfoEvent;
-
-        public event OnEventCallback onPurchaseFlowStartedEvent;
-        public event OnEventCallback onPurchaseSucceededEvent;
-        public event OnEventCallback onPurchaseFailedEvent;
-        public event OnEventCallback onDeferredEvent;
+        public event OnResultCallback onInitFinishedEvent;
+        public event OnEventCallback2 onPurchaseFlowStartedEvent;
+        public event OnEventCallback2 onPurchaseSucceededEvent;
+        public event OnEventCallback2 onPurchaseFailedEvent;
+        public event OnEventCallback2 onDeferredEvent;
 
         public class CustomProduct
         {
@@ -49,46 +44,42 @@ namespace EZFramework.UniSDK
         public virtual void Init(List<CustomProduct> products)
         {
             Log("Init");
-            if (positiveEvent) m_OnInitSucceeded("", "IAP disabled, positive events will be triggered.");
-            else m_OnInitFailed("", "IAP disabled, negative events will be triggered.");
+            _OnInitFinished(positiveEvent, "Test Mode");
         }
         public virtual void Purchase(string productId, string payload = "")
         {
             inProgress = true;
-            Log(string.Format("{0}\n{1}\n{2}", "Purchase", productId, payload));
-            if (positiveEvent) m_OnPurchaseSucceeded(productId, payload);
-            else m_OnPurchaseFailed(productId, "IAP disabled");
+            _OnPurchaseFlowStarted(productId, payload);
+            if (positiveEvent) _OnPurchaseSucceeded(productId, "Test Mode");
+            else _OnPurchaseFailed(productId, "Test Mode");
         }
 
-        protected virtual void m_OnInitSucceeded(string info = "", string msg = "")
+        protected virtual void _OnInitFinished(bool result, string message)
         {
-            if (onInitSucceededEvent != null) onInitSucceededEvent(info, msg);
+            Log(string.Format("InitFinished:\n result={0}\n message={1}", result, message));
+            if (onInitFinishedEvent != null) onInitFinishedEvent(result, message);
         }
-        protected virtual void m_OnInitFailed(string info = "", string msg = "")
+        protected virtual void _OnPurchaseFlowStarted(string productId, string payload)
         {
-            if (onInitFailedEvent != null) onInitFailedEvent(info, msg);
+            Log(string.Format("PurchaseFlowStarted:\n productId={0}\n payload={1}", productId, payload));
+            if (onPurchaseFlowStartedEvent != null) onPurchaseFlowStartedEvent(productId, payload);
         }
-        protected virtual void m_OnProductInfo(string info = "", string msg = "")
+        protected virtual void _OnPurchaseSucceeded(string productId, string receipt)
         {
-            if (onProductInfoEvent != null) onProductInfoEvent(info, msg);
-        }
-        protected virtual void m_OnPurchaseFlowStarted(string info = "", string msg = "")
-        {
-            if (onPurchaseFlowStartedEvent != null) onPurchaseFlowStartedEvent(info, msg);
-        }
-        protected virtual void m_OnPurchaseSucceeded(string info = "", string msg = "")
-        {
-            if (onPurchaseSucceededEvent != null) onPurchaseSucceededEvent(info, msg);
+            Log(string.Format("PurchaseSucceeded:\n productId={0}\n receipt={1}", productId, receipt));
+            if (onPurchaseSucceededEvent != null) onPurchaseSucceededEvent(productId, receipt);
             inProgress = false;
         }
-        protected virtual void m_OnPurchaseFailed(string info = "", string msg = "")
+        protected virtual void _OnPurchaseFailed(string productId, string message)
         {
-            if (onPurchaseFailedEvent != null) onPurchaseFailedEvent(info, msg);
+            Log(string.Format("PurchaseFailed:\n productId={0}\n message={1}", productId, message));
+            if (onPurchaseFailedEvent != null) onPurchaseFailedEvent(productId, message);
             inProgress = false;
         }
-        protected virtual void m_OnDeferred(string info = "", string msg = "")
+        protected virtual void _OnDeferred(string productId)
         {
-            if (onDeferredEvent != null) onDeferredEvent(info, msg);
+            Log(string.Format("Deferred:\n productId={0}", productId));
+            if (onDeferredEvent != null) onDeferredEvent(productId, "");
         }
 
         public class ReceiptContent

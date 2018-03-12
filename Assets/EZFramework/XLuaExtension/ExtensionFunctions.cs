@@ -4,7 +4,7 @@
  * Description:
  * 为了降低Lua和框架中其他逻辑的耦合性，部分方法使用扩展方式添加
 */
-using EZFramework.UniSDK;
+using EZFramework.UniSDK.Base;
 using System;
 using UnityEngine;
 using XLua;
@@ -55,15 +55,15 @@ namespace EZFramework.XLuaExtension
             return instance.LoadAsset<Texture>(bundleName, assetName);
         }
 
-        public static void SetInt(this DataAnalytics.CustomEvent customEvent, string key, int value)
+        public static void SetInt(this UnityAnalytics.CustomEvent customEvent, string key, int value)
         {
             customEvent.SetData<int>(key, value);
         }
-        public static void SetFloat(this DataAnalytics.CustomEvent customEvent, string key, float value)
+        public static void SetFloat(this UnityAnalytics.CustomEvent customEvent, string key, float value)
         {
             customEvent.SetData<float>(key, value);
         }
-        public static void SetString(this DataAnalytics.CustomEvent customEvent, string key, string value)
+        public static void SetString(this UnityAnalytics.CustomEvent customEvent, string key, string value)
         {
             customEvent.SetData<string>(key, value);
         }

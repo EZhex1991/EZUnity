@@ -6,11 +6,11 @@
 */
 using UnityEngine;
 
-namespace EZFramework.UniSDK.UnityNative
+namespace EZFramework.UniSDK
 {
-    public class DataAnalytics : UniSDK.DataAnalytics
+    public class UnityAnalytics : Base.UnityAnalytics
     {
-#if UNITY_ANALYTICS
+#if UNITYANALYTICS
         public override void SetUserInfo(string userId, int gender = 2, int birthYear = 0)
         {
             ResultCheck(UnityEngine.Analytics.Analytics.SetUserId(userId));
@@ -24,7 +24,7 @@ namespace EZFramework.UniSDK.UnityNative
         }
         public override void Transaction(string productId, decimal amount, string currency, string receiptPurchaseData, string signature)
         {
-            ResultCheck(UnityEngine.Analytics.Analytics.Transaction(productId, amount, currency));
+            ResultCheck(UnityEngine.Analytics.Analytics.Transaction(productId, amount, currency, receiptPurchaseData, signature));
         }
         public override void Submit(CustomEvent customEvent)
         {
