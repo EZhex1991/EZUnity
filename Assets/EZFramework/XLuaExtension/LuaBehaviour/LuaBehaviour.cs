@@ -37,6 +37,7 @@ namespace EZFramework.XLuaExtension
         protected virtual void OnDestory()
         {
             if (m_LuaTable != null) m_LuaTable.Dispose();
+            m_LuaTable = null;
         }
     }
 }
