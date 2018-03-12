@@ -63,7 +63,12 @@ function M:invokerepeat(delay, repeatRate, action)
     return task
 end
 function M:tick(deltatime)
+    -- 此处先对现有task进行记录，然后再遍历调用，防止task执行中有新的task插入造成死循环
+    local tasks = {}
     for key, task in pairs(self._tasklist) do
+        tasks[key] = task
+    end
+    for key, task in pairs(tasks) do
         task.countdown = task.countdown - deltatime
         if task.countdown <= 0 then
             task.action()
