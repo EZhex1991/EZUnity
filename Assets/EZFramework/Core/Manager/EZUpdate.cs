@@ -112,11 +112,7 @@ namespace EZFramework
             if (loadingPanel == null) return;
             loadingPanel.LoadComplete();
         }
-
-        /// <summary>
-        /// 开始进行更新，并在完成后执行回调
-        /// </summary>
-        /// <param name="callback">更新完成后的回调</param>
+        
         public void StartUpdate()
         {
             StartCoroutine(Cor_StartUpdate());
