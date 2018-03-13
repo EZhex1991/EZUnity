@@ -1,10 +1,11 @@
-/Assets/EZAssets
-/Assets/EZAssets.meta
 /Assets/EZData
 /Assets/EZData.meta
 
 /Assets/EZFramework/3rdParty/XLua/Gen
 /Assets/EZFramework/3rdParty/XLua/Gen.meta
+
+/Assets/EZUnityTools/EZAssets
+/Assets/EZUnityTools/EZAssets.meta
 
 .svn
 
