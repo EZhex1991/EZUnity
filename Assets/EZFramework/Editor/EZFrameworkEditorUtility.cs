@@ -13,7 +13,6 @@ namespace EZFrameworkEditor
 {
     public static class EZFrameworkEditorUtility
     {
-        [EZUnityEditor.EZBundleBuilder.OnPreBuild]
         public static void LuaToTxt()
         {
             foreach (string dirPath in EZFrameworkSettings.Instance.luaDirList)
