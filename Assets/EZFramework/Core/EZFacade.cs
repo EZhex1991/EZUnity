@@ -23,7 +23,7 @@ namespace EZFramework
 #if UNITY_EDITOR
                 return Application.dataPath + "/EZData/";
 #else
-                return Application.persistentDataPath + "/Data/"; // 部分设备persistent没有删除权限，建立子文件夹读写更方便
+                return Application.persistentDataPath + "/EZData/"; // 部分设备persistent没有删除权限，建立子文件夹读写更方便
 #endif
             }
         }
