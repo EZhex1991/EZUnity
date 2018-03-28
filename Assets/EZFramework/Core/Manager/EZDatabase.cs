@@ -4,16 +4,15 @@
  * Description:
  * 一个简易的数据库，使用缓存防止数据在异常情况下的丢失，同时可以减少外存的读写次数；
  * 
- * 1. Index: 索引是这个数据库的基本状态，记录当前有多少缓存和数据库中有哪些数据；
+ * 1. Index: 索引是这个数据库的基本状态，记录当前有哪些数据，初始化时遍历主目录；
  * 2. Cache: 缓存是内存的修改记录，当对内存进行修改时外存不会同步修改，而是在缓存中记录下修改的字段、方式和值；（只有Cache是直接进行实时外存读写的）
- * 3. Data: 数据是一个键值对的集合，采用的数据结构是Hashtable，每个数据会保存成一个文件；
- * 运行时会首先读取Index，如果发现Cache不为0则会读取Cache，根据Cache对Data进行读取和修改；
+ * 3. Data: 数据是一个键值对的集合，采用的数据结构是Dictionary<string, string>，第一个string是字段名称，第二个是序列化之后的值，每个数据会保存成一个文件；
+ * 运行时会首先遍历主目录并将数据文件记录至Index，然后读取Cache，如果Cache不为空则根据Cache对Data进行读取和修改；
  * 当需要从Data中取某一键值对记录时，会先判断该Data是否已加载到内存，如果没有则判断在Index中是否存在该数据，如果存在则加载对应文件，如果不存在则新建数据；
  * 当缓存达到一定数量或者程序退出时，会查看Cache中有哪些数据的修改记录，然后将这些数据直接从内存写到外存文件中。
 */
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -23,6 +22,129 @@ namespace EZFramework
 {
     public class EZDatabase : _EZManager<EZDatabase>
     {
+        // 数据文件的索引
+        public class DBIndex
+        {
+            public List<string> index { get; private set; }
+
+            public bool Add(string dataName)
+            {
+                if (index.Contains(dataName)) return false;
+                index.Add(dataName);
+                return true;
+            }
+            public bool Remove(string dataName)
+            {
+                return index.Remove(dataName);
+            }
+            public bool Contains(string dataName)
+            {
+                return index.Contains(dataName);
+            }
+
+            public DBIndex()
+            {
+                this.index = new List<string>();
+            }
+            public static DBIndex LoadFromString(string indexString)
+            {
+                DBIndex dbIndex = JsonConvert.DeserializeObject<DBIndex>(indexString);
+                if (dbIndex == null) dbIndex = new DBIndex();
+                return dbIndex;
+            }
+            public override string ToString()
+            {
+                return JsonConvert.SerializeObject(this);
+            }
+        }
+
+        // 操作记录
+        public class DBCache
+        {
+            private const char SEPARATOR = '|';
+
+            public string dataName { get; private set; }
+            public string operation { get; private set; }
+            public string key { get; private set; }
+            public string serializedValue { get; private set; }
+
+            public DBCache(string dataName, string operation, string key, string serializedValue)
+            {
+                this.dataName = dataName;
+                this.operation = operation;
+                this.key = key;
+                this.serializedValue = serializedValue;
+            }
+            public static DBCache LoadFromString(string cacheString)
+            {
+                string[] args = cacheString.Split(SEPARATOR);
+                if (args.Length == 4)
+                    return new DBCache(args[0], args[1], args[2], args[3]);
+                else return new DBCache("CACHEERROR", "A", DateTime.Now.ToString("yyyyMMddHHmmss"), cacheString);
+            }
+            public override string ToString()
+            {
+                return string.Join(SEPARATOR.ToString(), new string[] { dataName, operation, key, serializedValue });
+            }
+        }
+
+        // 数据的实际存放方式
+        public class DBData
+        {
+            private const string TIME_FORMAT = "yyyyMMddHHmmss";
+
+            public Dictionary<string, string> data { get; private set; }
+            public string timeModified { get; private set; }
+
+            public bool Add(string key, string serializedValue)
+            {
+                if (data.ContainsKey(key)) return false;
+                else data.Add(key, serializedValue);
+                timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
+                return true;
+            }
+            public bool Set(string key, string serializedValue)
+            {
+                data[key] = serializedValue;
+                timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
+                return true;
+            }
+            public bool Del(string key)
+            {
+                if (!data.ContainsKey(key)) return false;
+                data.Remove(key);
+                timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
+                return true;
+            }
+            public string Get(string key)
+            {
+                string serializedValue;
+                data.TryGetValue(key, out serializedValue);
+                return serializedValue;
+            }
+
+            public bool IsEmpty()
+            {
+                return data.Count == 0;
+            }
+
+            public DBData()
+            {
+                this.data = new Dictionary<string, string>();
+                this.timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
+            }
+            public static DBData LoadFromString(string dataString)
+            {
+                DBData dbData = JsonConvert.DeserializeObject<DBData>(dataString);
+                if (dbData == null) dbData = new DBData();
+                return dbData;
+            }
+            public override string ToString()
+            {
+                return JsonConvert.SerializeObject(this);
+            }
+        }
+
         // 设置缓存的大小，根据实际的需要调节，如果需要读写长字符串建议调小一点
         [Range(10, 1000)]
         public int cacheSize = 500;
@@ -40,8 +162,8 @@ namespace EZFramework
 
         protected readonly Encoding ENCODING = Encoding.UTF8;
 
-        protected DBIndex DBIndex;
-        protected Dictionary<string, DBData> DBDict;
+        protected DBIndex dbIndex;
+        protected Dictionary<string, DBData> dbDict;
 
         protected class Operation
         {
@@ -57,7 +179,7 @@ namespace EZFramework
             IndexFilePath = MainDirPath + "_DBIndex" + EXTENSION_INDEX;
             CacheFilePath = MainDirPath + "_Cache" + EXTENSION_CACHE;
             Directory.CreateDirectory(MainDirPath);
-            DBDict = new Dictionary<string, DBData>();
+            dbDict = new Dictionary<string, DBData>();
             LoadIndex();
             LoadCache();
         }
@@ -67,33 +189,35 @@ namespace EZFramework
             base.OnDestroy();
         }
 
-        public bool Add(string dataName, object key, object value)
+        public bool Add(string dataName, string key, object value)
         {
+            string serializedValue = JsonConvert.SerializeObject(value);
             DBData data = LoadData(dataName);
-            if (!data.Add(key, value))
+            if (!data.Add(key, serializedValue))
             {
                 LogWarning("Add failed: " + dataName + "[" + key + "]");
                 return false;
             }
 
-            DBCache cache = new DBCache(dataName, Operation.Add, key.ToString(), value.ToString());
+            DBCache cache = new DBCache(dataName, Operation.Add, key, serializedValue);
             SaveCache(cache.ToString());
             return true;
         }
-        public bool Set(string dataName, object key, object value)
+        public bool Set(string dataName, string key, object value)
         {
+            string serializedValue = JsonConvert.SerializeObject(value);
             DBData data = LoadData(dataName);
-            if (!data.Set(key, value))
+            if (!data.Set(key, serializedValue))
             {
                 LogWarning("Set failed: " + dataName + "[" + key + "]");
                 return false;
             }
 
-            DBCache cache = new DBCache(dataName, Operation.Set, key.ToString(), value.ToString());
+            DBCache cache = new DBCache(dataName, Operation.Set, key, serializedValue);
             SaveCache(cache.ToString());
             return true;
         }
-        public bool Del(string dataName, object key)
+        public bool Del(string dataName, string key)
         {
             DBData data = LoadData(dataName);
             if (!data.Del(key))
@@ -102,30 +226,32 @@ namespace EZFramework
                 return false;
             }
 
-            DBCache cache = new DBCache(dataName, Operation.Del, key.ToString(), string.Empty);
+            DBCache cache = new DBCache(dataName, Operation.Del, key, string.Empty);
             SaveCache(cache.ToString());
             return true;
         }
-        public object Get(string dataName, object key, object value)
+        public object Get(string dataName, string key, object value)
         {
-            DBData data = LoadData(dataName);
-            return data.Get(key, value);
+            string serializedValue = LoadData(dataName).Get(key);
+            if (string.IsNullOrEmpty(serializedValue)) return value;
+            else return JsonConvert.DeserializeObject(serializedValue);
         }
-        public T Get<T>(string dataName, object key, T value)  // 此处取值在类型转换上容易出错，建议返回Object之后自行转换
+        public T Get<T>(string dataName, string key, T value)
         {
-            DBData data = LoadData(dataName);
-            return data.Get<T>(key, value);
+            string serializedValue = LoadData(dataName).Get(key);
+            if (string.IsNullOrEmpty(serializedValue)) return value;
+            else return JsonConvert.DeserializeObject<T>(serializedValue);
         }
 
         public bool IsExist(string dataName)
         {
-            return DBIndex.Contains(dataName);
+            return dbIndex.Contains(dataName);
         }
         public bool IsEmpty(string dataName)
         {
             DBData data;
-            if (DBDict.TryGetValue(dataName, out data)) { return data.IsEmpty(); }
-            else if (DBIndex.Contains(dataName))
+            if (dbDict.TryGetValue(dataName, out data)) { return data.IsEmpty(); }
+            else if (dbIndex.Contains(dataName))
             {
                 return LoadDataFromFile(dataName).IsEmpty();
             }
@@ -149,16 +275,16 @@ namespace EZFramework
         public DBData LoadData(string dataName)
         {
             DBData data;
-            if (DBDict.TryGetValue(dataName, out data)) { return data; }
-            else if (DBIndex.Contains(dataName))
+            if (dbDict.TryGetValue(dataName, out data)) { return data; }
+            else if (dbIndex.Contains(dataName))
             {
                 return LoadDataFromFile(dataName);
             }
             else
             {
                 data = new DBData();
-                DBDict.Add(dataName, data);
-                DBIndex.Add(dataName);
+                dbDict.Add(dataName, data);
+                dbIndex.Add(dataName);
                 Log("Create new data: " + dataName);
                 return data;
             }
@@ -177,9 +303,9 @@ namespace EZFramework
                 LogWarning("Load data from file: " + dataName + " failed");
                 LogWarning(ex.Message);
                 data = new DBData();
-                DBIndex.Add(dataName);
+                dbIndex.Add(dataName);
             }
-            DBDict[dataName] = data;
+            dbDict[dataName] = data;
             return data;
         }
 
@@ -195,7 +321,7 @@ namespace EZFramework
         public DBData LoadDataFromString(string dataName, string dataString)
         {
             DBData data = DBData.LoadFromString(dataString);
-            DBDict[dataName] = data;
+            dbDict[dataName] = data;
             Log("Load data from string: " + dataString);
             return data;
         }
@@ -214,12 +340,12 @@ namespace EZFramework
 
         protected void LoadIndex()
         {
-            DBIndex = new DBIndex();
+            dbIndex = new DBIndex();
             string[] files = Directory.GetFiles(MainDirPath, "*" + EXTENSION_DATA);
             for (int i = 0; i < files.Length; i++)
             {
                 string dataName = Path.GetFileNameWithoutExtension(files[i]);
-                DBIndex.Add(dataName);
+                dbIndex.Add(dataName);
             }
         }
         protected void LoadCache()
@@ -234,10 +360,10 @@ namespace EZFramework
                 switch (cache.operation)
                 {
                     case Operation.Add:
-                        data.Add(cache.key, cache.value);
+                        data.Add(cache.key, cache.serializedValue);
                         break;
                     case Operation.Set:
-                        data.Set(cache.key, cache.value);
+                        data.Set(cache.key, cache.serializedValue);
                         break;
                     case Operation.Del:
                         data.Del(cache.key);
@@ -262,7 +388,7 @@ namespace EZFramework
         }
         protected void LoadData()   // 这个方法是手动加载所有数据，实际上完全没用
         {
-            foreach (string dataName in DBIndex.index)
+            foreach (string dataName in dbIndex.index)
             {
                 LoadData(dataName);
             }
@@ -288,132 +414,6 @@ namespace EZFramework
             }
             File.WriteAllText(CacheFilePath, string.Empty, ENCODING);
             cacheCount = 0;
-        }
-    }
-
-    // 可以自行添加其他数据
-    public class DBIndex
-    {
-        public List<string> index { get; private set; }
-
-        public bool Add(string dataName)
-        {
-            if (index.Contains(dataName)) return false;
-            index.Add(dataName);
-            return true;
-        }
-        public bool Remove(string dataName)
-        {
-            return index.Remove(dataName);
-        }
-        public bool Contains(string dataName)
-        {
-            return index.Contains(dataName);
-        }
-
-        public DBIndex()
-        {
-            this.index = new List<string>();
-        }
-        public static DBIndex LoadFromString(string indexString)
-        {
-            DBIndex dbIndex = JsonConvert.DeserializeObject<DBIndex>(indexString);
-            if (dbIndex == null) dbIndex = new DBIndex();
-            return dbIndex;
-        }
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-    }
-
-    public class DBCache
-    {
-        private const char SEPARATOR = '|';
-
-        public string dataName { get; private set; }
-        public string operation { get; private set; }
-        public string key { get; private set; }
-        public string value { get; private set; }
-
-        public DBCache(string dataName, string operation, string key, string value)
-        {
-            this.dataName = dataName;
-            this.operation = operation;
-            this.key = key;
-            this.value = value;
-        }
-        public static DBCache LoadFromString(string cacheString)
-        {
-            string[] args = cacheString.Split(SEPARATOR);
-            if (args.Length == 4)
-                return new DBCache(args[0], args[1], args[2], args[3]);
-            else return new DBCache("CACHEERROR", "A", DateTime.Now.ToString("yyyyMMddHHmmss"), cacheString);
-        }
-        public override string ToString()
-        {
-            return string.Join(SEPARATOR.ToString(), new string[] { dataName, operation, key, value });
-        }
-    }
-
-    // 这个封装是为了方便替换数据的实现方式，其实Hashtable挺好用的
-    public class DBData
-    {
-        private const string TIME_FORMAT = "yyyyMMddHHmmss";
-
-        public Hashtable data { get; private set; }
-        public string timeModified { get; private set; }
-
-        public bool Add(object key, object value)
-        {
-            if (data.ContainsKey(key)) return false;
-            else data.Add(key, value);
-            timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
-            return true;
-        }
-        public bool Set(object key, object value)
-        {
-            data[key] = value;
-            timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
-            return true;
-        }
-        public bool Del(object key)
-        {
-            if (!data.ContainsKey(key)) return false;
-            data.Remove(key);
-            timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
-            return true;
-        }
-        public object Get(object key, object value)
-        {
-            if (data.ContainsKey(key)) return data[key];
-            return value;
-        }
-        public T Get<T>(object key, T value)
-        {
-            if (data.ContainsKey(key)) return (T)data[key];
-            return value;
-        }
-
-        public bool IsEmpty()
-        {
-            return data.Count == 0;
-        }
-
-        public DBData()
-        {
-            this.data = new Hashtable();
-            this.timeModified = DateTime.UtcNow.ToString(TIME_FORMAT);
-        }
-        public static DBData LoadFromString(string dataString)
-        {
-            DBData dbData = JsonConvert.DeserializeObject<DBData>(dataString);
-            if (dbData == null) dbData = new DBData();
-            return dbData;
-        }
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
         }
     }
 }

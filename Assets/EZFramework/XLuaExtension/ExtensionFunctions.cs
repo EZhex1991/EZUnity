@@ -13,29 +13,29 @@ namespace EZFramework.XLuaExtension
 {
     public static class ExtensionFunctions
     {
-        public static int GetInt(this EZDatabase instance, string dataName, string key, object value)
+        public static int GetInt(this EZDatabase instance, string dataName, string key, int value)
         {
-            return Convert.ToInt32(instance.Get(dataName, key, value));
+            return instance.Get(dataName, key, value);
         }
-        public static long GetLong(this EZDatabase instance, string dataName, string key, object value)
+        public static long GetLong(this EZDatabase instance, string dataName, string key, long value)
         {
-            return Convert.ToInt64(instance.Get(dataName, key, value));
+            return instance.Get(dataName, key, value);
         }
-        public static float GetSingle(this EZDatabase instance, string dataName, string key, object value)
+        public static float GetSingle(this EZDatabase instance, string dataName, string key, float value)
         {
-            return Convert.ToSingle(instance.Get(dataName, key, value));
+            return instance.Get(dataName, key, value);
         }
-        public static double GetDouble(this EZDatabase instance, string dataName, string key, object value)
+        public static double GetDouble(this EZDatabase instance, string dataName, string key, double value)
         {
-            return Convert.ToDouble(instance.Get(dataName, key, value));
+            return instance.Get(dataName, key, value);
         }
-        public static string GetString(this EZDatabase instance, string dataName, string key, object value)
+        public static string GetString(this EZDatabase instance, string dataName, string key, string value)
         {
-            return instance.Get(dataName, key, value).ToString();
+            return instance.Get(dataName, key, value);
         }
-        public static bool GetBool(this EZDatabase instance, string dataName, string key, object value)
+        public static bool GetBool(this EZDatabase instance, string dataName, string key, bool value)
         {
-            return Convert.ToBoolean(instance.Get(dataName, key, value));
+            return instance.Get(dataName, key, value);
         }
 
         public static Sprite LoadSprite(this EZResource instance, string bundleName, string assetName)
