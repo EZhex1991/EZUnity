@@ -1,6 +1,6 @@
 ## EZScriptTemplate
 
-**用于在编辑器下管理脚本模板**
+**用于在编辑器下管理脚本模板，使用之前请为User添加Unity的Editor目录的write权限**
 
 Unity新建脚本的模板位于 [Unity安装目录/Editor/Resources/ScriptTemplates] 目录中，其中的".txt"文件如果命名符合一定的格式，那么Unity的Project右键菜单Create选项中会出现对应的选项（由于这个Create菜单是在Unity启动时初始化，所以添加模板后需要重启Unity才能生效，修改模板则会即时生效）。
 
