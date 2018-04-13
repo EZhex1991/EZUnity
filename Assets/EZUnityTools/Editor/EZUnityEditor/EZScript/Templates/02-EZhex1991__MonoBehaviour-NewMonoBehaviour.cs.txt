@@ -5,10 +5,18 @@
  */
 using UnityEngine;
 
-namespace EZFramework
+namespace EZhex1991
 {
-    public class #SCRIPTNAME#
+    public class #SCRIPTNAME# : MonoBehaviour
     {
-        
+        void Start()
+        {
+
+        }
+
+        void Update()
+        {
+
+        }
     }
 }

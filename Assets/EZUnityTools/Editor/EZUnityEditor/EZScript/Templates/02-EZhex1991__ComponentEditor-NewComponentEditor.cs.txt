@@ -3,14 +3,16 @@
  * Orgnization:     #ORGNIZATION#
  * Description:     
  */
-using EZComponent;
 using UnityEngine;
 using UnityEditor;
 
-namespace EZComponentEditor
+namespace EZhex1991
 {
-    public class #SCRIPTNAME#
+    public class #SCRIPTNAME# : Editor
     {
-
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+        }
     }
 }

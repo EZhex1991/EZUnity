@@ -9,6 +9,6 @@ namespace EZhex1991
 {
     public class #SCRIPTNAME#
     {
-
+        
     }
 }
