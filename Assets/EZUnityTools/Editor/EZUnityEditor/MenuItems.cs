@@ -41,16 +41,22 @@ namespace EZUnityEditor
             EZGraphicsSettings.IncludeBuiltinShaders();
         }
 
-        [MenuItem(ROOT_NAME + "/EZAssetGenerator/Material", false, PRIORITY + 111)]
+        [MenuItem(ROOT_NAME + "/EZAsset/Generator Material", false, PRIORITY + 111)]
         private static void GenerateMaterial()
         {
             Selection.activeObject = EZAssetGenerator.GenerateMaterial();
         }
-        [MenuItem(ROOT_NAME + "/EZAssetGenerator/TextAsset", false, PRIORITY + 112)]
+        [MenuItem(ROOT_NAME + "/EZAsset/Generator TextAsset", false, PRIORITY + 112)]
         private static void GenerateTextAsset()
         {
             Selection.activeObject = EZAssetGenerator.GenerateTextAsset();
         }
+        [MenuItem(ROOT_NAME + "/EZAsset/AssetReferenceViewer", false, PRIORITY + 113)]
+        private static void EZAssetReferenceViewer()
+        {
+            EditorWindow.GetWindow<EZAssetReferenceViewer>("EZAssetReferenceViewer").Show();
+        }
+
 
         [MenuItem(ROOT_NAME + "/EZBundle/EZBundle", false, PRIORITY + 121)]
         private static void EZBundle()
