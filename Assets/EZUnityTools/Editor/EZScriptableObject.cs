@@ -1,6 +1,6 @@
 /* Author:          熊哲
  * CreateTime:      2016-11-28 12:02:02
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using UnityEditor;

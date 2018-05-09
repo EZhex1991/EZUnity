@@ -1,6 +1,6 @@
 /* Author:          熊哲
  * CreateTime:      2018-02-22 16:48:41
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using System;

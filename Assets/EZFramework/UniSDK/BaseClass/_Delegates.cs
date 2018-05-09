@@ -1,6 +1,6 @@
 /* Author:          熊哲
  * CreateTime:      2018-03-12 13:52:22
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 namespace EZFramework.UniSDK.Base

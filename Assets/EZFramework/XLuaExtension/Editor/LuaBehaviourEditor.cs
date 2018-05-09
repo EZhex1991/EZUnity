@@ -1,6 +1,6 @@
 /* Author:          熊哲
  * CreateTime:      2018-02-27 12:36:14
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using EZFramework.XLuaExtension;

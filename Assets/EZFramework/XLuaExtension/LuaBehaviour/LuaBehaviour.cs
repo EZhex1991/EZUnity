@@ -1,6 +1,6 @@
 /* Author:          熊哲
  * CreateTime:      2018-02-24 14:47:57
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using XLua;

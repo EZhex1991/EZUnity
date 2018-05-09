@@ -1,6 +1,6 @@
 ﻿/* Author:          熊哲
  * CreateTime:      2017-09-02 18:23:42
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using System.Collections.Generic;

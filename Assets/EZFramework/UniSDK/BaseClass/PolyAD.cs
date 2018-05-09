@@ -1,6 +1,6 @@
 /* Author:          熊哲
  * CreateTime:      2018-01-08 18:19:35
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using UnityEngine;

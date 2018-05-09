@@ -1,6 +1,6 @@
 /* Author:          熊哲
  * CreateTime:      2017-07-03 18:44:14
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using System.IO;

@@ -1,7 +1,7 @@
 ﻿--[==[
 - Author:       熊哲
 - CreateTime:   9/29/2017 12:52:50 PM
-- Orgnization:  #ORGNIZATION#
+- Organization: #ORGANIZATION#
 - Description:  
 --]==]
 local M = {}

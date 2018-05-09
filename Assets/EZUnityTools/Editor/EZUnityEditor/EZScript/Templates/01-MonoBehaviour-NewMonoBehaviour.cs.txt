@@ -1,6 +1,6 @@
 /* Author:          #AUTHORNAME#
  * CreateTime:      #CREATETIME#
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using UnityEngine;

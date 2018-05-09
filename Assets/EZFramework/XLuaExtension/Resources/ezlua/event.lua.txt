@@ -1,7 +1,7 @@
 --[==[
 - Author:       熊哲
 - CreateTime:   4/19/2017 2:20:04 PM
-- Orgnization:  #ORGNIZATION#
+- Organization: #ORGANIZATION#
 - Description:  
     -- 用一个key去对应一个func是为了方便在移除时直接通过key去置空，而不是遍历_functionlist判断存在时移除：
     这意味着你必须用一个很特殊的值来保证key不冲突，好在lua里function本身就是一个不会冲突的key，

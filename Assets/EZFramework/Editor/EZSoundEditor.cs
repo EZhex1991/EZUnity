@@ -1,6 +1,6 @@
 ﻿/* Author:          熊哲
  * CreateTime:      2016-12-26 16:54:18
- * Orgnization:     #ORGNIZATION#
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using EZFramework;
