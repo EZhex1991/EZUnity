@@ -6,17 +6,16 @@
 --]==]
 local M = require("ezlua.module"):module()
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     local self = M:new()
     injector:Inject(self)
     self.gameObject = injector.gameObject
     self.transform = self.gameObject.transform
     self.rigidbody = self.gameObject:GetComponent("Rigidbody")
-    self:Start()
     return self
 end
 
-function M:Start()
+function M:LuaStart()
     self.rigidbody.velocity = self.transform.forward * self.n_Speed
 end
 ----- CODE -----

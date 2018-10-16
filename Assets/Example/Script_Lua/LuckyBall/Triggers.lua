@@ -5,20 +5,19 @@
 - Description:  
 --]==]
 local Object = CS.UnityEngine.Object
-local ActivityMessage = CS.EZFramework.XLuaExtension.ActivityMessage
-local TriggerMessage = CS.EZFramework.XLuaExtension.TriggerMessage
+local ActivityMessage = CS.EZUnity.XLuaExtension.ActivityMessage
+local TriggerMessage = CS.EZUnity.XLuaExtension.TriggerMessage
 
 local M = {}
 ----- CODE -----
-function M.LCBinder(injector) -- bind lua(table) with C#(MonoBehaviour)
+function M.LuaAwake(injector) -- bind lua(table) with C#(MonoBehaviour)
     injector:Inject(M)
     M.gameObject = injector.gameObject
     M.transform = M.gameObject.transform
-    ActivityMessage.Require(M.gameObject).start:AddAction(M.Start)
     return M
 end
 
-function M.Start()
+function M.LuaStart()
     M.Triggers = {}
     for i = 1, M.transform.childCount do
         local go = M.transform:GetChild(i - 1).gameObject

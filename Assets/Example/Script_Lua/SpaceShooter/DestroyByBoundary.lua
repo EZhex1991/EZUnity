@@ -5,20 +5,20 @@
 - Description:  
 --]==]
 local Object = CS.UnityEngine.Object
-local TriggerMessage = CS.EZFramework.XLuaExtension.TriggerMessage
+local TriggerMessage = CS.EZUnity.XLuaExtension.TriggerMessage
 local bind = require("xlua.util").bind
 
 local M = require("ezlua.module"):module()
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     local self = M:new()
     injector:Inject(self)
     self.gameObject = injector.gameObject
-    TriggerMessage.Require(self.gameObject).onTriggerExit:AddAction(bind(self.OnTriggerExit, self))
+    TriggerMessage.Require(self.gameObject).onTriggerExit:AddAction(bind(self.LuaOnTriggerExit, self))
     return self
 end
 
-function M:OnTriggerExit(collider)
+function M:LuaOnTriggerExit(collider)
     Object.Destroy(collider.gameObject)
 end
 ----- CODE -----

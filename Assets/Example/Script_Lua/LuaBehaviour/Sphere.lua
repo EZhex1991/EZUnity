@@ -6,12 +6,12 @@
 --]==]
 local M = {}
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     injector:Inject(M)
     -- 与其他LuaBehaviour进行交互
     M.go_Cube:GetComponent("LuaBehaviour").luaTable.ChangePosition(M.v1)
     -- Behaviour可以用injector注入，节省GetComponent的调用开销
-    M.lb_Cube.luaTable.ChangePosition(M.v2)
+    M.lb_Cube.luaTable.ChangePosition(M.v3)
     return M
 end
 ----- CODE -----

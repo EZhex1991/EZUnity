@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 463866117
+CRC: 907345310
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b06590905931142d5b148fdae2348d7f
+    Hash: 178ce6054f26e43fdd232b6c2d3951d0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: a74f48a90aaa06e0a543926062b4339c
+    Hash: fb14365050d3b72b9afa0b877e2f3b62
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -36,6 +36,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 3069907128af34efca9780c9aea75eb0, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 7f7850f24249e4056b2189de03ae584c, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 03ac954430ba2904886bd74e7333b42d, type: 3}
 - Class: 115
   Script: {instanceID: 0}
@@ -48,14 +50,14 @@ ClassTypes:
 - Class: 199
   Script: {instanceID: 0}
 Assets:
-- Assets/Example/SpaceShooter/_ForLua/done_explosion_player.prefab
-- Assets/Example/SpaceShooter/_ForLua/done_explosion_asteroid.prefab
-- Assets/Example/SpaceShooter/_ForLua/Done_Player.prefab
-- Assets/Example/SpaceShooter/_ForLua/Done_Asteroid 03.prefab
-- Assets/Example/SpaceShooter/_ForLua/Done_Asteroid 01.prefab
-- Assets/Example/SpaceShooter/_ForLua/done_explosion_enemy.prefab
-- Assets/Example/SpaceShooter/_ForLua/Done_Asteroid 02.prefab
-- Assets/Example/SpaceShooter/_ForLua/Done_Bolt.prefab
-- Assets/Example/SpaceShooter/_ForLua/Done_Enemy Ship.prefab
-- Assets/Example/SpaceShooter/_ForLua/Done_Bolt-Enemy.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/done_explosion_player.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/done_explosion_asteroid.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/Done_Player.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/Done_Asteroid 03.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/Done_Asteroid 01.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/done_explosion_enemy.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/Done_Asteroid 02.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/Done_Bolt.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/Done_Enemy Ship.prefab
+- Assets/Example/02_SpaceShooter/_Complete-Lua/Done_Bolt-Enemy.prefab
 Dependencies: []

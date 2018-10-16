@@ -5,27 +5,26 @@
 - Description:  
 --]==]
 local Object = CS.UnityEngine.Object
-local TriggerMessage = CS.EZFramework.XLuaExtension.TriggerMessage
-local LuaUtility = CS.EZFramework.XLuaExtension.LuaUtility
+local TriggerMessage = CS.EZUnity.XLuaExtension.TriggerMessage
+local LuaUtility = CS.EZUnity.XLuaExtension.LuaUtility
 local bind = require("xlua.util").bind
 
 local M = require("ezlua.module"):module()
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     self = M:new()
     injector:Inject(self)
     self.gameObject = injector.gameObject
     self.transform = self.gameObject.transform
-    TriggerMessage.Require(self.gameObject).onTriggerEnter:AddAction(bind(self.OnTriggerEnter, self))
-    self:Start()
+    TriggerMessage.Require(self.gameObject).onTriggerEnter:AddAction(bind(self.LuaOnTriggerEnter, self))
     return self
 end
 
-function M:Start()
+function M:LuaStart()
     self.gameController = require("SpaceShooter.GameController")
 end
 
-function M:OnTriggerEnter(collider)
+function M:LuaOnTriggerEnter(collider)
     if collider.tag == "Boundary" or collider.tag == "Enemy" then
         return
     end

@@ -10,21 +10,20 @@ local bind = require("xlua.util").bind
 
 local M = require("ezlua.module"):module()
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     local self = M:new()
     injector:Inject(self)
     self.gameObject = injector.gameObject
     self.timer = require("ezlua.timer"):new()
-    CS.EZFramework.XLuaExtension.UpdateMessage.Require(self.gameObject).update:AddAction(bind(self.Update, self))
-    self:Start()
+    CS.EZUnity.XLuaExtension.UpdateMessage.Require(self.gameObject).update:AddAction(bind(self.LuaUpdate, self))
     return self
 end
 
-function M:Start()
+function M:LuaStart()
     self.timer:invokerepeat(self.n_Delay, self.n_FireRate, bind(self.Fire, self))
 end
 
-function M:Update()
+function M:LuaUpdate()
     self.timer:tick(Time.deltaTime)
 end
 

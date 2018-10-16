@@ -1,15 +1,85 @@
 ManifestFileVersion: 0
-CRC: 3560914001
+CRC: 2337898302
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 719f0db1fa395e1f91c529bfeaacb429
+    Hash: ceb550dfa6fc225d422cb77f06413fb2
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+    Hash: d4f52fc6240cd7bcb7c987d85bc26a83
 HashAppended: 0
-ClassTypes: []
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 92
+  Script: {instanceID: 0}
+- Class: 104
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3069907128af34efca9780c9aea75eb0, type: 3}
+- Class: 114
+  Script: {fileID: -619905303, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 114
+  Script: {fileID: 1077351063, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7f7850f24249e4056b2189de03ae584c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 03ac954430ba2904886bd74e7333b42d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ef73dad58880c4027a74be9c91fb039e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8846417901f4942d2a5fa9e32ce69d45, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 365dd2da98dd9431b8c5d7406c200eeb, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 124
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 132
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 157
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
 Assets:
 - Assets/Example/02_SpaceShooter/_Complete-Lua/SpaceShooter.unity
 Dependencies:
-- D:/Workspace/Unity/EZFramework/Assets/StreamingAssets/spaceshooter_assets
+- D:/UnityProjects/EZFramework/Assets/StreamingAssets/spaceshooter_assets

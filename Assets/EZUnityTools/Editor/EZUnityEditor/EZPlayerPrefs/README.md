@@ -1,3 +1,0 @@
-## EZPlayerPrefsEditor
-
-![](.SamplePicture/EZPlayerPrefsEditor.png)

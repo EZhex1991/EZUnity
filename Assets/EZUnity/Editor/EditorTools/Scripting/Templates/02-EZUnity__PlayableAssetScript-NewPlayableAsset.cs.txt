@@ -1,0 +1,18 @@
+/* Author:          #AUTHORNAME#
+ * CreateTime:      #CREATETIME#
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+using UnityEngine;
+using UnityEngine.Playables;
+
+namespace EZUnity
+{
+    public class #SCRIPTNAME# : PlayableAsset
+    {
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
+        {
+            return Playable.Create(graph);
+        }
+    }
+}

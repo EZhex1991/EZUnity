@@ -6,26 +6,35 @@
 --]==]
 local M = {}
 ----- CODE -----
-function M.LCBinder(injector)
-    local self = M
-    self.btns = {}
-    injector:Inject(self)
-    self.btns[1].onClick:AddListener(self.LuaBehaviour)
-    self.btns[2].onClick:AddListener(self.LuckyBall)
-    self.btns[3].onClick:AddListener(self.SpaceShooter)
-    return self
+local LoadSceneMode = CS.UnityEngine.SceneManagement.LoadSceneMode
+
+function M.LuaAwake(injector)
+    M.btns = {}
+    injector:Inject(M)
+    M.btns[1].onClick:AddListener(M.Menu)
+    M.btns[2].onClick:AddListener(M.LuaBehaviour)
+    M.btns[3].onClick:AddListener(M.LuckyBall)
+    M.btns[4].onClick:AddListener(M.SpaceShooter)
+    return M
+end
+
+function M.Menu()
+    CS.UnityEngine.SceneManagement.SceneManager.LoadScene("Menu")
 end
 
 function M.LuaBehaviour()
-    CS.UnityEngine.SceneManagement.SceneManager.LoadScene("LuaBehaviour")
+    CS.UnityEngine.SceneManagement.SceneManager.LoadScene("LuaBehaviour", LoadSceneMode.Additive)
+    M.panel_Menu:SetActive(false)
 end
 
 function M.LuckyBall()
-    CS.UnityEngine.SceneManagement.SceneManager.LoadScene("LuckyBall")
+    CS.UnityEngine.SceneManagement.SceneManager.LoadScene("LuckyBall", LoadSceneMode.Additive)
+    M.panel_Menu:SetActive(false)
 end
 
 function M.SpaceShooter()
     require("SpaceShooter.GameController"):Init()
+    M.panel_Menu:SetActive(false)
 end
 ----- CODE -----
 return M

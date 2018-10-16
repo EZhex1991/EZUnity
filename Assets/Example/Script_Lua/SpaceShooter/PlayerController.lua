@@ -8,7 +8,7 @@ local Object = CS.UnityEngine.Object
 local Input = CS.UnityEngine.Input
 local Time = CS.UnityEngine.Time
 local Vector3 = CS.UnityEngine.Vector3
-local LuaUtility = CS.EZFramework.XLuaExtension.LuaUtility
+local LuaUtility = CS.EZUnity.XLuaExtension.LuaUtility
 local bind = require("xlua.util").bind
 
 local M = require("ezlua.module"):module()
@@ -21,19 +21,19 @@ M.Boundary = {
 }
 M.n_NextFire = 0
 
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     self = M:new()
     injector:Inject(self)
     self.gameObject = injector.gameObject
     self.transform = self.gameObject.transform
     self.rigidbody = self.gameObject:GetComponent("Rigidbody")
-    local updateMessage = CS.EZFramework.XLuaExtension.UpdateMessage.Require(self.gameObject)
-    updateMessage.update:AddAction(bind(self.Update, self))
-    updateMessage.fixedUpdate:AddAction(bind(self.FixedUpdate, self))
+    local updateMessage = CS.EZUnity.XLuaExtension.UpdateMessage.Require(self.gameObject)
+    updateMessage.update:AddAction(bind(self.LuaUpdate, self))
+    updateMessage.fixedUpdate:AddAction(bind(self.LuaFixedUpdate, self))
     return self
 end
 
-function M:Update()
+function M:LuaUpdate()
     if Input.GetButton("Fire1") and Time.time > self.n_NextFire then
         self.n_NextFire = Time.time + self.n_FireRate
         local shot = Object.Instantiate(self.go_Shot, self.tf_ShotSpawn.position, self.tf_ShotSpawn.rotation)
@@ -42,7 +42,7 @@ function M:Update()
     end
 end
 
-function M:FixedUpdate()
+function M:LuaFixedUpdate()
     local moveHorizontal = Input.GetAxis("Horizontal")
     local moveVertical = Input.GetAxis("Vertical")
     local movement = Vector3(moveHorizontal, 0, moveVertical)

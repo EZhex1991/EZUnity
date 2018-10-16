@@ -6,7 +6,7 @@
 --]==]
 local M = require("ezlua.module"):module()
 ----- CODE -----
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     local self = M:new()
     injector:Inject(self)
     self.gameObject = injector.gameObject

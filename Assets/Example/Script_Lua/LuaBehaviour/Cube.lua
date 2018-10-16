@@ -6,10 +6,10 @@
 --]==]
 local M = {}
 ----- CODE -----
--- LCBinder(injector)用于lua和C#的绑定
+-- LuaAwake(injector)用于lua和C#的绑定
 -- LuaBehaviour（继承LuaInjector）作为参数injector传入，使用injector:Inject(table)将变量直接注入table中
 -- 返回值会保存在LuaBehaviour.luaTable中用于Behaviour的相互调用
-function M.LCBinder(injector)
+function M.LuaAwake(injector)
     injector:Inject(M)
     print(injector.name) -- injector.gameObject就是当前绑定的GameObject
     print(M.go_Sphere.name)

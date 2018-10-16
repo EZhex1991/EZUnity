@@ -1,11 +1,7 @@
-/Assets/EZData
-/Assets/EZData.meta
-
-/Assets/EZFramework/Library/XLua/Gen
-/Assets/EZFramework/Library/XLua/Gen.meta
-
-/Assets/EZUnityTools/EZAssets
-/Assets/EZUnityTools/EZAssets.meta
+/Assets/_Temp
+/Assets/_Temp.meta
+/Assets/XLua/Gen
+/Assets/XLua/Gen.meta
 
 .svn
 
@@ -18,11 +14,11 @@
 *.config
 *.code-workspace
 
+/EZUnity
 /Library
 /obj
+/Packages
 /Temp
-/UnityPackageManager
-
 
 # Windows image file caches
 Thumbs.db

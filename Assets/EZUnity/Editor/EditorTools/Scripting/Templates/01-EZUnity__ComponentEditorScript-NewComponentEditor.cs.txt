@@ -1,0 +1,18 @@
+﻿/* Author:          #AUTHORNAME#
+ * CreateTime:      #CREATETIME#
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+using UnityEditor;
+using UnityEngine;
+
+namespace EZUnity
+{
+    public class #SCRIPTNAME# : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+        }
+    }
+}

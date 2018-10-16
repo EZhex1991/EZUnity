@@ -1,0 +1,69 @@
+/* Author:          熊哲
+ * CreateTime:      2018-02-24 14:47:57
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+#if XLUA
+using XLua;
+
+namespace EZUnity.XLuaExtension
+{
+    public class LuaBehaviour : LuaInjector
+    {
+        public EZLua ezLua { get { return EZLua.Instance; } }
+
+        public string moduleName;
+
+        private LuaTable m_LuaTable;
+        public LuaTable luaTable
+        {
+            get
+            {
+                // Awake时会自动Bind，但如果调用发生在Awake之前，那么就提前进行Bind
+                if (m_LuaTable == null) m_LuaTable = GetLuaTable();
+                return m_LuaTable;
+            }
+        }
+
+        public delegate LuaTable LuaAwake(LuaInjector injector);
+        public LuaAction<LuaTable> luaStart;
+        public LuaAction<LuaTable> luaOnEnable;
+        public LuaAction<LuaTable> luaOnDisable;
+        public LuaAction<LuaTable> luaOnDestroy;
+
+        private LuaTable GetLuaTable()
+        {
+            LuaTable luaModule = ezLua.luaRequire(moduleName);
+            LuaAwake awake = luaModule.Get<LuaAwake>("LuaAwake");
+            LuaTable luaTable = awake == null ? luaModule : awake.Invoke(this);
+            luaStart = luaTable.Get<LuaAction<LuaTable>>("LuaStart");
+            luaOnEnable = luaTable.Get<LuaAction<LuaTable>>("LuaOnEnable");
+            luaOnDisable = luaTable.Get<LuaAction<LuaTable>>("LuaOnDisable");
+            luaOnDestroy = luaTable.Get<LuaAction<LuaTable>>("LuaOnDestroy");
+            return luaTable;
+        }
+
+        private void Awake()
+        {
+            if (m_LuaTable == null) m_LuaTable = GetLuaTable();
+        }
+        private void Start()
+        {
+            if (luaStart != null) luaStart(luaTable);
+        }
+        private void OnEnable()
+        {
+            if (luaOnEnable != null) luaOnEnable(luaTable);
+        }
+        private void OnDisable()
+        {
+            if (luaOnDisable != null) luaOnDisable(luaTable);
+        }
+        private void OnDestroy()
+        {
+            if (luaOnDestroy != null) luaOnDestroy(luaTable);
+            if (m_LuaTable != null) m_LuaTable.Dispose();
+        }
+    }
+}
+#endif
