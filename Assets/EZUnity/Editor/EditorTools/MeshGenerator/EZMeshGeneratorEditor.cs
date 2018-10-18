@@ -43,8 +43,10 @@ namespace EZUnity
             base.OnInspectorGUI();
             if (GUILayout.Button("Generate Mesh"))
             {
-                string assetName = "New Mesh";
-                string path = AssetDatabase.GetAssetPath(target).Replace(target.name, assetName);
+                string path = AssetDatabase.GetAssetPath(target);
+                AssetDatabase.ImportAsset(path); // unity bug (2018.2.7), Reset option set asset name to empty
+                string assetName = "New Mesh.mesh";
+                path = path.Substring(0, path.LastIndexOf('/') + 1) + assetName;
                 AssetDatabase.CreateAsset(Instantiate(generator.mesh), AssetDatabase.GenerateUniqueAssetPath(path));
             }
         }
