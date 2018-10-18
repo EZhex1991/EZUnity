@@ -67,6 +67,7 @@ namespace EZUnity.Animation
             segmentIndex = index;
             segment = segments[segmentIndex];
             OnSegmentStart();
+            ProcessSegment();
         }
         protected virtual void ProcessSegment()
         {
