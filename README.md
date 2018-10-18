@@ -15,7 +15,7 @@
 ## 基于XLua的逻辑热更方案
 
 - [XLuaExtension](Assets/EZUnity/XLuaExtension)
-- [Example](Assets/EZUnity/Example)
+- [Example](Assets/Example)
 
 -----
 
