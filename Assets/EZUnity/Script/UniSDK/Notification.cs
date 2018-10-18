@@ -15,9 +15,9 @@ namespace EZUnity.UniSDK
     public class Notification : Base.Notification
     {
 #if UNITY_IOS
-        protected override void Start()
+        protected override void Init()
         {
-            base.Start();
+            base.Init();
             NotificationServices.RegisterForNotifications(NotificationType.Alert | NotificationType.Badge | NotificationType.Sound);
         }
 
