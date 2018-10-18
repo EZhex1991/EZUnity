@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace EZUnity
 {
@@ -48,6 +50,17 @@ namespace EZUnity
                 properties.AddRange(type.GetProperties(flags));
             }
             return properties;
+        }
+
+        private static Material m_DefaultMaterial;
+        public static Material defaultMaterial
+        {
+            get
+            {
+                if (m_DefaultMaterial == null)
+                    m_DefaultMaterial = AssetDatabase.GetBuiltinExtraResource<Material>("Default-Material.mat");
+                return m_DefaultMaterial;
+            }
         }
     }
 }
