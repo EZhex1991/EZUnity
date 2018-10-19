@@ -12,9 +12,14 @@ namespace EZUnity.Playables
     {
         public static void Replace<T>(List<T> frames, List<T> other) where T : IKeyframe
         {
-            if (other.Count == 0 || other[0].time >= other[other.Count - 1].time)
+            if (other.Count == 0)
             {
-                Debug.LogError("Invalid Replace Range");
+                Debug.LogWarning("no frames");
+                return;
+            }
+            if (other[0].time > other[other.Count - 1].time)
+            {
+                Debug.LogErrorFormat("Invalid Replace Range: {0} - {1}", other[0].time, other[other.Count - 1].time);
                 return;
             }
             if (frames.Count == 0)
@@ -36,14 +41,12 @@ namespace EZUnity.Playables
                 else
                 {
                     Vector2Int range = GetRangeByTime(frames, mergeRange);
-                    int index = range[0]; int count = range[1] - range[0];
                     if (other[0].time <= frames[range[0]].time)
                     {
-                        index -= 1;
-                        count += 1;
+                        range[0] -= 1;
                     }
-                    frames.RemoveRange(index + 1, count);
-                    frames.InsertRange(index + 1, other);
+                    frames.RemoveRange(range[0] + 1, range[1] - range[0]);
+                    frames.InsertRange(range[0] + 1, other);
                 }
             }
         }

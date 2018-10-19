@@ -12,8 +12,25 @@ namespace EZUnity.Playables
     public abstract class KeyframeBehaviour<T> : PlayableBehaviour
         where T : IKeyframe
     {
-        public List<T> keyframes { get; set; }
+        public KeyframeClip<T> clip;
+        public virtual List<T> keyframes { get { return clip.keyframes; } }
+        protected List<T> tempFrames = new List<T>();
         public T outputFrame { get; set; }
+
+        public override void OnBehaviourPlay(Playable playable, FrameData info)
+        {
+            Clear();
+        }
+        public override void OnBehaviourPause(Playable playable, FrameData info)
+        {
+            if (tempFrames.Count > 0)
+            {
+                KeyframeUtility.Replace(clip.keyframes, tempFrames);
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(clip);
+#endif
+            }
+        }
 
         public override void PrepareFrame(Playable playable, FrameData info)
         {
@@ -23,9 +40,18 @@ namespace EZUnity.Playables
             T startFrame = keyframes[frameIndex];
             T endFrame = frameIndex >= keyframes.Count - 1 ? keyframes[frameIndex] : keyframes[frameIndex + 1];
             float process = Mathf.InverseLerp(startFrame.time, endFrame.time, time);
-            outputFrame = InterpolateFrame(startFrame, endFrame, process);
+            InterpolateFrame(startFrame, endFrame, process);
         }
 
-        protected abstract T InterpolateFrame(T startFrame, T endFrame, float process);
+        protected abstract void InterpolateFrame(T startFrame, T endFrame, float process);
+
+        public void Record(T frame)
+        {
+            tempFrames.Add(frame);
+        }
+        public void Clear()
+        {
+            tempFrames.Clear();
+        }
     }
 }
