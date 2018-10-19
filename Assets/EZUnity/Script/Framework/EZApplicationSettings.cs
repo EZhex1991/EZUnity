@@ -25,6 +25,7 @@ namespace EZUnity.Framework
                         m_Instance = CreateInstance<EZApplicationSettings>();
 #if UNITY_EDITOR
                         string assetName = typeof(EZApplicationSettings).Name + ".asset";
+                        Directory.CreateDirectory(FolderPath);
                         UnityEditor.AssetDatabase.CreateAsset(m_Instance, Path.Combine(FolderPath, assetName));
 #endif
                     }
