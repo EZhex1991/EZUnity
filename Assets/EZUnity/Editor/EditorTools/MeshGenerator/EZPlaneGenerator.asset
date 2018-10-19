@@ -11,6 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e42808854a154f4c808ee44bc13ae83, type: 3}
   m_Name: EZPlaneGenerator
   m_EditorClassIdentifier: 
-  m_Mesh: {fileID: 0}
-  m_Size: {x: 1, y: 1}
   m_Subdivision: {x: 2, y: 2}
