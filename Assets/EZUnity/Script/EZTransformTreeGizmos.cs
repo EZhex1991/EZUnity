@@ -39,6 +39,9 @@ namespace EZUnity
             }
         }
 
+        public Color normalColor = Color.gray * Color.green;
+        public Color selectedColor = Color.green;
+
         private void Reset()
         {
             transforms.Clear();
@@ -51,12 +54,12 @@ namespace EZUnity
         }
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.gray;
+            Gizmos.color = normalColor;
             DrawLines();
         }
         private void OnDrawGizmosSelected()
         {
-            Gizmos.color = Color.white;
+            Gizmos.color = selectedColor;
             DrawLines();
         }
         private void DrawLines()
