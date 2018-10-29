@@ -35,12 +35,12 @@ namespace EZUnity.XLuaExtension
         {
             LuaTable luaModule = ezLua.luaRequire(moduleName);
             LuaAwake awake = luaModule.Get<LuaAwake>("LuaAwake");
-            LuaTable luaTable = awake == null ? luaModule : awake.Invoke(this);
-            luaStart = luaTable.Get<LuaAction<LuaTable>>("LuaStart");
-            luaOnEnable = luaTable.Get<LuaAction<LuaTable>>("LuaOnEnable");
-            luaOnDisable = luaTable.Get<LuaAction<LuaTable>>("LuaOnDisable");
-            luaOnDestroy = luaTable.Get<LuaAction<LuaTable>>("LuaOnDestroy");
-            return luaTable;
+            LuaTable table = awake == null ? luaModule : awake.Invoke(this);
+            luaStart = table.Get<LuaAction<LuaTable>>("LuaStart");
+            luaOnEnable = table.Get<LuaAction<LuaTable>>("LuaOnEnable");
+            luaOnDisable = table.Get<LuaAction<LuaTable>>("LuaOnDisable");
+            luaOnDestroy = table.Get<LuaAction<LuaTable>>("LuaOnDestroy");
+            return table;
         }
 
         private void Awake()
