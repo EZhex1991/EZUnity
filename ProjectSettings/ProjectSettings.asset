@@ -152,9 +152,9 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.ezhex1991.ezunity
-    Standalone: unity.DefaultCompany.EZFramework
+    Standalone: com.ezhex1991.ezunity
     Tizen: com.Company.ProductName
-    iOS: com.Company.ProductName
+    iOS: com.ezhex1991.ezunity
     tvOS: com.Company.ProductName
   buildNumber:
     iOS: 0
@@ -556,6 +556,8 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 0
   scriptingDefineSymbols:
+    1: XLUA;DOTWEEN
+    4: XLUA;DOTWEEN
     7: XLUA;DOTWEEN
   platformArchitecture: {}
   scriptingBackend:
