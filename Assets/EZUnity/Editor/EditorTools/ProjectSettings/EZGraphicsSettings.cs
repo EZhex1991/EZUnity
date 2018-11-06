@@ -20,12 +20,30 @@ namespace EZUnity.ProjectSettings
         public static SerializedObject serializedObject;
         public static SerializedProperty m_AlwaysIncludedShaders;
 
-        public static List<string> blackList = new List<string>()
+        public static List<string> nameBlackList = new List<string>()
         {
-            "Standard",
-            "Standard (Specular setup)",
             "FX/Flare",
         };
+        public static List<string> prefixBlackList = new List<string>()
+        {
+            "Standard",
+            "Hidden",
+            "Legacy Shaders",
+            "VR",
+            "Nature"
+        };
+        public static bool IsInBlackList(string name)
+        {
+            for (int i = 0; i < prefixBlackList.Count; i++)
+            {
+                if (name.StartsWith(prefixBlackList[i])) return true;
+            }
+            for (int i = 0; i < nameBlackList.Count; i++)
+            {
+                if (name == nameBlackList[i]) return true;
+            }
+            return false;
+        }
 
         static EZGraphicsSettings()
         {
@@ -40,8 +58,7 @@ namespace EZUnity.ProjectSettings
             List<Shader> shaders = new List<Shader>();
             foreach (Object asset in AssetDatabase.LoadAllAssetsAtPath("Resources/unity_builtin_extra")
                 .Where(obj => obj is Shader)
-                .Where(obj => !obj.name.StartsWith("Hidden") && !obj.name.StartsWith("Legacy Shaders") && !obj.name.StartsWith("VR") && !obj.name.StartsWith("Nature"))
-                .Where(obj => !blackList.Contains(obj.name)))
+                .Where(obj => !IsInBlackList(obj.name)))
             {
                 shaders.Add(asset as Shader);
             }
