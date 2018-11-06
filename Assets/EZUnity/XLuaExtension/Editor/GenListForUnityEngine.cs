@@ -151,21 +151,24 @@ namespace EZUnity.XLuaExtension
         [BlackList]
         public static List<List<string>> BlackList = new List<List<string>>()
         {
-            new List<string>() {"UnityEngine.GameObject", "networkView" },
-            new List<string>() {"UnityEngine.Handheld", "GetActivityIndicatorStyle" },
-            new List<string>() {"UnityEngine.Handheld", "SetActivityIndicatorStyle", "UnityEngine.iOS.ActivityIndicatorStyle" },
-            new List<string>() {"UnityEngine.Handheld", "SetActivityIndicatorStyle", "UnityEngine.AndroidActivityIndicatorStyle" },
-            new List<string>() {"UnityEngine.Input", "IsJoystickPreconfigured", "System.String" },
-            new List<string>() {"UnityEngine.Light", "areaSize" },
-            new List<string>() {"UnityEngine.Light", "lightmapBakeType" },
-            new List<string>() {"UnityEngine.MonoBehaviour", "runInEditMode" },
-            new List<string>() {"UnityEngine.Physics", "OverlapSphereNonAlloc", "UnityEngine.Vector3", "System.Single", "UnityEngine.Collider[]"},
-            new List<string>() {"UnityEngine.Physics2D", "OverlapCollider", "UnityEngine.Collider2D", "UnityEngine.ContactFilter2D", "UnityEngine.Collider2D[]" },
-            new List<string>() {"UnityEngine.Texture2D", "alphaIsTransparency" },
-            new List<string>() {"UnityEngine.WWW", "movie" },
+            new List<string>() { "UnityEngine.GameObject", "networkView" },
+            new List<string>() { "UnityEngine.Handheld", "GetActivityIndicatorStyle" },
+            new List<string>() { "UnityEngine.Handheld", "SetActivityIndicatorStyle", "UnityEngine.iOS.ActivityIndicatorStyle" },
+            new List<string>() { "UnityEngine.Handheld", "SetActivityIndicatorStyle", "UnityEngine.AndroidActivityIndicatorStyle" },
+            new List<string>() { "UnityEngine.Input", "IsJoystickPreconfigured", "System.String" },
+            new List<string>() { "UnityEngine.Light", "areaSize" },
+            new List<string>() { "UnityEngine.Light", "lightmapBakeType" },
+            new List<string>() { "UnityEngine.Light", "shadowRadius" },
+            new List<string>() { "UnityEngine.Light", "shadowAngle" },
+            new List<string>() { "UnityEngine.MonoBehaviour", "runInEditMode" },
+            new List<string>() { "UnityEngine.Physics", "OverlapSphereNonAlloc", "UnityEngine.Vector3", "System.Single", "UnityEngine.Collider[]"},
+            new List<string>() { "UnityEngine.Physics2D", "OverlapCollider", "UnityEngine.Collider2D", "UnityEngine.ContactFilter2D", "UnityEngine.Collider2D[]" },
+            new List<string>() { "UnityEngine.Texture", "imageContentsHash" },
+            new List<string>() { "UnityEngine.Texture2D", "alphaIsTransparency" },
+            new List<string>() { "UnityEngine.WWW", "movie" },
 
-            new List<string>() {"UnityEngine.UI.Graphic", "OnRebuildRequested" },
-            new List<string>() {"UnityEngine.UI.Text", "OnRebuildRequested" },
+            new List<string>() { "UnityEngine.UI.Graphic", "OnRebuildRequested" },
+            new List<string>() { "UnityEngine.UI.Text", "OnRebuildRequested" },
         };
     }
 }
