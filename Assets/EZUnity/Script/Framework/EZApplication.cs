@@ -44,6 +44,8 @@ namespace EZUnity.Framework
 
         protected override void Init()
         {
+            Screen.sleepTimeout = settings.sleepTimeout;
+            Application.runInBackground = settings.runInBackground;
             Application.targetFrameRate = settings.targetFrameRate;
             if (onApplicationStartEvent != null) onApplicationStartEvent();
         }
