@@ -15,11 +15,18 @@ namespace EZUnity.Framework
     {
         SerializedProperty m_RunModeInEditor;
         SerializedProperty m_RunModeInApp;
+
+        SerializedProperty m_SleepTimeout;
+        SerializedProperty m_RunInBackground;
         SerializedProperty m_TargetFrameRate;
-        SerializedProperty m_UpdateServer;
+
+        SerializedProperty m_AndroidServer;
+        SerializedProperty m_IOSServer;
+        SerializedProperty m_DefaultServer;
         SerializedProperty m_FileListName;
         SerializedProperty m_IgnorePrefix;
         SerializedProperty m_IgnoreSuffix;
+
         SerializedProperty m_LuaFolders;
         SerializedProperty m_LuaBundles;
         ReorderableList luaFolderList;
@@ -31,11 +38,18 @@ namespace EZUnity.Framework
         {
             m_RunModeInEditor = serializedObject.FindProperty("m_RunModeInEditor");
             m_RunModeInApp = serializedObject.FindProperty("m_RunModeInApp");
+
+            m_SleepTimeout = serializedObject.FindProperty("m_SleepTimeout");
+            m_RunInBackground = serializedObject.FindProperty("m_RunInBackground");
             m_TargetFrameRate = serializedObject.FindProperty("m_TargetFrameRate");
-            m_UpdateServer = serializedObject.FindProperty("m_UpdateServer");
+
+            m_AndroidServer = serializedObject.FindProperty("m_AndroidServer");
+            m_IOSServer = serializedObject.FindProperty("m_IOSServer");
+            m_DefaultServer = serializedObject.FindProperty("m_DefaultServer");
             m_FileListName = serializedObject.FindProperty("m_FileListName");
             m_IgnorePrefix = serializedObject.FindProperty("m_IgnorePrefix");
             m_IgnoreSuffix = serializedObject.FindProperty("m_IgnoreSuffix");
+
             m_LuaFolders = serializedObject.FindProperty("m_LuaFolders");
             m_LuaBundles = serializedObject.FindProperty("m_LuaBundles");
             luaFolderList = new ReorderableList(serializedObject, m_LuaFolders, true, true, true, true)
@@ -88,11 +102,11 @@ namespace EZUnity.Framework
             if (m_RunModeInApp.enumValueIndex == (int)RunMode.Develop) m_RunModeInApp.enumValueIndex = (int)RunMode.Package;
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Quality", EditorStyles.boldLabel);
-            Application.runInBackground = EditorGUILayout.Toggle("Run In Background", Application.runInBackground);
-            Screen.sleepTimeout = EditorGUILayout.IntPopup("Sleep Timeout", Screen.sleepTimeout,
+            m_SleepTimeout.intValue = EditorGUILayout.IntPopup("Sleep Timeout", Screen.sleepTimeout,
                 new string[] { "Never Sleep", "System Setting" },
                 new int[] { SleepTimeout.NeverSleep, SleepTimeout.SystemSetting }
                 );
+            EditorGUILayout.PropertyField(m_RunInBackground);
             QualitySettings.vSyncCount = EditorGUILayout.IntSlider("V Sync Count", QualitySettings.vSyncCount, 0, 4);
             if (QualitySettings.vSyncCount == 0)
             {
@@ -104,7 +118,9 @@ namespace EZUnity.Framework
             }
 
             EditorGUILayout.Space(); EditorGUILayout.LabelField("Update", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(m_UpdateServer);
+            EditorGUILayout.PropertyField(m_AndroidServer);
+            EditorGUILayout.PropertyField(m_IOSServer);
+            EditorGUILayout.PropertyField(m_DefaultServer);
             EditorGUILayout.PropertyField(m_FileListName);
             EditorGUILayout.PropertyField(m_IgnorePrefix);
             EditorGUILayout.PropertyField(m_IgnoreSuffix);
