@@ -70,16 +70,8 @@ namespace EZUnity
             SerializedProperty vector4Value = property.FindPropertyRelative("m_Vector4Value");
             SerializedProperty animationCurveValue = property.FindPropertyRelative("m_AnimationCurveValue");
 
-            Type type = GetType(typeName.stringValue);
-            if (type == null)
-            {
-                type = typeof(UnityEngine.Object);
-                typeName.stringValue = type.FullName;
-            }
-
-            float width = rect.width / 3, space = 5;
-            rect.width = width - space; rect.height = lineHeight;
-            if (GUI.Button(rect, type.Name))
+            float typeButtonWidth = 40;
+            if (GUI.Button(new Rect(rect.x, rect.y, typeButtonWidth, rect.height), "Type", EditorStyles.miniButton))
             {
                 DrawTypeMenu(delegate (object name)
                 {
@@ -87,9 +79,18 @@ namespace EZUnity
                     property.serializedObject.ApplyModifiedProperties();
                 });
             }
+            float width = (rect.width - typeButtonWidth) / 3, space = 5;
+            rect.x += typeButtonWidth + space; rect.width = width - space; rect.height = lineHeight;
+            EditorGUI.DelayedTextField(new Rect(rect.x, rect.y, rect.width, rect.height), typeName, GUIContent.none);
             rect.x += width;
             EditorGUI.PropertyField(rect, key, GUIContent.none);
             rect.x += width;
+            Type type = GetType(typeName.stringValue);
+            if (type == null)
+            {
+                type = typeof(UnityEngine.Object);
+                typeName.stringValue = type.FullName;
+            }
             if (type == typeof(int)) EditorGUI.PropertyField(rect, intValue, GUIContent.none);
             else if (type == typeof(float)) EditorGUI.PropertyField(rect, floatValue, GUIContent.none);
             else if (type == typeof(bool)) EditorGUI.PropertyField(rect, boolValue, GUIContent.none);
