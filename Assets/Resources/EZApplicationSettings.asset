@@ -13,8 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RunModeInEditor: 0
   m_RunModeInApp: 1
+  m_SleepTimeout: -1
+  m_RunInBackground: 0
   m_TargetFrameRate: 30
-  m_UpdateServer: file:///D:/UnityProjects/EZFramework/Assets/StreamingAssets
+  m_AndroidServer: D:\UnityProjects\EZUnity\Assets\StreamingAssets
+  m_IOSServer: 
+  m_DefaultServer: 
   m_FileListName: files
   m_IgnorePrefix: delay
   m_IgnoreSuffix: delay
