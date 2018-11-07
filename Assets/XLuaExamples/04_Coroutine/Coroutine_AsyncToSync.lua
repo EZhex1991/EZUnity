@@ -13,7 +13,7 @@ local util = require "xlua.util"
 Yield =
 	util.async_to_sync(
 	function(yield, callback)
-		CS.EZhex1991.XLuaExample.LuaManager.Instance:Yield(yield, callback)
+		CS.EZUnity.XLuaExample.LuaManager.Instance:Yield(yield, callback)
 	end
 )
 function WaitForEndOfFrame()

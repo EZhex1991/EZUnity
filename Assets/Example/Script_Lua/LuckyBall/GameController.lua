@@ -10,7 +10,7 @@ local Mathf = CS.UnityEngine.Mathf
 local Quaternion = CS.UnityEngine.Quaternion
 local Vector3 = CS.UnityEngine.Vector3
 local UpdateMessage = CS.EZUnity.XLuaExtension.UpdateMessage
-local LuaUtility = CS.EZUnity.XLuaExtension.LuaUtility
+local EZLuaUtility = CS.EZUnity.XLuaExtension.EZLuaUtility
 local ezutil = require("ezlua.util")
 
 local M = {}
@@ -26,7 +26,7 @@ end
 function M.LuaUpdate()
     if Input.GetMouseButtonDown(0) then
         local ray = M.camera:ScreenPointToRay(Input.mousePosition)
-        local hit, hitInfo = LuaUtility.Raycast(ray)
+        local hit, hitInfo = EZLuaUtility.Raycast(ray)
         if hit then
             local position = hitInfo.point
             position.x =

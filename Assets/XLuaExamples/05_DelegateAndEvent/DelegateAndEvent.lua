@@ -56,7 +56,7 @@ local nonStaticDelegate =
 	require("xlua.util").createdelegate(
 	CS.System.Action,
 	behaviour,
-	CS.EZhex1991.XLuaExample.TestBehaviour,
+	CS.EZUnity.XLuaExample.TestBehaviour,
 	"NonStaticFunction",
 	{}
 )
@@ -64,7 +64,7 @@ local staticDelegate =
 	require("xlua.util").createdelegate(
 	CS.System["Action`1[System.Int32]"],
 	nil,
-	CS.EZhex1991.XLuaExample.TestBehaviour,
+	CS.EZUnity.XLuaExample.TestBehaviour,
 	"StaticFunction",
 	{typeof(CS.System.Int32)}
 )

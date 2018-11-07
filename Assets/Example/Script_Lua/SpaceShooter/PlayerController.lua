@@ -8,7 +8,7 @@ local Object = CS.UnityEngine.Object
 local Input = CS.UnityEngine.Input
 local Time = CS.UnityEngine.Time
 local Vector3 = CS.UnityEngine.Vector3
-local LuaUtility = CS.EZUnity.XLuaExtension.LuaUtility
+local EZLuaUtility = CS.EZUnity.XLuaExtension.EZLuaUtility
 local bind = require("xlua.util").bind
 
 local M = require("ezlua.module"):module()
@@ -49,9 +49,9 @@ function M:LuaFixedUpdate()
     self.rigidbody.velocity = movement * self.n_Speed
     self.rigidbody.position =
         Vector3(
-        LuaUtility.ClampFloat(self.rigidbody.position.x, self.Boundary.xMin, self.Boundary.xMax),
+        EZLuaUtility.ClampFloat(self.rigidbody.position.x, self.Boundary.xMin, self.Boundary.xMax),
         0,
-        LuaUtility.ClampFloat(self.rigidbody.position.z, self.Boundary.zMin, self.Boundary.zMax)
+        EZLuaUtility.ClampFloat(self.rigidbody.position.z, self.Boundary.zMin, self.Boundary.zMax)
     )
     self.rigidbody.rotation = CS.UnityEngine.Quaternion.Euler(0, 0, self.rigidbody.velocity.x * -self.n_Tilt)
 end

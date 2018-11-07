@@ -9,7 +9,7 @@ local M = {}
 M.__index = M
 ----- begin module -----
 --local DictSS = CS.System.Collections.Generic["Dictionary`2[System.String,System.String]"] -- 泛型的表示可以在C#上通过Debug.Log(typeof(Type))输出
-local DictSS = CS.System.Collections.Generic.Dictionary(CS.System.String, CS.System.String)
+local DictSS = CS.System.Collections.Generic.Dictionary(CS.System.String, CS.System.String) -- 新版本的优化写法
 local dictSS = DictSS()
 
 dictSS:Add("0", "zero") -- 直接访问C#方法
@@ -25,7 +25,7 @@ for i = 1, 3 do
 end
 
 -- dictSS["2"] = "two";	-- setter之前可以用后来也被改掉了，此处会报错
-CS.EZhex1991.XLuaExample.Dictionary.SetItem(dictSS, "2", "two") -- 自己封装方法替代setter
+CS.EZUnity.XLuaExample.Dictionary.SetItem(dictSS, "2", "two") -- 自己封装方法替代setter
 
 local enum = dictSS:GetEnumerator() -- 遍历用Enumerator
 while enum:MoveNext() do

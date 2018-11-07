@@ -160,7 +160,7 @@ MonoBehaviour:
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
-  - m_TypeName: EZUnity.XLuaExtension.LuaBehaviour
+  - m_TypeName: UnityEngine.Object
     m_Key: lb_Cube
     m_ObjectValue: {fileID: 2095298530}
     m_IntValue: 0

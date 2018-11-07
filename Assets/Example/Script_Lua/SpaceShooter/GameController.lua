@@ -5,7 +5,7 @@
 - Description:  
 --]==]
 local Vector3 = CS.UnityEngine.Vector3
-local LuaUtility = CS.EZUnity.XLuaExtension.LuaUtility
+local EZLuaUtility = CS.EZUnity.XLuaExtension.EZLuaUtility
 local ActivityMessage = CS.EZUnity.XLuaExtension.ActivityMessage
 local UpdateMessage = CS.EZUnity.XLuaExtension.UpdateMessage
 local ezutil = require("ezlua.util")
@@ -25,7 +25,7 @@ function M:Init()
         CS.UnityEngine.SceneManagement.LoadSceneMode.Single
     )
 end
--- LuaBehaviour的Lua-CSharp逻辑绑定，Awake逻辑也写在这里
+-- EZLuaBehaviour的Lua-CSharp逻辑绑定，Awake逻辑也写在这里
 function M.LuaAwake(injector)
     local self = M
     injector:Inject(self)
@@ -59,8 +59,8 @@ function M:Cor_SpawnWaves()
             coroutine.yield(CS.UnityEngine.WaitForSeconds(self.n_StartWait))
             while (true) do
                 for i = 1, self.n_HazardCount do
-                    local index = LuaUtility.RandomInt(0, #self.Hazards) + 1 -- CS.UnityEngine.Random会得到小数
-                    local x = LuaUtility.RandomFloat(-self.v3_SpawnValues.x, self.v3_SpawnValues.x)
+                    local index = EZLuaUtility.RandomInt(0, #self.Hazards) + 1 -- CS.UnityEngine.Random会得到小数
+                    local x = EZLuaUtility.RandomFloat(-self.v3_SpawnValues.x, self.v3_SpawnValues.x)
                     local position = Vector3(x, self.v3_SpawnValues.y, self.v3_SpawnValues.z)
                     local rotation = CS.UnityEngine.Quaternion.identity
                     local hazard = CS.UnityEngine.Object.Instantiate(self.Hazards[index], position, rotation)

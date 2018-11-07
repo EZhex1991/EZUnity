@@ -35,7 +35,7 @@ namespace EZUnity.XLuaExample
         }
 
         // 该例子我随便挑了三个Message，实际上常用Message很多，我对其进行了分类封装，参考链接：
-        // https://github.com/EZhex1991/EZFramework/tree/master/Assets/EZFramework/XLuaExtension/LuaMessage
+        // https://github.com/EZhex1991/EZUnity/tree/master/Assets/EZUnity/XLuaExtension/LuaMessage
 
         // Start对应的消息事件
         public OnMessageEvent start = new OnMessageEvent();

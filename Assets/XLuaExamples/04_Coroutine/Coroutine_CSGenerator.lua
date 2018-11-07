@@ -40,7 +40,7 @@ function Coroutine(...)
 			end
 		)
 	end
-	CS.EZhex1991.XLuaExample.LuaManager.Instance:StartCoroutine(cor())
+	CS.EZUnity.XLuaExample.LuaManager.Instance:StartCoroutine(cor())
 end
 Coroutine("xlua", "banzai")
 ----- end -----

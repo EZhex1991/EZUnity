@@ -14,7 +14,7 @@ MonoBehaviour:
   buildTarget: 13
   outputPath: Assets/StreamingAssets
   listFileName: files.txt
-  managerMode: 1
+  managerMode: 0
   forceRebuild: 0
   copyList: []
   bundleList:

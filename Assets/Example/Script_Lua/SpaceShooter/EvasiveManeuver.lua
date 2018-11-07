@@ -8,7 +8,7 @@ local Mathf = CS.UnityEngine.Mathf
 local Time = CS.UnityEngine.Time
 local Vector3 = CS.UnityEngine.Vector3
 local Quaternion = CS.UnityEngine.Quaternion
-local LuaUtility = CS.EZUnity.XLuaExtension.LuaUtility
+local EZLuaUtility = CS.EZUnity.XLuaExtension.EZLuaUtility
 local UpdateMessage = CS.EZUnity.XLuaExtension.UpdateMessage
 local ezutil = require("ezlua.util")
 
@@ -43,19 +43,19 @@ function M:Cor_Evade()
     return require("xlua.util").cs_generator(
         function()
             coroutine.yield(
-                CS.UnityEngine.WaitForSeconds(LuaUtility.RandomFloat(self.v2_StartWait[0], self.v2_StartWait[1]))
+                CS.UnityEngine.WaitForSeconds(EZLuaUtility.RandomFloat(self.v2_StartWait[0], self.v2_StartWait[1]))
             )
-            while not LuaUtility.IsNull(self.gameObject) do
-                self.targetManeuver = LuaUtility.RandomFloat(1, self.n_Dodge) * -Mathf.Sign(self.transform.position.x)
+            while not EZLuaUtility.IsNull(self.gameObject) do
+                self.targetManeuver = EZLuaUtility.RandomFloat(1, self.n_Dodge) * -Mathf.Sign(self.transform.position.x)
                 coroutine.yield(
                     CS.UnityEngine.WaitForSeconds(
-                        LuaUtility.RandomFloat(self.v2_ManeuverTime[0], self.v2_ManeuverTime[1])
+                        EZLuaUtility.RandomFloat(self.v2_ManeuverTime[0], self.v2_ManeuverTime[1])
                     )
                 )
                 self.targetManeuver = 0
                 coroutine.yield(
                     CS.UnityEngine.WaitForSeconds(
-                        LuaUtility.RandomFloat(self.v2_ManeuverWait[0], self.v2_ManeuverWait[1])
+                        EZLuaUtility.RandomFloat(self.v2_ManeuverWait[0], self.v2_ManeuverWait[1])
                     )
                 )
             end
@@ -69,9 +69,9 @@ function M:LuaFixedUpdate()
     self.rigidbody.velocity = Vector3(newManeuver, 0, self.currentSpeed)
     self.rigidbody.position =
         Vector3(
-        LuaUtility.ClampFloat(self.rigidbody.position.x, self.Boundary.xMin, self.Boundary.xMax),
+        EZLuaUtility.ClampFloat(self.rigidbody.position.x, self.Boundary.xMin, self.Boundary.xMax),
         0,
-        LuaUtility.ClampFloat(self.rigidbody.position.z, self.Boundary.zMin, self.Boundary.zMax)
+        EZLuaUtility.ClampFloat(self.rigidbody.position.z, self.Boundary.zMin, self.Boundary.zMax)
     )
     self.rigidbody.rotation = Quaternion.Euler(0, 0, self.rigidbody.velocity.x * -self.n_Tilt)
 end
