@@ -8,7 +8,7 @@ using XLua;
 
 namespace EZUnity.XLuaExtension
 {
-    public class LuaBehaviour : LuaInjector
+    public class EZLuaBehaviour : EZLuaInjector
     {
         public EZLua ezLua { get { return EZLua.Instance; } }
 
@@ -25,7 +25,7 @@ namespace EZUnity.XLuaExtension
             }
         }
 
-        public delegate LuaTable LuaAwake(LuaInjector injector);
+        public delegate LuaTable LuaAwake(EZLuaInjector injector);
         public LuaAction<LuaTable> luaStart;
         public LuaAction<LuaTable> luaOnEnable;
         public LuaAction<LuaTable> luaOnDisable;

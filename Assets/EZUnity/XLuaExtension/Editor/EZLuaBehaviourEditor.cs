@@ -8,8 +8,8 @@ using UnityEditor;
 
 namespace EZUnity.XLuaExtension
 {
-    [CustomEditor(typeof(LuaBehaviour))]
-    public class LuaBehaviourEditor : EZDictionaryEditor
+    [CustomEditor(typeof(EZLuaBehaviour))]
+    public class EZLuaBehaviourEditor : EZDictionaryEditor
     {
         protected SerializedProperty m_ModuleName;
 

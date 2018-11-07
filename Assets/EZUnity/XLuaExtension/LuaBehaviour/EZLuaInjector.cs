@@ -10,7 +10,7 @@ using XLua;
 
 namespace EZUnity.XLuaExtension
 {
-    public class LuaInjector : EZDictionary
+    public class EZLuaInjector : EZDictionary
     {
         public void Inject(LuaTable self)
         {

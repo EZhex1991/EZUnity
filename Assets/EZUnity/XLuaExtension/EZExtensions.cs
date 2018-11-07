@@ -70,9 +70,9 @@ namespace EZUnity
             customEvent.SetData<string>(key, value);
         }
 
-        public static LuaBehaviour GetLuaBehaviour(this GameObject go, string moduleName)
+        public static EZLuaBehaviour GetLuaBehaviour(this GameObject go, string moduleName)
         {
-            LuaBehaviour[] behaviours = go.GetComponents<LuaBehaviour>();
+            EZLuaBehaviour[] behaviours = go.GetComponents<EZLuaBehaviour>();
             if (moduleName.Contains("."))
             {
                 for (int i = 0; i < behaviours.Length; i++)
@@ -99,7 +99,7 @@ namespace EZUnity
         }
         public static LuaTable GetLuaTable(this GameObject go, string moduleName)
         {
-            LuaBehaviour behaviour = go.GetLuaBehaviour(moduleName);
+            EZLuaBehaviour behaviour = go.GetLuaBehaviour(moduleName);
             return behaviour ? behaviour.luaTable : null;
         }
     }
