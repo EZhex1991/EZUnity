@@ -38,7 +38,7 @@ namespace EZUnity.XLuaExtension
             typeof(EZUnity.XLuaExtension.EZLua),
             typeof(EZUnity.XLuaExtension.EZLuaBehaviour),
             typeof(EZUnity.XLuaExtension.EZLuaInjector),
-            typeof(EZUnity.XLuaExtension.LuaUtility),
+            typeof(EZUnity.XLuaExtension.EZLuaUtility),
             typeof(EZUnity.XLuaExtension.ActivityMessage),
             typeof(EZUnity.XLuaExtension.ActivityMessage.ActivityEvent),
             typeof(EZUnity.XLuaExtension.ApplicationMessage),

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace EZUnity.XLuaExtension
 {
-    public static class LuaUtility
+    public static class EZLuaUtility
     {
         public const int UNITY_EDITOR = 1;
         public const int UNITY_STANDALONE = 2;
