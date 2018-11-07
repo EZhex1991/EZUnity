@@ -8,7 +8,7 @@ using System.IO;
 using UnityEngine;
 using XLua;
 
-namespace EZhex1991.XLuaExample
+namespace EZUnity.XLuaExample
 {
     public class CustomLoader : MonoBehaviour
     {

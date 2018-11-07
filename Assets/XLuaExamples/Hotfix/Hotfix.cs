@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using XLua;
 
-namespace EZhex1991.XLuaExample
+namespace EZUnity.XLuaExample
 {
     [Hotfix]
     public class Hotfix : MonoBehaviour

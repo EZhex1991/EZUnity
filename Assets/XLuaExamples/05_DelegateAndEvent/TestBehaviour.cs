@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XLua;
 
-namespace EZhex1991.XLuaExample
+namespace EZUnity.XLuaExample
 {
     public class TestBehaviour : MonoBehaviour
     {

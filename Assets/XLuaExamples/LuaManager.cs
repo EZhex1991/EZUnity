@@ -10,7 +10,7 @@ using System.IO;
 using UnityEngine;
 using XLua;
 
-namespace EZhex1991.XLuaExample
+namespace EZUnity.XLuaExample
 {
     [LuaCallCSharp]
     public class LuaManager : CustomLoader  // 不懂CustomLoader的看第一个例子
