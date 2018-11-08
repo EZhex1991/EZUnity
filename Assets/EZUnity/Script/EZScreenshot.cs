@@ -59,12 +59,6 @@ namespace EZUnity
             return tex;
         }
 
-        public bool videoRecord;
-        [Range(0, 10)]
-        public int frameSkip = 0;
-        public string videoPath = "EZScreenshots/Video";
-        public int frameCount { get; private set; }
-
         public static string GetFileName()
         {
             return string.Format("screenshot-{0}", DateTime.Now.ToString("yyyyMMdd-HHmmss"));
@@ -73,27 +67,12 @@ namespace EZUnity
         // ScreenCapture can be used only in play mode, and the path is related to project path and must have extension name
         public void ScreenCapture(string path, int superSize = 2)
         {
-            if (!Path.HasExtension(path)) path = path + ".png";
+            if (!Path.HasExtension(path)) path = path + ".jpg";
             UnityEngine.ScreenCapture.CaptureScreenshot(path, superSize);
         }
         public Texture2D ScreenCapture(int superSize = 2)
         {
             return UnityEngine.ScreenCapture.CaptureScreenshotAsTexture(superSize);
-        }
-
-        private void Start()
-        {
-            Directory.CreateDirectory(capturePath);
-            Directory.CreateDirectory(videoPath);
-        }
-
-        private void Update()
-        {
-            if (videoRecord && Time.frameCount % (frameSkip + 1) == 0)
-            {
-                ScreenCapture(Path.Combine(videoPath, GetFileName()));
-                frameCount++;
-            }
         }
     }
 }

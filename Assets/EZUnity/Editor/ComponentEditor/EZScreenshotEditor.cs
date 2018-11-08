@@ -13,25 +13,20 @@ namespace EZUnity
     public class EZScreenshotEditor : Editor
     {
         private EZScreenshot capturer { get { return target as EZScreenshot; } }
+
         private SerializedProperty m_Resolution;
         private SerializedProperty m_Format;
         private SerializedProperty m_CapturePath;
-        private SerializedProperty m_VideoRecord;
-        private SerializedProperty m_VideoPath;
-        private SerializedProperty m_FrameSkip;
 
         private void OnEnable()
         {
             m_Resolution = serializedObject.FindProperty("resolution");
             m_Format = serializedObject.FindProperty("format");
             m_CapturePath = serializedObject.FindProperty("capturePath");
-            m_VideoRecord = serializedObject.FindProperty("videoRecord");
-            m_VideoPath = serializedObject.FindProperty("videoPath");
-            m_FrameSkip = serializedObject.FindProperty("frameSkip");
         }
-
         public override void OnInspectorGUI()
         {
+            EZEditorGUIUtility.ScriptTitle(target);
             serializedObject.Update();
             EditorGUILayout.LabelField("Camera Capture", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_Resolution);
@@ -39,15 +34,14 @@ namespace EZUnity
             EditorGUILayout.PropertyField(m_CapturePath);
             if (GUILayout.Button("Capture"))
             {
+                if (!string.IsNullOrEmpty(m_CapturePath.stringValue)) Directory.CreateDirectory(m_CapturePath.stringValue);
                 Capture();
             }
-            EditorGUILayout.LabelField("Video Recorder", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(m_FrameSkip);
-            EditorGUILayout.LabelField("FrameCount", capturer.frameCount.ToString());
-            EditorGUILayout.PropertyField(m_VideoPath);
-            if (GUILayout.Button(m_VideoRecord.boolValue ? "Recording(While Game Playing)" : "Start Record"))
+            if (GUILayout.Button("Open Folder"))
             {
-                m_VideoRecord.boolValue = !m_VideoRecord.boolValue;
+                if (!string.IsNullOrEmpty(m_CapturePath.stringValue)) Directory.CreateDirectory(m_CapturePath.stringValue);
+                string projectPath = Application.dataPath.Substring(0, Application.dataPath.Length - 7);
+                Application.OpenURL(string.Format("file://{0}/{1}", projectPath, m_CapturePath.stringValue));
             }
             serializedObject.ApplyModifiedProperties();
         }
