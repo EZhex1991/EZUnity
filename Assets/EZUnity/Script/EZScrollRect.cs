@@ -40,9 +40,9 @@ namespace EZUnity
         public int focusingY { get; private set; }
 
         public delegate void OnBeginScrollAction();
-        public OnBeginScrollAction onBeginScrollEvent;
+        public event OnBeginScrollAction onBeginScrollEvent;
         public delegate void OnEndScrollAction(int x, int y);
-        public OnEndScrollAction onEndScrollEvent;
+        public event OnEndScrollAction onEndScrollEvent;
 
         private Vector2 step
         {
