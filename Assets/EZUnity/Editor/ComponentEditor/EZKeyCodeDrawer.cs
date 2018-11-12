@@ -16,7 +16,7 @@ namespace EZUnity
         {
             EditorGUI.BeginProperty(position, label, property);
             position.width -= 70;
-            EditorGUI.PropertyField(position, property);
+            EditorGUI.PropertyField(position, property, label);
             position.x += position.width;
             position.width = 65;
             if (GUI.Button(position, "KeyCode", EditorStyles.miniButton))
