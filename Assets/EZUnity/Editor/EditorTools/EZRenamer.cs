@@ -53,7 +53,7 @@ namespace EZUnity
             assetList.Clear();
             assetNameList.Clear();
             assetNameDict.Clear();
-            foreach (Object asset in Selection.GetFiltered<Object>(SelectionMode.Assets | SelectionMode.OnlyUserModifiable))
+            foreach (Object asset in Selection.GetFiltered<Object>(SelectionMode.Assets | SelectionMode.TopLevel))
             {
                 assetList.Add(asset);
                 assetNameList.Add(GetAssetName(asset));
