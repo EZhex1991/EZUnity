@@ -27,6 +27,7 @@ namespace EZUnity
             {
                 get
                 {
+                    CheckType(typeof(Object));
                     return m_ObjectValue;
                 }
             }
@@ -119,9 +120,20 @@ namespace EZUnity
                 }
             }
 
+            [SerializeField]
+            private KeyCode m_KeyCodeValue;
+            public KeyCode keyCodeValue
+            {
+                get
+                {
+                    CheckType(typeof(KeyCode));
+                    return m_KeyCodeValue;
+                }
+            }
+
             private bool CheckType(System.Type type)
             {
-                if (typeName != type.FullName)
+                if (System.Type.GetType(typeName).IsAssignableFrom(type))
                 {
                     Debug.LogErrorFormat("Type mismatch: expect {0}, current {1}", type.FullName, typeName);
                     return false;

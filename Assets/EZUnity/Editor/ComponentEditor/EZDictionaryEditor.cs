@@ -26,6 +26,7 @@ namespace EZUnity
             typeof(Vector3),
             typeof(Vector4),
             typeof(AnimationCurve),
+            typeof(KeyCode),
         };
         static EZDictionaryElementDrawer()
         {
@@ -69,9 +70,10 @@ namespace EZUnity
             SerializedProperty vector3Value = property.FindPropertyRelative("m_Vector3Value");
             SerializedProperty vector4Value = property.FindPropertyRelative("m_Vector4Value");
             SerializedProperty animationCurveValue = property.FindPropertyRelative("m_AnimationCurveValue");
+            SerializedProperty keyCodeValue = property.FindPropertyRelative("m_KeyCodeValue");
 
             float typeButtonWidth = 40;
-            if (GUI.Button(new Rect(rect.x, rect.y, typeButtonWidth, rect.height), "Type", EditorStyles.miniButton))
+            if (GUI.Button(new Rect(rect.x, rect.y, typeButtonWidth, EditorGUIUtility.singleLineHeight), "Type", EditorStyles.miniButton))
             {
                 DrawTypeMenu(delegate (object name)
                 {
@@ -99,6 +101,7 @@ namespace EZUnity
             else if (type == typeof(Vector3)) EditorGUI.PropertyField(rect, vector3Value, GUIContent.none);
             else if (type == typeof(Vector4)) EditorGUI.PropertyField(rect, vector4Value, GUIContent.none);
             else if (type == typeof(AnimationCurve)) EditorGUI.PropertyField(rect, animationCurveValue, GUIContent.none);
+            else if (type == typeof(KeyCode)) EditorGUI.PropertyField(rect, keyCodeValue, GUIContent.none);
             else objectValue.objectReferenceValue = EditorGUI.ObjectField(rect, GUIContent.none, objectValue.objectReferenceValue, type, true);
             EditorGUI.EndProperty();
             property.serializedObject.ApplyModifiedProperties();
@@ -111,14 +114,9 @@ namespace EZUnity
                 string space = typeList[i].Namespace;
                 string name = typeList[i].Name;
                 string fullName = typeList[i].FullName;
-                if (!typeList[i].IsSubclassOf(typeof(UnityEngine.Object)))
+                if (string.IsNullOrEmpty(space))
                 {
-                    space = "Non-Object";
-                    name = fullName;
-                }
-                else if (string.IsNullOrEmpty(space))
-                {
-                    space = "No Namespace";
+                    space = "No Namespace/" + name.Substring(0, 1);
                 }
                 else if (space == "UnityEngine")
                 {
