@@ -36,44 +36,21 @@ namespace EZUnity.XLuaExtension
                 }
             }
         }
-        private void SetByType<T>(LuaTable table, T key, Element injection)
+        private void SetByType<T>(LuaTable table, T key, EZSerializableProperty injection)
         {
-            if (injection.typeName == typeof(int).FullName)
-            {
-                table.Set(key, injection.intValue);
-            }
-            else if (injection.typeName == typeof(float).FullName)
-            {
-                table.Set(key, injection.floatValue);
-            }
-            else if (injection.typeName == typeof(bool).FullName)
-            {
-                table.Set(key, injection.boolValue);
-            }
-            else if (injection.typeName == typeof(string).FullName)
-            {
-                table.Set(key, injection.stringValue);
-            }
-            else if (injection.typeName == typeof(Vector2).FullName)
-            {
-                table.Set(key, injection.vector2Value);
-            }
-            else if (injection.typeName == typeof(Vector3).FullName)
-            {
-                table.Set(key, injection.vector3Value);
-            }
-            else if (injection.typeName == typeof(Vector4).FullName)
-            {
-                table.Set(key, injection.vector4Value);
-            }
-            else if (injection.typeName == typeof(AnimationCurve).FullName)
-            {
-                table.Set(key, injection.animationCurveValue);
-            }
-            else
-            {
-                table.Set(key, injection.objectValue);
-            }
+            if (injection.typeName == typeof(int).FullName) { table.Set(key, injection.intValue); }
+            else if (injection.typeName == typeof(long).FullName) { table.Set(key, injection.longValue); }
+            else if (injection.typeName == typeof(bool).FullName) { table.Set(key, injection.boolValue); }
+            else if (injection.typeName == typeof(float).FullName) { table.Set(key, injection.floatValue); }
+            else if (injection.typeName == typeof(double).FullName) { table.Set(key, injection.doubleValue); }
+            else if (injection.typeName == typeof(string).FullName) { table.Set(key, injection.stringValue); }
+            else if (injection.typeName == typeof(Color).FullName) { table.Set(key, injection.colorValue); }
+            else if (injection.typeName == typeof(AnimationCurve).FullName) { table.Set(key, injection.animationCurveValue); }
+            else if (injection.typeName == typeof(Vector2).FullName) { table.Set(key, injection.vector2Value); }
+            else if (injection.typeName == typeof(Vector3).FullName) { table.Set(key, injection.vector3Value); }
+            else if (injection.typeName == typeof(Vector2Int).FullName) { table.Set(key, injection.vector2IntValue); }
+            else if (injection.typeName == typeof(Vector3Int).FullName) { table.Set(key, injection.vector3IntValue); }
+            else { table.Set(key, injection.objectValue); }
         }
     }
 }

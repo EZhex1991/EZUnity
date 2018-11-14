@@ -67,7 +67,7 @@ namespace EZUnity.XLuaExtension
             typeof(EZUnity.EZSizeDriver),
             typeof(EZUnity.EZTransition),
             typeof(EZUnity.EZDictionary),
-            typeof(EZUnity.EZDictionary.Element),
+            typeof(EZUnity.EZSerializableProperty),
 
             typeof(EZUnity.EZLoadingPanel),
             typeof(EZUnity.EZUtility),
