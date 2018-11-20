@@ -18,7 +18,7 @@ Shader "EZUnity/Dynamic/Shield" {
 		[PowerSlider(8)]_SpecPower ("Spec Power", Range(0.1, 128)) = 16
 
 		[Header(Scanner)]
-		_ScannerTex ("Scanner Texture", 2D) = "white" {}
+		_ScannerTex ("Scanner Texture", 2D) = "black" {}
 		_ScannerColor ("Scanner Color", Color) = (1, 1, 1, 1)
 		_ScannerSpeed ("Scanner Speed(XY)", Vector) = (0, 0.3, 1, 1)
 	}
