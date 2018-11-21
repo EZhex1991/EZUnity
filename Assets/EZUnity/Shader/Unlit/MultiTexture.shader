@@ -13,13 +13,13 @@ Shader "EZUnity/MultiTexture" {
 		_Add1Tex ("Texture", 2D) = "black" {}
 		[KeywordEnum(UV0, UV1)] _Add1UV ("UV", Int) = 0
 		_Add1Color ("Color", Color) = (1, 1, 1, 1)
-		[KeywordEnum(Normal, Add)] _Add1BlendMode ("Blend Mode", Int) = 0
+		[KeywordEnum(AlphaBlend, Add)] _Add1BlendMode ("Blend Mode", Int) = 0
 		
 		[Header(Additional 2)]
 		_Add2Tex ("Texture", 2D) = "black" {}
 		[KeywordEnum(UV0, UV1)] _Add2UV ("UV", Int) = 0
 		_Add2Color ("Color", Color) = (1, 1, 1, 1)
-		[KeywordEnum(Normal, Add)] _Add2BlendMode ("Blend Mode", Int) = 0
+		[KeywordEnum(AlphaBlend, Add)] _Add2BlendMode ("Blend Mode", Int) = 0
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
