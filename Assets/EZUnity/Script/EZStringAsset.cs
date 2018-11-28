@@ -20,7 +20,7 @@ namespace EZUnity
         }
 
         [System.Serializable]
-        public struct Values
+        public class Values
         {
             public string key;
             [TextArea]
@@ -43,7 +43,10 @@ namespace EZUnity
             dict.Clear();
             for (int i = 0; i < m_Items.Length; i++)
             {
-                dict.Add(m_Items[i].key, m_Items[i]);
+                if (!dict.ContainsKey(m_Items[i].key))
+                {
+                    dict.Add(m_Items[i].key, m_Items[i]);
+                }
             }
         }
 
@@ -52,6 +55,13 @@ namespace EZUnity
             get
             {
                 return GetString(key);
+            }
+        }
+        public string this[int index]
+        {
+            get
+            {
+                return GetString(index);
             }
         }
 
@@ -63,6 +73,10 @@ namespace EZUnity
         {
             return GetString(key, GlobalLanguageSetting);
         }
+        public string GetString(int index)
+        {
+            return GetString(index, GlobalLanguageSetting);
+        }
         public string GetString(string key, Language language)
         {
             switch (language)
@@ -71,6 +85,24 @@ namespace EZUnity
                 case Language.English: return dict[key].en;
                 default: return dict[key].ch;
             }
+        }
+        public string GetString(int index, Language language)
+        {
+            switch (language)
+            {
+                case Language.Chinese: return m_Items[index].ch;
+                case Language.English: return m_Items[index].en;
+                default: return m_Items[index].ch;
+            }
+        }
+
+        public Values GetStrings(string key)
+        {
+            return dict[key];
+        }
+        public Values GetStrings(int index)
+        {
+            return m_Items[index];
         }
     }
 }

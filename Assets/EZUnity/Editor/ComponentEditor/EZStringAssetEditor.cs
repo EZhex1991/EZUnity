@@ -16,6 +16,7 @@ namespace EZUnity
         private ReorderableList itemList;
         private int itemIndex { get { return itemList.index == -1 ? 0 : itemList.index; } }
 
+        private EZStringAsset ezStringAsset { get { return target as EZStringAsset; } }
         private int selection;
         private Vector2 scrollPosition;
         private Vector2 textPosition;
@@ -47,19 +48,30 @@ namespace EZUnity
             float width = rect.width / 5; float margin = 3;
             if (index == itemIndex)
             {
+                Color color = GUI.backgroundColor;
+                if (ezStringAsset.GetStrings(index) != ezStringAsset.GetStrings(key.stringValue))
+                {
+                    GUI.backgroundColor = Color.red;
+                }
                 EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, rect.height), key, GUIContent.none);
                 rect.x += width;
                 EditorGUI.PropertyField(new Rect(rect.x, rect.y, width * 2 - margin, rect.height), ch);
                 rect.x += width * 2;
                 EditorGUI.PropertyField(new Rect(rect.x, rect.y, width * 2 - margin, rect.height), en);
+                GUI.backgroundColor = color;
             }
             else
             {
-                EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), key.stringValue);
+                GUIStyle style = new GUIStyle(EditorStyles.label);
+                if (ezStringAsset.GetStrings(index) != ezStringAsset.GetStrings(key.stringValue))
+                {
+                    style.normal.textColor = Color.red;
+                }
+                EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), key.stringValue, style);
                 rect.x += width;
-                EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - margin, rect.height), ch.stringValue);
+                EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - margin, rect.height), ch.stringValue, style);
                 rect.x += width * 2;
-                EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - margin, rect.height), en.stringValue);
+                EditorGUI.LabelField(new Rect(rect.x, rect.y, width * 2 - margin, rect.height), en.stringValue, style);
             }
         }
 
