@@ -12,7 +12,7 @@
   - EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行build。
   - Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
 
-## 基于XLua的逻辑热更方案
+## 基于XLua的逻辑热更方案（需要加宏'XLUA'启用）
 
 - [XLuaExtension](Assets/EZUnity/XLuaExtension)
 - [Example](Assets/Example)
