@@ -480,7 +480,7 @@ namespace EZUnity.Framework
 #if UNITY_EDITOR    // Editor+Develop模式下不加载bundle，直接读场景文件（需要将场景加到BuildSettings，打包时取消勾选）
             if (ezApplication.runMode != RunMode.Develop)
 #endif
-                LoadBundle(sceneName);
+                LoadBundle(bundleName);
             SceneManager.LoadScene(sceneName, mode);
         }
         // 异步加载场景，把异步封装成了同步+回调
@@ -490,6 +490,7 @@ namespace EZUnity.Framework
         }
         IEnumerator Cor_LoadSceneAsync(string bundleName, string sceneName, LoadSceneMode loadSceneMode, OnSceneChangedAction action)
         {
+            yield return null;
 #if UNITY_EDITOR    // Editor+Develop模式下不加载bundle，直接读场景文件（需要将场景加到BuildSettings，打包时取消勾选）
             if (ezApplication.runMode != RunMode.Develop)
 #endif
