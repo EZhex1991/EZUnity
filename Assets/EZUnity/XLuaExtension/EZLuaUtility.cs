@@ -79,6 +79,12 @@ namespace EZUnity.XLuaExtension
             return System.String.Format(format, args);
         }
 
+        // 枚举到int的转换
+        public static int ToInt32(object value)
+        {
+            return System.Convert.ToInt32(value);
+        }
+
         // 变量是否为空的判断由C#来做比较保险
         public static bool IsNull(Object o)
         {
