@@ -16,7 +16,10 @@ namespace EZUnity.XLuaExtension
         [LuaCallCSharp]
         public static List<Type> LuaCallCSharp = new List<Type>()
         {
-
+            typeof(System.Collections.Generic.List<int>),
+            typeof(System.Collections.Generic.List<float>),
+            typeof(System.Collections.Generic.List<string>),
+            typeof(System.Collections.Generic.List<bool>),
         };
 
         [CSharpCallLua]

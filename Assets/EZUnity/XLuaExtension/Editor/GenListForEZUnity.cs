@@ -24,6 +24,8 @@ namespace EZUnity.XLuaExtension
             typeof(EZUnity.Framework.EZWWWQueue),
             typeof(EZUnity.Framework.EZWWWQueue.Status),
             typeof(EZUnity.Framework.EZWWWQueue.Task),
+            typeof(EZUnity.Framework.Events.EZEvent),
+            typeof(EZUnity.Framework.Events.EZEventHub),
 
             typeof(EZUnity.UniSDK.Base.PolyAD),
             typeof(EZUnity.UniSDK.Base.Notification),
@@ -84,6 +86,7 @@ namespace EZUnity.XLuaExtension
             typeof(EZUnity.Framework.EZResources.OnBundleLoadedAction),
             typeof(EZUnity.Framework.EZWWWQueue.Task.OnProgressAction),
             typeof(EZUnity.Framework.EZWWWQueue.Task.OnStopAction),
+            typeof(EZUnity.Framework.Events.EZEventHandler),
 
             typeof(EZUnity.UniSDK.Base.OnResultCallback),
             typeof(EZUnity.UniSDK.Base.OnDataCallback),
