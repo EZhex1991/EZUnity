@@ -28,14 +28,18 @@ namespace EZUnity
         {
             EZEditorGUIUtility.ScriptTitle(target);
             serializedObject.Update();
-            EditorGUILayout.LabelField("Camera Capture", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_Resolution);
             EditorGUILayout.PropertyField(m_Format);
             EditorGUILayout.PropertyField(m_CapturePath);
-            if (GUILayout.Button("Capture"))
+            if (GUILayout.Button("Camera Capture"))
             {
                 if (!string.IsNullOrEmpty(m_CapturePath.stringValue)) Directory.CreateDirectory(m_CapturePath.stringValue);
-                Capture();
+                CameraCapture();
+            }
+            if (GUILayout.Button("Screen Capture"))
+            {
+                if (!string.IsNullOrEmpty(m_CapturePath.stringValue)) Directory.CreateDirectory(m_CapturePath.stringValue);
+                ScreenCapture();
             }
             if (GUILayout.Button("Open Folder"))
             {
@@ -46,13 +50,23 @@ namespace EZUnity
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void Capture()
+        private void CameraCapture()
         {
             string folderPath = m_CapturePath.stringValue;
             if (!string.IsNullOrEmpty(folderPath)) Directory.CreateDirectory(folderPath);
             string fileName = EZScreenshot.GetFileName();
             string path = string.Format("{0}/{1}.{2}", folderPath, fileName, "png");
             capturer.CameraCapture(path);
+            AssetDatabase.Refresh();
+        }
+
+        private void ScreenCapture()
+        {
+            string folderPath = m_CapturePath.stringValue;
+            if (!string.IsNullOrEmpty(folderPath)) Directory.CreateDirectory(folderPath);
+            string fileName = EZScreenshot.GetFileName();
+            string path = string.Format("{0}/{1}.{2}", folderPath, fileName, "png");
+            capturer.ScreenCapture(path);
             AssetDatabase.Refresh();
         }
     }
