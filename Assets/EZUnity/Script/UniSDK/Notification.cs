@@ -61,13 +61,12 @@ namespace EZUnity.UniSDK
         public override void ResetBadgeNumber()
         {
             LocalNotification ntf = new LocalNotification();
-            ntf.fireDate = DateTime.Now.AddSeconds(1);
+            ntf.fireDate = DateTime.Now.AddSeconds(1.5);
             ntf.applicationIconBadgeNumber = -1;
             NotificationServices.ScheduleLocalNotification(ntf);
         }
-        public override void ClearNotifications()
+        public override void ClearLocalNotifications()
         {
-            NotificationServices.CancelAllLocalNotifications();
             NotificationServices.ClearLocalNotifications();
         }
 #elif UNITY_ANDROID

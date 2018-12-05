@@ -5,6 +5,7 @@
  * 
 */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,14 +21,14 @@ namespace EZUnity.UniSDK.Base
 
         protected override void Init()
         {
-            ClearNotifications();
+            ClearLocalNotifications();
         }
         protected override void Dispose()
         {
 
         }
 
-        protected virtual void OnApplicationPause(bool pauseStatus)
+        protected virtual IEnumerator OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus)
             {
@@ -39,10 +40,12 @@ namespace EZUnity.UniSDK.Base
                     if (seconds >= 10)
                         ScheduleNotification(message, seconds);
                 }
+                yield return null;
             }
             else
             {
-                ClearNotifications();
+                yield return null;
+                ClearLocalNotifications();
             }
         }
 
@@ -81,7 +84,7 @@ namespace EZUnity.UniSDK.Base
 
         }
 
-        public virtual void ClearNotifications()
+        public virtual void ClearLocalNotifications()
         {
 
         }
