@@ -27,6 +27,12 @@ namespace EZUnity.XLuaExample
                 function ReturnTable()
                     return { intValue = 2, floatValue = 2.5, stringValue = 'TableFromLua' }
                 end
+                function ArrayParamTest()
+                    local ArrayTest = CS.EZUnity.XLuaExample.FromLua.ArrayTest
+                    local Color = CS.UnityEngine.Color
+                    ArrayTest({ Color.red, Color.green, Color.blue }, 0)
+                    ArrayTest({ Color.red, Color.green, Color.blue }, 1)
+                end
             ");
             int intValue = 0;
             float floatValue = 0;
@@ -43,7 +49,15 @@ namespace EZUnity.XLuaExample
             stringValue = table.Get<string>("stringValue");
             print(string.Format("intValue={0}, floatValue={1}, stringValue={2}", intValue, floatValue, stringValue));
 
+            LuaFunction func3 = luaEnv.Global.Get<LuaFunction>("ArrayParamTest");
+            func3.Call();
+
             table.ForEach<string, object>((key, value) => print(string.Format("{0}={1}, type:{2}", key, value, value.GetType())));
+        }
+
+        public static void ArrayTest(Color[] colors, int index)
+        {
+            Debug.Log(colors[index]);
         }
     }
 }
