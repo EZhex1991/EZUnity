@@ -9,14 +9,14 @@ Shader "EZUnity/Dynamic/PlaneFlame" {
 		_FlameTex ("Flame Texture(R)", 2D) = "white" {}
 		_FlameNoise1 ("Noise1 UV(RG) Alpha(B)", 2D) = "black" {}
 		_FlameNoise2 ("Noise2 UV(RG) Alpha(B)", 2D) = "black" {}
-		_FlameColor1 ("Flame Color1", Color) = (1, 0, 0, 1)
-		_FlameColor2 ("Flame Color2", Color) = (0.95, 0.5, 0, 1)
+		[HDR] _FlameColor1 ("Flame Color1", Color) = (1, 0, 0, 1)
+		[HDR] _FlameColor2 ("Flame Color2", Color) = (0.95, 0.5, 0, 1)
 		_Flame1 ("Flame1 Speed(XY) Alpha(Z) Noise(W)", Vector) = (-0.1, -0.3, 0.9, 1)
 		_Flame2 ("Flame2 Speed(XY) Alpha(Z) Noise(W)", Vector) = (0.12, -0.6, 0.8, 1)
 		
 		[Header(Alpha Wave Waves(X) Speed(Y) Height(Z) Power(W))]
-		_AlphaWave1 ("Alpha Wave1", Vector) = (1.975, 0.793, 0.15, 0.7)
-		_AlphaWave2 ("Alpha Wave2", Vector) = (0.375, 0.193, 0.2, 0.4)
+		_AlphaWave1 ("Alpha Wave1", Vector) = (1.975, 0.375, 0.193, 0.793)
+		_AlphaWave2 ("Alpha Wave2", Vector) = (0.793, 0.375, 0.193, 1.975)
 	}
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
