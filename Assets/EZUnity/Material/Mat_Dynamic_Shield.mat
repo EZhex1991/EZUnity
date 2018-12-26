@@ -34,4 +34,4 @@ Material:
     - _Color: {r: 0, g: 0, b: 1, a: 1}
     - _ScannerColor: {r: 1, g: 1, b: 1, a: 0.2}
     - _ScannerSpeed: {r: 0, g: 0.3, b: 1, a: 1}
-    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecColor: {r: 3.9999995, g: 3.9999995, b: 3.9999995, a: 1}

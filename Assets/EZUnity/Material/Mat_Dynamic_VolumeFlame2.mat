@@ -92,7 +92,7 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flame1: {r: -0.1, g: -0.3, b: 1.2, a: 1}
     - _Flame2: {r: 0.12, g: -0.6, b: 1.2, a: 1}
-    - _FlameColor1: {r: 1, g: 0, b: 0, a: 1}
-    - _FlameColor2: {r: 0.95, g: 0.5, b: 0, a: 1}
+    - _FlameColor1: {r: 2, g: 0, b: 0, a: 1}
+    - _FlameColor2: {r: 1.8980392, g: 1.0039216, b: 0, a: 1}
     - _VertexShape: {r: 1, g: 1, b: 1, a: 1}
     - _VertexWave: {r: 0.193, g: 0.375, b: 0.793, a: 1.975}
