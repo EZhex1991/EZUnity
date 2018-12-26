@@ -3,7 +3,7 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/UnlitHDR" {
+Shader "EZUnity/Unlit/HDR" {
 	Properties {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
