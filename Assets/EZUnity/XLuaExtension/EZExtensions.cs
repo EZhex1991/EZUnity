@@ -6,7 +6,6 @@
 */
 #if XLUA
 using EZUnity.Framework;
-using EZUnity.UniSDK.Base;
 using EZUnity.XLuaExtension;
 using UnityEngine;
 using XLua;
@@ -55,19 +54,6 @@ namespace EZUnity
         public static Texture LoadTextture(this EZResources instance, string bundleName, string assetName)
         {
             return instance.LoadAsset<Texture>(bundleName, assetName);
-        }
-
-        public static void SetInt(this UnityAnalytics.CustomEvent customEvent, string key, int value)
-        {
-            customEvent.SetData<int>(key, value);
-        }
-        public static void SetFloat(this UnityAnalytics.CustomEvent customEvent, string key, float value)
-        {
-            customEvent.SetData<float>(key, value);
-        }
-        public static void SetString(this UnityAnalytics.CustomEvent customEvent, string key, string value)
-        {
-            customEvent.SetData<string>(key, value);
         }
 
         public static EZLuaBehaviour GetLuaBehaviour(this GameObject go, string moduleName)

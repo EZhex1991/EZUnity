@@ -29,8 +29,6 @@ namespace EZUnity.XLuaExtension
 
             typeof(EZUnity.UniSDK.Base.PolyAD),
             typeof(EZUnity.UniSDK.Base.Notification),
-            typeof(EZUnity.UniSDK.Base.UnityAnalytics),
-            typeof(EZUnity.UniSDK.Base.UnityAnalytics.CustomEvent),
             typeof(EZUnity.UniSDK.Base.UnityPurchasing),
             typeof(EZUnity.UniSDK.Base.UnityPurchasing.CustomProduct),
             typeof(EZUnity.UniSDK.Base.UnityPurchasing.ReceiptContent),
