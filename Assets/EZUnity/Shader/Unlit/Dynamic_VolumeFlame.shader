@@ -9,8 +9,8 @@ Shader "EZUnity/Dynamic/VolumeFlame" {
 		_FlameTex ("Flame Texture(R)", 2D) = "white" {}
 		_FlameNoise1 ("Noise1 UV(RG) Alpha(B)", 2D) = "black" {}
 		_FlameNoise2 ("Noise2 UV(RG) Alpha(B)", 2D) = "black" {}
-		_FlameColor1 ("Flame Color1", Color) = (1, 0, 0, 1)
-		_FlameColor2 ("Flame Color2", Color) = (0.95, 0.5, 0, 1)
+		[HDR] _FlameColor1 ("Flame Color1", Color) = (1, 0, 0, 1)
+		[HDR] _FlameColor2 ("Flame Color2", Color) = (0.95, 0.5, 0, 1)
 		_Flame1 ("Flame1 Speed(XY) Alpha(Z) Noise(W)", Vector) = (-0.1, -0.3, 1, 1)
 		_Flame2 ("Flame2 Speed(XY) Alpha(Z) Noise(W)", Vector) = (0.12, -0.6, 1, 1)
 
@@ -73,14 +73,8 @@ Shader "EZUnity/Dynamic/VolumeFlame" {
 				o.worldViewDir = normalize(WorldSpaceViewDir(v.vertex));
 				return o;
 			}
-			fixed uvAlphaByWave (float2 uv, fixed4 flameWave) {
-				fixed waveX = uv.x * flameWave.x + flameWave.y * _Time.y;
-				fixed waveY = (sin(waveX * 6.28) + 1) * flameWave.z * 0.5;
-				fixed alpha = pow(1 - saturate(uv.y / (1 -  waveY)), flameWave.w);
-				return alpha;
-			}
 			fixed4 frag (v2f i) : SV_Target {
-				fixed alpha = pow(abs(dot(i.worldViewDir, i.worldNormal)), _VertexAlphaPower);
+				fixed alpha = saturate(pow(abs(dot(i.worldViewDir, i.worldNormal)), _VertexAlphaPower));
 				fixed2 uv1 = frac(i.uv + _Flame1.xy * _Time.y);
 				fixed2 uv2 = frac(i.uv + _Flame2.xy * _Time.y);
 				fixed4 noise1 = tex2D(_FlameNoise1, uv1) * _Flame1.w;
