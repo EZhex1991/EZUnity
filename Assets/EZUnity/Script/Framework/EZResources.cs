@@ -192,7 +192,7 @@ namespace EZUnity.Framework
                 {
                     if (string.IsNullOrEmpty(infoList[i])) continue;
                     FileInfo info = JsonUtility.FromJson<FileInfo>(infoList[i]);
-                    if (fileList.ContainsKey(info.fileName) && fileList[info.fileName].md5 != info.md5) continue;
+                    if (fileList.ContainsKey(info.fileName) && fileList[info.fileName].md5 == info.md5) continue;
                     info.filePath = Path.Combine(ezApplication.persistentDataPath, info.fileName);
                     if (File.Exists(info.filePath) && CalcFileMD5(info.filePath) == info.md5)
                     {
