@@ -7,8 +7,13 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public static partial class EZExtensions
+    public static partial class EZUnityExtensions
     {
+        public static bool Contains(this LayerMask mask, int layer)
+        {
+            return (mask | (1 << layer)) == mask;
+        }
+
         public static Vector2 GetSize(this RectTransform rt)
         {
             Vector2 anchorDistance = rt.anchorMax - rt.anchorMin;
@@ -103,6 +108,11 @@ namespace EZUnity
             tf.localEulerAngles = angles;
         }
 
+        public static Vector2 Abs(this Vector2 v)
+        {
+            return new Vector2(Mathf.Abs(v.x), Mathf.Abs(v.y));
+        }
+
         public static Vector3 EulerNormalize(this Vector3 angles)
         {
             for (int i = 0; i < 3; i++)
@@ -111,6 +121,10 @@ namespace EZUnity
                 else if (angles[i] > 180) angles[i] = angles[i] - 360;
             }
             return angles;
+        }
+        public static Vector3 Abs(this Vector3 v)
+        {
+            return new Vector3(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
         }
 
         public static float Magnitude(this Quaternion rotation)
