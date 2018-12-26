@@ -14,12 +14,12 @@ Shader "EZUnity/Dynamic/Shield" {
 		
 		[Header(Specular)]
 		_SpecAtten ("Spec Atten", Range(0, 1)) = 1
-		[HDR]_SpecColor ("Spec Color", Color) = (1, 1, 1, 1)
+		[HDR] _SpecColor ("Spec Color", Color) = (1, 1, 1, 1)
 		[PowerSlider(8)]_SpecPower ("Spec Power", Range(0.1, 128)) = 16
 
 		[Header(Scanner)]
 		_ScannerTex ("Scanner Texture", 2D) = "black" {}
-		_ScannerColor ("Scanner Color", Color) = (1, 1, 1, 1)
+		[HDR] _ScannerColor ("Scanner Color", Color) = (1, 1, 1, 1)
 		_ScannerSpeed ("Scanner Speed(XY)", Vector) = (0, 0.3, 1, 1)
 	}
 	SubShader {
