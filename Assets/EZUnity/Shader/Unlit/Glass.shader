@@ -24,7 +24,7 @@ Shader "EZUnity/Glass" {
 		
 		[Header(Specular)]
 		_SpecAtten ("Spec Atten", Range(0, 1)) = 1
-		[HDR]_SpecColor ("Spec Color", Color) = (1, 1, 1, 1)
+		[HDR] _SpecColor ("Spec Color", Color) = (1, 1, 1, 1)
 		[PowerSlider(8)]_SpecPower ("Spec Power", Range(0.1, 128)) = 16
 	}
 	SubShader {
