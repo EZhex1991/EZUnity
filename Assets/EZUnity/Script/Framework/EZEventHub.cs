@@ -24,7 +24,7 @@ namespace EZUnity.Framework.Events
             LogFormat("Event {0} From {1}", eventKey, sender);
             int intKey = eventKey.GetHashCode();
             EZEvent e;
-            if (m_Events.TryGetValue(eventKey.GetHashCode(), out e))
+            if (m_Events.TryGetValue(intKey, out e))
             {
                 e.SendEvent(sender, value);
             }
