@@ -1,1 +1,5 @@
-![](.Sample/EZPhysicsBoneSample.gif)
+# PhysicsComponent
+
+## EZPhysicsBone
+
+![Sample](.Sample/EZPhysicsBoneSample.gif)

@@ -2,6 +2,10 @@
 
 ## 常用组件和编辑器扩展  
 
+- [EZPhysicsBone](Assets/EZUnity/Script/PhysicsComponent): 动态骨骼，效果参考来源于AssetStore上的DynamicBone，但逻辑差异较大，工作流程更多考虑的是自己目前的项目需求。
+  - 相对优势: 支持所有碰撞体（包括MeshCollider，但效果一般）；独立的材质"EZPhysicsBoneMaterial"存放参数，通用性强；代码可读性高，碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义。
+  - 相对劣势: 结构复杂性提高，效率上没有做优化；（暂时）没有与项目中的其他逻辑解耦；一些没读懂的逻辑没有做还原，功能不完善。
+
 - EZRenamer: 批量重命名工具，支持正则式匹配，整理资源目录很方便
 - EZPlayerPrefsEditor: 用于在编辑器下对PlayerPrefs进行编辑，目前只有Win下5.x以上版本可以用
 - [EZScripting](Assets/EZUnity/Editor/EditorTools/Scripting):
