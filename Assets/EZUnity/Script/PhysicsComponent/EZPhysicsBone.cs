@@ -11,6 +11,8 @@ namespace EZUnity.PhysicsCompnent
 {
     public class EZPhysicsBone : MonoBehaviour
     {
+        public static List<EZPhysicsBone> EnabledBones = new List<EZPhysicsBone>();
+
         public class TreeNode : IDisposable
         {
             public TreeNode parent;
@@ -213,6 +215,9 @@ namespace EZUnity.PhysicsCompnent
         [SerializeField]
         private Vector3 m_Gravity;
         public Vector3 gravity { get { return m_Gravity; } set { m_Gravity = value; } }
+        [SerializeField]
+        private EZPhysicsBoneForce m_ForceModule;
+        public EZPhysicsBoneForce forceModule { get { return m_ForceModule; } set { m_ForceModule = value; } }
 
         private List<TreeNode> m_PhysicsTrees = new List<TreeNode>();
 
@@ -222,6 +227,7 @@ namespace EZUnity.PhysicsCompnent
         }
         private void OnEnable()
         {
+            EnabledBones.Add(this);
             ResyncPhysicsTrees();
         }
         private void FixedUpdate()
@@ -242,6 +248,7 @@ namespace EZUnity.PhysicsCompnent
         private void OnDisable()
         {
             RevertTransforms();
+            EnabledBones.Remove(this);
         }
 
         private void OnValidate()
@@ -261,7 +268,6 @@ namespace EZUnity.PhysicsCompnent
 
             if (Application.isEditor && !Application.isPlaying && transform.hasChanged)
             {
-                RevertTransforms();
                 InitPhysicsTrees();
             }
 
@@ -311,13 +317,18 @@ namespace EZUnity.PhysicsCompnent
         {
             if (node.depth > startDepth)
             {
-
-                // Elasticity (Outside force effection)
-                node.position += gravity * (1 - sharedMaterial.GetResistance(node.normalizedLength));
                 // Damping (inertia attenuation)
                 Vector3 movement = node.position - node.lastPosition;
                 node.lastPosition = node.position;
                 node.position += movement * (1 - sharedMaterial.GetDamping(node.normalizedLength));
+
+                // Resistance (outside force resistance)
+                Vector3 force = gravity;
+                if (forceModule != null)
+                {
+                    force += forceModule.outputForce;
+                }
+                node.position += force * (1 - sharedMaterial.GetResistance(node.normalizedLength));
 
                 // Stiffness (shape keeper)
                 Vector3 parentOffset = node.parent.position - node.parent.transform.position;
@@ -326,7 +337,7 @@ namespace EZUnity.PhysicsCompnent
                 node.position += offset * sharedMaterial.GetStiffness(node.normalizedLength);
 
                 // Collision
-                if (radius > 0)
+                if (node.radius > 0)
                 {
                     foreach (EZPhysicsBoneColliderBase collider in EZPhysicsBoneColliderBase.EnabledColliders)
                     {

@@ -28,7 +28,7 @@ namespace EZUnity.PhysicsCompnent
         private float m_Resistance = 0.9f;
         public float resistance { get { return m_Resistance; } set { m_Resistance = Mathf.Clamp01(value); } }
         [SerializeField, EZCurve(0, 0, 1, 1)]
-        private AnimationCurve m_ResistanceCurve = AnimationCurve.Linear(0, 1, 1, 0);
+        private AnimationCurve m_ResistanceCurve = AnimationCurve.Linear(0, 1, 1, 0.9f);
         public AnimationCurve resistanceCurve { get { return m_ResistanceCurve; } }
 
         [SerializeField, Range(0, 1)]
