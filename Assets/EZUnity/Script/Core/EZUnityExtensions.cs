@@ -1,4 +1,4 @@
-/* Author:          熊哲
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-06-13 19:19:11
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -147,7 +147,7 @@ namespace EZUnity
             rotation.w *= multiplier;
             return rotation;
         }
-#if UNITY_2018_1
+#if !UNITY_2018_2_OR_NEWER
         public static Quaternion Normalize(this Quaternion rotation)
         {
             float magnitude = rotation.Magnitude();
