@@ -2,7 +2,7 @@
 
 ## 常用组件和编辑器扩展  
 
-- [EZPhysicsBone](Assets/EZUnity/Script/PhysicsComponent): 动态骨骼，效果参考来源于AssetStore上的DynamicBone，但逻辑差异较大，工作流程更多考虑的是自己目前的项目需求。
+- [EZPhysicsBone](Assets/EZUnity/EZPhysicsBone): 动态骨骼，效果参考来源于AssetStore上的DynamicBone，但逻辑差异较大，工作流程更多考虑的是自己目前的项目需求。
   - 相对优势: 支持所有碰撞体（包括MeshCollider，但效果一般）；独立的材质"EZPhysicsBoneMaterial"存放参数，通用性强；代码可读性高，碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义。
   - 相对劣势: 结构复杂性提高，效率上没有做优化；（暂时）没有与项目中的其他逻辑解耦；一些没读懂的逻辑没有做还原，功能不完善。
 
@@ -29,7 +29,7 @@
 
 - 实际上这半年是一直在做一些小的改动，但是项目时间紧张，完全没有保持之前的结构，与项目耦合度很高，而且考虑到项目的一些保密原则没有继续更新，所以本次提交有**相当大的改动**
 - 项目一直保持与Unity同步更新，所以提交前测试使用的版本是较新的**2018.2.7f1，旧版本可能无法打开**，PS: 以后可能会考虑使用Unity的LTS版本进行测试
-- 目录结构优化，移除了部分第三方插件的依赖；XLua的扩展部分放到了一个目录，不需要的可以删除；如果使用`EZUnity.Framework`，文件存放位置放到了"工程目录/EZUnity"下（以前在"工程目录/Assets/EZUnity"下）
+- 目录结构优化，移除了部分第三方插件的依赖；XLua的扩展部分放到了一个目录，不需要的可以删除；如果使用`EZUnity.Framework`，文件存放位置放到了"工程目录/EZPersistent"下（以前在"工程目录/Assets/EZUnity"下）
 - 取消了一些在固定目录下生成自定义Asset并打开自定义Window的选项，所有自定义Asset都需要通过`Assets/Create/EZUnity`菜单(同Project视图下的右键)进行创建，并在Inspector视图下编辑
 - 命名空间统一以`EZUnity`开头
   - `EZUnity.Famework`（以前的`EZFramework`，优化了很多东西）
