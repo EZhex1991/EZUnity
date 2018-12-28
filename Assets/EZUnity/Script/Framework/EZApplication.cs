@@ -28,9 +28,9 @@ namespace EZUnity.Framework
             get
             {
 #if UNITY_EDITOR
-                return Application.dataPath.Substring(0, Application.dataPath.Length - 6) + "EZUnity/";
+                return Application.dataPath.Substring(0, Application.dataPath.Length - 6) + "EZPersistent/";
 #else
-                return Application.persistentDataPath + "/EZUnity/"; // 部分设备persistent没有删除权限，建立子文件夹读写更方便
+                return Application.persistentDataPath + "/EZPersistent/"; // 部分设备persistent没有删除权限，建立子文件夹读写更方便
 #endif
             }
         }

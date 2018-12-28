@@ -14,7 +14,8 @@
 *.config
 *.code-workspace
 
-/EZUnity
+/EZPersistent
+/EZScreenshots
 /Library
 /obj
 /Packages
