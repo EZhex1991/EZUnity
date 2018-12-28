@@ -3,7 +3,6 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EZUnity.PhysicsCompnent
@@ -26,11 +25,11 @@ namespace EZUnity.PhysicsCompnent
         private float m_TurbulenceTimeCycle = 2f;
         public float turbulenceTimeCycle { get { return m_TurbulenceTimeCycle; } set { m_TurbulenceTimeCycle = Mathf.Max(0, value); } }
 
-        [SerializeField, EZCurve(0, -1, 1, 2)]
+        [SerializeField, EZCurveRange(0, -1, 1, 2)]
         private AnimationCurve m_TurbulenceXCurve = AnimationCurve.Linear(0, -1, 1, 1);
-        [SerializeField, EZCurve(0, -1, 1, 2)]
+        [SerializeField, EZCurveRange(0, -1, 1, 2)]
         private AnimationCurve m_TurbulenceYCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        [SerializeField, EZCurve(0, -1, 1, 2)]
+        [SerializeField, EZCurveRange(0, -1, 1, 2)]
         private AnimationCurve m_TurbulenceZCurve = AnimationCurve.EaseInOut(0, 1, 1, -1);
 
         public Vector3 outputForce { get; set; }

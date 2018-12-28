@@ -84,6 +84,7 @@ namespace EZUnity.PhysicsCompnent
 
             public void Inflate(float baseRadius, AnimationCurve radiusCurve, bool recursive)
             {
+                if (treeLength <= 0) return;
                 normalizedLength = boneLength / treeLength;
                 radius = radiusCurve.Evaluate(normalizedLength) * baseRadius;
                 if (recursive)
@@ -207,7 +208,7 @@ namespace EZUnity.PhysicsCompnent
         [SerializeField]
         private float m_Radius = 0;
         public float radius { get { return m_Radius; } }
-        [SerializeField, EZCurve(0, 0, 1, 1)]
+        [SerializeField, EZCurveRange(0, 0, 1, 1)]
         private AnimationCurve m_RadiusCurve = AnimationCurve.Constant(0, 1, 1);
         public AnimationCurve radiusCurve { get { return m_RadiusCurve; } }
 

@@ -8,15 +8,15 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CustomPropertyDrawer(typeof(EZCurveAttribute))]
+    [CustomPropertyDrawer(typeof(EZCurveRangeAttribute))]
     public class EZCurveRangePropertyDrawer : PropertyDrawer
     {
-        private EZCurveAttribute curveAttribute { get { return attribute as EZCurveAttribute; } }
+        private EZCurveRangeAttribute curveRangeAttribute { get { return attribute as EZCurveRangeAttribute; } }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            EditorGUI.CurveField(position, property, curveAttribute.color, curveAttribute.range, label);
+            EditorGUI.CurveField(position, property, curveRangeAttribute.color, curveRangeAttribute.range, label);
             EditorGUI.EndProperty();
         }
     }
