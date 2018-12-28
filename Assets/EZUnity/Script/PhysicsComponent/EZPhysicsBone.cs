@@ -327,7 +327,7 @@ namespace EZUnity.PhysicsCompnent
                 Vector3 force = gravity;
                 if (forceModule != null)
                 {
-                    force += forceModule.outputForce;
+                    force += forceModule.GetForce(node.normalizedLength);
                 }
                 node.position += force * (1 - sharedMaterial.GetResistance(node.normalizedLength));
 
@@ -342,12 +342,12 @@ namespace EZUnity.PhysicsCompnent
                 {
                     foreach (EZPhysicsBoneColliderBase collider in EZPhysicsBoneColliderBase.EnabledColliders)
                     {
-                        if (collisionLayers.Contains(collider.gameObject.layer))
+                        if (node.transform != collider.transform && collisionLayers.Contains(collider.gameObject.layer))
                             collider.Collide(ref node.position, node.radius);
                     }
                     foreach (Collider collider in extraColliders)
                     {
-                        if (collider.enabled)
+                        if (node.transform != collider.transform && collider.enabled)
                             EZPhysicsUtility.SphereOutsideCollider(ref node.position, collider, node.radius);
                     }
                 }
@@ -357,7 +357,7 @@ namespace EZUnity.PhysicsCompnent
                 Vector3 lengthKeeper = node.parent.position + nodeDir * node.nodeLength;
                 node.position = Vector3.Lerp(lengthKeeper, node.position, sharedMaterial.GetSlackness(node.normalizedLength));
             }
-            else
+            else if (node.transform != null)
             {
                 // root nodes should keep its displacement
                 node.lastPosition = node.position;

@@ -25,6 +25,10 @@ namespace EZUnity.PhysicsCompnent
         private float m_TurbulenceTimeCycle = 2f;
         public float turbulenceTimeCycle { get { return m_TurbulenceTimeCycle; } set { m_TurbulenceTimeCycle = Mathf.Max(0, value); } }
 
+        [SerializeField, Range(0, 1)]
+        private float m_Conductivity = 0.15f;
+        public float conductivity { get { return m_Conductivity; } set { m_Conductivity = value; } }
+
         [SerializeField, EZCurveRange(0, -1, 1, 2)]
         private AnimationCurve m_TurbulenceXCurve = AnimationCurve.Linear(0, -1, 1, 1);
         [SerializeField, EZCurveRange(0, -1, 1, 2)]
@@ -32,22 +36,21 @@ namespace EZUnity.PhysicsCompnent
         [SerializeField, EZCurveRange(0, -1, 1, 2)]
         private AnimationCurve m_TurbulenceZCurve = AnimationCurve.EaseInOut(0, 1, 1, -1);
 
-        public Vector3 outputForce { get; set; }
-
-        private void Update()
+        public Vector3 GetForce(float normalizedLength)
         {
             float t = (Time.time % m_TurbulenceTimeCycle) / m_TurbulenceTimeCycle;
+            t = (t - conductivity * normalizedLength) % 1f;
             Vector3 tbl = turbulence;
             tbl.x *= m_TurbulenceXCurve.Evaluate(t);
             tbl.y *= m_TurbulenceYCurve.Evaluate(t);
             tbl.z *= m_TurbulenceZCurve.Evaluate(t);
             if (useLocalDirection)
             {
-                outputForce = transform.TransformDirection(direction + tbl);
+                return transform.TransformDirection(direction + tbl);
             }
             else
             {
-                outputForce = direction + tbl;
+                return direction + tbl;
             }
         }
     }
