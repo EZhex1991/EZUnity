@@ -38,6 +38,7 @@ namespace EZUnity.PhysicsCompnent
 
         public Vector3 GetForce(float normalizedLength)
         {
+            if (!isActiveAndEnabled) return Vector3.zero;
             float t = (Time.time % m_TurbulenceTimeCycle) / m_TurbulenceTimeCycle;
             t = (t - conductivity * normalizedLength) % 1f;
             Vector3 tbl = turbulence;
