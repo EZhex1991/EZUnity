@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9d9656f4da33d48a28beaf0dfd13df, type: 3}
   m_Name: PBMat_Tail_2
   m_EditorClassIdentifier: 
-  m_Damping: 0.2
+  m_Damping: 0.3
   m_DampingCurve:
     serializedVersion: 2
     m_Curve:
