@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace EZUnity.PhysicsCompnent
 {
-    [CreateAssetMenu(fileName = "EZPhysicsBoneMaterial", menuName = "EZUnity/EZPhysicsBoneMaterial", order = EZUtility.AssetOrder)]
+    [CreateAssetMenu(fileName = "PBMat", menuName = "EZUnity/EZPhysicsBoneMaterial", order = EZUtility.AssetOrder)]
     public class EZPhysicsBoneMaterial : ScriptableObject
     {
         [SerializeField, Range(0, 1)]
         private float m_Damping = 0.2f;
         public float damping { get { return m_Damping; } set { m_Damping = Mathf.Clamp01(value); } }
         [SerializeField, EZCurveRange(0, 0, 1, 1)]
-        private AnimationCurve m_DampingCurve = AnimationCurve.Linear(0, 1, 1, 0.8f);
+        private AnimationCurve m_DampingCurve = AnimationCurve.EaseInOut(0, 0.5f, 1, 1);
         public AnimationCurve dampingCurve { get { return m_DampingCurve; } }
 
         [SerializeField, Range(0, 1)]
@@ -28,7 +28,7 @@ namespace EZUnity.PhysicsCompnent
         private float m_Resistance = 0.9f;
         public float resistance { get { return m_Resistance; } set { m_Resistance = Mathf.Clamp01(value); } }
         [SerializeField, EZCurveRange(0, 0, 1, 1)]
-        private AnimationCurve m_ResistanceCurve = AnimationCurve.Linear(0, 1, 1, 0.9f);
+        private AnimationCurve m_ResistanceCurve = AnimationCurve.Linear(0, 1, 1, 0);
         public AnimationCurve resistanceCurve { get { return m_ResistanceCurve; } }
 
         [SerializeField, Range(0, 1)]
@@ -45,7 +45,7 @@ namespace EZUnity.PhysicsCompnent
             {
                 if (m_DefaultMaterial == null)
                     m_DefaultMaterial = CreateInstance<EZPhysicsBoneMaterial>();
-                m_DefaultMaterial.name = "Default-EZPhysicsBoneMaterial";
+                m_DefaultMaterial.name = "PBMat_Default";
                 return m_DefaultMaterial;
             }
         }
