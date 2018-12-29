@@ -11,8 +11,6 @@ namespace EZUnity.PhysicsCompnent
 {
     public class EZPhysicsBone : MonoBehaviour
     {
-        public static List<EZPhysicsBone> EnabledBones = new List<EZPhysicsBone>();
-
         public class TreeNode : IDisposable
         {
             public TreeNode parent;
@@ -29,7 +27,8 @@ namespace EZUnity.PhysicsCompnent
             public float radius;
 
             public Vector3 position;
-            public Vector3 lastPosition;
+            public Vector3 speed;
+
             public Vector3 originalLocalPosition;
             public Quaternion originalLocalRotation = Quaternion.identity;
 
@@ -39,7 +38,7 @@ namespace EZUnity.PhysicsCompnent
                 transform = t;
                 if (t != null)
                 {
-                    position = lastPosition = t.position;
+                    position = t.position;
                     originalLocalPosition = t.localPosition;
                     originalLocalRotation = t.localRotation;
                 }
@@ -72,7 +71,7 @@ namespace EZUnity.PhysicsCompnent
                         node.originalLocalPosition = t.InverseTransformPoint(t.parent.TransformPoint(t.localPosition * 2)) * endLength;
                     }
                     node.depth = depth + 1;
-                    node.position = node.lastPosition = t.TransformPoint(node.originalLocalPosition);
+                    node.position = t.TransformPoint(node.originalLocalPosition);
                     node.nodeLength = node.originalLocalPosition.magnitude;
                     node.boneLength = boneLength + node.nodeLength;
                     node.treeLength = node.boneLength;
@@ -111,7 +110,7 @@ namespace EZUnity.PhysicsCompnent
                     }
                 }
             }
-            public void ApplyTransform(bool recursive)
+            public void ApplyToTransform(bool recursive)
             {
                 if (transform != null)
                 {
@@ -128,7 +127,7 @@ namespace EZUnity.PhysicsCompnent
                 {
                     for (int i = 0; i < children.Count; i++)
                     {
-                        children[i].ApplyTransform(recursive);
+                        children[i].ApplyToTransform(recursive);
                     }
                 }
             }
@@ -136,7 +135,7 @@ namespace EZUnity.PhysicsCompnent
             {
                 if (transform != null)
                 {
-                    position = lastPosition = transform.position;
+                    position = transform.position;
                 }
                 if (recursive)
                 {
@@ -198,6 +197,10 @@ namespace EZUnity.PhysicsCompnent
         private AnimatorUpdateMode m_UpdateMode = AnimatorUpdateMode.Normal;
         public AnimatorUpdateMode updateMode { get { return m_UpdateMode; } }
 
+        [SerializeField]
+        private float m_SleepThreshold = 0.005f;
+        public float sleepThreshold { get { return m_SleepThreshold; } set { m_SleepThreshold = Mathf.Max(0, value); } }
+
         [Header("Collision")]
         [SerializeField]
         private LayerMask m_CollisionLayers = 0;
@@ -228,35 +231,34 @@ namespace EZUnity.PhysicsCompnent
         }
         private void OnEnable()
         {
-            EnabledBones.Add(this);
             ResyncPhysicsTrees();
         }
         private void FixedUpdate()
         {
             if (updateMode == AnimatorUpdateMode.AnimatePhysics)
-                RevertTransforms();
+                UpdatePhysicsTrees(Time.fixedDeltaTime);
         }
         private void Update()
         {
             if (updateMode != AnimatorUpdateMode.AnimatePhysics)
-                RevertTransforms();
+                UpdatePhysicsTrees(Time.deltaTime);
         }
         private void LateUpdate()
         {
             if (rootBones == null || rootBones.Count == 0) return;
-            UpdatePhysicsTrees();
+            ApplyToTransforms();
         }
         private void OnDisable()
         {
             RevertTransforms();
-            EnabledBones.Remove(this);
         }
 
         private void OnValidate()
         {
-            m_StartDepth = Mathf.Max(m_StartDepth, 0);
-            m_EndNodeLength = Mathf.Max(m_EndNodeLength, 0);
-            m_Radius = Mathf.Max(m_Radius, 0);
+            m_StartDepth = Mathf.Max(0, m_StartDepth);
+            m_EndNodeLength = Mathf.Max(0, m_EndNodeLength);
+            m_SleepThreshold = Mathf.Max(0, m_SleepThreshold);
+            m_Radius = Mathf.Max(0, m_Radius);
             if (Application.isEditor && Application.isPlaying)
             {
                 RevertTransforms();
@@ -306,22 +308,29 @@ namespace EZUnity.PhysicsCompnent
                 m_PhysicsTrees[i].SyncPosition(true);
             }
         }
-        private void UpdatePhysicsTrees()
+        private void UpdatePhysicsTrees(float deltaTime)
         {
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
             {
-                UpdateNode(m_PhysicsTrees[i]);
-                m_PhysicsTrees[i].ApplyTransform(true);
+                m_PhysicsTrees[i].RevertTransforms(true);
+                UpdateNode(m_PhysicsTrees[i], deltaTime);
             }
         }
-        private void UpdateNode(TreeNode node)
+        private void UpdateNode(TreeNode node, float deltaTime)
         {
             if (node.depth > startDepth)
             {
+                Vector3 lastPosition = node.position;
+
                 // Damping (inertia attenuation)
-                Vector3 movement = node.position - node.lastPosition;
-                node.lastPosition = node.position;
-                node.position += movement * (1 - sharedMaterial.GetDamping(node.normalizedLength));
+                if (node.speed.sqrMagnitude < sleepThreshold)
+                {
+                    node.speed = Vector3.zero;
+                }
+                else
+                {
+                    node.position += node.speed * deltaTime * (1 - sharedMaterial.GetDamping(node.normalizedLength));
+                }
 
                 // Resistance (outside force resistance)
                 Vector3 force = gravity;
@@ -329,13 +338,12 @@ namespace EZUnity.PhysicsCompnent
                 {
                     force += forceModule.GetForce(node.normalizedLength);
                 }
-                node.position += force * (1 - sharedMaterial.GetResistance(node.normalizedLength));
+                node.position += force * deltaTime * (1 - sharedMaterial.GetResistance(node.normalizedLength));
 
                 // Stiffness (shape keeper)
                 Vector3 parentOffset = node.parent.position - node.parent.transform.position;
                 Vector3 expectedPos = node.parent.transform.TransformPoint(node.originalLocalPosition) + parentOffset;
-                Vector3 offset = expectedPos - node.position;
-                node.position += offset * sharedMaterial.GetStiffness(node.normalizedLength);
+                node.position = Vector3.Lerp(node.position, expectedPos, sharedMaterial.GetStiffness(node.normalizedLength));
 
                 // Collision
                 if (node.radius > 0)
@@ -356,17 +364,24 @@ namespace EZUnity.PhysicsCompnent
                 Vector3 nodeDir = (node.position - node.parent.position).normalized;
                 Vector3 lengthKeeper = node.parent.position + nodeDir * node.nodeLength;
                 node.position = Vector3.Lerp(lengthKeeper, node.position, sharedMaterial.GetSlackness(node.normalizedLength));
+
+                node.speed = (node.position - lastPosition) / deltaTime;
             }
-            else if (node.transform != null)
+            else
             {
-                // root nodes should keep its displacement
-                node.lastPosition = node.position;
                 node.position = node.transform.position;
             }
 
             for (int i = 0; i < node.children.Count; ++i)
             {
-                UpdateNode(node.children[i]);
+                UpdateNode(node.children[i], deltaTime);
+            }
+        }
+        private void ApplyToTransforms()
+        {
+            for (int i = 0; i < m_PhysicsTrees.Count; i++)
+            {
+                m_PhysicsTrees[i].ApplyToTransform(true);
             }
         }
 
