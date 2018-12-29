@@ -556,9 +556,9 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 0
   scriptingDefineSymbols:
-    1: XLUA;DOTWEEN
-    4: XLUA;DOTWEEN
-    7: XLUA;DOTWEEN
+    1: XLUA;DOTWEEN;HOTFIX_ENABLE
+    4: XLUA;DOTWEEN;HOTFIX_ENABLE
+    7: XLUA;DOTWEEN;HOTFIX_ENABLE
   platformArchitecture: {}
   scriptingBackend:
     Android: 0

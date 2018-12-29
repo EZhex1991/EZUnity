@@ -4,6 +4,7 @@
  * Description:
  * 
 */
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using XLua;
@@ -37,21 +38,45 @@ namespace EZUnity.XLuaExample
             btn_Hotfix.onClick.RemoveAllListeners();
             btn_Hotfix.onClick.AddListener(FixClear);
             luaEnv.DoString(@"
-                xlua.private_accessible(CS.EZUnity.XLuaExample.Hotfix);   -- 获取private字段的访问权限
+                xlua.private_accessible(CS.EZUnity.XLuaExample.Hotfix)   -- 获取private字段的访问权限
                 xlua.hotfix(CS.EZUnity.XLuaExample.Hotfix, {  -- 直接Fix整个Class的写法
                     Update = function(self)
                         self.console_CSharp.text = 'Time: ' .. CS.UnityEngine.Time.time -- 访问private字段
                         self.console_Lua.text = 'Time: ' .. CS.UnityEngine.Time.time
                     end,
                     FixClear = function(self)
+                        self:StartCoroutine(self:Cor1_FixClear())
+                        self:StartCoroutine(NewCor2_FixClear(self)) -- 注意！这里并非是self:Cor2_FixClear！而是调用了在lua端新增的方法
                         print('Fix Clear')
-                        self.btn_Hotfix.gameObject:SetActive(false)
-                        self.luaEnv:DoString('xlua.hotfix(CS.EZUnity.XLuaExample.Hotfix, { Update = false, FixClear = false })') -- 清空Hotfix
                     end,
+                    Cor1_FixClear = function(self)
+                        return require('xlua.util').cs_generator(function()
+                            coroutine.yield(CS.UnityEngine.WaitForEndOfFrame())
+                            self.btn_Hotfix.gameObject:SetActive(false)
+                            print('button disabled')
+                        end)
+                    end
                 })
+
+                NewCor2_FixClear = function(self) -- 原Cor2_FixClear返回值错误，这里实际上是lua端的新增函数而不是修复函数
+                    return require('xlua.util').cs_generator(function()
+                        coroutine.yield(CS.UnityEngine.WaitForSeconds(1))
+                        self.luaEnv:DoString('xlua.hotfix(CS.EZUnity.XLuaExample.Hotfix, { Update = false, FixClear = false })') -- 清空Hotfix
+                        print('Cleared')
+                    end)
+                end
             ");
         }
         public void FixClear()  // 要fix首先得保证有该方法
+        {
+            Cor1_FixClear();
+            Cor2_FixClear();
+        }
+        public IEnumerator Cor1_FixClear()
+        {
+            yield return null;
+        }
+        public void Cor2_FixClear()
         {
 
         }
