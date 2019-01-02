@@ -267,7 +267,7 @@ namespace EZUnity.PhysicsCompnent
         }
         private void OnDrawGizmosSelected()
         {
-            if (!enabled || rootBones == null || rootBones.Count == 0) return;
+            if (!enabled) return;
 
             if (Application.isEditor && !Application.isPlaying && transform.hasChanged)
             {
@@ -276,7 +276,7 @@ namespace EZUnity.PhysicsCompnent
 
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
             {
-                DrawNodeGizoms(m_PhysicsTrees[i]);
+                DrawNodeGizmos(m_PhysicsTrees[i]);
             }
         }
 
@@ -385,24 +385,17 @@ namespace EZUnity.PhysicsCompnent
             }
         }
 
-        private void DrawNodeGizoms(TreeNode node)
+        private void DrawNodeGizmos(TreeNode node)
         {
             for (int i = 0; i < node.children.Count; i++)
             {
-                DrawNodeGizoms(node.children[i]);
+                DrawNodeGizmos(node.children[i]);
             }
+            Gizmos.color = Color.Lerp(Color.white, Color.red, node.normalizedLength);
             if (node.depth > startDepth)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(node.parent.position, node.position);
-                Gizmos.color = Color.Lerp(Color.white, Color.red, node.normalizedLength);
                 Gizmos.DrawWireSphere(node.position, node.radius);
-            }
-            else if (node.depth > 0)
-            {
-                Gizmos.color = Color.white;
+            if (node.parent != null)
                 Gizmos.DrawLine(node.parent.position, node.position);
-            }
         }
     }
 }
