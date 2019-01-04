@@ -112,23 +112,31 @@ namespace EZUnity.PhysicsCompnent
             }
             public void ApplyToTransform(bool recursive)
             {
-                if (transform != null)
-                {
-                    // rotate if has only one child
-                    if (children.Count == 1)
-                    {
-                        TreeNode child = children[0];
-                        Quaternion rotation = Quaternion.FromToRotation(transform.TransformDirection(child.originalLocalPosition), child.position - position);
-                        transform.rotation = rotation * transform.rotation;
-                    }
-                    transform.position = position;
-                }
+                ApplyRotation();
+                ApplyPosition();
                 if (recursive)
                 {
                     for (int i = 0; i < children.Count; i++)
                     {
                         children[i].ApplyToTransform(recursive);
                     }
+                }
+            }
+            public void ApplyRotation()
+            {
+                // rotate if has only one child, and this means transform could not be null too
+                if (children.Count == 1)
+                {
+                    TreeNode child = children[0];
+                    Quaternion rotation = Quaternion.FromToRotation(transform.TransformDirection(child.originalLocalPosition), child.position - position);
+                    transform.rotation = rotation * transform.rotation;
+                }
+            }
+            public void ApplyPosition()
+            {
+                if (transform != null)
+                {
+                    transform.position = position;
                 }
             }
             public void SyncPosition(bool recursive)
@@ -258,7 +266,7 @@ namespace EZUnity.PhysicsCompnent
         private void LateUpdate()
         {
             if (rootBones == null || rootBones.Count == 0) return;
-            ApplyToTransforms();
+            ApplyPhysicsTrees();
         }
         private void OnDisable()
         {
@@ -321,6 +329,7 @@ namespace EZUnity.PhysicsCompnent
                 m_PhysicsTrees[i].SyncPosition(true);
             }
         }
+
         private void UpdatePhysicsTrees(float deltaTime)
         {
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
@@ -385,16 +394,32 @@ namespace EZUnity.PhysicsCompnent
                 node.position = node.transform.position;
             }
 
-            for (int i = 0; i < node.children.Count; ++i)
+            for (int i = 0; i < node.children.Count; i++)
             {
                 UpdateNode(node.children[i], deltaTime);
             }
         }
-        private void ApplyToTransforms()
+
+        private void ApplyPhysicsTrees()
         {
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
             {
-                m_PhysicsTrees[i].ApplyToTransform(true);
+                ApplyTransform(m_PhysicsTrees[i]);
+            }
+        }
+        private void ApplyTransform(TreeNode node)
+        {
+            if (node.depth == startDepth)
+            {
+                node.ApplyRotation();
+            }
+            else if (node.depth > startDepth)
+            {
+                node.ApplyToTransform(false);
+            }
+            for (int i = 0; i < node.children.Count; i++)
+            {
+                ApplyTransform(node.children[i]);
             }
         }
 
