@@ -1,4 +1,4 @@
-/* Author:          熊哲
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-06-13 20:10:05
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -12,7 +12,11 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
+using UObject = UnityEngine.Object;
+#if UNITYADDRESSABLES
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement;
+#endif
 
 namespace EZUnity.Framework
 {
@@ -61,8 +65,8 @@ namespace EZUnity.Framework
             }
         }
 
-        public delegate void OnAssetLoadedAction(Object asset);
-        public delegate void OnAssetLoadedAction<T>(T asset) where T : Object;
+        public delegate void OnAssetLoadedAction(UObject asset);
+        public delegate void OnAssetLoadedAction<T>(T asset) where T : UObject;
         public delegate void OnSceneChangedAction();
         public delegate void OnBundleLoadedAction(AssetBundle bundle);
 
@@ -249,7 +253,7 @@ namespace EZUnity.Framework
         }
 
         // 同步加载资源
-        public T LoadAsset<T>(string bundleName, string assetName) where T : Object
+        public T LoadAsset<T>(string bundleName, string assetName) where T : UObject
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
@@ -270,7 +274,7 @@ namespace EZUnity.Framework
 #endif
             return bundle.LoadAsset<T>(assetName);
         }
-        public Object LoadAsset(string bundleName, string assetName)
+        public UObject LoadAsset(string bundleName, string assetName)
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
@@ -285,13 +289,13 @@ namespace EZUnity.Framework
                 }
                 else
                 {
-                    return UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Object));
+                    return UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(UObject));
                 }
             }
 #endif
             return bundle.LoadAsset(assetName);
         }
-        public Object LoadAsset(string bundleName, string assetName, Type type)
+        public UObject LoadAsset(string bundleName, string assetName, Type type)
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
@@ -312,7 +316,7 @@ namespace EZUnity.Framework
 #endif
             return bundle.LoadAsset(assetName, type);
         }
-        public T[] LoadAllAssets<T>(string bundleName) where T : Object
+        public T[] LoadAllAssets<T>(string bundleName) where T : UObject
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
@@ -329,34 +333,34 @@ namespace EZUnity.Framework
 #endif
             return bundle.LoadAllAssets<T>();
         }
-        public Object[] LoadAllAssets(string bundleName)
+        public UObject[] LoadAllAssets(string bundleName)
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
             if (ezApplication.runMode == RunMode.Develop)
             {
                 string[] assetPaths = bundle.GetAllAssetNames();
-                Object[] assets = new Object[assetPaths.Length];
+                UObject[] assets = new UObject[assetPaths.Length];
                 for (int i = 0; i < assetPaths.Length; i++)
                 {
-                    assets[i] = UnityEditor.AssetDatabase.LoadAssetAtPath<Object>(assetPaths[i]);
+                    assets[i] = UnityEditor.AssetDatabase.LoadAssetAtPath<UObject>(assetPaths[i]);
                 }
                 return assets;
             }
 #endif
             return bundle.LoadAllAssets();
         }
-        public Object[] LoadAllAssets(string bundleName, Type type)
+        public UObject[] LoadAllAssets(string bundleName, Type type)
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
             if (ezApplication.runMode == RunMode.Develop)
             {
                 string[] assetPaths = bundle.GetAllAssetNames();
-                List<Object> assets = new List<Object>();
+                List<UObject> assets = new List<UObject>();
                 for (int i = 0; i < assetPaths.Length; i++)
                 {
-                    Object asset = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPaths[i], type);
+                    UObject asset = UnityEditor.AssetDatabase.LoadAssetAtPath(assetPaths[i], type);
                     if (asset != null) assets.Add(asset);
                 }
                 return assets.ToArray();
@@ -365,19 +369,19 @@ namespace EZUnity.Framework
             return bundle.LoadAllAssets(type);
         }
         // 异步加载资源，把异步封装成了同步+回调，Editor+Develop模式会变成同步加载，可能复现不了一些异步问题
-        public void LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : Object
+        public void LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : UObject
         {
             StartCoroutine(Cor_LoadAssetAsync<T>(bundleName, assetName, callback));
         }
-        public void LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<Object> callback)
+        public void LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<UObject> callback)
         {
             StartCoroutine(Cor_LoadAssetAsync(bundleName, assetName, callback));
         }
-        public void LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<Object> callback)
+        public void LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<UObject> callback)
         {
             StartCoroutine(Cor_LoadAssetAsync(bundleName, assetName, type, callback));
         }
-        IEnumerator Cor_LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : Object
+        IEnumerator Cor_LoadAssetAsync<T>(string bundleName, string assetName, OnAssetLoadedAction<T> callback) where T : UObject
         {
             yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
@@ -409,7 +413,7 @@ namespace EZUnity.Framework
                 LogErrorFormat("Bundle not loaded: {0}", bundleName);
             }
         }
-        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<Object> callback)
+        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, OnAssetLoadedAction<UObject> callback)
         {
             yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
@@ -427,7 +431,7 @@ namespace EZUnity.Framework
                     }
                     else
                     {
-                        callback(UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(Object)));
+                        callback(UnityEditor.AssetDatabase.LoadAssetAtPath(assetPath, typeof(UObject)));
                     }
                     yield break;
                 }
@@ -441,7 +445,7 @@ namespace EZUnity.Framework
                 LogErrorFormat("Bundle not loaded: {0}", bundleName);
             }
         }
-        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<Object> callback)
+        IEnumerator Cor_LoadAssetAsync(string bundleName, string assetName, Type type, OnAssetLoadedAction<UObject> callback)
         {
             yield return Cor_LoadBundleAsync(bundleName, null);
             AssetBundle bundle;
@@ -596,5 +600,29 @@ namespace EZUnity.Framework
                 bundleDict.Remove(bundleName);
             }
         }
+
+#if UNITYADDRESSABLES
+        public void LoadAddressableAsset(string address, OnAssetLoadedAction<UObject> callback)
+        {
+            Addressables.LoadAsset<UObject>(address).Completed += (opr) =>
+            {
+                if (callback != null) callback(opr.Result);
+            };
+        }
+        public void LoadAddressableAssets(string address, OnAssetLoadedAction<UObject> callback)
+        {
+            Addressables.LoadAssets<UObject>(address, (opr1) =>
+            {
+                if (callback != null) opr1.Completed += (opr2) => callback(opr2.Result);
+            });
+        }
+        public void LoadAddressableScene(string address, LoadSceneMode mode, OnSceneChangedAction callback)
+        {
+            Addressables.LoadScene(address, mode).Completed += (opr) =>
+            {
+                if (callback != null) callback();
+            };
+        }
+#endif
     }
 }
