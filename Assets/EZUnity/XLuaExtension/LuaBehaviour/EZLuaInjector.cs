@@ -1,42 +1,35 @@
-/*
- * Author:      熊哲
- * CreateTime:  9/4/2017 4:48:11 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-09-04 16:48:11
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if XLUA
 using UnityEngine;
 using XLua;
 
 namespace EZUnity.XLuaExtension
 {
-    public class EZLuaInjector : EZDictionary
+    public class EZLuaInjector : EZPropertyList
     {
-        public void Inject(LuaTable self)
+        public void Inject(LuaTable table)
         {
-            foreach (var pair in dictionary)
+            if (isList)
             {
-                string[] path = pair.Key.Split('.');
-                LuaTable toBeSet = self;
-                for (int j = 0; j < path.Length - 1; j++)
+                for (int i = 0; i < elements.Length; i++)
                 {
-                    toBeSet = toBeSet.Get<LuaTable>(path[j]);
+                    Set(table, i + 1, elements[i]);
                 }
-                string key = path[path.Length - 1];
-                if (key.Contains("#"))
+            }
+            else
+            {
+                for (int i = 0; i < elements.Length; i++)
                 {
-                    string[] listKey = key.Split('#');
-                    int index = System.Convert.ToInt32(listKey[1]);
-                    toBeSet = toBeSet.Get<LuaTable>(listKey[0]);
-                    SetByType(toBeSet, index, pair.Value);
-                }
-                else
-                {
-                    SetByType(toBeSet, key, pair.Value);
+                    string key = elements[i].key;
+                    SetInPath(table, key, elements[i]);
                 }
             }
         }
-        private void SetByType<T>(LuaTable table, T key, EZSerializableProperty injection)
+        private void Set<T>(LuaTable table, T key, EZProperty injection)
         {
             if (injection.typeName == typeof(int).FullName) { table.Set(key, injection.intValue); }
             else if (injection.typeName == typeof(long).FullName) { table.Set(key, injection.longValue); }
@@ -50,7 +43,36 @@ namespace EZUnity.XLuaExtension
             else if (injection.typeName == typeof(Vector3).FullName) { table.Set(key, injection.vector3Value); }
             else if (injection.typeName == typeof(Vector2Int).FullName) { table.Set(key, injection.vector2IntValue); }
             else if (injection.typeName == typeof(Vector3Int).FullName) { table.Set(key, injection.vector3IntValue); }
+            else if (injection.typeName == typeof(EZLuaInjector).FullName)
+            {
+                LuaTable child;
+                table.Get(key, out child);
+                if (child == null) child = table.NewTable(key);
+                (injection.objectValue as EZLuaInjector).Inject(child);
+            }
             else { table.Set(key, injection.objectValue); }
+        }
+        private void SetInPath(LuaTable table, string key, EZProperty injection)
+        {
+            if (injection.typeName == typeof(int).FullName) { table.SetInPath(key, injection.intValue); }
+            else if (injection.typeName == typeof(long).FullName) { table.SetInPath(key, injection.longValue); }
+            else if (injection.typeName == typeof(bool).FullName) { table.SetInPath(key, injection.boolValue); }
+            else if (injection.typeName == typeof(float).FullName) { table.SetInPath(key, injection.floatValue); }
+            else if (injection.typeName == typeof(double).FullName) { table.SetInPath(key, injection.doubleValue); }
+            else if (injection.typeName == typeof(string).FullName) { table.SetInPath(key, injection.stringValue); }
+            else if (injection.typeName == typeof(Color).FullName) { table.SetInPath(key, injection.colorValue); }
+            else if (injection.typeName == typeof(AnimationCurve).FullName) { table.SetInPath(key, injection.animationCurveValue); }
+            else if (injection.typeName == typeof(Vector2).FullName) { table.SetInPath(key, injection.vector2Value); }
+            else if (injection.typeName == typeof(Vector3).FullName) { table.SetInPath(key, injection.vector3Value); }
+            else if (injection.typeName == typeof(Vector2Int).FullName) { table.SetInPath(key, injection.vector2IntValue); }
+            else if (injection.typeName == typeof(Vector3Int).FullName) { table.SetInPath(key, injection.vector3IntValue); }
+            else if (injection.typeName == typeof(EZLuaInjector).FullName)
+            {
+                LuaTable child = table.GetInPath<LuaTable>(key);
+                if (child == null) child = table.NewTable(key);
+                (injection.objectValue as EZLuaInjector).Inject(child);
+            }
+            else { table.SetInPath(key, injection.objectValue); }
         }
     }
 }

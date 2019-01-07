@@ -1,4 +1,4 @@
-/* Author:          熊哲
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-02-27 12:36:14
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -9,7 +9,7 @@ using UnityEditor;
 namespace EZUnity.XLuaExtension
 {
     [CustomEditor(typeof(EZLuaBehaviour))]
-    public class EZLuaBehaviourEditor : EZDictionaryEditor
+    public class EZLuaBehaviourEditor : EZPropertyListEditor
     {
         protected SerializedProperty m_ModuleName;
 
@@ -27,6 +27,12 @@ namespace EZUnity.XLuaExtension
             elementList.DoLayoutList();
             serializedObject.ApplyModifiedProperties();
         }
+    }
+
+    [CustomEditor(typeof(EZLuaInjector))]
+    public class EZLuaInjectorEditor : EZPropertyListEditor
+    {
+
     }
 }
 #endif
