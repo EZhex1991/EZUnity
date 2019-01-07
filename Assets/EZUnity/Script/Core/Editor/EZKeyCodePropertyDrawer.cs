@@ -1,4 +1,4 @@
-/* Author:          熊哲
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-11-07 17:22:30
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -10,7 +10,7 @@ using UnityEngine;
 namespace EZUnity
 {
     [CustomPropertyDrawer(typeof(KeyCode))]
-    public class EZKeyCodeDrawer : PropertyDrawer
+    public class EZKeyCodePropertyDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
