@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 6400000}
   - component: {fileID: 8200000}
   - component: {fileID: 114727226321641886}
+  - component: {fileID: 114998046669799400}
   m_Layer: 0
   m_Name: Done_Player
   m_TagString: Player
@@ -9451,149 +9452,219 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ac954430ba2904886bd74e7333b42d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IsList: 0
   m_Elements:
   - m_TypeName: System.Single
     m_Key: n_Speed
     m_ObjectValue: {fileID: 0}
     m_IntValue: 0
-    m_FloatValue: 10
+    m_LongValue: 0
     m_BoolValue: 0
+    m_FloatValue: 10
+    m_DoubleValue: 0
     m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
     m_AnimationCurveValue:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
   - m_TypeName: System.Single
     m_Key: n_Tilt
     m_ObjectValue: {fileID: 0}
     m_IntValue: 0
+    m_LongValue: 0
+    m_BoolValue: 0
     m_FloatValue: 5
-    m_BoolValue: 0
+    m_DoubleValue: 0
     m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
     m_AnimationCurveValue:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
-  - m_TypeName: System.Single
-    m_Key: Boundary.xMin
-    m_ObjectValue: {fileID: 0}
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
+  - m_TypeName: EZUnity.XLuaExtension.EZLuaInjector
+    m_Key: Boundary
+    m_ObjectValue: {fileID: 114998046669799400}
     m_IntValue: 0
+    m_LongValue: 0
+    m_BoolValue: 0
     m_FloatValue: -6
-    m_BoolValue: 0
+    m_DoubleValue: 0
     m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
     m_AnimationCurveValue:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
-  - m_TypeName: System.Single
-    m_Key: Boundary.xMax
-    m_ObjectValue: {fileID: 0}
-    m_IntValue: 0
-    m_FloatValue: 6
-    m_BoolValue: 0
-    m_StringValue: 
     m_Vector2Value: {x: 0, y: 0}
     m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
-    m_AnimationCurveValue:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
-  - m_TypeName: System.Single
-    m_Key: Boundary.zMin
-    m_ObjectValue: {fileID: 0}
-    m_IntValue: 0
-    m_FloatValue: -4
-    m_BoolValue: 0
-    m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
-    m_AnimationCurveValue:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
-  - m_TypeName: System.Single
-    m_Key: Boundary.zMax
-    m_ObjectValue: {fileID: 0}
-    m_IntValue: 0
-    m_FloatValue: 8
-    m_BoolValue: 0
-    m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
-    m_AnimationCurveValue:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
   - m_TypeName: UnityEngine.GameObject
     m_Key: go_Shot
     m_ObjectValue: {fileID: 100000, guid: f4ec271e525e14ca9927a07e6a2e153d, type: 2}
     m_IntValue: 0
-    m_FloatValue: 8
+    m_LongValue: 0
     m_BoolValue: 0
+    m_FloatValue: 8
+    m_DoubleValue: 0
     m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
     m_AnimationCurveValue:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
   - m_TypeName: UnityEngine.Transform
     m_Key: tf_ShotSpawn
     m_ObjectValue: {fileID: 400004}
     m_IntValue: 0
-    m_FloatValue: 8
+    m_LongValue: 0
     m_BoolValue: 0
+    m_FloatValue: 8
+    m_DoubleValue: 0
     m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
     m_AnimationCurveValue:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
   - m_TypeName: System.Single
     m_Key: n_FireRate
     m_ObjectValue: {fileID: 0}
     m_IntValue: 0
-    m_FloatValue: 0.25
+    m_LongValue: 0
     m_BoolValue: 0
+    m_FloatValue: 0.25
+    m_DoubleValue: 0
     m_StringValue: 
-    m_Vector2Value: {x: 0, y: 0}
-    m_Vector3Value: {x: 0, y: 0, z: 0}
-    m_Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
     m_AnimationCurveValue:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 0
       m_PostInfinity: 0
       m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
   moduleName: SpaceShooter.PlayerController
+--- !u!114 &114998046669799400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89a894f7a09b4f429394ac6229fe24b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsList: 0
+  m_Elements:
+  - m_TypeName: System.Single
+    m_Key: xMin
+    m_ObjectValue: {fileID: 0}
+    m_IntValue: 0
+    m_LongValue: 0
+    m_BoolValue: 0
+    m_FloatValue: -6
+    m_DoubleValue: 0
+    m_StringValue: 
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    m_AnimationCurveValue:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
+  - m_TypeName: System.Single
+    m_Key: xMax
+    m_ObjectValue: {fileID: 0}
+    m_IntValue: 0
+    m_LongValue: 0
+    m_BoolValue: 0
+    m_FloatValue: 6
+    m_DoubleValue: 0
+    m_StringValue: 
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    m_AnimationCurveValue:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
+  - m_TypeName: System.Single
+    m_Key: zMin
+    m_ObjectValue: {fileID: 0}
+    m_IntValue: 0
+    m_LongValue: 0
+    m_BoolValue: 0
+    m_FloatValue: -4
+    m_DoubleValue: 0
+    m_StringValue: 
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    m_AnimationCurveValue:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}
+  - m_TypeName: System.Single
+    m_Key: zMax
+    m_ObjectValue: {fileID: 0}
+    m_IntValue: 0
+    m_LongValue: 0
+    m_BoolValue: 0
+    m_FloatValue: 8
+    m_DoubleValue: 0
+    m_StringValue: 
+    m_ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    m_AnimationCurveValue:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    m_Vector2Value: {x: 0, y: 0}
+    m_Vector3Value: {x: 0, y: 0, z: 0}
+    m_Vector2IntValue: {x: 0, y: 0}
+    m_Vector3IntValue: {x: 0, y: 0, z: 0}

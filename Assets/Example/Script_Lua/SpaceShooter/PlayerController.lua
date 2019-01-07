@@ -1,6 +1,6 @@
 --[==[
-- Author:       熊哲
-- CreateTime:   11/15/2017 6:21:40 PM
+- Author:       ezhex1991@outlook.com
+- CreateTime:   2017-11-15 18:21:40
 - Orgnization:  #ORGNIZATION#
 - Description:  
 --]==]
@@ -13,12 +13,6 @@ local bind = require("xlua.util").bind
 
 local M = require("ezlua.module"):module()
 ----- CODE -----
-M.Boundary = {
-    xMin,
-    xMax,
-    zMin,
-    zMax
-}
 M.n_NextFire = 0
 
 function M.LuaAwake(injector)
