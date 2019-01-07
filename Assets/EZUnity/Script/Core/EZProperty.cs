@@ -1,4 +1,4 @@
-/* Author:          熊哲
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-11-14 15:17:18
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZUnity
 {
     [System.Serializable]
-    public class EZSerializableProperty
+    public class EZProperty
     {
         [SerializeField]
         private string m_TypeName = typeof(Object).FullName;

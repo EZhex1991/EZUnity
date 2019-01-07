@@ -1,4 +1,4 @@
-/* Author:          熊哲
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-11-14 16:17:52
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -12,8 +12,8 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CustomPropertyDrawer(typeof(EZSerializableProperty))]
-    public class EZSerializablePropertyDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(EZProperty))]
+    public class EZPropertyDrawer : PropertyDrawer
     {
         public static List<Type> typeList = new List<Type>()
         {
@@ -43,7 +43,7 @@ namespace EZUnity
             }
             return null;
         }
-        static EZSerializablePropertyDrawer()
+        static EZPropertyDrawer()
         {
             List<Assembly> assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where((assembly) => assembly.FullName.StartsWith("UnityEngine") || assembly.GetName().Name == "Assembly-CSharp")
@@ -60,11 +60,27 @@ namespace EZUnity
         public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(rect, label, property);
-            SerializedProperty typeName = property.FindPropertyRelative("m_TypeName");
-            SerializedProperty key = property.FindPropertyRelative("m_Key");
 
+            float width = rect.width / 3, space = 5;
+            rect.width = width - space;
+            rect.height = EditorGUIUtility.singleLineHeight;
+            DrawTypeOption(rect, property);
+
+            rect.x += width;
+            DrawKeyContent(rect, property);
+
+            rect.x += width;
+            DrawValueContent(rect, property);
+
+            EditorGUI.EndProperty();
+            property.serializedObject.ApplyModifiedProperties();
+        }
+
+        public static void DrawTypeOption(Rect rect, SerializedProperty property)
+        {
             float typeButtonWidth = 40;
-            if (GUI.Button(new Rect(rect.x, rect.y, typeButtonWidth, EditorGUIUtility.singleLineHeight), "Type", EditorStyles.miniButton))
+            SerializedProperty typeName = property.FindPropertyRelative("m_TypeName");
+            if (GUI.Button(new Rect(rect.x, rect.y, typeButtonWidth, rect.height), "Type", EditorStyles.miniButton))
             {
                 DrawTypeMenu(delegate (object selection)
                 {
@@ -72,12 +88,45 @@ namespace EZUnity
                     property.serializedObject.ApplyModifiedProperties();
                 });
             }
-            float width = (rect.width - typeButtonWidth) / 3, space = 5;
-            rect.x += typeButtonWidth + space; rect.width = width - space; rect.height = lineHeight;
-            EditorGUI.DelayedTextField(new Rect(rect.x, rect.y, rect.width, rect.height), typeName, GUIContent.none);
-            rect.x += width;
+            rect.x += typeButtonWidth;
+            rect.width -= typeButtonWidth;
+            EditorGUI.DelayedTextField(rect, typeName, GUIContent.none);
+        }
+        private static void DrawTypeMenu(GenericMenu.MenuFunction2 callback)
+        {
+            GenericMenu menu = new GenericMenu();
+            for (int i = 0; i < typeList.Count; i++)
+            {
+                string space = typeList[i].Namespace;
+                string fullName = typeList[i].FullName;
+                string menuContent;
+                if (string.IsNullOrEmpty(space))
+                {
+                    menuContent = "No Namespace/" + fullName.Substring(0, 1) + "/" + fullName.Replace('.', '/');
+                }
+                else if (space == "UnityEngine")
+                {
+                    string shortName = fullName.Substring(space.Length + 1);
+                    menuContent = space + "/" + shortName.Substring(0, 1) + "/" + shortName.Replace('.', '/');
+                }
+                else
+                {
+                    string shortName = fullName.Substring(space.Length + 1);
+                    menuContent = space + "/" + shortName.Replace('.', '/');
+                }
+                menu.AddItem(new GUIContent(menuContent), false, callback, typeList[i]);
+            }
+            menu.ShowAsContext();
+        }
+
+        public static void DrawKeyContent(Rect rect, SerializedProperty property)
+        {
+            SerializedProperty key = property.FindPropertyRelative("m_Key");
             EditorGUI.PropertyField(rect, key, GUIContent.none);
-            rect.x += width;
+        }
+        public static void DrawValueContent(Rect rect, SerializedProperty property)
+        {
+            SerializedProperty typeName = property.FindPropertyRelative("m_TypeName");
             Type type = GetType(typeName.stringValue);
             if (type == null)
             {
@@ -105,34 +154,6 @@ namespace EZUnity
                 else if (type == typeof(Vector3Int)) { targetProperty = property.FindPropertyRelative("m_Vector3IntValue"); }
                 EditorGUI.PropertyField(rect, targetProperty, GUIContent.none);
             }
-            EditorGUI.EndProperty();
-            property.serializedObject.ApplyModifiedProperties();
-        }
-        protected void DrawTypeMenu(GenericMenu.MenuFunction2 callback)
-        {
-            GenericMenu menu = new GenericMenu();
-            for (int i = 0; i < typeList.Count; i++)
-            {
-                string space = typeList[i].Namespace;
-                string fullName = typeList[i].FullName;
-                string menuContent;
-                if (string.IsNullOrEmpty(space))
-                {
-                    menuContent = "No Namespace/" + fullName.Substring(0, 1) + "/" + fullName.Replace('.', '/');
-                }
-                else if (space == "UnityEngine")
-                {
-                    string shortName = fullName.Substring(space.Length + 1);
-                    menuContent = space + "/" + shortName.Substring(0, 1) + "/" + shortName.Replace('.', '/');
-                }
-                else
-                {
-                    string shortName = fullName.Substring(space.Length + 1);
-                    menuContent = space + "/" + shortName.Replace('.', '/');
-                }
-                menu.AddItem(new GUIContent(menuContent), false, callback, typeList[i]);
-            }
-            menu.ShowAsContext();
         }
     }
 }

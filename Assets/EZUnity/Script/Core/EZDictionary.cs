@@ -1,4 +1,4 @@
-/* Author:          熊哲
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-11-29 17:17:10
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -10,7 +10,7 @@ using UnityEngine;
 namespace EZUnity
 {
     [Serializable]
-    public class EZSerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver
+    public class EZDictionary<TKey, TValue> : ISerializationCallbackReceiver
     {
         [SerializeField]
         private List<TKey> m_Keys = new List<TKey>();
@@ -18,6 +18,8 @@ namespace EZUnity
         private List<TValue> m_Values = new List<TValue>();
 
         private Dictionary<TKey, TValue> m_Dictionary = new Dictionary<TKey, TValue>();
+        public Dictionary<TKey, TValue> dictionary { get { return m_Dictionary; } }
+
         public void OnBeforeSerialize()
         {
             m_Keys.Clear();
@@ -36,8 +38,6 @@ namespace EZUnity
                 m_Dictionary.Add(m_Keys[i], m_Values[i]);
             }
         }
-
-        public Dictionary<TKey, TValue> dictionary { get { return m_Dictionary; } }
 
         public TValue this[TKey key]
         {
