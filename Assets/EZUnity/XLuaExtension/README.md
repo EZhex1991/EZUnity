@@ -12,7 +12,7 @@
 
 `EZPropertyList`则是`EZProperty`的集合，并且可以嵌套，根据`m_IsList`字段有list和mapping两种表现。
 
-`EZLuaInjector`在`EZPropertyList`的基础上提供了`Inject(LuaTable)`方法，可以将集合内Property当前类型的数据注入到一个LuaTable中。
+`EZLuaInjector`在`EZPropertyList`的基础上提供了`Inject(LuaTable)`方法，可以将集合内Property当前类型的数据注入到一个LuaTable中（如果其中有Injector嵌套，那么注入也会是嵌套的）。
 
 `EZLuaBehaviour`在`EZLuaInjector`的基础上导出了`MonoBehaviour`的一些生命周期相关的消息，可用于lua脚本的启动。
 
