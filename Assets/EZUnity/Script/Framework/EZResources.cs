@@ -13,9 +13,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
+using System.Linq;
 #if UNITYADDRESSABLES
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement;
 #endif
 
 namespace EZUnity.Framework
@@ -609,12 +609,9 @@ namespace EZUnity.Framework
                 if (callback != null) callback(opr.Result);
             };
         }
-        public void LoadAddressableAssets(string address, OnAssetLoadedAction<UObject> callback)
+        public void InstantiateGameObject(string address, Transform parent = null, bool instantiateInWorldSpace = false)
         {
-            Addressables.LoadAssets<UObject>(address, (opr1) =>
-            {
-                if (callback != null) opr1.Completed += (opr2) => callback(opr2.Result);
-            });
+            Addressables.Instantiate<GameObject>(address, parent, instantiateInWorldSpace);
         }
         public void LoadAddressableScene(string address, LoadSceneMode mode, OnSceneChangedAction callback)
         {
@@ -622,6 +619,33 @@ namespace EZUnity.Framework
             {
                 if (callback != null) callback();
             };
+        }
+        public List<string> GetAddresses(string rootPath)
+        {
+            List<string> addresses = new List<string>();
+            foreach (var locator in Addressables.ResourceLocators.Where(l => l is ResourceLocationMap))
+            {
+                foreach (object address in (locator as ResourceLocationMap).Locations.Keys)
+                {
+                    Debug.LogFormat("Map - {0}", address);
+                }
+                addresses.AddRange(
+                    from key in (locator as ResourceLocationMap).Locations.Keys.Select(k => k as string)
+                    where key != null && key.StartsWith(rootPath)
+                    select key);
+            }
+            foreach (var locator in Addressables.ResourceLocators.Where(l => l is ResourceLocationData))
+            {
+                foreach (string address in (locator as ResourceLocationData).Keys)
+                {
+                    Debug.LogFormat("Data - {0}", address);
+                }
+                addresses.AddRange(
+                    from key in (locator as ResourceLocationData).Keys.Select(k => k as string)
+                    where key != null && key.StartsWith(rootPath)
+                    select key);
+            }
+            return addresses;
         }
 #endif
     }
