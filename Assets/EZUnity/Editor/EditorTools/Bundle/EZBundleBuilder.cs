@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  3/8/2017 6:30:08 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-03-08 18:30:08
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using System;
 using System.Collections.Generic;
 using System.IO;

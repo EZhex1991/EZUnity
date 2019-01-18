@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  4/1/2017 11:33:11 AM
- * Description:
- * 为了降低Lua和框架中其他逻辑的耦合性，部分方法使用扩展方式添加
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-04-01 11:33:11
+ * Organization:    #ORGANIZATION#
+ * Description:     为了降低Lua和框架中其他逻辑的耦合性，部分方法使用扩展方式添加
+ */
 #if XLUA
 using EZUnity.Framework;
 using EZUnity.XLuaExtension;

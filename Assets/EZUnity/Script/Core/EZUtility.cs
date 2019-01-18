@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  1/24/2018 2:53:33 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2018-01-24 14:53:33
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using UnityEngine;
 
 namespace EZUnity

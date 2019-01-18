@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  3/13/2017 11:23:11 AM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-03-13 11:23:11
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if XLUA
 using CSObjectWrapEditor;
 using UnityEngine;

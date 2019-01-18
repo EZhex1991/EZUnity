@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  9/26/2017 5:56:03 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-09-26 17:56:03
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if XLUA
 using UnityEngine;
 

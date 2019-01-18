@@ -1,7 +1,7 @@
-/*
- * Author:      熊哲
- * CreateTime:  3/16/2017 11:50:51 AM
- * Description:
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-03-16 11:50:51
+ * Organization:    #ORGANIZATION#
+ * Description:     
  * 
  * 关于InitializeOnLoad和InitializeOnLoadMethod，两个标签都可以自定义初始化（一个是类，一个是方法），初始化在编译后会自动执行；
  * 值得注意的是，初始化在打开工程时同样也会执行一次，而每次Unity打开工程后又会编译一次，所以，在开始工程时，方法实际上是执行了两次；

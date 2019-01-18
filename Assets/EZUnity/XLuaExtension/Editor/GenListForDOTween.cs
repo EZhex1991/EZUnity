@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  3/31/2017 6:12:01 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-03-31 18:12:01
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if XLUA && DOTWEEN
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
 --[==[
-- Author:       熊哲
-- CreateTime:   12/21/2017 12:34:25 PM
+- Author:       ezhex1991@outlook.com
+- CreateTime:   2017-12-21 12:34:25
 - Organization: #ORGANIZATION#
 - Description:  
     -- 用于延迟调用的计时器，使用invoke(delay, action)方法来添加延迟事件，使用tick(deltatime)方法来计时

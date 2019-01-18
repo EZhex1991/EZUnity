@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  9/26/2017 1:02:58 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-09-26 13:02:58
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if XLUA
 using System.Collections;
 using UnityEngine;

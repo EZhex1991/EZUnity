@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  2/14/2017 3:58:53 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-02-14 15:58:53
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using EZUnity.AssetProcessor;
 using EZUnity.Bundle;
 using EZUnity.Framework;

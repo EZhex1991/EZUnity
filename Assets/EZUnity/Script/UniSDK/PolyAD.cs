@@ -1,12 +1,11 @@
-/*
- * Author:      熊哲
- * CreateTime:  7/24/2017 2:43:03 PM
- * Description:
- * 
-*/
-using UnityEngine;
-using System.Collections.Generic;
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-07-24 14:43:03
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 #if POLYAD
 using Polymer;
 #endif

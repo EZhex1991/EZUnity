@@ -1,10 +1,8 @@
-﻿/*
- * Author:      熊哲
- * CreateTime:  2016/08/08 10:49
- * Description:
- * 用于初始化脚本文件，使用前请先修改Unity的脚本模板
- * 文件请放置于Editor文件夹下
-*/
+﻿/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2016-08-08 10:49:31
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using System;
 using System.Collections.Generic;
 using System.IO;

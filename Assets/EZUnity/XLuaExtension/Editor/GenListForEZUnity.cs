@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  3/31/2017 6:11:46 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-03-31 18:11:46
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if XLUA
 using System;
 using System.Collections.Generic;

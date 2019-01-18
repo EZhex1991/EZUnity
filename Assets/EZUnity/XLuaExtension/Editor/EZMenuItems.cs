@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  1/6/2017 10:44:41 AM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-01-06 10:44:41
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if XLUA
 using EZUnity.Framework;
 using System.IO;

@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  1/16/2018 12:13:04 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2018-01-16 12:13:04
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 #if UNITY_IOS
 using System;
 using UnityEngine.iOS;

@@ -1,9 +1,8 @@
-/*
- * Author:      熊哲
- * CreateTime:  7/19/2017 10:53:58 AM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-07-19 10:53:58
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITYPURCHASING
