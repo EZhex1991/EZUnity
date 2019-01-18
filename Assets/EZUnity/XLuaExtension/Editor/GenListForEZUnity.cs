@@ -20,9 +20,6 @@ namespace EZUnity.XLuaExtension
             typeof(EZUnity.Framework.EZDatabase),
             typeof(EZUnity.Framework.EZLogHandler),
             typeof(EZUnity.Framework.EZResources),
-            typeof(EZUnity.Framework.EZWWWQueue),
-            typeof(EZUnity.Framework.EZWWWQueue.Status),
-            typeof(EZUnity.Framework.EZWWWQueue.Task),
             typeof(EZUnity.Framework.Events.EZEvent),
             typeof(EZUnity.Framework.Events.EZEventHub),
 
@@ -63,7 +60,6 @@ namespace EZUnity.XLuaExtension
             typeof(EZUnity.EZGridLayout2D),
             typeof(EZUnity.EZOutstand),
             typeof(EZUnity.EZScrollRect),
-            typeof(EZUnity.EZSizeDriver),
             typeof(EZUnity.EZTransition),
             typeof(EZUnity.EZPropertyList),
             typeof(EZUnity.EZProperty),
@@ -81,8 +77,6 @@ namespace EZUnity.XLuaExtension
             typeof(EZUnity.Framework.EZResources.OnAssetLoadedAction),
             typeof(EZUnity.Framework.EZResources.OnSceneChangedAction),
             typeof(EZUnity.Framework.EZResources.OnBundleLoadedAction),
-            typeof(EZUnity.Framework.EZWWWQueue.Task.OnProgressAction),
-            typeof(EZUnity.Framework.EZWWWQueue.Task.OnStopAction),
             typeof(EZUnity.Framework.Events.EZEventHandler),
 
             typeof(EZUnity.UniSDK.Base.OnResultCallback),
