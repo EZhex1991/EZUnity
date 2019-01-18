@@ -1,5 +1,5 @@
 /*
- * Author:      熊哲
+ * Author:      ezhex1991@outlook.com
  * CreateTime:  9/26/2017 5:19:35 PM
  * Description:
  * xlua原LuaBehaviour只是样例，这个LuaMessage为了防止重名，但仍然是！示例！
