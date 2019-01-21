@@ -1,8 +1,8 @@
 ﻿--[==[
-Author:     #AUTHORNAME#
-CreateTime: #CREATETIME#
-Description:
-
+- Author:       ezhex1991@outlook.com
+- CreateTime:   #CREATETIME#
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
 local M = {} -- 脚本内使用local的M作为表名，不用和文件名一致，方便维护
 M._modulename = ... -- 这里是require的参数，通常就是文件路径，很多时候可以作为日志的tag

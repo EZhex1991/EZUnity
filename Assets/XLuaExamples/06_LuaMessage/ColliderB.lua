@@ -1,8 +1,8 @@
 ﻿--[==[
-Author:     #AUTHORNAME#
-CreateTime: #CREATETIME#
-Description:
-
+- Author:       ezhex1991@outlook.com
+- CreateTime:   #CREATETIME#
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
 local M = {}
 M._modulename = ...

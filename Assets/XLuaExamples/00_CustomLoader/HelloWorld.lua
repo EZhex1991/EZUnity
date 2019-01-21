@@ -1,8 +1,8 @@
 ﻿--[==[
-Author:     熊哲
-CreateTime: 5/23/2017 6:30:07 PM
-Description:
-
+- Author:       ezhex1991@outlook.com
+- CreateTime:   2017-05-23 18:30:07
+- Orgnization:  #ORGNIZATION#
+- Description:  
 --]==]
 local moduleName = ...
 local M = {}
