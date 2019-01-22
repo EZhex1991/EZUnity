@@ -121,10 +121,6 @@ namespace EZUnity.XLuaExtension
             }
             ezApplication.onApplicationQuitEvent += ExitLua;
         }
-        protected override void Dispose()
-        {
-
-        }
 
         public void StartLua()
         {

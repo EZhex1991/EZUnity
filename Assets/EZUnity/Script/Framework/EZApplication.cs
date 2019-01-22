@@ -50,10 +50,6 @@ namespace EZUnity.Framework
             System.IO.Directory.CreateDirectory(persistentDataPath);
             if (onApplicationStartEvent != null) onApplicationStartEvent();
         }
-        protected override void Dispose()
-        {
-
-        }
 
         private void OnApplicationQuit()
         {

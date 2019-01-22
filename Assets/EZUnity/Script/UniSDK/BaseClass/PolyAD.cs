@@ -46,10 +46,6 @@ namespace EZUnity.UniSDK.Base
             Log("Init");
             _OnInitFinished(positiveEvent, "Test Mode");
         }
-        protected override void Dispose()
-        {
-
-        }
 
         public virtual bool IsRewardVideoReady()
         {

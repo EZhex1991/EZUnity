@@ -22,10 +22,6 @@ namespace EZUnity.UniSDK.Base
         {
             ClearLocalNotifications();
         }
-        protected override void Dispose()
-        {
-
-        }
 
         protected virtual IEnumerator OnApplicationPause(bool pauseStatus)
         {

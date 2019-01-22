@@ -12,13 +12,6 @@ namespace EZUnity.Framework.Events
     {
         public Dictionary<int, EZEvent> m_Events = new Dictionary<int, EZEvent>();
 
-        protected override void Init()
-        {
-        }
-        protected override void Dispose()
-        {
-        }
-
         public void SendEvent(object eventKey, object sender, object value)
         {
             LogFormat("Event {0} From {1}", eventKey, sender);

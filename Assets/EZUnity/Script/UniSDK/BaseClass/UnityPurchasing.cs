@@ -114,15 +114,5 @@ namespace EZUnity.UniSDK.Base
         {
             return JsonUtility.FromJson<JsonContent>(jsonText);
         }
-
-        protected override void Init()
-        {
-
-        }
-
-        protected override void Dispose()
-        {
-
-        }
     }
 }

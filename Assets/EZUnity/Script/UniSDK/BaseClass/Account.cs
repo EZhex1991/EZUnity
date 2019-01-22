@@ -22,10 +22,6 @@ namespace EZUnity.UniSDK.Base
             if (positiveEvent) _OnInitSucceeded("Test Mode");
             else _OnInitFailed("Test Mode");
         }
-        protected override void Dispose()
-        {
-
-        }
 
         public virtual bool IsLoggedIn()
         {

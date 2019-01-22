@@ -31,10 +31,6 @@ namespace EZUnity.Framework
         {
             Input.simulateMouseWithTouches = simulateMouseWithTouches;
         }
-        protected override void Dispose()
-        {
-
-        }
 
         protected virtual void Update()
         {

@@ -70,8 +70,8 @@ namespace EZUnity
             Dispose();
         }
 
-        protected abstract void Init();
-        protected abstract void Dispose();
+        protected virtual void Init() { }
+        protected virtual void Dispose() { }
 
         public void Log(string message)
         {
