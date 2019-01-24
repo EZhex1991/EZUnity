@@ -50,12 +50,13 @@ Shader "EZUnity/Glass" {
 			};
 			struct v2f {
 				float4 pos : SV_POSITION;
-				float2 uv : TEXCOORD0;
+				float2 mainUV : TEXCOORD0;
 				float3 worldNormal : TEXCOORD1;
 				float3 worldViewDir : TEXCOORD2;
 				float4 grabPosR : TEXCOORD3;
 				float4 grabPosG : TEXCOORD4;
 				float4 grabPosB : TEXCOORD5;
+				float2 roughnessUV : TEXCOORD6;
 			};
 
 			sampler2D _MainTex;
@@ -70,6 +71,7 @@ Shader "EZUnity/Glass" {
 			fixed _ReflectionStrength;
 			
 			sampler2D _RoughTex;
+			float4 _RoughTex_ST;
 			fixed4 _Roughness;
 			
 			fixed _SpecAtten;
@@ -81,7 +83,8 @@ Shader "EZUnity/Glass" {
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.mainUV = TRANSFORM_TEX(v.uv, _MainTex);
+				o.roughnessUV = TRANSFORM_TEX(v.uv, _RoughTex);
 				o.worldNormal = normalize(UnityObjectToWorldNormal(v.normal));
 				o.worldViewDir = normalize(WorldSpaceViewDir(v.vertex));
 				fixed4 grabPosR = UnityObjectToClipPos(v.vertex - v.normal * _Refrection.r * _Refrection.w);
@@ -93,7 +96,7 @@ Shader "EZUnity/Glass" {
 				return o;
 			}
 			fixed4 frag (v2f i) : SV_Target {
-				fixed4 rough = tex2D(_RoughTex, i.uv + frac(_Roughness.xy * _Time.y));
+				fixed4 rough = tex2D(_RoughTex, i.roughnessUV + frac(_Roughness.xy * _Time.y));
 
 				// grab
 				fixed4 grabColor = 1;
@@ -102,7 +105,7 @@ Shader "EZUnity/Glass" {
 				grabColor.b = tex2Dproj(_GrabTexture, i.grabPosB + rough * _Roughness.w).b;
 
 				// base color
-				fixed4 color = tex2D(_MainTex, i.uv) * _Color;
+				fixed4 color = tex2D(_MainTex, i.mainUV) * _Color;
 				fixed alpha = pow(1 - abs(dot(i.worldNormal, i.worldViewDir)), _AlphaPower);
 				color.a *= alpha;
 
