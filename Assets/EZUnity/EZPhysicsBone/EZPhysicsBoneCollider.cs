@@ -26,30 +26,45 @@ namespace EZUnity.PhysicsCompnent
         private float m_Margin;
         public float margin { get { return m_Margin; } }
 
+        [SerializeField]
+        private bool m_InsideMode;
+        public bool insideMode { get { return m_InsideMode; } set { m_InsideMode = value; } }
+
         public override void Collide(ref Vector3 position, float spacing)
         {
             if (referenceCollider is SphereCollider)
             {
                 SphereCollider collider = referenceCollider as SphereCollider;
-                EZPhysicsUtility.SphereOutsideSphere(ref position, collider, spacing + margin);
+                if (insideMode) EZPhysicsUtility.PointInsideSphere(ref position, collider, spacing + margin);
+                else EZPhysicsUtility.PointOutsideSphere(ref position, collider, spacing + margin);
             }
             else if (referenceCollider is CapsuleCollider)
             {
                 CapsuleCollider collider = referenceCollider as CapsuleCollider;
-                EZPhysicsUtility.SphereOutsideCapsule(ref position, collider, spacing + margin);
+                if (insideMode) EZPhysicsUtility.PointInsideCapsule(ref position, collider, spacing + margin);
+                else EZPhysicsUtility.PointOutsideCapsule(ref position, collider, spacing + margin);
             }
             else if (referenceCollider is BoxCollider)
             {
-                EZPhysicsUtility.SphereOutsideCollider(ref position, referenceCollider, spacing + margin);
+                BoxCollider collider = referenceCollider as BoxCollider;
+                if (insideMode) EZPhysicsUtility.PointInsideBox(ref position, collider, spacing + margin);
+                else EZPhysicsUtility.PointOutsideBox(ref position, collider, spacing + margin);
             }
             else if (referenceCollider is MeshCollider)
             {
                 if (!CheckConvex(referenceCollider as MeshCollider))
                 {
                     Debug.LogError("Non-Convex Mesh Collider is not supported", this);
+                    enabled = false;
                     return;
                 }
-                EZPhysicsUtility.SphereOutsideCollider(ref position, referenceCollider, spacing + margin);
+                if (insideMode)
+                {
+                    Debug.LogError("Inside Mode On Mesh Collider is not supported", this);
+                    insideMode = false;
+                    return;
+                }
+                EZPhysicsUtility.PointOutsideCollider(ref position, referenceCollider, spacing + margin);
             }
         }
 

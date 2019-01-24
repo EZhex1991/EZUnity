@@ -378,7 +378,7 @@ namespace EZUnity.PhysicsCompnent
                     foreach (Collider collider in extraColliders)
                     {
                         if (node.transform != collider.transform && collider.enabled)
-                            EZPhysicsUtility.SphereOutsideCollider(ref node.position, collider, node.radius);
+                            EZPhysicsUtility.PointOutsideCollider(ref node.position, collider, node.radius);
                     }
                 }
 

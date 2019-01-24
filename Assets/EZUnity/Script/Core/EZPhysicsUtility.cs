@@ -9,34 +9,7 @@ namespace EZUnity
 {
     public static partial class EZPhysicsUtility
     {
-        public static void SphereOutsideSphere(ref Vector3 position, SphereCollider collider, float spacing)
-        {
-            Vector3 scale = collider.transform.localScale.Abs();
-            float radius = collider.radius * Mathf.Max(scale.x, scale.y, scale.z);
-            SphereOutsideSphere(ref position, collider.transform.TransformPoint(collider.center), radius + spacing);
-        }
-        public static void SphereOutsideSphere(ref Vector3 position, Vector3 spherePosition, float distance)
-        {
-            Vector3 bounceDir = position - spherePosition;
-            if (bounceDir.magnitude < distance)
-            {
-                position = spherePosition + bounceDir.normalized * distance;
-            }
-        }
-        public static void SphereInsideSphere(ref Vector3 position, SphereCollider collider, float spacing)
-        {
-            SphereInsideSphere(ref position, collider.transform.TransformPoint(collider.center), collider.radius - spacing);
-        }
-        public static void SphereInsideSphere(ref Vector3 position, Vector3 spherePosition, float distance)
-        {
-            Vector3 bounceDir = position - spherePosition;
-            if (bounceDir.magnitude > distance)
-            {
-                position = spherePosition + bounceDir.normalized * distance;
-            }
-        }
-
-        public static void CapsuleSpheres(CapsuleCollider collider, out Vector3 sphereP0, out Vector3 sphereP1, out float radius)
+        public static void GetCapsuleSpheres(CapsuleCollider collider, out Vector3 sphereP0, out Vector3 sphereP1, out float radius)
         {
             Vector3 scale = collider.transform.localScale.Abs();
             radius = collider.radius;
@@ -66,70 +39,151 @@ namespace EZUnity
             sphereP0 = collider.transform.TransformPoint(sphereP0);
             sphereP1 = collider.transform.TransformPoint(sphereP1);
         }
-        public static void SphereOutsideCapsule(ref Vector3 position, CapsuleCollider collider, float spacing)
+
+        public static void PointOutsideSphere(ref Vector3 position, SphereCollider collider, float spacing)
+        {
+            Vector3 scale = collider.transform.localScale.Abs();
+            float radius = collider.radius * Mathf.Max(scale.x, scale.y, scale.z);
+            PointOutsideSphere(ref position, collider.transform.TransformPoint(collider.center), radius + spacing);
+        }
+        public static void PointOutsideSphere(ref Vector3 position, Vector3 spherePosition, float radius)
+        {
+            Vector3 bounceDir = position - spherePosition;
+            if (bounceDir.magnitude < radius)
+            {
+                position = spherePosition + bounceDir.normalized * radius;
+            }
+        }
+
+        public static void PointInsideSphere(ref Vector3 position, SphereCollider collider, float spacing)
+        {
+            PointInsideSphere(ref position, collider.transform.TransformPoint(collider.center), collider.radius - spacing);
+        }
+        public static void PointInsideSphere(ref Vector3 position, Vector3 spherePosition, float radius)
+        {
+            Vector3 bounceDir = position - spherePosition;
+            if (bounceDir.magnitude > radius)
+            {
+                position = spherePosition + bounceDir.normalized * radius;
+            }
+        }
+
+        public static void PointOutsideCapsule(ref Vector3 position, CapsuleCollider collider, float spacing)
         {
             Vector3 sphereP0, sphereP1;
             float radius;
-            CapsuleSpheres(collider, out sphereP0, out sphereP1, out radius);
-            SphereOutsideCapsule(ref position, sphereP0, sphereP1, radius + spacing);
+            GetCapsuleSpheres(collider, out sphereP0, out sphereP1, out radius);
+            PointOutsideCapsule(ref position, sphereP0, sphereP1, radius + spacing);
         }
-        public static void SphereOutsideCapsule(ref Vector3 position, Vector3 sphereP0, Vector3 sphereP1, float distance)
+        public static void PointOutsideCapsule(ref Vector3 position, Vector3 sphereP0, Vector3 sphereP1, float radius)
         {
             Vector3 capsuleDir = sphereP1 - sphereP0;
-            Vector3 boneDir = position - sphereP0;
+            Vector3 pointDir = position - sphereP0;
 
-            float dot = Vector3.Dot(capsuleDir, boneDir);
+            float dot = Vector3.Dot(capsuleDir, pointDir);
             if (dot <= 0)
             {
-                SphereOutsideSphere(ref position, sphereP0, distance);
+                PointOutsideSphere(ref position, sphereP0, radius);
             }
             else if (dot >= capsuleDir.sqrMagnitude)
             {
-                SphereOutsideSphere(ref position, sphereP1, distance);
+                PointOutsideSphere(ref position, sphereP1, radius);
             }
             else
             {
-                Vector3 bounceDir = boneDir - capsuleDir.normalized * dot / capsuleDir.magnitude;
+                Vector3 bounceDir = pointDir - capsuleDir.normalized * dot / capsuleDir.magnitude;
                 float bounceDis = bounceDir.magnitude;
-                if (bounceDis < distance)
+                if (bounceDis < radius)
                 {
-                    position += bounceDir.normalized * (distance - bounceDis);
+                    position += bounceDir.normalized * (radius - bounceDis);
                 }
             }
         }
-        public static void SphereInsideCapsule(ref Vector3 position, CapsuleCollider collider, float spacing)
+
+        public static void PointInsideCapsule(ref Vector3 position, CapsuleCollider collider, float spacing)
         {
             Vector3 sphereP0, sphereP1;
             float radius;
-            CapsuleSpheres(collider, out sphereP0, out sphereP1, out radius);
-            SphereInsideCapsule(ref position, sphereP0, sphereP1, radius - spacing);
+            GetCapsuleSpheres(collider, out sphereP0, out sphereP1, out radius);
+            PointInsideCapsule(ref position, sphereP0, sphereP1, radius - spacing);
         }
-        public static void SphereInsideCapsule(ref Vector3 position, Vector3 sphereP0, Vector3 sphereP1, float distance)
+        public static void PointInsideCapsule(ref Vector3 position, Vector3 sphereP0, Vector3 sphereP1, float radius)
         {
             Vector3 capsuleDir = sphereP1 - sphereP0;
-            Vector3 boneDir = position - sphereP0;
+            Vector3 pointDir = position - sphereP0;
 
-            float dot = Vector3.Dot(capsuleDir, boneDir);
+            float dot = Vector3.Dot(capsuleDir, pointDir);
             if (dot <= 0)
             {
-                SphereInsideSphere(ref position, sphereP0, distance);
+                PointInsideSphere(ref position, sphereP0, radius);
             }
             else if (dot >= capsuleDir.sqrMagnitude)
             {
-                SphereInsideSphere(ref position, sphereP1, distance);
+                PointInsideSphere(ref position, sphereP1, radius);
             }
             else
             {
-                Vector3 bounceDir = boneDir - capsuleDir.normalized * dot / capsuleDir.magnitude;
+                Vector3 bounceDir = pointDir - capsuleDir.normalized * dot / capsuleDir.magnitude;
                 float bounceDis = bounceDir.magnitude;
-                if (bounceDis > distance)
+                if (bounceDis > radius)
                 {
-                    position += bounceDir.normalized * (distance - bounceDis);
+                    position += bounceDir.normalized * (radius - bounceDis);
                 }
             }
         }
 
-        public static void SphereOutsideCollider(ref Vector3 position, Collider collider, float spacing)
+        public static void PointOutsideBox(ref Vector3 position, BoxCollider collider, float spacing)
+        {
+            Vector3 positionToCollider = collider.transform.InverseTransformPoint(position) - collider.center;
+            PointOutsideBox(ref positionToCollider, collider.size.Abs() / 2 + collider.transform.InverseTransformVector(Vector3.one * spacing).Abs());
+            position = collider.transform.TransformPoint(collider.center + positionToCollider);
+        }
+        public static void PointOutsideBox(ref Vector3 position, Vector3 boxSize)
+        {
+            Vector3 distanceToCenter = position.Abs();
+            if (distanceToCenter.x < boxSize.x && distanceToCenter.y < boxSize.y && distanceToCenter.z < boxSize.z)
+            {
+                Vector3 distance = (distanceToCenter - boxSize).Abs();
+                if (distance.x < distance.y)
+                {
+                    if (distance.x < distance.z)
+                    {
+                        position.x = Mathf.Sign(position.x) * boxSize.x;
+                    }
+                    else
+                    {
+                        position.z = Mathf.Sign(position.z) * boxSize.z;
+                    }
+                }
+                else
+                {
+                    if (distance.y < distance.z)
+                    {
+                        position.y = Mathf.Sign(position.y) * boxSize.y;
+                    }
+                    else
+                    {
+                        position.z = Mathf.Sign(position.z) * boxSize.z;
+                    }
+                }
+            }
+        }
+
+        public static void PointInsideBox(ref Vector3 position, BoxCollider collider, float spacing)
+        {
+            Vector3 positionToCollider = collider.transform.InverseTransformPoint(position) - collider.center;
+            PointInsideBox(ref positionToCollider, collider.size.Abs() / 2 - collider.transform.InverseTransformVector(Vector3.one * spacing).Abs());
+            position = collider.transform.TransformPoint(collider.center + positionToCollider);
+        }
+        public static void PointInsideBox(ref Vector3 position, Vector3 boxSize)
+        {
+            Vector3 distanceToCenter = position.Abs();
+            if (distanceToCenter.x > boxSize.x) position.x = Mathf.Sign(position.x) * boxSize.x;
+            if (distanceToCenter.y > boxSize.y) position.y = Mathf.Sign(position.y) * boxSize.y;
+            if (distanceToCenter.z > boxSize.z) position.z = Mathf.Sign(position.z) * boxSize.z;
+        }
+
+        public static void PointOutsideCollider(ref Vector3 position, Collider collider, float spacing)
         {
             Vector3 closestPoint = collider.ClosestPoint(position);
             if (position == closestPoint) // inside collider
