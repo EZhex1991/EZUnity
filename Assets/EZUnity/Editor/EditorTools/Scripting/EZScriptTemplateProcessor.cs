@@ -6,7 +6,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace EZUnity.Scripting
+namespace EZUnity
 {
     public class EZScriptTemplateProcessor : UnityEditor.AssetModificationProcessor
     {

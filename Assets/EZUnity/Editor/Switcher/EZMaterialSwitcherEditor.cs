@@ -5,7 +5,7 @@
  */
 using UnityEditor;
 
-namespace EZUnity.Switcher
+namespace EZUnity
 {
     [CustomEditor(typeof(EZMaterialSwitcher))]
     public class EZMaterialSwitcherEditor : EZSwitcherEditor

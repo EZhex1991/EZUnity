@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XLua;
 
-namespace EZUnity.XLuaExtension
+namespace EZUnity.Example
 {
     public static class GenListForEZUnity
     {

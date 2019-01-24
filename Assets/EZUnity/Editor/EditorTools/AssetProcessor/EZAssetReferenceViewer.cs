@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.AssetProcessor
+namespace EZUnity
 {
     public class EZAssetReferenceViewer : EZEditorWindow
     {

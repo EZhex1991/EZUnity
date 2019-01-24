@@ -13,7 +13,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.Bundle
+namespace EZUnity
 {
     public class EZBundleBuilder
     {

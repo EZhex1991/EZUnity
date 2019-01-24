@@ -5,7 +5,7 @@
  */
 using UnityEditor;
 
-namespace EZUnity.Switcher
+namespace EZUnity
 {
     [CustomEditor(typeof(EZTimelineSwitcher))]
     public class EZTimelineSwitcherEditor : EZSwitcherEditor

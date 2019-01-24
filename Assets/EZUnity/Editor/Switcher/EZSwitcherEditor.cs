@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZUnity.Switcher
+namespace EZUnity
 {
     public class EZSwitcherEditor : Editor
     {

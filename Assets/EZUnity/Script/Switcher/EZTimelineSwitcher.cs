@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace EZUnity.Switcher
+namespace EZUnity
 {
     public class EZTimelineSwitcher : EZSwitcher<TimelineAsset>
     {

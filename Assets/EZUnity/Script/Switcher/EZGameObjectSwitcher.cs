@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.Switcher
+namespace EZUnity
 {
     public class EZGameObjectSwitcher : EZSwitcher<GameObject>
     {

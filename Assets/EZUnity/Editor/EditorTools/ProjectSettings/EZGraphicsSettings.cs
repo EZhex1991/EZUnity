@@ -9,7 +9,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.ProjectSettings
+namespace EZUnity
 {
     public static class EZGraphicsSettings
     {

@@ -7,7 +7,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.AssetProcessor
+namespace EZUnity
 {
 #if EZASSETPOSTPROCESSOR
     public class EZAssetPostprocessor : UnityEditor.AssetPostprocessor

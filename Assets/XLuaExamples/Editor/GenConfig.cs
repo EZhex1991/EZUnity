@@ -7,7 +7,7 @@
 using CSObjectWrapEditor;
 using UnityEngine;
 
-namespace EZUnity.XLuaExtension
+namespace EZUnity.Example
 {
     public static class GenConfig
     {

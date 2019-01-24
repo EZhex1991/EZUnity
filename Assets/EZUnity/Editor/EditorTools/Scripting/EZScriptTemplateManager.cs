@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZUnity.Scripting
+namespace EZUnity
 {
     public class EZScriptTemplateManager : EZEditorWindow
     {

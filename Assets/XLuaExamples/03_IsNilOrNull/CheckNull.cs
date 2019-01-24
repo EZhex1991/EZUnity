@@ -7,7 +7,7 @@
 using UnityEngine;
 using XLua;
 
-namespace EZUnity.XLuaExample
+namespace EZUnity.Example
 {
     [LuaCallCSharp]
     public class CheckNull

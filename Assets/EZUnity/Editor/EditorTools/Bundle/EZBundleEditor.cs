@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZUnity.Bundle
+namespace EZUnity
 {
     [CustomEditor(typeof(EZBundleObject))]
     public class EZBundleEditor : Editor

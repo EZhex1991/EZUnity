@@ -13,7 +13,7 @@
  */
 using UnityEditor;
 
-namespace EZUnity.ProjectSettings
+namespace EZUnity
 {
     public class EZKeystore
     {

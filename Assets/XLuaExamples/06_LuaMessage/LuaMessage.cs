@@ -7,7 +7,7 @@
 */
 using UnityEngine;
 
-namespace EZUnity.XLuaExample
+namespace EZUnity.Example
 {
     [XLua.LuaCallCSharp]
     public class LuaMessage : MonoBehaviour

@@ -13,7 +13,7 @@ namespace EZUnity
 {
     public static partial class EZMenuItems
     {
-        [Bundle.EZBundleBuilder.OnPreBuild]
+        [EZBundleBuilder.OnPreBuild]
         [MenuItem(ROOT_NAME + "/XLuaExtension/'.lua' To '.txt'", false, PRIORITY + 5001)]
         public static void LuaToTxt()
         {

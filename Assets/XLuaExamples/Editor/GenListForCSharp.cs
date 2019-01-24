@@ -3,12 +3,11 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-#if XLUA
 using System;
 using System.Collections.Generic;
 using XLua;
 
-namespace EZUnity.XLuaExtension
+namespace EZUnity.Example
 {
     public static class GenListForCSharp
     {
@@ -39,4 +38,3 @@ namespace EZUnity.XLuaExtension
         };
     }
 }
-#endif

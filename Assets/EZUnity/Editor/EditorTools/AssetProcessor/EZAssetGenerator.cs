@@ -8,7 +8,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.AssetProcessor
+namespace EZUnity
 {
     public static class EZAssetGenerator
     {

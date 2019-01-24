@@ -9,7 +9,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.Bundle
+namespace EZUnity
 {
     public enum AssetsViewOption
     {

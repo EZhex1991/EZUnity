@@ -3,11 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZUnity.AssetProcessor;
-using EZUnity.Bundle;
 using EZUnity.Framework;
-using EZUnity.ProjectSettings;
-using EZUnity.Scripting;
 using System;
 using System.IO;
 using UnityEditor;

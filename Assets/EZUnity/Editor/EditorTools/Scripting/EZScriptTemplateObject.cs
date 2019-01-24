@@ -9,7 +9,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.Scripting
+namespace EZUnity
 {
     public class EZScriptTemplateObject : ScriptableObject
     {

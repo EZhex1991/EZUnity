@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.Switcher
+namespace EZUnity
 {
     public class EZMaterialSwitcher : EZSwitcher<Material>
     {

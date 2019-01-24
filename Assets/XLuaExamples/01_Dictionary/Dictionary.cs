@@ -6,7 +6,7 @@
 */
 using System.Collections;
 
-namespace EZUnity.XLuaExample
+namespace EZUnity.Example
 {
     [XLua.LuaCallCSharp]
     public class Dictionary

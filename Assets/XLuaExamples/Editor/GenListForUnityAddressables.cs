@@ -3,12 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-#if XLUA && UNITYADDRESSABLES
+#if UNITYADDRESSABLES
 using System;
 using System.Collections.Generic;
 using XLua;
 
-namespace EZUnity.XLuaExtension
+namespace EZUnity.Example
 {
     public static class GenListForUnityAddressables
     {

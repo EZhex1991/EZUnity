@@ -3,12 +3,11 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-#if XLUA && DOTWEEN
 using System;
 using System.Collections.Generic;
 using XLua;
 
-namespace EZUnity.XLuaExtension
+namespace EZUnity.Example
 {
     public static class GenListForDOTween
     {
@@ -50,4 +49,3 @@ namespace EZUnity.XLuaExtension
         };
     }
 }
-#endif

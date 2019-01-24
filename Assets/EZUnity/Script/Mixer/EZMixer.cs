@@ -6,10 +6,10 @@
 using System;
 using UnityEngine;
 
-namespace EZUnity.Mixer
+namespace EZUnity
 {
     [Serializable]
-    public class EZBlendable
+    public class EZMixerBlendable
     {
         [SerializeField, Range(0, 1)]
         private float m_Weight = 1;
@@ -29,7 +29,7 @@ namespace EZUnity.Mixer
 
     public abstract class EZMixer : MonoBehaviour
     {
-        protected abstract EZBlendable[] blendables { get; }
+        protected abstract EZMixerBlendable[] blendables { get; }
         public int defaultSource = -1;
         public float delta = 0.05f;
 

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZUnity.Scripting
+namespace EZUnity
 {
     [CreateAssetMenu(fileName = "EZScriptStatistics", menuName = "EZUnity/EZScriptStatistics", order = EZUtility.AssetOrder)]
     public class EZScriptStatisticsObject : ScriptableObject
