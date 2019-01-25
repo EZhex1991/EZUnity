@@ -1,10 +1,4 @@
-/Assets/_Temp
-/Assets/_Temp.meta
-/Assets/XLua/Gen
-/Assets/XLua/Gen.meta
-
-.svn
-
+# VS/VSCode files
 .vs
 *.sln
 *.csproj
@@ -14,12 +8,24 @@
 *.config
 *.code-workspace
 
-/EZPersistent
-/EZScreenshots
+# Unity3D
 /Library
 /obj
 /Packages
 /Temp
+
+# EZUnity
+/EZPersistent
+/EZScreenshots
+
+# XLua
+/LuaDebuggee.dll
+/Assets/lpproj
+/Assets/lpproj.meta
+/Assets/ThirdParty
+/Assets/ThirdParty.meta
+/Assets/XLua/Gen
+/Assets/XLua/Gen.meta
 
 # Windows image file caches
 Thumbs.db
