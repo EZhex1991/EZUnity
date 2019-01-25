@@ -3,14 +3,13 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Unlit/Pattern/Stripe" {
+Shader "EZUnity/Unlit/Pattern/Wave" {
 	Properties {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 		_SecondColor ("Second Color", Color) = (0, 0, 0, 1)
 		[KeywordEnum(UV, LocalXY, LocalXZ, LocalYZ, ScreenPos)] _PatternMode ("Pattern Mode", Int) = 0
 		_DensityFactor ("Density(XY) Offset(ZW)", Vector) = (2, 2, 0, 0)
-		_FillRatio ("Fill Ratio", Range(0, 1)) = 0.5
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -38,7 +37,6 @@ Shader "EZUnity/Unlit/Pattern/Stripe" {
 			fixed4 _SecondColor;
 			int _PatternMode;
 			fixed4 _DensityFactor;
-			float _FillRatio;
 
 			v2f vert (appdata v) {
 				v2f o;
@@ -59,8 +57,8 @@ Shader "EZUnity/Unlit/Pattern/Stripe" {
 			}
 			fixed4 frag (v2f i) : SV_Target {
 				fixed4 color = tex2D(_MainTex, i.mainUV);
-				float2 coord = i.patternPos * _DensityFactor.xy + _DensityFactor.zw;
-				if (frac(coord.x + coord.y) > _FillRatio) {
+				float2 coord = frac(i.patternPos * _DensityFactor.xy + _DensityFactor.zw) - 0.5;
+				if (sin(coord.x * 6.2832) * 0.5 > coord.y) {
 					color *= _Color;
 				} else {
 					color *= _SecondColor;

@@ -8,7 +8,7 @@ Shader "EZUnity/Unlit/Pattern/Spot" {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 		_SecondColor ("Second Color", Color) = (0, 0, 0, 1)
-		[KeywordEnum(UV, LocalPos, ScreenPos)] _PatternMode ("Pattern Mode", Int) = 0
+		[KeywordEnum(UV, LocalXY, LocalXZ, LocalYZ, ScreenPos)] _PatternMode ("Pattern Mode", Int) = 0
 		_DensityFactor ("Density(XY) Offset(ZW)", Vector) = (2, 2, 0, 0)
 		_FillRatio ("Fill Ratio", Range(0, 1)) = 0.5
 	}
@@ -47,8 +47,12 @@ Shader "EZUnity/Unlit/Pattern/Spot" {
 				if (_PatternMode == 0) {
 					o.patternPos = o.mainUV;
 				} else if (_PatternMode == 1) {
-					o.patternPos = v.vertex;
+					o.patternPos = v.vertex.xy;
 				} else if (_PatternMode == 2) {
+					o.patternPos = v.vertex.xz;
+				} else if (_PatternMode == 3) {
+					o.patternPos = v.vertex.yz;
+				} else {
 					o.patternPos = ComputeScreenPos(o.pos);
 				}
 				return o;
