@@ -39,12 +39,12 @@ namespace EZUnity.PhysicsCompnent
         public Vector3 GetForce(float normalizedLength)
         {
             if (!isActiveAndEnabled) return Vector3.zero;
-            float t = (Time.time % m_TurbulenceTimeCycle) / m_TurbulenceTimeCycle;
-            t = (t - conductivity * normalizedLength) % 1f;
+            float time = (Time.time % m_TurbulenceTimeCycle) / m_TurbulenceTimeCycle;
+            time = (time - conductivity * normalizedLength) % 1f;
             Vector3 tbl = turbulence;
-            tbl.x *= m_TurbulenceXCurve.Evaluate(t);
-            tbl.y *= m_TurbulenceYCurve.Evaluate(t);
-            tbl.z *= m_TurbulenceZCurve.Evaluate(t);
+            tbl.x *= m_TurbulenceXCurve.Evaluate(time);
+            tbl.y *= m_TurbulenceYCurve.Evaluate(time);
+            tbl.z *= m_TurbulenceZCurve.Evaluate(time);
             if (useLocalDirection)
             {
                 return transform.TransformDirection(direction + tbl);
@@ -53,6 +53,12 @@ namespace EZUnity.PhysicsCompnent
             {
                 return direction + tbl;
             }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.matrix = Matrix4x4.identity * Matrix4x4.Translate(transform.position);
+            EZUtility.DrawGizmosArrow(Vector3.zero, GetForce(0), 1, Vector3.up);
         }
     }
 }

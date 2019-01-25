@@ -19,5 +19,30 @@ namespace EZUnity
         {
             get { return Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork; }
         }
+
+        public static void DrawGizmosPolyline(bool close, params Vector3[] vertices)
+        {
+            int i = 0;
+            while (i < vertices.Length - 1)
+            {
+                Gizmos.DrawLine(vertices[i], vertices[i + 1]);
+                i++;
+            }
+            if (close) Gizmos.DrawLine(vertices[i], vertices[0]);
+        }
+
+        public static void DrawGizmosArrow(Vector3 startPoint, Vector3 direction, float halfWidth, Vector3 normal)
+        {
+            Vector3 sideStep = Vector3.Cross(direction, normal).normalized * halfWidth * 0.5f;
+            Vector3[] vertices = new Vector3[7];
+            vertices[3] = startPoint + direction;
+            vertices[0] = startPoint + sideStep;
+            vertices[6] = startPoint - sideStep;
+            vertices[1] = vertices[0] + direction * 0.5f;
+            vertices[5] = vertices[6] + direction * 0.5f;
+            vertices[2] = vertices[1] + sideStep;
+            vertices[4] = vertices[5] - sideStep;
+            DrawGizmosPolyline(true, vertices);
+        }
     }
 }

@@ -108,11 +108,49 @@ namespace EZUnity
             tf.localEulerAngles = angles;
         }
 
+        public static Vector3 WorldCenter(this BoxCollider collider)
+        {
+            return collider.transform.TransformPoint(collider.center);
+        }
+        public static Vector3 WorldCenter(this SphereCollider collider)
+        {
+            return collider.transform.TransformPoint(collider.center);
+        }
+        public static Vector3 WorldCenter(this CapsuleCollider collider)
+        {
+            return collider.transform.TransformPoint(collider.center);
+        }
+
+        public static Vector3 WorldExtents(this BoxCollider collider)
+        {
+            return collider.transform.TransformVector(collider.size / 2);
+        }
+
         public static Vector2 Abs(this Vector2 v)
         {
             return new Vector2(Mathf.Abs(v.x), Mathf.Abs(v.y));
         }
+        public static float Max(this Vector2 v)
+        {
+            return Mathf.Max(v.x, v.y);
+        }
+        public static float Min(this Vector2 v)
+        {
+            return Mathf.Min(v.x, v.y);
+        }
 
+        public static Vector3 Abs(this Vector3 v)
+        {
+            return new Vector3(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
+        }
+        public static float Max(this Vector3 v)
+        {
+            return Mathf.Max(v.x, v.y, v.z);
+        }
+        public static float Min(this Vector3 v)
+        {
+            return Mathf.Min(v.x, v.y, v.z);
+        }
         public static Vector3 EulerNormalize(this Vector3 angles)
         {
             for (int i = 0; i < 3; i++)
@@ -122,9 +160,18 @@ namespace EZUnity
             }
             return angles;
         }
-        public static Vector3 Abs(this Vector3 v)
+
+        public static Vector4 Abs(this Vector4 v)
         {
-            return new Vector3(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z));
+            return new Vector4(Mathf.Abs(v.x), Mathf.Abs(v.y), Mathf.Abs(v.z), Mathf.Abs(v.w));
+        }
+        public static float Max(this Vector4 v)
+        {
+            return Mathf.Max(v.x, v.y, v.z, v.w);
+        }
+        public static float Min(this Vector4 v)
+        {
+            return Mathf.Min(v.x, v.y, v.z, v.w);
         }
 
         public static float Magnitude(this Quaternion rotation)

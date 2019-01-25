@@ -527,7 +527,7 @@ MonoBehaviour:
   m_UseLocalDirection: 0
   m_Direction: {x: -2, y: 2, z: 0}
   m_Turbulence: {x: 5, y: -5, z: 10}
-  m_TurbulenceTimeCycle: 15
+  m_TurbulenceTimeCycle: 10
   m_Conductivity: 0.1
   m_TurbulenceXCurve:
     serializedVersion: 2
