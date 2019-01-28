@@ -5,9 +5,9 @@
  */
 using UnityEngine;
 
-namespace EZUnity.UniSDK.Base
+namespace EZUnity.UniSDK
 {
-    public class Account : _EZMonoBehaviourSingleton<Account>
+    public class AccountBase : _EZMonoBehaviourSingleton<AccountBase>
     {
         public bool positiveEvent;
 

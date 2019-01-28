@@ -12,7 +12,7 @@ using Polymer;
 
 namespace EZUnity.UniSDK
 {
-    public class PolyAD : Base.PolyAD
+    public class PolyAD : PolyADBase
     {
 #if POLYAD
         private Queue<Action> callbackQueue = new Queue<Action>();

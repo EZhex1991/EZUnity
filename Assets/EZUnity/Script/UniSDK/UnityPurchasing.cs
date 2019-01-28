@@ -12,7 +12,7 @@ using UnityEngine.Purchasing.Security;
 
 namespace EZUnity.UniSDK
 {
-    public class UnityPurchasing : Base.UnityPurchasing
+    public class UnityPurchasing : UnityPurchasingBase
 #if UNITYPURCHASING
     , IStoreListener
 #endif

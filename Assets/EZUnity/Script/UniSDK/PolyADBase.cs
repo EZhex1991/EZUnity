@@ -5,9 +5,9 @@
  */
 using UnityEngine;
 
-namespace EZUnity.UniSDK.Base
+namespace EZUnity.UniSDK
 {
-    public class PolyAD : _EZMonoBehaviourSingleton<PolyAD>
+    public class PolyADBase : _EZMonoBehaviourSingleton<PolyADBase>
     {
         public bool positiveEvent = true;
         // init

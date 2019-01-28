@@ -11,7 +11,7 @@ using UnityEngine.iOS;
 
 namespace EZUnity.UniSDK
 {
-    public class Notification : Base.Notification
+    public class Notification : NotificationBase
     {
 #if UNITY_IOS
         protected override void Init()

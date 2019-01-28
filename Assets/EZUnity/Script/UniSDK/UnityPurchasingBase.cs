@@ -6,9 +6,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZUnity.UniSDK.Base
+namespace EZUnity.UniSDK
 {
-    public class UnityPurchasing : _EZMonoBehaviourSingleton<UnityPurchasing>
+    public class UnityPurchasingBase : _EZMonoBehaviourSingleton<UnityPurchasingBase>
     {
         [TextArea(5, 10)]
         public string googlePlayPublicKey;

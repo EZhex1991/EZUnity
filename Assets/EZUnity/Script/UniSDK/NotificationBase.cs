@@ -8,9 +8,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZUnity.UniSDK.Base
+namespace EZUnity.UniSDK
 {
-    public class Notification : _EZMonoBehaviourSingleton<Notification>
+    public class NotificationBase : _EZMonoBehaviourSingleton<NotificationBase>
     {
         [Range(0, 30)]
         public int timeout = 10;

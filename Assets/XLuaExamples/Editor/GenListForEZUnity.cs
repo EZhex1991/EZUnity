@@ -23,13 +23,13 @@ namespace EZUnity.Example
             typeof(EZUnity.Framework.Events.EZEvent),
             typeof(EZUnity.Framework.Events.EZEventHub),
 
-            typeof(EZUnity.UniSDK.Base.PolyAD),
-            typeof(EZUnity.UniSDK.Base.Notification),
-            typeof(EZUnity.UniSDK.Base.UnityPurchasing),
-            typeof(EZUnity.UniSDK.Base.UnityPurchasing.CustomProduct),
-            typeof(EZUnity.UniSDK.Base.UnityPurchasing.ReceiptContent),
-            typeof(EZUnity.UniSDK.Base.UnityPurchasing.PayloadContent),
-            typeof(EZUnity.UniSDK.Base.UnityPurchasing.JsonContent),
+            typeof(EZUnity.UniSDK.PolyADBase),
+            typeof(EZUnity.UniSDK.NotificationBase),
+            typeof(EZUnity.UniSDK.UnityPurchasingBase),
+            typeof(EZUnity.UniSDK.UnityPurchasingBase.CustomProduct),
+            typeof(EZUnity.UniSDK.UnityPurchasingBase.ReceiptContent),
+            typeof(EZUnity.UniSDK.UnityPurchasingBase.PayloadContent),
+            typeof(EZUnity.UniSDK.UnityPurchasingBase.JsonContent),
 
             typeof(EZUnity.XLuaExtension.EZLua),
             typeof(EZUnity.XLuaExtension.EZLuaBehaviour),
@@ -79,11 +79,11 @@ namespace EZUnity.Example
             typeof(EZUnity.Framework.EZResources.OnBundleLoadedAction),
             typeof(EZUnity.Framework.Events.EZEventHandler),
 
-            typeof(EZUnity.UniSDK.Base.OnResultCallback),
-            typeof(EZUnity.UniSDK.Base.OnDataCallback),
-            typeof(EZUnity.UniSDK.Base.OnEventCallback1),
-            typeof(EZUnity.UniSDK.Base.OnEventCallback2),
-            typeof(EZUnity.UniSDK.Base.Notification.NotificationProvider),
+            typeof(EZUnity.UniSDK.OnResultCallback),
+            typeof(EZUnity.UniSDK.OnDataCallback),
+            typeof(EZUnity.UniSDK.OnEventCallback1),
+            typeof(EZUnity.UniSDK.OnEventCallback2),
+            typeof(EZUnity.UniSDK.NotificationBase.NotificationProvider),
 
 
             typeof(EZUnity.XLuaExtension.LuaRequire),
