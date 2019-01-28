@@ -44,5 +44,14 @@ namespace EZUnity
             vertices[4] = vertices[5] - sideStep;
             DrawGizmosPolyline(true, vertices);
         }
+        public static void DrawGizmosArrowTriangle(Vector3 startPoint, Vector3 direction, float halfWidth, Vector3 normal)
+        {
+            Vector3 sideDirection = Vector3.Cross(direction, normal).normalized * halfWidth;
+            Vector3[] vertices = new Vector3[3];
+            vertices[0] = startPoint + direction;
+            vertices[1] = startPoint + sideDirection;
+            vertices[2] = startPoint - sideDirection;
+            DrawGizmosPolyline(true, vertices);
+        }
     }
 }
