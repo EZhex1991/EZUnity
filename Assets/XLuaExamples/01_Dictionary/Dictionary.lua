@@ -25,7 +25,7 @@ for i = 1, 3 do
 end
 
 -- dictSS["2"] = "two";	-- setter之前可以用后来也被改掉了，此处会报错
-CS.EZUnity.XLuaExample.Dictionary.SetItem(dictSS, "2", "two") -- 自己封装方法替代setter
+CS.EZUnity.Example.Dictionary.SetItem(dictSS, "2", "two") -- 自己封装方法替代setter
 
 local enum = dictSS:GetEnumerator() -- 遍历用Enumerator
 while enum:MoveNext() do
