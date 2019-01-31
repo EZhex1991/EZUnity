@@ -206,10 +206,6 @@ namespace EZUnity.PhysicsCompnent
         public AnimatorUpdateMode updateMode { get { return m_UpdateMode; } }
 
         [SerializeField]
-        private float m_MinDeltaTime = 0.02f;
-        public float minDeltaTime { get { return m_MinDeltaTime; } }
-
-        [SerializeField]
         private float m_SleepThreshold = 0.005f;
         public float sleepThreshold { get { return m_SleepThreshold; } set { m_SleepThreshold = Mathf.Max(0, value); } }
 
@@ -236,7 +232,6 @@ namespace EZUnity.PhysicsCompnent
         public EZPhysicsBoneForce forceModule { get { return m_ForceModule; } set { m_ForceModule = value; } }
 
         private List<TreeNode> m_PhysicsTrees = new List<TreeNode>();
-        private float deltaTime;
 
         private void Start()
         {
@@ -254,14 +249,7 @@ namespace EZUnity.PhysicsCompnent
         private void Update()
         {
             if (updateMode != AnimatorUpdateMode.AnimatePhysics)
-            {
-                deltaTime += Time.deltaTime;
-                if (deltaTime > minDeltaTime)
-                {
-                    UpdatePhysicsTrees(deltaTime);
-                    deltaTime = 0;
-                }
-            }
+                UpdatePhysicsTrees(Time.deltaTime);
         }
         private void LateUpdate()
         {
@@ -277,7 +265,6 @@ namespace EZUnity.PhysicsCompnent
         {
             m_StartDepth = Mathf.Max(0, m_StartDepth);
             m_EndNodeLength = Mathf.Max(0, m_EndNodeLength);
-            m_MinDeltaTime = Mathf.Max(0, m_MinDeltaTime);
             m_SleepThreshold = Mathf.Max(0, m_SleepThreshold);
             m_Radius = Mathf.Max(0, m_Radius);
             if (Application.isEditor && Application.isPlaying)
