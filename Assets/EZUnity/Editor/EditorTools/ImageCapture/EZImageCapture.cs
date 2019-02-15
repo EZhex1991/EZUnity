@@ -5,29 +5,19 @@
  */
 using System;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace EZUnity
 {
-    [RequireComponent(typeof(Camera))]
-    public class EZScreenshot : MonoBehaviour
+    [CreateAssetMenu(fileName = "EZImageCapture", menuName = "EZUnity/EZImageCapture", order = EZUtility.AssetOrder)]
+    public class EZImageCapture : ScriptableObject
     {
-        private Camera m_Camera;
-        public Camera camera
-        {
-            get
-            {
-                if (m_Camera == null)
-                    m_Camera = GetComponent<Camera>();
-                return m_Camera;
-            }
-        }
-
         public Vector2Int resolution = new Vector2Int(1920, 1080);
-        public TextureFormat format = TextureFormat.ARGB32;
-        public string capturePath = "EZScreenshots";
+        public TextureFormat textureFormat = TextureFormat.ARGB32;
+        public string filePath = "EZScreenshots";
 
-        public void CameraCapture(string path)
+        public void CameraCapture(Camera camera, string path)
         {
             Texture2D texture;
             if (camera.targetTexture == null)
@@ -53,22 +43,24 @@ namespace EZUnity
         }
         public Texture2D GetTexture(int width, int height)
         {
-            Texture2D tex = new Texture2D(width, height, format, false);
+            Texture2D tex = new Texture2D(width, height, textureFormat, false);
             tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
             tex.Apply();
             return tex;
         }
 
-        public static string GetFileName()
-        {
-            return string.Format("screenshot-{0}", DateTime.Now.ToString("yyyyMMdd-HHmmss"));
-        }
-
-        // ScreenCapture can be used only in play mode, and the path is related to project path and must have extension name
+        // Path is related to project path and must have extension name
         public void ScreenCapture(string path, int superSize = 2)
         {
-            if (!Path.HasExtension(path)) path = path + ".jpg";
-            UnityEngine.ScreenCapture.CaptureScreenshot(path, superSize);
+            if (EditorApplication.isPlaying)
+            {
+                if (!Path.HasExtension(path)) path = path + ".jpg";
+                UnityEngine.ScreenCapture.CaptureScreenshot(path, superSize);
+            }
+            else
+            {
+                Debug.LogError("ScreenCapture can only be used in play mode!");
+            }
         }
         public Texture2D ScreenCapture(int superSize = 2)
         {
