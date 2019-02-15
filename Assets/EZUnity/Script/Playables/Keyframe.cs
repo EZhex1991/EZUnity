@@ -13,13 +13,8 @@ namespace EZUnity.Playables
         float time { get; set; }
     }
 
-    public interface IKeyframe<T> : IKeyframe
-    {
-        T value { get; set; }
-    }
-
     [Serializable]
-    public struct FloatKeyframe : IKeyframe<float>
+    public struct FloatKeyframe : IKeyframe
     {
         [SerializeField]
         private float m_Time;
@@ -31,7 +26,7 @@ namespace EZUnity.Playables
     }
 
     [Serializable]
-    public struct Vector3Keyframe : IKeyframe<Vector3>
+    public struct Vector3Keyframe : IKeyframe
     {
         [SerializeField]
         private float m_Time;
