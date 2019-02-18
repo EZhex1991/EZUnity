@@ -3,13 +3,14 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Surface/Diffuse" {
+Shader "EZUnity/Surface/DoubleSidedDiffuse" {
 	Properties {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
+		Cull Off
 
 		CGPROGRAM
 		#pragma surface surf Lambert
