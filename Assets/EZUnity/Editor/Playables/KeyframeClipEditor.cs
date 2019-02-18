@@ -13,8 +13,10 @@ namespace EZUnity.Playables
     {
         protected KeyframeClip<T> asset;
 
-        protected Vector2 timeRange;
-        protected Vector2Int indexRange;
+        protected float startTime;
+        protected float endTime;
+        protected int startIndex;
+        protected int endIndex;
 
         protected virtual void OnEnable()
         {
@@ -43,26 +45,27 @@ namespace EZUnity.Playables
         {
             EditorGUILayout.LabelField("Remove By Time", EditorStyles.boldLabel);
             EditorGUILayout.BeginHorizontal();
-            timeRange.x = EditorGUILayout.FloatField("Start Time", timeRange.x);
-            timeRange.y = EditorGUILayout.FloatField("End Time", timeRange.y);
+            startTime = EditorGUILayout.FloatField("Start Time", startTime);
+            endTime = EditorGUILayout.FloatField("End Time", endTime);
             EditorGUILayout.EndHorizontal();
 
-            indexRange = KeyframeUtility.GetRangeByTime(asset.keyframes, timeRange);
-            if (asset.keyframes.Count > 0 && timeRange.x <= asset.keyframes[indexRange.x].time)
+            startIndex = KeyframeUtility.GetIndex(startTime, asset.keyframes);
+            endIndex = KeyframeUtility.GetIndex(endTime, asset.keyframes);
+            if (asset.keyframes.Count > 0 && startTime <= asset.keyframes[startIndex].time)
             {
-                indexRange.x -= 1;
+                startIndex -= 1;
             }
 
             GUI.enabled = false;
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.IntField("Start Index", indexRange.x + 1);
-            EditorGUILayout.IntField("End Index", indexRange.y);
+            EditorGUILayout.IntField("Start Index", startIndex + 1);
+            EditorGUILayout.IntField("End Index", endIndex);
             EditorGUILayout.EndHorizontal();
             GUI.enabled = true;
 
             if (GUILayout.Button("Confirm"))
             {
-                asset.keyframes.RemoveRange(indexRange.x + 1, indexRange.y - indexRange.x);
+                asset.keyframes.RemoveRange(startIndex + 1, endIndex - startIndex);
                 EditorUtility.SetDirty(target);
                 AssetDatabase.SaveAssets();
             }

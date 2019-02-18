@@ -25,10 +25,10 @@ namespace EZUnity.Playables
         {
             if (tempFrames.Count > 0)
             {
-                KeyframeUtility.Replace(clip.keyframes, tempFrames);
 #if UNITY_EDITOR
-                UnityEditor.EditorUtility.SetDirty(clip);
+                UnityEditor.Undo.RegisterCompleteObjectUndo(clip, "Record" + clip.GetType());
 #endif
+                KeyframeUtility.Replace(clip.keyframes, tempFrames);
             }
         }
 
@@ -36,7 +36,7 @@ namespace EZUnity.Playables
         {
             if (keyframes == null || keyframes.Count == 0) return;
             float time = (float)playable.GetTime();
-            int frameIndex = KeyframeUtility.FindKeyframe(time, keyframes);
+            int frameIndex = KeyframeUtility.GetIndex(time, keyframes);
             T startFrame = keyframes[frameIndex];
             T endFrame = frameIndex >= keyframes.Count - 1 ? keyframes[frameIndex] : keyframes[frameIndex + 1];
             float process = Mathf.InverseLerp(startFrame.time, endFrame.time, time);
