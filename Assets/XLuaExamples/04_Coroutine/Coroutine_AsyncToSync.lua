@@ -8,7 +8,7 @@ local moduleName = ...
 local M = {}
 M.__index = M
 ----- begin module -----
--- 多用于纯lua逻辑，C#需要做一定的处理(见该例子目录下的LuaManager)
+-- C#需要做一定的处理(见该例子目录下的LuaManager)
 local util = require "xlua.util"
 Yield =
 	util.async_to_sync(

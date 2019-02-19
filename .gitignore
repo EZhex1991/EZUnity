@@ -20,8 +20,7 @@
 
 # XLua
 /LuaDebuggee.dll
-/Assets/lpproj
-/Assets/lpproj.meta
+/Assets/.lpproj
 /Assets/ThirdParty
 /Assets/ThirdParty.meta
 /Assets/XLua/Gen

@@ -8,7 +8,7 @@ local moduleName = ...
 local M = {}
 M.__index = M
 ----- begin module -----
--- 多用于Hotfix，需要用一个Monobehaviour的StartCoroutine启动
+-- 需要用一个Monobehaviour的StartCoroutine启动
 local util = require("xlua.util")
 function Coroutine(...)
 	local params = {...}

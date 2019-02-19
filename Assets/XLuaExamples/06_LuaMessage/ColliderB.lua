@@ -30,6 +30,6 @@ function M:OnCollisionEnter(collision)
     scale.z = scale.z * 2
     self.gameObject.transform.localScale = scale -- 碰撞时面积增倍
 end
--- OnMouseOver继承与ColliderA
+-- OnMouseOver继承于ColliderA
 ----- end -----
 return M

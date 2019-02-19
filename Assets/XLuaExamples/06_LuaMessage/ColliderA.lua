@@ -48,7 +48,7 @@ function M:OnCollisionEnter(collision) -- 碰撞时回到原位置，随机换�
     self.gameObject:GetComponent("Renderer").material.color =
         Color(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1), 1)
 end
-function M:OnMouseOver() -- 鼠标悬停print自己的名字，这个没在B中重写
+function M:OnMouseOver() -- 鼠标悬停print自己的名字，这个方法会被B继承
     print(self.name)
 end
 ----- end -----
