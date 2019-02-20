@@ -9,9 +9,9 @@ using UnityEngine;
 namespace EZUnity
 {
     [ExecuteInEditMode]
-    public class EZMirror : MonoBehaviour
+    public class EZReflection : MonoBehaviour
     {
-        private static bool isRendering;
+        public static bool isRendering;
 
         public int textureSize = 256;
         public LayerMask reflectionLayers = -1;
@@ -92,28 +92,6 @@ namespace EZUnity
             dst.aspect = src.aspect;
             dst.orthographicSize = src.orthographicSize;
         }
-        private void GetReflectionMatrix(Vector4 plane, ref Matrix4x4 reflectionMatrix)
-        {
-            reflectionMatrix.m00 = 1f - 2f * plane[0] * plane[0];
-            reflectionMatrix.m01 = -2f * plane[0] * plane[1];
-            reflectionMatrix.m02 = -2f * plane[0] * plane[2];
-            reflectionMatrix.m03 = -2f * plane[0] * plane[3];
-
-            reflectionMatrix.m10 = -2f * plane[1] * plane[0];
-            reflectionMatrix.m11 = 1 - 2f * plane[1] * plane[1];
-            reflectionMatrix.m12 = -2f * plane[1] * plane[2];
-            reflectionMatrix.m13 = -2f * plane[1] * plane[3];
-
-            reflectionMatrix.m20 = -2f * plane[2] * plane[0];
-            reflectionMatrix.m21 = -2f * plane[2] * plane[1];
-            reflectionMatrix.m22 = 1 - 2f * plane[2] * plane[2];
-            reflectionMatrix.m23 = -2f * plane[2] * plane[3];
-
-            reflectionMatrix.m30 = 0;
-            reflectionMatrix.m31 = 0;
-            reflectionMatrix.m32 = 0;
-            reflectionMatrix.m33 = 1;
-        }
         private Vector4 GetCameraSpacePlane(Camera camera, Vector3 position, Vector3 normal, float sideSign)
         {
             Vector3 offsetPos = position + normal * clipPlaneOffset;
@@ -135,6 +113,7 @@ namespace EZUnity
 
             Camera reflectionCamera = GetReflectionCamera(camera);
             SetCamera(camera, reflectionCamera);
+            reflectionCamera.cullingMask = reflectionLayers;
 
             Vector3 position = transform.position;
             Vector3 normal = transform.TransformDirection(reflectionNormal);
@@ -143,22 +122,20 @@ namespace EZUnity
             Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, depth);
 
             Matrix4x4 reflectionMatrix = Matrix4x4.zero;
-            GetReflectionMatrix(reflectionPlane, ref reflectionMatrix);
-            Vector3 oldPostion = camera.transform.position;
-            Vector3 newPosition = reflectionMatrix.MultiplyPoint(oldPostion);
-            reflectionCamera.worldToCameraMatrix = camera.worldToCameraMatrix * reflectionMatrix;
+            EZUtility.GetReflectionMatrix(reflectionPlane, ref reflectionMatrix);
 
+            reflectionCamera.worldToCameraMatrix = camera.worldToCameraMatrix * reflectionMatrix;
             Vector4 clipPlane = GetCameraSpacePlane(reflectionCamera, position, normal, 1.0f);
             reflectionCamera.projectionMatrix = camera.CalculateObliqueMatrix(clipPlane);
 
-            reflectionCamera.cullingMatrix = camera.projectionMatrix * camera.worldToCameraMatrix;
-
-            reflectionCamera.targetTexture = reflectionTexture;
             bool oldCulling = GL.invertCulling;
             GL.invertCulling = !oldCulling;
+            Vector3 oldPostion = camera.transform.position;
+            Vector3 newPosition = reflectionMatrix.MultiplyPoint(oldPostion);
             reflectionCamera.transform.position = newPosition;
             Vector3 euler = camera.transform.eulerAngles;
             reflectionCamera.transform.eulerAngles = new Vector3(-euler.x, euler.y, euler.z);
+            reflectionCamera.targetTexture = reflectionTexture;
             reflectionCamera.Render();
             reflectionCamera.transform.position = oldPostion;
             GL.invertCulling = oldCulling;

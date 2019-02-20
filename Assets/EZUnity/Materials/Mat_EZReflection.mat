@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Unlit_Mirror
+  m_Name: Mat_EZReflection
   m_Shader: {fileID: 4800000, guid: 2c2235abee4d1d5478883a6499c5527a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
