@@ -26,7 +26,7 @@ namespace EZUnity.Playables
             if (tempFrames.Count > 0)
             {
 #if UNITY_EDITOR
-                UnityEditor.Undo.RegisterCompleteObjectUndo(clip, "Record" + clip.GetType());
+                UnityEditor.Undo.RegisterCompleteObjectUndo(clip, "Record " + typeof(T).Name);
 #endif
                 KeyframeUtility.Replace(clip.keyframes, tempFrames);
             }
