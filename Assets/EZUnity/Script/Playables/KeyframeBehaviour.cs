@@ -30,6 +30,7 @@ namespace EZUnity.Playables
 #endif
                 KeyframeUtility.Replace(clip.keyframes, tempFrames);
             }
+            Clear();
         }
 
         public override void PrepareFrame(Playable playable, FrameData info)
