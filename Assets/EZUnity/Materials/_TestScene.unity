@@ -1406,7 +1406,7 @@ GameObject:
   - component: {fileID: 512503379}
   - component: {fileID: 512503378}
   m_Layer: 0
-  m_Name: EZMirror
+  m_Name: EZReflection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1424,12 +1424,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5abe6d77ac5584fb71bfbfc72217ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textureSize: 512
+  renderTexture: {fileID: 8400000, guid: 998a8781c362d964993e7fcc1bc7bbb4, type: 2}
   reflectionLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  clipPlaneOffset: 0.05
   reflectionNormal: {x: 0, y: 0, z: 1}
+  clipPlaneOffset: 0.05
 --- !u!64 &512503379
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ReflectionTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8400000, guid: 998a8781c362d964993e7fcc1bc7bbb4, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats: []

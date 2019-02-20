@@ -13,48 +13,20 @@ namespace EZUnity
     {
         public static bool isRendering;
 
-        public int textureSize = 256;
+        public RenderTexture renderTexture;
         public LayerMask reflectionLayers = -1;
-        public float clipPlaneOffset = 0.05f;
         public Vector3 reflectionNormal = Vector3.forward;
-
-        private Renderer m_Renderer;
-        public Renderer renderer
-        {
-            get
-            {
-                if (m_Renderer == null)
-                    m_Renderer = GetComponent<Renderer>();
-                return m_Renderer;
-            }
-        }
+        public float clipPlaneOffset = 0.05f;
 
         private Dictionary<Camera, Camera> reflectionCameras = new Dictionary<Camera, Camera>();
-        private RenderTexture reflectionTexture;
-        private int oldTextureSize;
 
-        private bool IsEnabled()
-        {
-            if (!enabled) return false;
-            if (renderer == null || !renderer.enabled || renderer.sharedMaterial == null) return false;
-            return true;
-        }
         private Camera GetReflectionCamera(Camera camera)
         {
-            if (reflectionTexture == null || oldTextureSize != textureSize)
-            {
-                if (reflectionTexture != null) DestroyImmediate(reflectionTexture);
-                reflectionTexture = new RenderTexture(textureSize, textureSize, 16);
-                reflectionTexture.name = string.Format("EZMirrorReflectionTexture-{0}", GetInstanceID());
-                reflectionTexture.isPowerOfTwo = true;
-                reflectionTexture.hideFlags = HideFlags.DontSave;
-                oldTextureSize = textureSize;
-            }
             Camera reflectionCamera;
             reflectionCameras.TryGetValue(camera, out reflectionCamera);
             if (reflectionCamera == null)
             {
-                GameObject go = new GameObject(string.Format("EZMirrorReflectionCamera-{0}-{1}", GetInstanceID(), camera.GetInstanceID()));
+                GameObject go = new GameObject(string.Format("EZReflection-{0}-{1}", GetInstanceID(), camera.GetInstanceID()));
                 reflectionCamera = go.AddComponent<Camera>();
                 reflectionCamera.enabled = false;
                 reflectionCamera.transform.position = transform.position;
@@ -68,7 +40,7 @@ namespace EZUnity
         }
         private void SetCamera(Camera src, Camera dst)
         {
-            if (dst == null) return;
+            if (src == null || dst == null) return;
             dst.clearFlags = src.clearFlags;
             dst.backgroundColor = src.backgroundColor;
             if (src.clearFlags == CameraClearFlags.Skybox)
@@ -92,7 +64,7 @@ namespace EZUnity
             dst.aspect = src.aspect;
             dst.orthographicSize = src.orthographicSize;
         }
-        private Vector4 GetCameraSpacePlane(Camera camera, Vector3 position, Vector3 normal, float sideSign)
+        private Vector4 GetCameraSpacePlane(Camera camera, Vector3 position, Vector3 normal, float sideSign = 1)
         {
             Vector3 offsetPos = position + normal * clipPlaneOffset;
             Matrix4x4 matrix = camera.worldToCameraMatrix;
@@ -103,54 +75,45 @@ namespace EZUnity
 
         private void OnWillRenderObject()
         {
-            if (!IsEnabled()) return;
+            if (!enabled || renderTexture == null) return;
 
-            Camera camera = Camera.current;
-            if (camera == null) return;
+            Camera targetCamera = Camera.current;
+            if (targetCamera == null) return;
+            Camera reflectionCamera = GetReflectionCamera(targetCamera);
 
             if (isRendering) return;
             isRendering = true;
+            GL.invertCulling = true;
+            RenderTexture.active = renderTexture;
 
-            Camera reflectionCamera = GetReflectionCamera(camera);
-            SetCamera(camera, reflectionCamera);
+            SetCamera(targetCamera, reflectionCamera);
             reflectionCamera.cullingMask = reflectionLayers;
+            reflectionCamera.targetTexture = renderTexture;
 
             Vector3 position = transform.position;
             Vector3 normal = transform.TransformDirection(reflectionNormal);
-
-            float depth = -Vector3.Dot(normal, position) - clipPlaneOffset;
-            Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, depth);
+            float offset = -Vector3.Dot(normal, position) - clipPlaneOffset;
+            Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, offset);
 
             Matrix4x4 reflectionMatrix = Matrix4x4.zero;
             EZUtility.GetReflectionMatrix(reflectionPlane, ref reflectionMatrix);
 
-            reflectionCamera.worldToCameraMatrix = camera.worldToCameraMatrix * reflectionMatrix;
-            Vector4 clipPlane = GetCameraSpacePlane(reflectionCamera, position, normal, 1.0f);
-            reflectionCamera.projectionMatrix = camera.CalculateObliqueMatrix(clipPlane);
+            reflectionCamera.worldToCameraMatrix = targetCamera.worldToCameraMatrix * reflectionMatrix;
+            Vector4 clipPlane = GetCameraSpacePlane(reflectionCamera, position, normal);
+            reflectionCamera.projectionMatrix = targetCamera.CalculateObliqueMatrix(clipPlane);
 
-            bool oldCulling = GL.invertCulling;
-            GL.invertCulling = !oldCulling;
-            Vector3 oldPostion = camera.transform.position;
-            Vector3 newPosition = reflectionMatrix.MultiplyPoint(oldPostion);
-            reflectionCamera.transform.position = newPosition;
-            Vector3 euler = camera.transform.eulerAngles;
-            reflectionCamera.transform.eulerAngles = new Vector3(-euler.x, euler.y, euler.z);
-            reflectionCamera.targetTexture = reflectionTexture;
+            reflectionCamera.transform.position = reflectionMatrix.MultiplyPoint(targetCamera.transform.position);
+            Vector3 forward = reflectionMatrix.MultiplyVector(targetCamera.transform.forward);
+            Vector3 up = reflectionMatrix.MultiplyVector(targetCamera.transform.up);
+            reflectionCamera.transform.rotation = Quaternion.LookRotation(forward, up);
             reflectionCamera.Render();
-            reflectionCamera.transform.position = oldPostion;
-            GL.invertCulling = oldCulling;
 
-            renderer.sharedMaterial.SetTexture("_ReflectionTex", reflectionTexture);
-
+            RenderTexture.active = null;
+            GL.invertCulling = false;
             isRendering = false;
         }
         private void OnDisable()
         {
-            if (reflectionTexture != null)
-            {
-                DestroyImmediate(reflectionTexture);
-                reflectionTexture = null;
-            }
             foreach (var pair in reflectionCameras)
             {
                 DestroyImmediate(pair.Value.gameObject);
