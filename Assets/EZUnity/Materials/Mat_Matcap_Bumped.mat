@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Matcap_Simple
-  m_Shader: {fileID: 4800000, guid: 4f41fc72bb66d55449b815133befc481, type: 3}
+  m_Name: Mat_Matcap_Bumped
+  m_Shader: {fileID: 4800000, guid: 6fd7775d4bead024889c1d23c4ca3f46, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BumpTex:
+        m_Texture: {fileID: 2800000, guid: dc0518bebaa96da4f993dee78459a2d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
@@ -28,6 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Bumpiness: 1
     - _MatcapBrightness: 1.1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

@@ -3,14 +3,16 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Matcap/Simple" {
+Shader "EZUnity/Matcap/Specular" {
 	Properties {
 		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
-		
+
 		[Header(Matcap)]
 		[NoScaleOffset] _MatcapTex ("Matcap Texture", 2D) = "white" {}
+		[NoScaleOffset] _SpecMatcapTex ("Specular Matcap Texture", 2D) = "black" {}
+		[HDR] _SpecColor ("Specular Color (RGB, Strength)", Color) = (1, 1, 1, 1)
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -36,8 +38,10 @@ Shader "EZUnity/Matcap/Simple" {
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			half4 _Color;
-			
+
 			sampler2D _MatcapTex;
+			sampler2D _SpecMatcapTex;
+			half4 _SpecColor;
 
 			v2f vert (appdata v) {
 				v2f o;
@@ -49,9 +53,12 @@ Shader "EZUnity/Matcap/Simple" {
 			}
 			half4 frag (v2f i) : SV_Target {
 				half4 color = tex2D(_MainTex, i.mainUV) * _Color;
-				
+
 				half4 matcapColor = tex2D(_MatcapTex, i.matcapUV);
 				color.rgb *= matcapColor.rgb;
+
+				half4 specularColor = tex2D(_SpecMatcapTex, i.matcapUV);
+				color.rgb += specularColor.rgb * _SpecColor.rgb * _SpecColor.a;
 
 				return color;
 			}

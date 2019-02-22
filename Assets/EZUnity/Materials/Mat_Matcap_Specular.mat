@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Matcap_Simple
-  m_Shader: {fileID: 4800000, guid: 4f41fc72bb66d55449b815133befc481, type: 3}
+  m_Name: Mat_Matcap_Specular
+  m_Shader: {fileID: 4800000, guid: f760f49592b983d4dadbe5dbaae1e7f7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BumpTex:
+        m_Texture: {fileID: 2800000, guid: dc0518bebaa96da4f993dee78459a2d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
@@ -27,8 +31,18 @@ Material:
         m_Texture: {fileID: 2800000, guid: ceffb95a3efab1d4dbe924d717c4fed3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecMatcapTex:
+        m_Texture: {fileID: 2800000, guid: ceffb95a3efab1d4dbe924d717c4fed3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecTex:
+        m_Texture: {fileID: 2800000, guid: ceffb95a3efab1d4dbe924d717c4fed3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Bumpiness: 1
     - _MatcapBrightness: 1.1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _MatcapColor: {r: 1.4980392, g: 1.2, b: 1.2, a: 1}
+    - _SpecColor: {r: 1, g: 0.5019608, b: 1, a: 1}
