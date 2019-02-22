@@ -18,6 +18,10 @@ Shader "EZUnity/#SCRIPTNAME#" {
 
 			#include "UnityCG.cginc"
 
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			fixed4 _Color;
+
 			struct appdata {
 				float4 vertex : POSITION;
 				float2 uv0 : TEXCOORD0;
@@ -26,10 +30,6 @@ Shader "EZUnity/#SCRIPTNAME#" {
 				float4 pos : SV_POSITION;
 				float2 mainUV : TEXCOORD0;
 			};
-
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
-			fixed4 _Color;
 
 			v2f vert (appdata v) {
 				v2f o;
