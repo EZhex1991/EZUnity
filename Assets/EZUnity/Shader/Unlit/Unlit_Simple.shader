@@ -5,15 +5,19 @@
 
 Shader "EZUnity/Unlit/Simple" {
 	Properties {
+		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
+		// EZShaderGUI Properties
 		[HideInInspector] _RenderingMode ("_RenderingMode", Float) = 0
 		[HideInInspector] _SrcBlendMode ("_SrcBlendMode", Float) = 1
 		[HideInInspector] _DstBlendMode ("_DstBlendMode", Float) = 0
 		[HideInInspector] _AlphaCutoff ("_AlphaCutoff", Range(0, 1)) = 0.5
 		[HideInInspector] _ZWriteMode ("_ZWriteMode", Float) = 1
 		[HideInInspector] _CullMode ("_CullMode", Float) = 2
+		[HideInInspector] _OffsetFactor ("_OffsetFactor", Float) = 0
+		[HideInInspector] _OffsetUnit ("_OffsetUnit", Float) = 0
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -22,6 +26,7 @@ Shader "EZUnity/Unlit/Simple" {
 			Blend [_SrcBlendMode] [_DstBlendMode]
 			ZWrite [_ZWriteMode]
 			Cull [_CullMode]
+			Offset [_OffsetFactor], [_OffsetUnit]
 
 			CGPROGRAM
 			#pragma vertex vert
@@ -32,7 +37,8 @@ Shader "EZUnity/Unlit/Simple" {
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			fixed4 _Color;
-
+			
+			// EZShaderGUI Properties
 			int _RenderingMode;
 			fixed _AlphaCutoff;
 
@@ -61,6 +67,6 @@ Shader "EZUnity/Unlit/Simple" {
 			ENDCG
 		}
 	}
-	FallBack "Diffuse"
+	FallBack "Unlit/Texture"
 	CustomEditor "EZShaderGUI"
 }

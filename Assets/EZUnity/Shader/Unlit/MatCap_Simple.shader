@@ -3,13 +3,14 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/MatCap/Simple" {
+Shader "EZUnity/Matcap/Simple" {
 	Properties {
+		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
-		[NonScaleOffset]
-		_MatcapTex ("Matcap Texture", 2D) = "white" {}
+		[Header(Matcap)]
+		[NonScaleOffset] _MatcapTex ("Matcap Texture", 2D) = "white" {}
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }

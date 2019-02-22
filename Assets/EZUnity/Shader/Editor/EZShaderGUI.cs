@@ -24,9 +24,8 @@ public class EZShaderGUI : ShaderGUI
     public const string Property_ZWriteMode = "_ZWriteMode";
     public const string Property_CullMode = "_CullMode";
     public const string Property_AlphaCutoff = "_AlphaCutoff";
-    public const string Keyword_AlphaTestOn = "_ALPHATEST_ON";
-    public const string Keyword_AlphaBlendOn = "_ALPHABLEND_ON";
-    public const string Keyword_AlphaPremultiplyOn = "_ALPHAPREMULTIPLY_ON";
+    public const string Property_OffsetFactor = "_OffsetFactor";
+    public const string Property_OffsetUnit = "_OffsetUnit";
 
     public static readonly string[] RenderModeNames = Enum.GetNames(typeof(RenderModePresets));
     public static readonly string[] BlendModeNames = Enum.GetNames(typeof(UnityEngine.Rendering.BlendMode));
@@ -93,9 +92,6 @@ public class EZShaderGUI : ShaderGUI
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
                 material.SetInt(Property_ZWriteMode, 1);
-                material.DisableKeyword(Keyword_AlphaTestOn);
-                material.DisableKeyword(Keyword_AlphaBlendOn);
-                material.DisableKeyword(Keyword_AlphaPremultiplyOn);
                 material.DisableKeyword("alpha");
                 material.renderQueue = -1;
                 break;
@@ -104,9 +100,6 @@ public class EZShaderGUI : ShaderGUI
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
                 material.SetInt(Property_ZWriteMode, 1);
-                material.EnableKeyword(Keyword_AlphaTestOn);
-                material.DisableKeyword(Keyword_AlphaBlendOn);
-                material.DisableKeyword(Keyword_AlphaPremultiplyOn);
                 material.EnableKeyword("alpha");
                 material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
                 break;
@@ -115,9 +108,6 @@ public class EZShaderGUI : ShaderGUI
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                 material.SetInt(Property_ZWriteMode, 0);
-                material.DisableKeyword(Keyword_AlphaTestOn);
-                material.EnableKeyword(Keyword_AlphaBlendOn);
-                material.DisableKeyword(Keyword_AlphaPremultiplyOn);
                 material.EnableKeyword("alpha");
                 material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
                 break;
@@ -126,9 +116,6 @@ public class EZShaderGUI : ShaderGUI
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                 material.SetInt(Property_ZWriteMode, 0);
-                material.DisableKeyword(Keyword_AlphaTestOn);
-                material.DisableKeyword(Keyword_AlphaBlendOn);
-                material.EnableKeyword(Keyword_AlphaPremultiplyOn);
                 material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
                 break;
         }
@@ -142,9 +129,12 @@ public class EZShaderGUI : ShaderGUI
     private MaterialProperty _ZWrite;
     private MaterialProperty _CullMode;
 
+    private MaterialProperty _OffsetFactor;
+    private MaterialProperty _OffsetUnit;
+
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
-        base.OnGUI(materialEditor, properties);
+        materialEditor.PropertiesDefaultGUI(properties);
 
         _RenderingMode = FindProperty(Property_RenderingMode, properties);
         _SrcBlend = FindProperty(Property_SrcBlendMode, properties);
@@ -152,9 +142,11 @@ public class EZShaderGUI : ShaderGUI
         _AlphaCutoff = FindProperty(Property_AlphaCutoff, properties);
         _ZWrite = FindProperty(Property_ZWriteMode, properties);
         _CullMode = FindProperty(Property_CullMode, properties);
+        _OffsetFactor = FindProperty(Property_OffsetFactor, properties);
+        _OffsetUnit = FindProperty(Property_OffsetUnit, properties);
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Render Mode Settings", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("EZShaderGUI Properties", EditorStyles.boldLabel);
         DrawRenderModePopup(materialEditor, _RenderingMode);
         EditorGUI.indentLevel++;
         if (RenderModePresetFoldout)
@@ -170,5 +162,8 @@ public class EZShaderGUI : ShaderGUI
         }
 
         DrawEnumPopup<UnityEngine.Rendering.CullMode>(materialEditor, _CullMode);
+
+        materialEditor.ShaderProperty(_OffsetFactor, Property_OffsetFactor);
+        materialEditor.ShaderProperty(_OffsetUnit, Property_OffsetUnit);
     }
 }

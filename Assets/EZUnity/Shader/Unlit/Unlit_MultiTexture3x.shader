@@ -5,6 +5,7 @@
 
 Shader "EZUnity/Unlit/MultiTexture3x" {
 	Properties {
+		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		[KeywordEnum(UV0, UV1)] _MainUV ("Main UV", Int) = 0
 		_Color ("Color", Color) = (1, 1, 1, 1)
@@ -20,28 +21,31 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 		[KeywordEnum(UV0, UV1)] _Add2UV ("UV", Int) = 0
 		_Add2Color ("Color", Color) = (1, 1, 1, 1)
 		[KeywordEnum(AlphaBlend, Add)] _Add2BlendMode ("Blend Mode", Int) = 0
+		
+		// EZShaderGUI Properties
+		[HideInInspector] _RenderingMode ("_RenderingMode", Float) = 0
+		[HideInInspector] _SrcBlendMode ("_SrcBlendMode", Float) = 1
+		[HideInInspector] _DstBlendMode ("_DstBlendMode", Float) = 0
+		[HideInInspector] _AlphaCutoff ("_AlphaCutoff", Range(0, 1)) = 0.5
+		[HideInInspector] _ZWriteMode ("_ZWriteMode", Float) = 1
+		[HideInInspector] _CullMode ("_CullMode", Float) = 2
+		[HideInInspector] _OffsetFactor ("_OffsetFactor", Float) = 0
+		[HideInInspector] _OffsetUnit ("_OffsetUnit", Float) = 0
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 
 		Pass {
+			Blend [_SrcBlendMode] [_DstBlendMode]
+			ZWrite [_ZWriteMode]
+			Cull [_CullMode]
+			Offset [_OffsetFactor], [_OffsetUnit]
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
-
-			struct appdata {
-				float4 vertex : POSITION;
-				float2 uv0 : TEXCOORD0;
-				float2 uv1 : TEXCOORD1;
-			};
-			struct v2f {
-				float4 pos : SV_POSITION;
-				float2 mainUV : TEXCOORD0;
-				float2 add1UV : TEXCOORD1;
-				float2 add2UV : TEXCOORD2;
-			};
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
@@ -59,6 +63,22 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 			int _Add2UV;
 			fixed4 _Add2Color;
 			int _Add2BlendMode;
+			
+			// EZShaderGUI Properties
+			int _RenderingMode;
+			fixed _AlphaCutoff;
+
+			struct appdata {
+				float4 vertex : POSITION;
+				float2 uv0 : TEXCOORD0;
+				float2 uv1 : TEXCOORD1;
+			};
+			struct v2f {
+				float4 pos : SV_POSITION;
+				float2 mainUV : TEXCOORD0;
+				float2 add1UV : TEXCOORD1;
+				float2 add2UV : TEXCOORD2;
+			};
 
 			v2f vert (appdata v) {
 				v2f o;
@@ -75,21 +95,24 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 				if (_Add1BlendMode == 0) {
 					color.rgb = add1Color.rgb * add1Color.a + color.rgb * (1 - add1Color.a);
 				} else if (_Add1BlendMode == 1) {
-					color.rgb += add1Color.rgb;
+					color += add1Color;
 				}
 				
 				fixed4 add2Color = tex2D(_Add2Tex, i.add2UV) * _Add2Color;
 				if (_Add2BlendMode == 0) {
 					color.rgb = add2Color.rgb * add2Color.a + color.rgb * (1 - add2Color.a);
 				} else if (_Add2BlendMode == 1) {
-					color.rgb += add2Color.rgb;
+					color += add2Color;
 				}
-
-				color.a = 1;
+				
+				if (_RenderingMode == 1) {
+					clip(color.a - _AlphaCutoff);
+				}
 				return color;
 			}
 			ENDCG
 		}
 		//UsePass "VertexLit/SHADOWCASTER"
 	}
+	CustomEditor "EZShaderGUI"
 }

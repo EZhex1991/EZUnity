@@ -5,8 +5,11 @@
 
 Shader "EZUnity/UnlitDynamic/Slide" {
 	Properties {
+		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
+
+		[Header(Speed)]
 		_SlideSpeed ("Speed(XY)", Vector) = (0.2, 0.2, 0, 0)
 	}
 	SubShader {
