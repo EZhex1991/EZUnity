@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Matcap
+  m_Name: Mat_Matcap_Simple
   m_Shader: {fileID: 4800000, guid: 4f41fc72bb66d55449b815133befc481, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
