@@ -1,0 +1,24 @@
+﻿/* Author:          #AUTHORNAME#
+ * CreateTime:      #CREATETIME#
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+using UnityEditor;
+using UnityEngine;
+
+public class #SCRIPTNAME# : ShaderGUI
+{
+    private MaterialProperty _MainTex;
+    private MaterialProperty _Color;
+
+    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    {
+        materialEditor.PropertiesDefaultGUI(properties);
+
+        //_MainTex = FindProperty("_MainTex", properties);
+        //_Color = FindProperty("_Color", properties);
+
+        //materialEditor.ShaderProperty(_MainTex, "_MainTex");
+        //materialEditor.ShaderProperty(_Color, "_Color");
+    }
+}
