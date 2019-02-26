@@ -55,11 +55,7 @@ namespace EZUnity
         }
         private bool CheckPrefabReference(Object obj)
         {
-#if UNITY_2018_2
-            if (PrefabUtility.GetPrefabType(obj) == PrefabType.PrefabInstance && PrefabUtility.GetCorrespondingObjectFromSource(obj) == target)
-#else
-            if (PrefabUtility.GetPrefabType(obj) == PrefabType.PrefabInstance && PrefabUtility.GetPrefabParent(obj) == target)
-#endif
+            if (PrefabUtility.GetPrefabAssetType(obj) == PrefabAssetType.Regular && PrefabUtility.GetCorrespondingObjectFromSource(obj) == target)
             {
                 return true;
             }

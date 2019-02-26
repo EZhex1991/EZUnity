@@ -87,7 +87,7 @@ namespace EZUnity.Example
             typeof(UnityEngine.WaitForEndOfFrame),
             typeof(UnityEngine.WaitForFixedUpdate),
             typeof(UnityEngine.WaitForSeconds),
-            typeof(UnityEngine.WWW),
+            //typeof(UnityEngine.WWW),
             //typeof(UnityEngine.WWWForm),
             typeof(UnityEngine.ForceMode),
 
