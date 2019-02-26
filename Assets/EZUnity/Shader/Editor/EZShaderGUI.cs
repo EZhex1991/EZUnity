@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using EZUnity;
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -33,20 +34,6 @@ public class EZShaderGUI : ShaderGUI
 
     public static bool RenderModePresetFoldout = false;
 
-    public static void DrawEnumPopup<T>(MaterialEditor materialEditor, MaterialProperty property) where T : Enum
-    {
-        EditorGUI.showMixedValue = property.hasMixedValue;
-        float value = property.floatValue;
-
-        EditorGUI.BeginChangeCheck();
-        value = EditorGUILayout.Popup(property.name, (int)value, Enum.GetNames(typeof(T)));
-        if (EditorGUI.EndChangeCheck())
-        {
-            materialEditor.RegisterPropertyChangeUndo(property.name);
-            property.floatValue = value;
-        }
-        EditorGUI.showMixedValue = false;
-    }
     public static void DrawRenderModePopup(MaterialEditor materialEditor, MaterialProperty property)
     {
         EditorGUI.showMixedValue = property.hasMixedValue;
@@ -135,7 +122,11 @@ public class EZShaderGUI : ShaderGUI
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
         materialEditor.PropertiesDefaultGUI(properties);
+        DrawEZShaderProperties(materialEditor, properties);
+    }
 
+    public void DrawEZShaderProperties(MaterialEditor materialEditor, MaterialProperty[] properties)
+    {
         _RenderingMode = FindProperty(Property_RenderingMode, properties);
         _SrcBlend = FindProperty(Property_SrcBlendMode, properties);
         _DstBlend = FindProperty(Property_DstBlendMode, properties);
@@ -151,8 +142,8 @@ public class EZShaderGUI : ShaderGUI
         EditorGUI.indentLevel++;
         if (RenderModePresetFoldout)
         {
-            DrawEnumPopup<UnityEngine.Rendering.BlendMode>(materialEditor, _SrcBlend);
-            DrawEnumPopup<UnityEngine.Rendering.BlendMode>(materialEditor, _DstBlend);
+            EZShaderGUIUtility.DrawEnumPopup<UnityEngine.Rendering.BlendMode>(materialEditor, _SrcBlend);
+            EZShaderGUIUtility.DrawEnumPopup<UnityEngine.Rendering.BlendMode>(materialEditor, _DstBlend);
             DrawZWriteToggle(materialEditor, _ZWrite);
         }
         EditorGUI.indentLevel--;
@@ -161,7 +152,7 @@ public class EZShaderGUI : ShaderGUI
             materialEditor.ShaderProperty(_AlphaCutoff, Property_AlphaCutoff);
         }
 
-        DrawEnumPopup<UnityEngine.Rendering.CullMode>(materialEditor, _CullMode);
+        EZShaderGUIUtility.DrawEnumPopup<UnityEngine.Rendering.CullMode>(materialEditor, _CullMode);
 
         materialEditor.ShaderProperty(_OffsetFactor, Property_OffsetFactor);
         materialEditor.ShaderProperty(_OffsetUnit, Property_OffsetUnit);

@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_UnlitPattern_Diamond
-  m_Shader: {fileID: 4800000, guid: 1d55f45aedb511f4c8cd7beb407dce0b, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 80af8b7f7384f7e409ffb4acb319b08e, type: 3}
+  m_ShaderKeywords: _PATTERNTYPE_DIAMOND
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -58,9 +58,11 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _ColorRatio: 0.5
+    - _CoordMode: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FillRatio: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -69,6 +71,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PatternMode: 0
+    - _PatternType: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

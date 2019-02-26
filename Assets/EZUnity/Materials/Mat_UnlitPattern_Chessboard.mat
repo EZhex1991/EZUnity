@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_UnlitPattern_Chessboard
   m_Shader: {fileID: 4800000, guid: 80af8b7f7384f7e409ffb4acb319b08e, type: 3}
-  m_ShaderKeywords: _PATTERNMODE_UV
+  m_ShaderKeywords: _COORDMODE_UV _EZUNLITPATTERNSHADERGUI+PATTERNTYPE_DIAMOND _EZUnlitPatternShaderGUI+CoordMode_UV
+    _EZUnlitPatternShaderGUI+PatternType_Chessboard _PATTERNMODE_UV _PATTERNTYPE_CHESSBOARD
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -58,9 +59,11 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _ColorRatio: 0.5
+    - _CoordMode: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FillRatio: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -69,6 +72,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PatternMode: 0
+    - _PatternType: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
