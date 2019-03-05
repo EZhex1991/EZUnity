@@ -3,19 +3,27 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Matcap/Bumped" {
+Shader "EZUnity/Matcap" {
 	Properties {
 		[Header(Base)]
-		_MainTex ("Main Texture", 2D) = "white" {}
+		[NoScaleOffset] _MainTex ("Main Texture", 2D) = "white" {}
 		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
+		
+		[Header(Diffuse)]
+		[NoScaleOffset] _DiffMatcap ("Diffuse Matcap", 2D) = "white" {}
+		[HDR] _DiffColor ("Diffuse Color (RGB, Strength)", Color) = (1, 1, 1, 1)
 
 		[Header(Bump)]
-		_BumpTex ("Bump Texture", 2D) = "bump" {}
-		_Bumpiness ("Bumpiness", Range(0, 8)) = 1
-		
-		[Header(Matcap)]
-		[NoScaleOffset] _MatcapTex ("Matcap Texture", 2D) = "white" {}
+		_BumpOn ("Bump On", Float) = 0
+		[NoScaleOffset] _BumpTex ("Bump Texture", 2D) = "bump" {}
+		_Bumpiness ("Bumpiness", Range(0, 2)) = 1
+
+		[Header(Specular)]
+		_SpecOn ("Spec On", Float) = 0
+		[NoScaleOffset] _SpecMatcap ("Specular Matcap", 2D) = "black" {}
+		[HDR] _SpecColor ("Specular Color (RGB, Strength)", Color) = (1, 1, 1, 1)
 	}
+	CustomEditor "EZMatcapShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 
@@ -23,17 +31,26 @@ Shader "EZUnity/Matcap/Bumped" {
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma shader_feature _ _BUMP_ON
+			#pragma shader_feature _ _SPEC_ON
 
 			#include "UnityCG.cginc"
 
 			sampler2D _MainTex;
-			float4 _MainTex_ST;
 			fixed4 _Color;
 
+#if _BUMP_ON
 			sampler2D _BumpTex;
 			fixed _Bumpiness;
-			
-			sampler2D _MatcapTex;
+#endif			
+
+			sampler2D _DiffMatcap;
+			half4 _DiffColor;
+
+#if _SPEC_ON
+			sampler2D _SpecMatcap;
+			half4 _SpecColor;
+#endif
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -44,16 +61,21 @@ Shader "EZUnity/Matcap/Bumped" {
 			struct v2f {
 				float4 pos : SV_POSITION;
 				float2 mainUV : TEXCOORD0;
+#if _BUMP_ON
 				float3 worldNormal : TEXCOORD2;
-				float3 tbnSpace0 : TEXCOORD3;
-				float3 tbnSpace1 : TEXCOORD4;
-				float3 tbnSpace2 : TEXCOORD5;
+				float3 tbnSpace0 : TEXCOORD10;
+				float3 tbnSpace1 : TEXCOORD11;
+				float3 tbnSpace2 : TEXCOORD12;
+#else
+				float2 matcapUV : TEXCOORD1;
+#endif
 			};
 
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.mainUV = TRANSFORM_TEX(v.uv0, _MainTex);
+				o.mainUV = v.uv0;
+#if _BUMP_ON
 				float3 worldViewDir = normalize(WorldSpaceViewDir(v.vertex));
 				o.worldNormal = normalize(UnityObjectToWorldNormal(v.normal));
 				float3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
@@ -62,23 +84,33 @@ Shader "EZUnity/Matcap/Bumped" {
 				o.tbnSpace0 = float3(worldTangent.x, worldBitangent.x, o.worldNormal.x);
 				o.tbnSpace1 = float3(worldTangent.y, worldBitangent.y, o.worldNormal.y);
 				o.tbnSpace2 = float3(worldTangent.z, worldBitangent.z, o.worldNormal.z);
+#else
+				o.matcapUV = mul(UNITY_MATRIX_IT_MV, v.normal) * 0.5 + 0.5;
+#endif
 				return o;
 			}
 			half4 frag (v2f i) : SV_Target {
 				half4 color = tex2D(_MainTex, i.mainUV) * _Color;
 
-				// Unpack Normal
+#if _BUMP_ON
 				float3 bumpTex = UnpackNormal(tex2D(_BumpTex, i.mainUV));
 				float3 normal;
 				normal.x = dot(i.tbnSpace0, bumpTex);
 				normal.y = dot(i.tbnSpace1, bumpTex);
 				normal.z = dot(i.tbnSpace2, bumpTex);
 				normal = lerp(i.worldNormal, normal, _Bumpiness);
-
-				// Matcap
 				float2 matcapUV = mul(UNITY_MATRIX_IT_MV, normal) * 0.5 + 0.5;
-				half4 matcapColor = tex2D(_MatcapTex, matcapUV);
-				color.rgb *= matcapColor.rgb;
+#else
+				float2 matcapUV = i.matcapUV;
+#endif
+
+				half4 diff = tex2D(_DiffMatcap, matcapUV) * _DiffColor;
+				color *= diff;
+
+#if _SPEC_ON
+				half4 spec = tex2D(_SpecMatcap, matcapUV) * _SpecColor;
+				color += spec;
+#endif
 
 				return color;
 			}
