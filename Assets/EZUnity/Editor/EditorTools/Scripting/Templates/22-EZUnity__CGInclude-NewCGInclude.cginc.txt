@@ -1,0 +1,11 @@
+﻿// Author:			#AUTHORNAME#
+// CreateTime:		#CREATETIME#
+// Organization:	#ORGANIZATION#
+// Description:		
+
+#ifndef #SCRIPTNAME#_CG_INCLUDE
+#define #SCRIPTNAME#_CG_INCLUDE
+
+
+
+#endif

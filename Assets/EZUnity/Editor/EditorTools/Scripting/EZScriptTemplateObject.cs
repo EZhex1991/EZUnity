@@ -42,7 +42,7 @@ namespace EZUnity
         }
 
         public string timeFormat = "yyyy-MM-dd HH:mm:ss";
-        public List<string> extensionList = new List<string> { ".cs", ".lua", ".txt", ".shader" };
+        public List<string> extensionList = new List<string> { ".cs", ".lua", ".txt", ".shader", ".cginc" };
 
         [Serializable]
         public class Pattern

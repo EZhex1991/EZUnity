@@ -14,7 +14,7 @@ namespace EZUnity
     {
         public const string AssetName = "EZScriptStatistics";
 
-        public string[] filePatterns = new string[] { "*.cs", "*.cs.txt", "*.lua", "*.lua.txt", "*.shader", "*.shader.txt", "*.cginc" };
+        public string[] filePatterns = new string[] { "*.cs", "*.lua", "*.lua.txt", "*.shader", "*.cginc" };
         public string[] includePaths = new string[] { "Assets" };
         public string[] excludePaths = new string[] { "Assets/Plugins" };
 
