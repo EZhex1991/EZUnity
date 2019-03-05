@@ -404,7 +404,7 @@ PrefabInstance:
     - target: {fileID: 3220427153873395920, guid: 31b6dc2db4e3bfd4cb80253592f7afa4,
         type: 3}
       propertyPath: m_Name
-      value: UnlitDynamic_Shield
+      value: UnlitDynamic_Gas
       objectReference: {fileID: 0}
     - target: {fileID: 1939335288039699594, guid: 31b6dc2db4e3bfd4cb80253592f7afa4,
         type: 3}
@@ -498,7 +498,7 @@ PrefabInstance:
     - target: {fileID: 3220427153873395920, guid: 31b6dc2db4e3bfd4cb80253592f7afa4,
         type: 3}
       propertyPath: m_Name
-      value: UnlitDynamic_Limpid1
+      value: UnlitDynamic_Liquid
       objectReference: {fileID: 0}
     - target: {fileID: 1939335288039699594, guid: 31b6dc2db4e3bfd4cb80253592f7afa4,
         type: 3}
