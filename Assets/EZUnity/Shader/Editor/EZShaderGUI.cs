@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class EZShaderGUI : ShaderGUI
 {
-    public enum RenderModePresets
+    public enum RenderingModePresets
     {
         Opaque,
         Cutout,
@@ -28,77 +28,52 @@ public class EZShaderGUI : ShaderGUI
     public const string Property_OffsetFactor = "_OffsetFactor";
     public const string Property_OffsetUnit = "_OffsetUnit";
 
-    public static readonly string[] RenderModeNames = Enum.GetNames(typeof(RenderModePresets));
-    public static readonly string[] BlendModeNames = Enum.GetNames(typeof(UnityEngine.Rendering.BlendMode));
-    public static readonly string[] CullModeNames = Enum.GetNames(typeof(UnityEngine.Rendering.CullMode));
+    public static readonly string[] RenderModeNames = Enum.GetNames(typeof(RenderingModePresets));
 
-    public static bool RenderModePresetFoldout = false;
-
-    public static void DrawRenderModePopup(MaterialEditor materialEditor, MaterialProperty property)
+    public static void DrawRenderingModePresets(MaterialEditor materialEditor, MaterialProperty property)
     {
-        EditorGUI.showMixedValue = property.hasMixedValue;
-        RenderModePresets renderingMode = (RenderModePresets)property.floatValue;
-
-        EditorGUI.BeginChangeCheck();
         EditorGUILayout.BeginHorizontal();
-        RenderModePresetFoldout = EditorGUILayout.Foldout(RenderModePresetFoldout, property.name);
-        renderingMode = (RenderModePresets)EditorGUILayout.Popup((int)renderingMode, RenderModeNames);
-        EditorGUILayout.EndHorizontal();
-        if (EditorGUI.EndChangeCheck())
+        EditorGUILayout.LabelField(property.displayName, EditorStyles.wordWrappedLabel);
+        foreach (var renderingMode in Enum.GetValues(typeof(RenderingModePresets)))
         {
-            materialEditor.RegisterPropertyChangeUndo(property.name);
-            property.floatValue = (float)renderingMode;
-            foreach (Material mat in property.targets)
+            if (GUILayout.Button(renderingMode.ToString(), EditorStyles.miniButton))
             {
-                SetupBlendMode(mat, renderingMode);
+                materialEditor.RegisterPropertyChangeUndo(property.name);
+                property.floatValue = (int)renderingMode;
+                foreach (Material mat in property.targets)
+                {
+                    SetupRenderingMode(mat, (RenderingModePresets)renderingMode);
+                }
             }
         }
-        EditorGUI.showMixedValue = false;
+        EditorGUILayout.EndHorizontal();
     }
-    public static void DrawZWriteToggle(MaterialEditor materialEditor, MaterialProperty property)
+    public static void SetupRenderingMode(Material material, RenderingModePresets renderMode)
     {
-        EditorGUI.showMixedValue = property.hasMixedValue;
-        bool zWrite = property.floatValue == 1;
-
-        EditorGUI.BeginChangeCheck();
-        zWrite = EditorGUILayout.Toggle(property.name, zWrite);
-        if (EditorGUI.EndChangeCheck())
+        switch (renderMode)
         {
-            materialEditor.RegisterPropertyChangeUndo(property.name);
-            property.floatValue = zWrite ? 1 : 0;
-        }
-        EditorGUI.showMixedValue = false;
-    }
-
-    public static void SetupBlendMode(Material material, RenderModePresets blendMode)
-    {
-        switch (blendMode)
-        {
-            case RenderModePresets.Opaque:
+            case RenderingModePresets.Opaque:
                 material.SetOverrideTag(Tag_RenderType, "");
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
                 material.SetInt(Property_ZWriteMode, 1);
-                material.DisableKeyword("alpha");
                 material.renderQueue = -1;
                 break;
-            case RenderModePresets.Cutout:
+            case RenderingModePresets.Cutout:
                 material.SetOverrideTag(Tag_RenderType, "TransparentCutout");
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
                 material.SetInt(Property_ZWriteMode, 1);
-                material.EnableKeyword("alpha");
                 material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
                 break;
-            case RenderModePresets.Fade:
+            case RenderingModePresets.Fade:
                 material.SetOverrideTag(Tag_RenderType, "Transparent");
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                 material.SetInt(Property_ZWriteMode, 0);
-                material.EnableKeyword("alpha");
                 material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
                 break;
-            case RenderModePresets.Transparent:
+            case RenderingModePresets.Transparent:
                 material.SetOverrideTag(Tag_RenderType, "Transparent");
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -109,11 +84,11 @@ public class EZShaderGUI : ShaderGUI
     }
 
     private MaterialProperty _RenderingMode;
-    private MaterialProperty _SrcBlend;
-    private MaterialProperty _DstBlend;
+    private MaterialProperty _SrcBlendMode;
+    private MaterialProperty _DstBlendMode;
     private MaterialProperty _AlphaCutoff;
 
-    private MaterialProperty _ZWrite;
+    private MaterialProperty _ZWriteMode;
     private MaterialProperty _CullMode;
 
     private MaterialProperty _OffsetFactor;
@@ -128,33 +103,32 @@ public class EZShaderGUI : ShaderGUI
     public void DrawEZShaderProperties(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
         _RenderingMode = FindProperty(Property_RenderingMode, properties);
-        _SrcBlend = FindProperty(Property_SrcBlendMode, properties);
-        _DstBlend = FindProperty(Property_DstBlendMode, properties);
+        _SrcBlendMode = FindProperty(Property_SrcBlendMode, properties);
+        _DstBlendMode = FindProperty(Property_DstBlendMode, properties);
         _AlphaCutoff = FindProperty(Property_AlphaCutoff, properties);
-        _ZWrite = FindProperty(Property_ZWriteMode, properties);
+        _ZWriteMode = FindProperty(Property_ZWriteMode, properties);
         _CullMode = FindProperty(Property_CullMode, properties);
         _OffsetFactor = FindProperty(Property_OffsetFactor, properties);
         _OffsetUnit = FindProperty(Property_OffsetUnit, properties);
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("EZShaderGUI Properties", EditorStyles.boldLabel);
-        DrawRenderModePopup(materialEditor, _RenderingMode);
+        DrawRenderingModePresets(materialEditor, _RenderingMode);
         EditorGUI.indentLevel++;
-        if (RenderModePresetFoldout)
         {
-            EZShaderGUIUtility.DrawEnumPopup<UnityEngine.Rendering.BlendMode>(materialEditor, _SrcBlend);
-            EZShaderGUIUtility.DrawEnumPopup<UnityEngine.Rendering.BlendMode>(materialEditor, _DstBlend);
-            DrawZWriteToggle(materialEditor, _ZWrite);
+            materialEditor.BlendModeProperty(_SrcBlendMode);
+            materialEditor.BlendModeProperty(_DstBlendMode);
+            materialEditor.Toggle(_ZWriteMode);
         }
         EditorGUI.indentLevel--;
-        if ((RenderModePresets)(_RenderingMode.floatValue) == RenderModePresets.Cutout)
+        if ((RenderingModePresets)(_RenderingMode.floatValue) == RenderingModePresets.Cutout)
         {
-            materialEditor.ShaderProperty(_AlphaCutoff, Property_AlphaCutoff);
+            materialEditor.ShaderProperty(_AlphaCutoff);
         }
 
-        EZShaderGUIUtility.DrawEnumPopup<UnityEngine.Rendering.CullMode>(materialEditor, _CullMode);
+        materialEditor.CullModeProperty(_CullMode);
 
-        materialEditor.ShaderProperty(_OffsetFactor, Property_OffsetFactor);
-        materialEditor.ShaderProperty(_OffsetUnit, Property_OffsetUnit);
+        materialEditor.ShaderProperty(_OffsetFactor);
+        materialEditor.ShaderProperty(_OffsetUnit);
     }
 }

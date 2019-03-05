@@ -44,6 +44,9 @@ public class EZUnlitPatternShaderGUI : ShaderGUI
         _MainTex = FindProperty("_MainTex", properties);
         _Color = FindProperty("_Color", properties);
 
+        materialEditor.ShaderProperty(_MainTex, "Main Texture");
+        materialEditor.ShaderProperty(_Color, "Color");
+
         _CoordMode = FindProperty("_CoordMode", properties);
         _DensityFactor = FindProperty("_DensityFactor", properties);
         _PatternType = FindProperty("_PatternType", properties);
@@ -51,17 +54,12 @@ public class EZUnlitPatternShaderGUI : ShaderGUI
         _FillRatio = FindProperty("_FillRatio", properties);
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Base", EditorStyles.boldLabel);
-        materialEditor.ShaderProperty(_MainTex, "Main Texture");
-        materialEditor.ShaderProperty(_Color, "Color");
-
-        EditorGUILayout.Space();
         EditorGUILayout.LabelField("Pattern", EditorStyles.boldLabel);
         EditorGUI.BeginChangeCheck();
-        EZShaderGUIUtility.DrawEnumPopup<CoordMode>(materialEditor, _CoordMode, "Coordinate Mode", (mat, selection) => EZShaderGUIUtility.SetKeyword(mat, (CoordMode)selection));
-        materialEditor.ShaderProperty(_DensityFactor, "Density Factor");
-        EZShaderGUIUtility.DrawEnumPopup<PatternType>(materialEditor, _PatternType, "Pattern Type", (mat, selection) => EZShaderGUIUtility.SetKeyword(mat, (PatternType)selection));
-        materialEditor.ShaderProperty(_SecondColor, "Second Color");
+        materialEditor.EnumPopup<CoordMode>(_CoordMode, (mat, selection) => mat.SetKeyword((CoordMode)selection));
+        materialEditor.ShaderProperty(_DensityFactor);
+        materialEditor.EnumPopup<PatternType>(_PatternType, (mat, selection) => mat.SetKeyword((PatternType)selection));
+        materialEditor.ShaderProperty(_SecondColor);
         PatternType type = (PatternType)(int)_PatternType.floatValue;
         switch (type)
         {
@@ -74,7 +72,7 @@ public class EZUnlitPatternShaderGUI : ShaderGUI
             case PatternType.Wave:
                 break;
             default:
-                materialEditor.ShaderProperty(_FillRatio, "Fill Ratio");
+                materialEditor.ShaderProperty(_FillRatio);
                 break;
         }
 
