@@ -3,22 +3,23 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using EZUnity;
 using UnityEditor;
 using UnityEngine;
 
-public class #SCRIPTNAME# : ShaderGUI
+public class #SCRIPTNAME# : EZShaderGUI
 {
-    private MaterialProperty _MainTex;
-    private MaterialProperty _Color;
-
+    protected override void Setup(Material mat)
+    {
+        base.Setup(mat);
+    }
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
-        materialEditor.PropertiesDefaultGUI(properties);
+        // materialEditor.PropertiesDefaultGUI(properties);
 
-        //_MainTex = FindProperty("_MainTex", properties);
-        //_Color = FindProperty("_Color", properties);
+        MainTextureWithColorGUI(materialEditor, properties);
 
-        //materialEditor.ShaderProperty(_MainTex, "_MainTex");
-        //materialEditor.ShaderProperty(_Color, "_Color");
+        AdvancedOptionsGUI(materialEditor);
+        Setup(materialEditor.target as Material);
     }
 }

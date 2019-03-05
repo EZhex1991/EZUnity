@@ -1,134 +1,53 @@
 /* Author:          ezhex1991@outlook.com
- * CreateTime:      2019-02-21 17:44:54
+ * CreateTime:      2019-03-05 15:21:25
  * Organization:    #ORGANIZATION#
  * Description:     
  */
 using EZUnity;
-using System;
 using UnityEditor;
 using UnityEngine;
 
 public class EZShaderGUI : ShaderGUI
 {
-    public enum RenderingModePresets
-    {
-        Opaque,
-        Cutout,
-        Fade,   // Old school alpha-blending mode, fresnel does not affect amount of transparency
-        Transparent // Physically plausible transparency mode, implemented as alpha pre-multiply
-    }
-
     public const string Tag_RenderType = "RenderType";
-    public const string Property_RenderingMode = "_RenderingMode";
-    public const string Property_SrcBlendMode = "_SrcBlendMode";
-    public const string Property_DstBlendMode = "_DstBlendMode";
-    public const string Property_ZWriteMode = "_ZWriteMode";
-    public const string Property_CullMode = "_CullMode";
-    public const string Property_AlphaCutoff = "_AlphaCutoff";
-    public const string Property_OffsetFactor = "_OffsetFactor";
-    public const string Property_OffsetUnit = "_OffsetUnit";
+    public const string Keyword_BumpOn = "_BUMP_ON";
+    public const string Keyword_SpecOn = "_SPEC_ON";
 
-    public static readonly string[] RenderModeNames = Enum.GetNames(typeof(RenderingModePresets));
-
-    public static void DrawRenderingModePresets(MaterialEditor materialEditor, MaterialProperty property)
+    protected bool setupRequired = true;
+    protected virtual void Setup(Material mat)
     {
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField(property.displayName, EditorStyles.wordWrappedLabel);
-        foreach (var renderingMode in Enum.GetValues(typeof(RenderingModePresets)))
-        {
-            if (GUILayout.Button(renderingMode.ToString(), EditorStyles.miniButton))
-            {
-                materialEditor.RegisterPropertyChangeUndo(property.name);
-                property.floatValue = (int)renderingMode;
-                foreach (Material mat in property.targets)
-                {
-                    SetupRenderingMode(mat, (RenderingModePresets)renderingMode);
-                }
-            }
-        }
-        EditorGUILayout.EndHorizontal();
-    }
-    public static void SetupRenderingMode(Material material, RenderingModePresets renderMode)
-    {
-        switch (renderMode)
-        {
-            case RenderingModePresets.Opaque:
-                material.SetOverrideTag(Tag_RenderType, "");
-                material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
-                material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
-                material.SetInt(Property_ZWriteMode, 1);
-                material.renderQueue = -1;
-                break;
-            case RenderingModePresets.Cutout:
-                material.SetOverrideTag(Tag_RenderType, "TransparentCutout");
-                material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
-                material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
-                material.SetInt(Property_ZWriteMode, 1);
-                material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest;
-                break;
-            case RenderingModePresets.Fade:
-                material.SetOverrideTag(Tag_RenderType, "Transparent");
-                material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                material.SetInt(Property_ZWriteMode, 0);
-                material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-                break;
-            case RenderingModePresets.Transparent:
-                material.SetOverrideTag(Tag_RenderType, "Transparent");
-                material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
-                material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                material.SetInt(Property_ZWriteMode, 0);
-                material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-                break;
-        }
+        if (!setupRequired) return;
+        setupRequired = false;
     }
 
-    private MaterialProperty _RenderingMode;
-    private MaterialProperty _SrcBlendMode;
-    private MaterialProperty _DstBlendMode;
-    private MaterialProperty _AlphaCutoff;
-
-    private MaterialProperty _ZWriteMode;
-    private MaterialProperty _CullMode;
-
-    private MaterialProperty _OffsetFactor;
-    private MaterialProperty _OffsetUnit;
-
-    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    protected MaterialProperty _MainTex;
+    protected MaterialProperty _Color;
+    protected void MainTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
-        materialEditor.PropertiesDefaultGUI(properties);
-        DrawEZShaderProperties(materialEditor, properties);
+        _MainTex = FindProperty("_MainTex", properties);
+        _Color = FindProperty("_Color", properties);
+        materialEditor.ShaderProperty(_MainTex);
+        materialEditor.ShaderProperty(_Color);
     }
 
-    public void DrawEZShaderProperties(MaterialEditor materialEditor, MaterialProperty[] properties)
+    protected MaterialProperty _BumpOn;
+    protected MaterialProperty _BumpTex;
+    protected MaterialProperty _Bumpiness;
+    protected void FeaturedBumpGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
-        _RenderingMode = FindProperty(Property_RenderingMode, properties);
-        _SrcBlendMode = FindProperty(Property_SrcBlendMode, properties);
-        _DstBlendMode = FindProperty(Property_DstBlendMode, properties);
-        _AlphaCutoff = FindProperty(Property_AlphaCutoff, properties);
-        _ZWriteMode = FindProperty(Property_ZWriteMode, properties);
-        _CullMode = FindProperty(Property_CullMode, properties);
-        _OffsetFactor = FindProperty(Property_OffsetFactor, properties);
-        _OffsetUnit = FindProperty(Property_OffsetUnit, properties);
-
+        _BumpOn = FindProperty("_BumpOn", properties);
+        _BumpTex = FindProperty("_BumpTex", properties);
+        _Bumpiness = FindProperty("_Bumpiness", properties);
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("EZShaderGUI Properties", EditorStyles.boldLabel);
-        DrawRenderingModePresets(materialEditor, _RenderingMode);
-        EditorGUI.indentLevel++;
-        {
-            materialEditor.BlendModeProperty(_SrcBlendMode);
-            materialEditor.BlendModeProperty(_DstBlendMode);
-            materialEditor.Toggle(_ZWriteMode);
-        }
-        EditorGUI.indentLevel--;
-        if ((RenderingModePresets)(_RenderingMode.floatValue) == RenderingModePresets.Cutout)
-        {
-            materialEditor.ShaderProperty(_AlphaCutoff);
-        }
+        materialEditor.FeaturedPropertiesWithTexture(_BumpOn, _BumpTex, _Bumpiness, Keyword_BumpOn);
+    }
 
-        materialEditor.CullModeProperty(_CullMode);
-
-        materialEditor.ShaderProperty(_OffsetFactor);
-        materialEditor.ShaderProperty(_OffsetUnit);
+    protected void AdvancedOptionsGUI(MaterialEditor materialEditor)
+    {
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Advanced Options", EditorStyles.boldLabel);
+        materialEditor.RenderQueueField();
+        materialEditor.EnableInstancingField();
+        materialEditor.DoubleSidedGIField();
     }
 }
