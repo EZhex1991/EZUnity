@@ -4,11 +4,10 @@
  * Description:     
  */
 using EZUnity;
-using System;
 using UnityEditor;
 using UnityEngine;
 
-public class EZUnlitPatternShaderGUI : ShaderGUI
+public class EZUnlitPatternShaderGUI : EZShaderGUI
 {
     public enum CoordMode
     {
@@ -30,9 +29,6 @@ public class EZUnlitPatternShaderGUI : ShaderGUI
         Wave,
     }
 
-    private MaterialProperty _MainTex;
-    private MaterialProperty _Color;
-
     private MaterialProperty _CoordMode;
     private MaterialProperty _DensityFactor;
     private MaterialProperty _PatternType;
@@ -41,11 +37,7 @@ public class EZUnlitPatternShaderGUI : ShaderGUI
 
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
-        _MainTex = FindProperty("_MainTex", properties);
-        _Color = FindProperty("_Color", properties);
-
-        materialEditor.ShaderProperty(_MainTex, "Main Texture");
-        materialEditor.ShaderProperty(_Color, "Color");
+        MainTextureWithColorGUI(materialEditor, properties);
 
         _CoordMode = FindProperty("_CoordMode", properties);
         _DensityFactor = FindProperty("_DensityFactor", properties);
@@ -76,8 +68,7 @@ public class EZUnlitPatternShaderGUI : ShaderGUI
                 break;
         }
 
-        EditorGUILayout.Space();
-        materialEditor.RenderQueueField();
-        materialEditor.DoubleSidedGIField();
+        AdvancedOptionsGUI(materialEditor);
+        Setup(materialEditor.target as Material);
     }
 }

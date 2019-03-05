@@ -7,7 +7,7 @@ using EZUnity;
 using UnityEditor;
 using UnityEngine;
 
-public class EZUnlitDynamicFlameShaderGUI : ShaderGUI
+public class EZUnlitDynamicFlameShaderGUI : EZShaderGUI
 {
     private enum FlameMode
     {
@@ -27,9 +27,9 @@ public class EZUnlitDynamicFlameShaderGUI : ShaderGUI
     private MaterialProperty _AlphaFactor;
     private MaterialProperty _ShapeFactor;
 
-    private bool setupRequired = true;
-    private void Setup(Material mat)
+    protected override void Setup(Material mat)
     {
+        base.Setup(mat);
         mat.SetKeyword((FlameMode)_FlameMode.floatValue);
     }
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
@@ -71,9 +71,7 @@ public class EZUnlitDynamicFlameShaderGUI : ShaderGUI
                 break;
         }
 
-        if (setupRequired)
-        {
-            Setup(materialEditor.target as Material);
-        }
+        AdvancedOptionsGUI(materialEditor);
+        Setup(materialEditor.target as Material);
     }
 }

@@ -124,6 +124,26 @@ namespace EZUnity
             else mat.DisableKeyword(keyword);
         }
 
+        public static void FeaturedPropertiesWithTexture(this MaterialEditor materialEditor, MaterialProperty featureOn, MaterialProperty texture, MaterialProperty adjustor, string keyword)
+        {
+            EditorStyles.label.fontStyle = FontStyle.Bold;
+            materialEditor.Toggle(featureOn, (mat, isOn) =>
+            {
+                mat.SetKeyword(keyword, isOn && texture.textureValue != null);
+            });
+            EditorStyles.label.fontStyle = FontStyle.Normal;
+            if (featureOn.floatValue == 1)
+            {
+                EditorGUI.BeginChangeCheck();
+                materialEditor.ShaderProperty(texture);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+                }
+                materialEditor.ShaderProperty(adjustor);
+            }
+        }
+
         public static string FormatKeyword<T>(T value) where T : Enum
         {
             return string.Format("_{0}_{1}", typeof(T).Name, value).ToUpper();
