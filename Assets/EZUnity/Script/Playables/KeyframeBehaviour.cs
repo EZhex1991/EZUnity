@@ -29,6 +29,10 @@ namespace EZUnity.Playables
                 UnityEditor.Undo.RegisterCompleteObjectUndo(clip, "Record " + typeof(T).Name);
 #endif
                 KeyframeUtility.Replace(clip.keyframes, tempFrames);
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(clip);
+                UnityEditor.AssetDatabase.SaveAssets();
+#endif
             }
             Clear();
         }
