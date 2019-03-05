@@ -12,16 +12,17 @@ Shader "EZUnity/Unlit/SimpleExternalAlpha" {
 		[Header(Alpha)]
 		_AlphaTex ("Alpha Texture", 2D) = "white" {}
 		
-		// EZShaderGUI Properties
-		[HideInInspector] _RenderingMode ("_RenderingMode", Float) = 0
-		[HideInInspector] _SrcBlendMode ("_SrcBlendMode", Float) = 1
-		[HideInInspector] _DstBlendMode ("_DstBlendMode", Float) = 0
-		[HideInInspector] _AlphaCutoff ("_AlphaCutoff", Range(0, 1)) = 0.5
-		[HideInInspector] _ZWriteMode ("_ZWriteMode", Float) = 1
-		[HideInInspector] _CullMode ("_CullMode", Float) = 2
-		[HideInInspector] _OffsetFactor ("_OffsetFactor", Float) = 0
-		[HideInInspector] _OffsetUnit ("_OffsetUnit", Float) = 0
+		// Rendering Mode Settings
+		[HideInInspector] _RenderingMode ("Rendering Mode", Float) = 0
+		[HideInInspector] _SrcBlendMode ("Source Blend", Float) = 1
+		[HideInInspector] _DstBlendMode ("Destination Blend", Float) = 0
+		[HideInInspector] _AlphaCutoff ("Alpha Cutoff", Range(0, 1)) = 0.5
+		[HideInInspector] _ZWriteMode ("ZWrite", Float) = 1
+		[HideInInspector] _CullMode ("Cull", Float) = 2
+		[HideInInspector] _OffsetFactor ("Offset Factor", Float) = 0
+		[HideInInspector] _OffsetUnit ("Offset Unit", Float) = 0
 	}
+	CustomEditor "EZShaderGUIWithRenderingModeSettings"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 
@@ -43,7 +44,7 @@ Shader "EZUnity/Unlit/SimpleExternalAlpha" {
 
 			sampler2D _AlphaTex;
 			
-			// EZShaderGUI Properties
+			// Rendering Mode Settings
 			int _RenderingMode;
 			fixed _AlphaCutoff;
 
@@ -75,5 +76,4 @@ Shader "EZUnity/Unlit/SimpleExternalAlpha" {
 		}
 	}
 	FallBack "Unlit/Texture"
-	CustomEditor "EZShaderGUI"
 }

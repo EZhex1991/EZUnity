@@ -22,7 +22,7 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 		_Add2Color ("Color", Color) = (1, 1, 1, 1)
 		[KeywordEnum(AlphaBlend, Add)] _Add2BlendMode ("Blend Mode", Int) = 0
 		
-		// EZShaderGUI Properties
+		// Rendering Mode Settings
 		[HideInInspector] _RenderingMode ("_RenderingMode", Float) = 0
 		[HideInInspector] _SrcBlendMode ("_SrcBlendMode", Float) = 1
 		[HideInInspector] _DstBlendMode ("_DstBlendMode", Float) = 0
@@ -32,6 +32,7 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 		[HideInInspector] _OffsetFactor ("_OffsetFactor", Float) = 0
 		[HideInInspector] _OffsetUnit ("_OffsetUnit", Float) = 0
 	}
+	CustomEditor "EZShaderGUIWithRenderingModeSettings"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 
@@ -64,7 +65,7 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 			fixed4 _Add2Color;
 			int _Add2BlendMode;
 			
-			// EZShaderGUI Properties
+			// Rendering Mode Settings
 			int _RenderingMode;
 			fixed _AlphaCutoff;
 
@@ -114,5 +115,4 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 		}
 		//UsePass "VertexLit/SHADOWCASTER"
 	}
-	CustomEditor "EZShaderGUI"
 }

@@ -9,7 +9,7 @@ Shader "EZUnity/Unlit/Simple" {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
-		// EZShaderGUI Properties
+		// Rendering Mode Settings
 		[HideInInspector] _RenderingMode ("Rendering Mode", Float) = 0
 		[HideInInspector] _SrcBlendMode ("Source Blend", Float) = 1
 		[HideInInspector] _DstBlendMode ("Destination Blend", Float) = 0
@@ -19,7 +19,7 @@ Shader "EZUnity/Unlit/Simple" {
 		[HideInInspector] _OffsetFactor ("Offset Factor", Float) = 0
 		[HideInInspector] _OffsetUnit ("Offset Unit", Float) = 0
 	}
-	CustomEditor "EZShaderGUI"
+	CustomEditor "EZShaderGUIWithRenderingModeSettings"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 
@@ -39,7 +39,7 @@ Shader "EZUnity/Unlit/Simple" {
 			float4 _MainTex_ST;
 			fixed4 _Color;
 			
-			// EZShaderGUI Properties
+			// Rendering Mode Settings
 			int _RenderingMode;
 			fixed _AlphaCutoff;
 
