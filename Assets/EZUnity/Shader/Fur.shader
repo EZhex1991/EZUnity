@@ -33,7 +33,6 @@ Shader "EZUnity/Fur" {
 	CustomEditor "EZFurShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
-		ZWrite Off
 		Blend SrcAlpha OneMinusSrcAlpha
 		
 		Pass {
