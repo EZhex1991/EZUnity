@@ -20,19 +20,20 @@ namespace EZUnity
             ToLower = 2,
         }
 
-        private static CaseConversion caseConversion = CaseConversion.None;
-        private static string oldValue, newValue;
-        private static string prefix, suffix;
+        private CaseConversion caseConversion = CaseConversion.None;
+        private string oldValue, newValue;
+        private string prefix, suffix;
 
-        private static bool showLog;
+        private static bool useRegex = false;
+        private static bool showLog = false;
         private static bool collapse = false;
 
-        private static bool assetListFoldOut = true;
+        private bool assetListFoldOut = true;
         private List<Object> assetList = new List<Object>();
         private List<string> assetNameList = new List<string>();
         private Dictionary<string, int> assetNameDict = new Dictionary<string, int>();
 
-        private static bool sceneObjectListFoldOut = true;
+        private bool sceneObjectListFoldOut = true;
         private List<GameObject> sceneObjectList = new List<GameObject>();
         private List<string> sceneObjectNameList = new List<string>();
         private Dictionary<string, int> sceneObjectNameDict = new Dictionary<string, int>();
@@ -104,12 +105,19 @@ namespace EZUnity
             }
             if (oldValue != "")
             {
-                try
+                if (useRegex)
                 {
-                    Regex reg = new Regex(oldValue);
-                    oldName = reg.Replace(oldName, newValue);
+                    try
+                    {
+                        Regex reg = new Regex(oldValue);
+                        oldName = reg.Replace(oldName, newValue);
+                    }
+                    catch
+                    {
+                        oldName = oldName.Replace(oldValue, newValue);
+                    }
                 }
-                catch
+                else
                 {
                     oldName = oldName.Replace(oldValue, newValue);
                 }
@@ -189,6 +197,7 @@ namespace EZUnity
         private void DrawConfig()
         {
             caseConversion = (CaseConversion)EditorGUILayout.EnumPopup("Case Conversion", caseConversion);
+            useRegex = EditorGUILayout.Toggle("Use Regex", useRegex);
             {
                 EditorGUILayout.BeginHorizontal();
                 oldValue = EditorGUILayout.TextField("Replace", oldValue);
