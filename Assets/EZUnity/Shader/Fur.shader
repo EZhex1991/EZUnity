@@ -9,7 +9,7 @@ Shader "EZUnity/Fur" {
 
 		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1, 1, 1, 1)
+		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(Fur)]
 		_FurOffset ("Fur Offset", Vector) = (0.1, -0.5, 1, 1)
