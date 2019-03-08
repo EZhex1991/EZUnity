@@ -19,6 +19,22 @@ namespace EZUnity
         {
             materialEditor.TextureProperty(property, property.displayName);
         }
+        public static void TexturePropertySingleLine(this MaterialEditor materialEditor, MaterialProperty property)
+        {
+            materialEditor.TexturePropertySingleLine(new GUIContent(property.displayName), property);
+        }
+        public static void TexturePropertySingleLine(this MaterialEditor materialEditor, MaterialProperty property, MaterialProperty extraProperty1)
+        {
+            materialEditor.TexturePropertySingleLine(new GUIContent(property.displayName), property, extraProperty1);
+        }
+        public static void TexturePropertySingleLine(this MaterialEditor materialEditor, MaterialProperty property, MaterialProperty extraProperty1, MaterialProperty extraProperty2)
+        {
+            materialEditor.TexturePropertySingleLine(new GUIContent(property.displayName), property, extraProperty1, extraProperty2);
+        }
+        public static void TexturePropertyTwoLines(this MaterialEditor materialEditor, MaterialProperty property, MaterialProperty extraProperty1, MaterialProperty extraProperty2)
+        {
+            materialEditor.TexturePropertyTwoLines(new GUIContent(property.displayName), property, extraProperty1, new GUIContent(extraProperty2.displayName), extraProperty2);
+        }
         public static void ColorProperty(this MaterialEditor materialEditor, MaterialProperty property)
         {
             materialEditor.ColorProperty(property, property.displayName);
@@ -124,23 +140,22 @@ namespace EZUnity
             else mat.DisableKeyword(keyword);
         }
 
-        public static void FeaturedPropertiesWithTexture(this MaterialEditor materialEditor, MaterialProperty featureOn, MaterialProperty texture, MaterialProperty adjustor, string keyword)
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword)
         {
-            EditorStyles.label.fontStyle = FontStyle.Bold;
-            materialEditor.Toggle(featureOn, (mat, isOn) =>
+            EditorGUI.BeginChangeCheck();
+            materialEditor.TexturePropertySingleLine(texture, adjustor);
+            if (EditorGUI.EndChangeCheck())
             {
-                mat.SetKeyword(keyword, isOn && texture.textureValue != null);
-            });
-            EditorStyles.label.fontStyle = FontStyle.Normal;
-            if (featureOn.floatValue == 1)
+                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+            }
+        }
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword, bool setupRequired)
+        {
+            EditorGUI.BeginChangeCheck();
+            materialEditor.TexturePropertySingleLine(texture, adjustor);
+            if (setupRequired || EditorGUI.EndChangeCheck())
             {
-                EditorGUI.BeginChangeCheck();
-                materialEditor.ShaderProperty(texture);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
-                }
-                materialEditor.ShaderProperty(adjustor);
+                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
             }
         }
 

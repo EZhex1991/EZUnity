@@ -10,6 +10,7 @@ using UnityEngine;
 public class EZShaderGUI : ShaderGUI
 {
     public const string Tag_RenderType = "RenderType";
+    public const string Keyword_SecondTexOn = "_SECONDTEX_ON";
     public const string Keyword_BumpOn = "_BUMP_ON";
     public const string Keyword_SpecOn = "_SPEC_ON";
 
@@ -22,24 +23,39 @@ public class EZShaderGUI : ShaderGUI
 
     protected MaterialProperty _MainTex;
     protected MaterialProperty _Color;
-    protected void MainTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    protected void MainTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties, bool scaleOffset = true)
     {
         _MainTex = FindProperty("_MainTex", properties);
         _Color = FindProperty("_Color", properties);
-        materialEditor.ShaderProperty(_MainTex);
-        materialEditor.ShaderProperty(_Color);
+        EditorGUILayout.LabelField("Main", EditorStyles.boldLabel);
+        materialEditor.TexturePropertySingleLine(_MainTex, _Color);
+        if (scaleOffset)
+        {
+            materialEditor.TextureScaleOffsetProperty(_MainTex);
+        }
     }
 
-    protected MaterialProperty _BumpOn;
+    protected MaterialProperty _SecondTex;
+    protected MaterialProperty _SecondColor;
+    protected void SecondTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    {
+        _SecondTex = FindProperty("_SecondTex", properties);
+        _SecondColor = FindProperty("_SecondColor", properties);
+        materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, Keyword_SecondTexOn, setupRequired);
+    }
+
     protected MaterialProperty _BumpTex;
     protected MaterialProperty _Bumpiness;
-    protected void FeaturedBumpGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    protected void BumpGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
-        _BumpOn = FindProperty("_BumpOn", properties);
         _BumpTex = FindProperty("_BumpTex", properties);
         _Bumpiness = FindProperty("_Bumpiness", properties);
-        EditorGUILayout.Space();
-        materialEditor.FeaturedPropertiesWithTexture(_BumpOn, _BumpTex, _Bumpiness, Keyword_BumpOn);
+        EditorGUI.BeginChangeCheck();
+        materialEditor.TexturePropertySingleLine(_BumpTex, _Bumpiness);
+        if (setupRequired || EditorGUI.EndChangeCheck())
+        {
+            (materialEditor.target as Material).SetKeyword(Keyword_BumpOn, _BumpTex.textureValue != null && _Bumpiness.floatValue != 0);
+        }
     }
 
     protected void AdvancedOptionsGUI(MaterialEditor materialEditor)
