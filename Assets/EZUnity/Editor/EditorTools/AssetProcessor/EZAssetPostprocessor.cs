@@ -129,7 +129,7 @@ namespace EZUnity
             )
             {
                 Debug.Log("Invalid Material Name: " + material.name);
-                return EZAssetGenerator.GenerateMaterial();
+                return EZEditorUtility.defaultMaterial;
             }
             return null;
         }
