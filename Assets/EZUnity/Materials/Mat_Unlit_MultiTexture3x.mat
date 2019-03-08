@@ -37,7 +37,15 @@ Material:
     - _Add1UV: 0
     - _Add2BlendMode: 0
     - _Add2UV: 0
+    - _AlphaCutoff: 0.5
+    - _CullMode: 2
+    - _DstBlendMode: 0
     - _MainUV: 0
+    - _OffsetFactor: 0
+    - _OffsetUnit: 0
+    - _RenderingMode: 0
+    - _SrcBlendMode: 1
+    - _ZWriteMode: 1
     m_Colors:
     - _Add1Color: {r: 0, g: 1, b: 0, a: 1}
     - _Add2Color: {r: 0, g: 0, b: 1, a: 1}

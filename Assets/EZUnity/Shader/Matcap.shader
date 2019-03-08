@@ -8,18 +8,13 @@ Shader "EZUnity/Matcap" {
 		[Header(Base)]
 		[NoScaleOffset] _MainTex ("Main Texture", 2D) = "white" {}
 		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
+
+		[NoScaleOffset] _BumpTex ("Bump Texture", 2D) = "bump" {}
+		_Bumpiness ("Bumpiness", Range(0, 2)) = 1
 		
-		[Header(Diffuse)]
 		[NoScaleOffset] _DiffMatcap ("Diffuse Matcap", 2D) = "white" {}
 		[HDR] _DiffColor ("Diffuse Color (RGB, Strength)", Color) = (1, 1, 1, 1)
 
-		[Header(Bump)]
-		_BumpOn ("Bump On", Float) = 0
-		[NoScaleOffset] _BumpTex ("Bump Texture", 2D) = "bump" {}
-		_Bumpiness ("Bumpiness", Range(0, 2)) = 1
-
-		[Header(Specular)]
-		_SpecOn ("Spec On", Float) = 0
 		[NoScaleOffset] _SpecMatcap ("Specular Matcap", 2D) = "black" {}
 		[HDR] _SpecColor ("Specular Color (RGB, Strength)", Color) = (1, 1, 1, 1)
 	}
