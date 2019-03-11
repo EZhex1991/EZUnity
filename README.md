@@ -14,6 +14,20 @@
   - EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行build。
   - Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
 
+## 一些比较有意思的Shader
+
+[Materials](Assets/EZUnity/Materials):
+
+- Reflection: 反射
+- Fur: 毛发
+- Matcap: Material Capture
+- ColorFilter: RGB转灰阶，HSV校色
+- StripeCutoff: 条纹渐隐/渐出
+- MultiTexture3x: 多贴图叠加
+- Pattern: 坐标花纹
+- DynamicFlame: 动态火焰
+- DynamicLiquid: 动态液体效果（折射，色散）
+
 ## 基于XLua的逻辑热更方案（需要加宏'XLUA'启用）
 
 - [XLuaExtension](Assets/EZUnity/XLuaExtension)
