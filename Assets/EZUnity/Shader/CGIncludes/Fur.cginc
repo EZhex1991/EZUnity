@@ -72,7 +72,7 @@ v2f vert (appdata v) {
 	float3 worldNormal = UnityObjectToWorldNormal(v.normal);
 	float3 worldTangent = UnityObjectToWorldDir(v.tangent);
 	float3 worldBitangent = cross(worldNormal, worldTangent);
-	float3 worldView = normalize(UnityWorldSpaceViewDir(v.vertex));
+	float3 worldView = normalize(WorldSpaceViewDir(v.vertex));
 	float3 worldHalf = normalize(_WorldSpaceLightPos0 + worldView);
 	
 	float dotNL = dot(worldNormal, _WorldSpaceLightPos0);
@@ -93,7 +93,7 @@ v2f vert (appdata v) {
 	o.worldNormal = UnityObjectToWorldNormal(v.normal);
 	o.worldTangent = UnityObjectToWorldDir(v.tangent);
 	o.worldBitangent = cross(o.worldNormal, o.worldTangent);
-	o.worldView = normalize(UnityWorldSpaceViewDir(v.vertex));
+	o.worldView = normalize(WorldSpaceViewDir(v.vertex));
 	o.worldHalf = normalize(_WorldSpaceLightPos0 + o.worldView);
 	o.ao = pow(Offset01(_AOOffset, FUR_LAYER), _AOPower);
 #endif
