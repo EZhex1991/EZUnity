@@ -27,11 +27,6 @@ public class EZUnlitDynamicFlameShaderGUI : EZShaderGUI
     private MaterialProperty _AlphaFactor;
     private MaterialProperty _ShapeFactor;
 
-    protected override void Setup(Material mat)
-    {
-        base.Setup(mat);
-        mat.SetKeyword((FlameMode)_FlameMode.floatValue);
-    }
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
         _FlameTex = FindProperty("_FlameTex", properties);
@@ -54,13 +49,7 @@ public class EZUnlitDynamicFlameShaderGUI : EZShaderGUI
         _AlphaFactor = FindProperty("_AlphaFactor", properties);
         _ShapeFactor = FindProperty("_ShapeFactor", properties);
 
-        EditorGUILayout.Space();
-        EditorStyles.label.fontStyle = FontStyle.Bold;
-        materialEditor.EnumPopup<FlameMode>(_FlameMode, (mat, selection) =>
-        {
-            mat.SetKeyword((FlameMode)selection);
-        });
-        EditorStyles.label.fontStyle = FontStyle.Normal;
+        materialEditor.ShaderProperty(_FlameMode);
         materialEditor.ShaderProperty(_AlphaFactor);
         switch ((FlameMode)_FlameMode.floatValue)
         {

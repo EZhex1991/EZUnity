@@ -28,7 +28,7 @@ public class EZMatcapShaderGUI : EZShaderGUI
         _SpecMatcap = FindProperty("_SpecMatcap", properties);
         _SpecColor = FindProperty("_SpecColor", properties);
 
-        materialEditor.TexturePropertyFeatured(_SpecMatcap, _SpecColor, Keyword_SpecOn);
+        materialEditor.TexturePropertyFeatured(_SpecMatcap, _SpecColor, Keyword_SpecOn, setupRequired);
 
         AdvancedOptionsGUI(materialEditor);
         Setup(materialEditor.target as Material);

@@ -1,18 +1,23 @@
-﻿// Author:			#AUTHORNAME#
-// CreateTime:		#CREATETIME#
+// Author:			ezhex1991@outlook.com
+// CreateTime:		2019-03-08 11:14:59
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/#SCRIPTNAME#" {
+Shader "EZUnity/Unlit/EdgeFadeOut" {
 	Properties {
-		[Header(Main)]
+		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1, 1, 1, 1)
+		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
+
+		[Header(Edge)]
+		[PowerSlider(8)] _AlphaPower ("Alpha Power", Range(0.01, 128)) = 32
 	}
 	SubShader {
-		Tags { "RenderType" = "Opaque" }
+		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 
 		Pass {
+			Blend SrcAlpha One
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -23,27 +28,39 @@ Shader "EZUnity/#SCRIPTNAME#" {
 			float4 _MainTex_ST;
 			half4 _Color;
 
+			fixed _AlphaPower;
+
 			struct appdata {
 				float4 vertex : POSITION;
 				float2 uv0 : TEXCOORD0;
+				float3 normal : NORMAL;
 			};
 			struct v2f {
 				float4 pos : SV_POSITION;
 				float2 uv_MainTex : TEXCOORD0;
+				float3 worldNormal : TEXCOORD1;
+				float3 worldView : TEXCOORD2;
 			};
 
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.uv_MainTex = TRANSFORM_TEX(v.uv0, _MainTex);
+				o.worldNormal = UnityObjectToWorldNormal(v.normal);
+				o.worldView = normalize(WorldSpaceViewDir(v.vertex));
 				return o;
 			}
 			half4 frag (v2f i) : SV_Target {
 				half4 color = tex2D(_MainTex, i.uv_MainTex) * _Color;
+
+				half dotNV = dot(i.worldNormal, i.worldView);
+				half alpha = pow(saturate(dotNV), _AlphaPower);
+
+				color.a *= alpha;
 				return color;
 			}
 			ENDCG
 		}
 	}
-	FallBack "Unlit/Texture"
+	FallBack "Unlit/Transparent"
 }

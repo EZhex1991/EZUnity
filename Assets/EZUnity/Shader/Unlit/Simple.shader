@@ -1,9 +1,9 @@
-﻿// Author:			#AUTHORNAME#
-// CreateTime:		#CREATETIME#
+// Author:			ezhex1991@outlook.com
+// CreateTime:		2019-03-11 15:57:05
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/#SCRIPTNAME#" {
+Shader "EZUnity/Unlit/Simple" {
 	Properties {
 		[Header(Main)]
 		_MainTex ("Main Texture", 2D) = "white" {}
@@ -21,7 +21,7 @@ Shader "EZUnity/#SCRIPTNAME#" {
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-			half4 _Color;
+			fixed4 _Color;
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -38,8 +38,8 @@ Shader "EZUnity/#SCRIPTNAME#" {
 				o.uv_MainTex = TRANSFORM_TEX(v.uv0, _MainTex);
 				return o;
 			}
-			half4 frag (v2f i) : SV_Target {
-				half4 color = tex2D(_MainTex, i.uv_MainTex) * _Color;
+			fixed4 frag (v2f i) : SV_Target {
+				fixed4 color = tex2D(_MainTex, i.uv_MainTex) * _Color;
 				return color;
 			}
 			ENDCG

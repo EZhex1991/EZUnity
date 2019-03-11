@@ -7,6 +7,7 @@ Shader "EZUnity/_Debug" {
 	Properties {
 		[KeywordEnum(Normal, Tangent, Bitangent, UV0, UV1)]
 		_DebugMode ("Debug Mode", Int) = 0
+
 		[KeywordEnum(Clamp, Repeat)]
 		_WrapMode ("Wrap Mode", Int) = 0
 	}
@@ -17,6 +18,8 @@ Shader "EZUnity/_Debug" {
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma shader_feature _DEBUGMODE_NORMAL _DEBUGMODE_TANGENT _DEBUGMODE_BITANGENT _DEBUGMODE_UV0 _DEBUGMODE_UV1
+			#pragma shader_feature _WRAPMODE_CLAMP _WRAPMODE_REPEAT
 
 			#include "UnityCG.cginc"
 
@@ -36,9 +39,6 @@ Shader "EZUnity/_Debug" {
 				float3 worldBitangent : TEXCOORD4;
 			};
 
-			int _DebugMode;
-			int _WrapMode;
-
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
@@ -52,23 +52,23 @@ Shader "EZUnity/_Debug" {
 			fixed4 frag (v2f i) : SV_Target {
 				fixed4 color = 1;
 
-				if (_DebugMode == 0) {
+#if _DEBUGMODE_NORMAL
 					color.rgb = i.worldNormal;
-				} else if (_DebugMode == 1) {
+#elif _DEBUGMODE_TANGENT
 					color.rgb = i.worldTangent;
-				} else if (_DebugMode == 2) {
+#elif _DEBUGMODE_BITANGENT
 					color.rgb = i.worldBitangent;
-				} else if (_DebugMode == 3) {
+#elif _DEBUGMODE_UV0
 					color.rg = i.uv0;
-				} else if (_DebugMode == 4) {
+#elif _DEBUGMODE_UV1
 					color.rg = i.uv1;
-				}
+#endif
 
-				if (_WrapMode == 0) {
+#if _WRAPMODE_CLAMP
 					color.rg = clamp(color.rg, 0, 1);
-				} else if (_WrapMode == 1) {
+#elif _WRAPMODE_REPEAT
 					color.rg = fmod(color.rg, 1);
-				}
+#endif
 
 				return color;
 			}

@@ -5,8 +5,6 @@
 
 Shader "EZUnity/Fur" {
 	Properties {
-		[HideInInspector] _LightingMode ("Lighting Mode", Float) = 0
-
 		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
@@ -19,6 +17,7 @@ Shader "EZUnity/Fur" {
 		[PowerSlider(2)] _AlphaPower ("Alpha Power", Range(0.01, 4)) = 0.5
 
 		[Header(Lighting)]
+		[KeywordEnum(Vertex, Pixel)] _LightingMode ("Lighting Mode", Float) = 0
 		_LambertOffset ("Lambert Offset", Range(0, 1)) = 0.5
 		_AOColor ("AO Color", Color) = (0.2, 0.2, 0.2, 1)
 		_AOOffset ("AO Offset", Range(0, 1)) = 0.2
@@ -30,7 +29,6 @@ Shader "EZUnity/Fur" {
 		[HDR] _RimColor ("Rim Color", Color) = (0.5, 0.5, 0.5, 1)
 		[PowerSlider(4)] _RimPower ("Rim Power", Range(0.01, 32)) = 1
 	}
-	CustomEditor "EZFurShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 		Blend SrcAlpha OneMinusSrcAlpha

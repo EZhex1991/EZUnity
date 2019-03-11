@@ -40,39 +40,47 @@ namespace EZUnity
             materialEditor.ColorProperty(property, property.displayName);
         }
 
-        public static void SliderProperty(this MaterialEditor materialEditor, MaterialProperty property, float min, float max, Action<Material, float> callback = null, params GUILayoutOption[] options)
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword)
         {
-            materialEditor.SliderProperty(property, min, max, property.displayName, callback, options);
-        }
-        public static void SliderProperty(this MaterialEditor materialEditor, MaterialProperty property, float min, float max, string label, Action<Material, float> callback = null, params GUILayoutOption[] options)
-        {
-            EditorGUI.showMixedValue = property.hasMixedValue;
-            float value = property.floatValue;
-
             EditorGUI.BeginChangeCheck();
-            value = EditorGUILayout.Slider(label, value, min, max);
+            materialEditor.TexturePropertySingleLine(texture, adjustor);
             if (EditorGUI.EndChangeCheck())
             {
-                materialEditor.RegisterPropertyChangeUndo(label);
-                property.floatValue = value;
-                if (callback != null)
-                {
-                    foreach (Material mat in property.targets)
-                    {
-                        callback(mat, value);
-                    }
-                }
+                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
             }
-            EditorGUI.showMixedValue = false;
+        }
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword, bool setupRequired)
+        {
+            EditorGUI.BeginChangeCheck();
+            materialEditor.TexturePropertySingleLine(texture, adjustor);
+            if (setupRequired || EditorGUI.EndChangeCheck())
+            {
+                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+            }
         }
 
-        public static void BlendModeProperty(this MaterialEditor materialEditor, MaterialProperty property)
+        public static void BlendMode(this MaterialEditor materialEditor, MaterialProperty property)
         {
             materialEditor.EnumPopup<UnityEngine.Rendering.BlendMode>(property);
         }
-        public static void CullModeProperty(this MaterialEditor materialEditor, MaterialProperty property)
+        public static void CullMode(this MaterialEditor materialEditor, MaterialProperty property)
         {
             materialEditor.EnumPopup<UnityEngine.Rendering.CullMode>(property);
+        }
+
+        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, params GUILayoutOption[] options) where T : Enum
+        {
+            materialEditor.EnumPopup<T>(property, (mat, selection) =>
+            {
+                mat.SetKeyword((T)selection);
+            }, options);
+        }
+        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, params GUILayoutOption[] options) where T : Enum
+        {
+            materialEditor.EnumPopup<T>(property, label, (mat, selection) =>
+            {
+                mat.SetKeyword((T)selection);
+            }, options);
         }
 
         public static void EnumPopup<T>(this MaterialEditor materialEditor, MaterialProperty property, Action<Material, Enum> callback = null, params GUILayoutOption[] options) where T : Enum
@@ -139,24 +147,9 @@ namespace EZUnity
             if (value) { mat.EnableKeyword(keyword); }
             else mat.DisableKeyword(keyword);
         }
-
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword)
+        public static bool IsKeywordEnabled<T>(this Material mat, T selection) where T : Enum
         {
-            EditorGUI.BeginChangeCheck();
-            materialEditor.TexturePropertySingleLine(texture, adjustor);
-            if (EditorGUI.EndChangeCheck())
-            {
-                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
-            }
-        }
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword, bool setupRequired)
-        {
-            EditorGUI.BeginChangeCheck();
-            materialEditor.TexturePropertySingleLine(texture, adjustor);
-            if (setupRequired || EditorGUI.EndChangeCheck())
-            {
-                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
-            }
+            return mat.IsKeywordEnabled(FormatKeyword(selection));
         }
 
         public static string FormatKeyword<T>(T value) where T : Enum
