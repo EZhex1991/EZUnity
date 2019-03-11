@@ -47,7 +47,7 @@ Shader "EZUnity/EdgeFadeOut" {
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.uv_MainTex = TRANSFORM_TEX(v.uv0, _MainTex);
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
-				o.worldView = normalize(UnityWorldSpaceViewDir(v.vertex));
+				o.worldView = normalize(WorldSpaceViewDir(v.vertex));
 				return o;
 			}
 			half4 frag (v2f i) : SV_Target {
