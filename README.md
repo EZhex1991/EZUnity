@@ -16,7 +16,7 @@
 
 ## 一些比较有意思的Shader
 
-[Materials](Assets/EZUnity/Materials):
+[Materials](Assets/EZUnity/Miscellaneous):
 
 - Reflection: 反射
 - Fur: 毛发
