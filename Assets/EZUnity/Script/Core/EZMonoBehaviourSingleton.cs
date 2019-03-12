@@ -52,7 +52,7 @@ namespace EZUnity
             }
             else if (m_Instance != this)
             {
-                LogWarning("Duplicate Singleton Instance!");
+                Debug.LogWarningFormat("Duplicate Singleton Instance: typeof {0}", typeof(T));
                 Destroy(this);
                 return;
             }
