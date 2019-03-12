@@ -84,4 +84,17 @@ half3 HSV2RGB(half3 hsvColor) {
 	return rgbColor;
 }
 
+half4 EZBlend_Alpha (half4 srcColor, half4 dstColor) {
+	return srcColor * srcColor.a + dstColor * (1 - srcColor.a);
+}
+half4 EZBlend_Premultiply (half4 srcColor, half4 dstColor) {
+	return srcColor + dstColor * (1 - srcColor.a);
+}
+half4 EZBlend_Additive (half4 srcColor, half4 dstColor) {
+	return srcColor + dstColor;
+}
+half4 EZBlend_Multiply (half4 srcColor, half4 dstColor) {
+	return srcColor * dstColor;
+}
+
 #endif
