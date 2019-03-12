@@ -23,5 +23,12 @@ namespace EZUnity
             Shader.SetGlobalVector(lightVectorName, -transform.forward);
             Shader.SetGlobalColor(lightColorName, lightColor);
         }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = lightColor;
+            EZUtility.DrawGizmosArrow(transform.position, transform.forward, 0.2f, transform.up);
+            EZUtility.DrawGizmosArrow(transform.position, transform.forward, 0.2f, transform.right);
+        }
     }
 }
