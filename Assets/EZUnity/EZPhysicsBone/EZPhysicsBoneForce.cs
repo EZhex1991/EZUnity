@@ -57,8 +57,10 @@ namespace EZUnity.PhysicsCompnent
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.matrix = Matrix4x4.identity * Matrix4x4.Translate(transform.position);
-            EZUtility.DrawGizmosArrow(Vector3.zero, GetForce(0), 1, Vector3.up);
+            Vector3 force0 = GetForce(0);
+            float width = force0.magnitude * 0.2f;
+            EZUtility.DrawGizmosArrow(transform.position, force0, width, transform.up);
+            EZUtility.DrawGizmosArrow(transform.position, force0, width, transform.right);
         }
     }
 }
