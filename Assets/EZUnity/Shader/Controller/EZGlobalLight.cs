@@ -21,8 +21,7 @@ namespace EZUnity
         private Color lightColor = Color.white;
 
         private string lastKeyword;
-
-        private void Awake()
+        private void OnEnable()
         {
             lastKeyword = keyword;
             Shader.EnableKeyword(keyword);
@@ -42,11 +41,6 @@ namespace EZUnity
             Gizmos.color = lightColor;
             EZUtility.DrawGizmosArrow(transform.position, transform.forward, 0.2f, transform.up);
             EZUtility.DrawGizmosArrow(transform.position, transform.forward, 0.2f, transform.right);
-        }
-        private void OnValidate()
-        {
-            Shader.DisableKeyword(lastKeyword);
-            Shader.EnableKeyword(keyword);
         }
     }
 }

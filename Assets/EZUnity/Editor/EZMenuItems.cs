@@ -87,5 +87,10 @@ namespace EZUnity
         {
             EZGraphicsSettings.IncludeBuiltinShaders();
         }
+        [MenuItem(ROOT_NAME + "/Experimental/Shader Keywords Manager", false, PRIORITY + 5001)]
+        private static void ShaderKeywordsManager()
+        {
+            EditorWindow.GetWindow<EZShaderKeywordsManager>("Keywords Manager").Show();
+        }
     }
 }
