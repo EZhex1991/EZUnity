@@ -202,10 +202,6 @@ namespace EZUnity.PhysicsCompnent
         }
 
         [SerializeField]
-        private AnimatorUpdateMode m_UpdateMode = AnimatorUpdateMode.Normal;
-        public AnimatorUpdateMode updateMode { get { return m_UpdateMode; } }
-
-        [SerializeField]
         private float m_SleepThreshold = 0.005f;
         public float sleepThreshold { get { return m_SleepThreshold; } set { m_SleepThreshold = Mathf.Max(0, value); } }
 
@@ -241,19 +237,10 @@ namespace EZUnity.PhysicsCompnent
         {
             ResyncPhysicsTrees();
         }
-        private void FixedUpdate()
-        {
-            if (updateMode == AnimatorUpdateMode.AnimatePhysics)
-                UpdatePhysicsTrees(Time.fixedDeltaTime);
-        }
-        private void Update()
-        {
-            if (updateMode != AnimatorUpdateMode.AnimatePhysics)
-                UpdatePhysicsTrees(Time.deltaTime);
-        }
         private void LateUpdate()
         {
-            if (rootBones == null || rootBones.Count == 0) return;
+            RevertTransforms();
+            UpdatePhysicsTrees(Time.deltaTime);
             ApplyPhysicsTrees();
         }
         private void OnDisable()
@@ -302,7 +289,6 @@ namespace EZUnity.PhysicsCompnent
         }
         private void RevertTransforms()
         {
-            if (m_PhysicsTrees == null || m_PhysicsTrees.Count == 0) return;
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
             {
                 m_PhysicsTrees[i].RevertTransforms(true);
@@ -310,7 +296,6 @@ namespace EZUnity.PhysicsCompnent
         }
         private void ResyncPhysicsTrees()
         {
-            if (m_PhysicsTrees == null || m_PhysicsTrees.Count == 0) return;
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
             {
                 m_PhysicsTrees[i].SyncPosition(true);
@@ -321,7 +306,6 @@ namespace EZUnity.PhysicsCompnent
         {
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
             {
-                m_PhysicsTrees[i].RevertTransforms(true);
                 UpdateNode(m_PhysicsTrees[i], deltaTime);
             }
         }
