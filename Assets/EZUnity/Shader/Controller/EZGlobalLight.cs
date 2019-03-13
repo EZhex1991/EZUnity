@@ -11,6 +11,8 @@ namespace EZUnity
     public class EZGlobalLight : MonoBehaviour
     {
         [SerializeField]
+        private string keyword = "_EZGLOBALLIGHT";
+        [SerializeField]
         private string lightVectorName = "_EZGlobalLightPosition";
         [SerializeField]
         private string lightColorName = "_EZGlobalLightColor";
@@ -18,10 +20,21 @@ namespace EZUnity
         [SerializeField, ColorUsage(true, true)]
         private Color lightColor = Color.white;
 
+        private string lastKeyword;
+
+        private void Awake()
+        {
+            lastKeyword = keyword;
+            Shader.EnableKeyword(keyword);
+        }
         private void Update()
         {
             Shader.SetGlobalVector(lightVectorName, -transform.forward);
             Shader.SetGlobalColor(lightColorName, lightColor);
+        }
+        private void OnDisable()
+        {
+            Shader.DisableKeyword(keyword);
         }
 
         private void OnDrawGizmos()
@@ -29,6 +42,11 @@ namespace EZUnity
             Gizmos.color = lightColor;
             EZUtility.DrawGizmosArrow(transform.position, transform.forward, 0.2f, transform.up);
             EZUtility.DrawGizmosArrow(transform.position, transform.forward, 0.2f, transform.right);
+        }
+        private void OnValidate()
+        {
+            Shader.DisableKeyword(lastKeyword);
+            Shader.EnableKeyword(keyword);
         }
     }
 }
