@@ -9,8 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Unlit_Pattern
   m_Shader: {fileID: 4800000, guid: 80af8b7f7384f7e409ffb4acb319b08e, type: 3}
-  m_ShaderKeywords: _COORDMODE_UV _EZUNLITPATTERNSHADERGUI+PATTERNTYPE_DIAMOND _EZUnlitPatternShaderGUI+CoordMode_UV
-    _EZUnlitPatternShaderGUI+PatternType_Chessboard _PATTERNMODE_UV _PATTERNTYPE_CHESSBOARD
+  m_ShaderKeywords: _COORDMODE_UV _PATTERNTYPE_CHESSBOARD
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Surface_ColorFilter
   m_Shader: {fileID: 4800000, guid: 8656d4a5248b35b4791d61275dec365f, type: 3}
-  m_ShaderKeywords: _FILTERMODE_GREY _FILTERMODE_RGB _FILTERMODE_RGM
+  m_ShaderKeywords: _FILTERMODE_GREY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
