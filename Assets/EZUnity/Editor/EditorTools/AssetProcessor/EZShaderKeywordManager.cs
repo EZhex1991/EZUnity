@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZShaderKeywordsManager : EZEditorWindow
+    public class EZShaderKeywordManager : EZEditorWindow
     {
         public static List<Material> materials = new List<Material>();
         public static Dictionary<string, List<Material>> keywordReference = new Dictionary<string, List<Material>>();
@@ -46,11 +46,14 @@ namespace EZUnity
                     else
                     {
                         keywordReference[keyword] = new List<Material>() { material };
+                    }
+                    if (!keywordFoldout.ContainsKey(keyword))
+                    {
                         keywordFoldout[keyword] = false;
                     }
                 }
             }
-            keywordReference.OrderBy((item) => item.Key);
+            keywordReference = keywordReference.OrderBy((item) => item.Key).ToDictionary((item) => item.Key, (item) => item.Value);
         }
 
         protected override void OnGUI()
