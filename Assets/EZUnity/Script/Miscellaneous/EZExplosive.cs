@@ -9,7 +9,8 @@ namespace EZUnity
 {
     public class EZExplosive : MonoBehaviour
     {
-        public LayerMask layerMask = 1;
+        public GameObject debris;
+        public LayerMask layerMask = -1;
         public bool disableKinematic = true;
         public bool executeOnEnable = true;
         public ForceMode forceMode = ForceMode.Impulse;
@@ -27,6 +28,16 @@ namespace EZUnity
 
         public void Explode()
         {
+            if (debris != null)
+            {
+                GameObject newDebris = Instantiate(debris, transform, true);
+                newDebris.SetActive(true);
+                foreach (Rigidbody rigidbody in newDebris.GetComponents<Rigidbody>())
+                {
+                    if (disableKinematic) rigidbody.isKinematic = false;
+                    rigidbody.AddExplosionForce(explosionForce, transform.position, explosionRadius, explosionUpwards, ForceMode.Impulse);
+                }
+            }
             Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, layerMask);
             foreach (Collider collider in colliders)
             {
