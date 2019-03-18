@@ -50,12 +50,21 @@ public class EZShaderGUI : ShaderGUI
 
     private MaterialProperty _MainTex;
     private MaterialProperty _Color;
-    protected void MainTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties, bool scaleOffset = true)
+    private MaterialProperty _MainUV;
+    protected void MainTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties, bool uvSelector = false, bool scaleOffset = true)
     {
         _MainTex = FindProperty("_MainTex", properties);
         _Color = FindProperty("_Color", properties);
         EditorGUILayout.LabelField("Main", EditorStyles.boldLabel);
-        materialEditor.TexturePropertySingleLine(_MainTex, _Color);
+        if (uvSelector)
+        {
+            _MainUV = FindProperty("_MainUV", properties);
+            materialEditor.TexturePropertySingleLine(_MainTex, _Color, _MainUV);
+        }
+        else
+        {
+            materialEditor.TexturePropertySingleLine(_MainTex, _Color);
+        }
         if (scaleOffset)
         {
             materialEditor.TextureScaleOffsetProperty(_MainTex);
@@ -64,11 +73,24 @@ public class EZShaderGUI : ShaderGUI
 
     private MaterialProperty _SecondTex;
     private MaterialProperty _SecondColor;
-    protected void SecondTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    private MaterialProperty _SecondUV;
+    protected void SecondTextureWithColorGUI(MaterialEditor materialEditor, MaterialProperty[] properties, bool uvSelector = false, bool scaleOffset = true)
     {
         _SecondTex = FindProperty("_SecondTex", properties);
         _SecondColor = FindProperty("_SecondColor", properties);
-        materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, Keyword_SecondOn, setupRequired);
+        if (uvSelector)
+        {
+            _SecondUV = FindProperty("_SecondUV", properties);
+            materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, _SecondUV, Keyword_SecondOn, setupRequired);
+        }
+        else
+        {
+            materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, Keyword_SecondOn, setupRequired);
+        }
+        if (scaleOffset && _SecondTex.textureValue != null)
+        {
+            materialEditor.TextureScaleOffsetProperty(_SecondTex);
+        }
     }
 
     private MaterialProperty _BumpTex;

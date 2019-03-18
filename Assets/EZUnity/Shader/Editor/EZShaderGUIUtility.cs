@@ -40,19 +40,37 @@ namespace EZUnity
             materialEditor.ColorProperty(property, property.displayName);
         }
 
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword)
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, string keyword)
         {
             EditorGUI.BeginChangeCheck();
-            materialEditor.TexturePropertySingleLine(texture, adjustor);
+            materialEditor.TexturePropertySingleLine(texture, extraProperty1);
             if (EditorGUI.EndChangeCheck())
             {
                 (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
             }
         }
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty adjustor, string keyword, bool setupRequired)
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, string keyword, bool setupRequired)
         {
             EditorGUI.BeginChangeCheck();
-            materialEditor.TexturePropertySingleLine(texture, adjustor);
+            materialEditor.TexturePropertySingleLine(texture, extraProperty1);
+            if (setupRequired || EditorGUI.EndChangeCheck())
+            {
+                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+            }
+        }
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, MaterialProperty extraProperty2, string keyword)
+        {
+            EditorGUI.BeginChangeCheck();
+            materialEditor.TexturePropertySingleLine(texture, extraProperty1, extraProperty2);
+            if (EditorGUI.EndChangeCheck())
+            {
+                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+            }
+        }
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, MaterialProperty extraProperty2, string keyword, bool setupRequired)
+        {
+            EditorGUI.BeginChangeCheck();
+            materialEditor.TexturePropertySingleLine(texture, extraProperty1, extraProperty2);
             if (setupRequired || EditorGUI.EndChangeCheck())
             {
                 (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
