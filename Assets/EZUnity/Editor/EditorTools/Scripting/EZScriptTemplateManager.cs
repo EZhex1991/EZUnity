@@ -29,14 +29,12 @@ namespace EZUnity
         private SerializedProperty m_PatternList;
         private ReorderableList patternList;
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             GetUnityTemplates();
         }
-        protected override void OnFocus()
+        protected void OnFocus()
         {
-            base.OnFocus();
             ezScriptTemplate.Load();
             so_EZScriptTemplate = new SerializedObject(ezScriptTemplate);
             m_TimeFormat = so_EZScriptTemplate.FindProperty("timeFormat");
@@ -47,20 +45,18 @@ namespace EZUnity
             patternList.drawElementCallback = DrawPatternListElement;
             GetSelectedTemplates();
         }
-        protected override void OnSelectionChange()
+        protected void OnSelectionChange()
         {
-            base.OnSelectionChange();
             GetSelectedTemplates();
         }
-        protected override void OnLostFocus()
+        protected void OnLostFocus()
         {
-            base.OnLostFocus();
             ezScriptTemplate.Save();
         }
 
-        protected override void OnGUI()
+        protected void OnGUI()
         {
-            base.OnGUI();
+            DrawWindowHeader();
             so_EZScriptTemplate.Update();
 
             scrollRect = EditorGUILayout.BeginScrollView(scrollRect);

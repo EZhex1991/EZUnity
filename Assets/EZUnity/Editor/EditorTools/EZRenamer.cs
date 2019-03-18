@@ -174,19 +174,18 @@ namespace EZUnity
             RenameSceneObjects();
         }
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             Reset();
             GetObjects();
         }
-        protected override void OnSelectionChange()
+        protected void OnSelectionChange()
         {
             GetObjects();
         }
-        protected override void OnGUI()
+        protected void OnGUI()
         {
-            base.OnGUI();
+            DrawWindowHeader();
             DrawConfig();
             EditorGUILayout.Space();
             DrawButton();

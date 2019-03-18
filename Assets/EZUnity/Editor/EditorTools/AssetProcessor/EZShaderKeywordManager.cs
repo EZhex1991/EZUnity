@@ -16,9 +16,7 @@ namespace EZUnity
         public static Dictionary<string, List<Material>> keywordReference = new Dictionary<string, List<Material>>();
         public static Dictionary<string, bool> keywordFoldout = new Dictionary<string, bool>();
 
-        private Vector2 scrollPosition;
-
-        private static void GetAllMaterials()
+        private void GetAllMaterials()
         {
             materials.Clear();
             string[] guids = AssetDatabase.FindAssets("t:Material");
@@ -32,7 +30,7 @@ namespace EZUnity
                 }
             }
         }
-        private static void GetAllKeywordRenderence()
+        private void GetAllKeywordRenderence()
         {
             keywordReference.Clear();
             foreach (Material material in materials)
@@ -56,21 +54,52 @@ namespace EZUnity
             keywordReference = keywordReference.OrderBy((item) => item.Key).ToDictionary((item) => item.Key, (item) => item.Value);
         }
 
-        protected override void OnGUI()
+        private Vector2 scrollPosition;
+
+        private void OnSelectionChange()
         {
-            base.OnGUI();
-            if (GUILayout.Button("Refresh"))
+            Repaint();
+        }
+
+        protected void OnGUI()
+        {
+            DrawWindowHeader();
+
+            Material selection = Selection.activeObject as Material;
+
+            EditorGUILayout.Space();
+            if (selection != null)
+            {
+                EditorGUILayout.ObjectField("Selection", selection, typeof(Material), true);
+                EditorGUI.indentLevel++;
+                for (int i = 0; i < selection.shaderKeywords.Length; i++)
+                {
+                    string keyword = selection.shaderKeywords[i];
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(keyword);
+                    if (GUILayout.Button("Delete"))
+                    {
+                        selection.DisableKeyword(keyword);
+                        EditorUtility.SetDirty(selection);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+                EditorGUI.indentLevel--;
+                EditorGUILayout.Space();
+            }
+
+            if (GUILayout.Button("Get All Keywords"))
             {
                 GetAllMaterials();
                 GetAllKeywordRenderence();
             }
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             bool changed = false;
-            int i = 0;
+            int index = 0;
             foreach (var pair in keywordReference)
             {
                 EditorGUILayout.BeginHorizontal();
-                keywordFoldout[pair.Key] = EditorGUILayout.Foldout(keywordFoldout[pair.Key], i++.ToString("00 ") + pair.Key);
+                keywordFoldout[pair.Key] = EditorGUILayout.Foldout(keywordFoldout[pair.Key], index++.ToString("00 ") + pair.Key);
                 if (GUILayout.Button("Delete"))
                 {
                     foreach (Material mat in pair.Value)
@@ -83,10 +112,12 @@ namespace EZUnity
                 EditorGUILayout.EndHorizontal();
                 if (keywordFoldout[pair.Key])
                 {
+                    EditorGUI.indentLevel++;
                     foreach (Material mat in pair.Value)
                     {
                         EditorGUILayout.ObjectField(mat, typeof(Material), true);
                     }
+                    EditorGUI.indentLevel--;
                 }
             }
             if (changed)

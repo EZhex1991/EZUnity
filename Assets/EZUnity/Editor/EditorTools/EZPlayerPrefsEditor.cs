@@ -70,15 +70,14 @@ namespace EZUnity
             }
         }
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             Refresh();
         }
 
-        protected override void OnGUI()
+        protected void OnGUI()
         {
-            base.OnGUI();
+            DrawWindowHeader();
             if (GUILayout.Button("Refresh"))
             {
                 Refresh();

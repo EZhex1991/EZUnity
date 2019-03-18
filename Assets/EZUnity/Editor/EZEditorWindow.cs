@@ -9,25 +9,12 @@ namespace EZUnity
 {
     public abstract class EZEditorWindow : EditorWindow
     {
-        protected virtual void OnEnable() { }
-
-        protected virtual void OnFocus() { }
-        protected virtual void OnLostFocus() { }
-
-        protected virtual void OnHierarchyChange() { }
-        protected virtual void OnSelectionChange() { }
-        protected virtual void OnProjectChange() { }
-
-        protected virtual void OnGUI()
+        public void DrawWindowHeader()
         {
-            EditorGUILayout.Space();
+            //EditorGUILayout.Space();
             EditorGUILayout.LabelField(titleContent.text, EditorStyles.centeredGreyMiniLabel);
             EZEditorGUIUtility.ScriptTitle(this);
             EditorGUILayout.Space();
         }
-        protected virtual void Update() { }
-        protected virtual void OnInspectorUpdate() { }
-
-        protected virtual void OnDestroy() { }
     }
 }

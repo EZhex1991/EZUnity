@@ -14,15 +14,14 @@ namespace EZUnity
         private Text[] texts;
         private Vector2 scrollPosition;
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             texts = FindObjectsOfType<Text>();
         }
 
-        protected override void OnGUI()
+        protected void OnGUI()
         {
-            base.OnGUI();
+            DrawWindowHeader();
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             for (int i = 0; i < texts.Length; i++)
             {

@@ -19,15 +19,14 @@ namespace EZUnity
             unityGuid = UnityEditor.GUID.Generate();
         }
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             RefreshGuid();
         }
 
-        protected override void OnGUI()
+        protected void OnGUI()
         {
-            base.OnGUI();
+            DrawWindowHeader();
             if (GUILayout.Button("Refresh"))
             {
                 RefreshGuid();

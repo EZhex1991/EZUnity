@@ -37,18 +37,17 @@ namespace EZUnity
         private BundleDependenciesViewOption showDependencies = BundleDependenciesViewOption.Recursive;
         private Vector2 scrollPosition;
 
-        protected override void OnGUI()
+        protected void OnGUI()
         {
-            base.OnGUI();
+            DrawWindowHeader();
             showAssets = (AssetsViewOption)EditorGUILayout.EnumPopup("Show Assets", showAssets);
             showDependencies = (BundleDependenciesViewOption)EditorGUILayout.EnumPopup("Show Dependencies", showDependencies);
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             DrawAssetBundleManager(showAssets, showDependencies);
             EditorGUILayout.EndScrollView();
         }
-        protected override void OnFocus()
+        protected void OnFocus()
         {
-            base.OnFocus();
             Refresh();
             Repaint();
         }

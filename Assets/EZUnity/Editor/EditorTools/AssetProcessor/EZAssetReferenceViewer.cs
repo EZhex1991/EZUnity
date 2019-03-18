@@ -22,14 +22,12 @@ namespace EZUnity
         private bool referencesFoldout = true;
         private bool referencesRecursive = true;
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             Refresh();
         }
-        protected override void OnSelectionChange()
+        protected void OnSelectionChange()
         {
-            base.OnSelectionChange();
             Refresh();
         }
         private void Refresh()
@@ -80,9 +78,9 @@ namespace EZUnity
             return false;
         }
 
-        protected override void OnGUI()
+        protected void OnGUI()
         {
-            base.OnGUI();
+            DrawWindowHeader();
             EditorGUILayout.ObjectField("Target", target, typeof(Object), true);
             EditorGUILayout.BeginHorizontal();
 
