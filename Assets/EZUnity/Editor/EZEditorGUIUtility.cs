@@ -15,6 +15,7 @@ namespace EZUnity
         public static float reorderableListHeaderIndent = 15;
         public static float singleLineHeight = EditorGUIUtility.singleLineHeight;
 
+        [System.Obsolete]
         public static void ScriptTitle(Object target, bool showTarget = false)
         {
             GUI.enabled = false;
@@ -24,6 +25,26 @@ namespace EZUnity
                 EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target as ScriptableObject), typeof(MonoScript), false);
             if (showTarget)
                 EditorGUILayout.ObjectField("Target", target, typeof(Object), false);
+            GUI.enabled = true;
+        }
+        public static void WindowTitle(EditorWindow target)
+        {
+            GUI.enabled = false;
+            EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target), typeof(MonoScript), false);
+            GUI.enabled = true;
+        }
+        public static void ScriptableObjectTitle(ScriptableObject target, bool showTarget = true)
+        {
+            GUI.enabled = false;
+            EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target), typeof(MonoScript), false);
+            if (showTarget)
+                EditorGUILayout.ObjectField("Target", target, typeof(Object), false);
+            GUI.enabled = true;
+        }
+        public static void MonoBehaviourTitle(MonoBehaviour target)
+        {
+            GUI.enabled = false;
+            EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour(target), typeof(MonoScript), false);
             GUI.enabled = true;
         }
 
