@@ -57,6 +57,7 @@ namespace EZUnity
             {
                 GenerateTexture();
             }
+
             serializedObject.ApplyModifiedProperties();
             if (GUI.changed) generator.SetTexture(previewTexture);
         }

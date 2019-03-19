@@ -14,15 +14,16 @@ namespace EZUnity
 
         public enum CoordinateMode
         {
-            X,
-            Y,
+            LinearX,
+            LinearY,
             Diagonal,
             Radial,
+            Angle,
         }
-        public delegate Color Sampler(float x, float y);
+        public delegate float Sampler(float x, float y);
 
         public Gradient gradient = new Gradient();
-        public CoordinateMode coordinateMode = CoordinateMode.X;
+        public CoordinateMode coordinateMode = CoordinateMode.LinearX;
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve coordinateX = AnimationCurve.Linear(0, 0, 1, 1);
         [EZCurveRange(0, 0, 1, 1)]
@@ -32,17 +33,20 @@ namespace EZUnity
         {
             switch (coordinateMode)
             {
-                case CoordinateMode.X:
-                    SetPixels(texture, SamplerX);
+                case CoordinateMode.LinearX:
+                    SetPixels(texture, (x, y) => x);
                     break;
-                case CoordinateMode.Y:
-                    SetPixels(texture, SamplerY);
+                case CoordinateMode.LinearY:
+                    SetPixels(texture, (x, y) => y);
                     break;
                 case CoordinateMode.Diagonal:
                     SetPixels(texture, SamplerDiagonal);
                     break;
                 case CoordinateMode.Radial:
                     SetPixels(texture, SamplerRadial);
+                    break;
+                case CoordinateMode.Angle:
+                    SetPixels(texture, SamplerAngle);
                     break;
             }
             texture.Apply();
@@ -56,27 +60,23 @@ namespace EZUnity
                 {
                     float coordX = coordinateX.Evaluate((float)x / texture.width);
                     float coordY = coordinateY.Evaluate((float)y / texture.height);
-                    texture.SetPixel(x, y, sampler(coordX, coordY));
+                    float time = sampler(coordX, coordY);
+                    texture.SetPixel(x, y, gradient.Evaluate(time));
                 }
             }
         }
-        private Color SamplerX(float x, float y)
+        private float SamplerDiagonal(float x, float y)
         {
-            return gradient.Evaluate(x);
+            return (x + y) * 0.5f;
         }
-        private Color SamplerY(float x, float y)
-        {
-            return gradient.Evaluate(y);
-        }
-        private Color SamplerDiagonal(float x, float y)
-        {
-            return gradient.Evaluate((x + y) * 0.5f);
-        }
-        private Color SamplerRadial(float x, float y)
+        private float SamplerRadial(float x, float y)
         {
             x -= 0.5f; y -= 0.5f;
-            float time = Mathf.Sqrt(x * x + y * y) * 2;
-            return gradient.Evaluate(time);
+            return Mathf.Sqrt(x * x + y * y) * 2;
+        }
+        private float SamplerAngle(float x, float y)
+        {
+            return Mathf.Atan2(y, x) / Mathf.PI * 2;
         }
     }
 }
