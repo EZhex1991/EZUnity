@@ -76,7 +76,8 @@ namespace EZUnity
         }
         private float SamplerAngle(float x, float y)
         {
-            return Mathf.Atan2(y, x) / Mathf.PI * 2;
+            x -= 0.5f; y -= 0.5f;
+            return (Mathf.Atan2(y, x) / Mathf.PI + 1) * 0.5f;
         }
     }
 }
