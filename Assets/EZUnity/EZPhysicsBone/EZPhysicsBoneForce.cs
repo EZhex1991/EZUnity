@@ -59,6 +59,7 @@ namespace EZUnity.PhysicsCompnent
         {
             Vector3 force0 = GetForce(0);
             float width = force0.magnitude * 0.2f;
+            Gizmos.DrawRay(transform.position, force0);
             EZUtility.DrawGizmosArrow(transform.position, force0, width, transform.up);
             EZUtility.DrawGizmosArrow(transform.position, force0, width, transform.right);
         }
