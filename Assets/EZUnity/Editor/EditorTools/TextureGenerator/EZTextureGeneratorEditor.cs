@@ -87,12 +87,7 @@ namespace EZUnity
                 }
                 File.WriteAllBytes(path, generator.GetTextureData());
                 AssetDatabase.Refresh();
-                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
-                importer.mipmapEnabled = false;
-                importer.isReadable = true;
-                importer.textureCompression = TextureImporterCompression.Uncompressed;
-                importer.wrapMode = TextureWrapMode.Clamp;
-                importer.SaveAndReimport();
+                OnTextureCreated(path);
                 generator.textureReference = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             }
             else
@@ -101,6 +96,14 @@ namespace EZUnity
                 File.WriteAllBytes(path, generator.GetTextureData());
                 AssetDatabase.Refresh();
             }
+        }
+        public virtual void OnTextureCreated(string path)
+        {
+            TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            importer.mipmapEnabled = false;
+            importer.isReadable = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
         }
     }
 }
