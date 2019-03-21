@@ -37,7 +37,7 @@ namespace EZUnity
         public AnimationCurve coordinateY = AnimationCurve.Linear(0, 0, 1, 1);
         public Rotation rotation = Rotation.None;
 
-        public override void SetTexture(Texture2D texture)
+        public override void SetPixels(Texture2D texture)
         {
             switch (coordinateMode)
             {

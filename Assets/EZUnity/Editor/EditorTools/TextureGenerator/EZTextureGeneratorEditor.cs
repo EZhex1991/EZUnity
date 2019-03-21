@@ -34,7 +34,7 @@ namespace EZUnity
             resolution = serializedObject.FindProperty("resolution");
             textureFormat = serializedObject.FindProperty("textureFormat");
             textureReference = serializedObject.FindProperty("textureReference");
-            generator.SetTexture(previewTexture);
+            generator.SetPixels(previewTexture);
         }
 
         public override void OnInspectorGUI()
@@ -67,7 +67,7 @@ namespace EZUnity
             }
 
             serializedObject.ApplyModifiedProperties();
-            if (GUI.changed) generator.SetTexture(previewTexture);
+            if (GUI.changed) generator.SetPixels(previewTexture);
         }
 
         public sealed override bool HasPreviewGUI()

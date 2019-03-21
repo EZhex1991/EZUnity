@@ -13,11 +13,11 @@ namespace EZUnity
         public TextureFormat textureFormat = TextureFormat.RGB24;
         public Texture2D textureReference;
 
-        public abstract void SetTexture(Texture2D texture);
+        public abstract void SetPixels(Texture2D texture);
         public byte[] GetTextureData()
         {
             Texture2D texture = new Texture2D(resolution.x, resolution.y, textureFormat, false);
-            SetTexture(texture);
+            SetPixels(texture);
             texture.Apply();
             byte[] bytes = texture.EncodeToPNG();
             DestroyImmediate(texture);
