@@ -44,7 +44,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  coordinateMode: 2
+  coordinateMode: 4
   coordinateX:
     serializedVersion: 2
     m_Curve:
@@ -111,3 +111,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rotation: 0

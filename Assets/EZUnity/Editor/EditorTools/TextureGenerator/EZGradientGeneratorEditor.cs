@@ -14,6 +14,7 @@ namespace EZUnity
         private SerializedProperty coordinateMode;
         private SerializedProperty coordinateX;
         private SerializedProperty coordinateY;
+        private SerializedProperty rotation;
 
         protected override void OnEnable()
         {
@@ -22,6 +23,7 @@ namespace EZUnity
             coordinateMode = serializedObject.FindProperty("coordinateMode");
             coordinateX = serializedObject.FindProperty("coordinateX");
             coordinateY = serializedObject.FindProperty("coordinateY");
+            rotation = serializedObject.FindProperty("rotation");
         }
 
         public override void DrawTextureSettings()
@@ -30,6 +32,7 @@ namespace EZUnity
             EditorGUILayout.PropertyField(coordinateMode);
             EditorGUILayout.PropertyField(coordinateX);
             EditorGUILayout.PropertyField(coordinateY);
+            EditorGUILayout.PropertyField(rotation);
         }
     }
 }

@@ -14,33 +14,41 @@ namespace EZUnity
 
         public enum CoordinateMode
         {
-            LinearX,
-            LinearY,
-            Diagonal,
+            AdditiveXY,
+            MultiplyXY,
+            DifferenceXY,
             Radial,
             Angle,
+        }
+        public enum Rotation
+        {
+            None,
+            Clockwise90,
+            CounterClockwise90,
+            _180,
         }
         public delegate float Sampler(float x, float y);
 
         public Gradient gradient = new Gradient();
-        public CoordinateMode coordinateMode = CoordinateMode.LinearX;
+        public CoordinateMode coordinateMode = CoordinateMode.AdditiveXY;
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve coordinateX = AnimationCurve.Linear(0, 0, 1, 1);
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve coordinateY = AnimationCurve.Linear(0, 0, 1, 1);
+        public Rotation rotation = Rotation.None;
 
         public override void SetTexture(Texture2D texture)
         {
             switch (coordinateMode)
             {
-                case CoordinateMode.LinearX:
-                    SetPixels(texture, (x, y) => x);
+                case CoordinateMode.AdditiveXY:
+                    SetPixels(texture, SamplerAdditiveXY);
                     break;
-                case CoordinateMode.LinearY:
-                    SetPixels(texture, (x, y) => y);
+                case CoordinateMode.MultiplyXY:
+                    SetPixels(texture, SamplerMultiplyXY);
                     break;
-                case CoordinateMode.Diagonal:
-                    SetPixels(texture, SamplerDiagonal);
+                case CoordinateMode.DifferenceXY:
+                    SetPixels(texture, SamplerDifference);
                     break;
                 case CoordinateMode.Radial:
                     SetPixels(texture, SamplerRadial);
@@ -58,16 +66,39 @@ namespace EZUnity
             {
                 for (int y = 0; y < texture.height; y++)
                 {
-                    float coordX = coordinateX.Evaluate((float)x / texture.width);
-                    float coordY = coordinateY.Evaluate((float)y / texture.height);
-                    float time = sampler(coordX, coordY);
+                    float coordX = coordinateX.Evaluate((float)x / (texture.width - 1));
+                    float coordY = coordinateY.Evaluate((float)y / (texture.height - 1));
+                    float time = 0;
+                    switch (rotation)
+                    {
+                        case Rotation.None:
+                            time = sampler(coordX, coordY);
+                            break;
+                        case Rotation.Clockwise90:
+                            time = sampler(coordY, 1 - coordX);
+                            break;
+                        case Rotation._180:
+                            time = sampler(1 - coordX, 1 - coordY);
+                            break;
+                        case Rotation.CounterClockwise90:
+                            time = sampler(1 - coordY, coordX);
+                            break;
+                    }
                     texture.SetPixel(x, y, gradient.Evaluate(time));
                 }
             }
         }
-        private float SamplerDiagonal(float x, float y)
+        private float SamplerAdditiveXY(float x, float y)
         {
             return (x + y) * 0.5f;
+        }
+        private float SamplerMultiplyXY(float x, float y)
+        {
+            return x * y;
+        }
+        private float SamplerDifference(float x, float y)
+        {
+            return Mathf.Abs(x - y);
         }
         private float SamplerRadial(float x, float y)
         {
