@@ -46,7 +46,15 @@ namespace EZUnity
             EditorGUILayout.LabelField("File Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(resolution);
             EditorGUILayout.PropertyField(textureFormat);
-            EditorGUILayout.PropertyField(textureReference);
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.PropertyField(textureReference);
+                if (GUILayout.Button("Clear", new GUILayoutOption[] { GUILayout.Width(50) }))
+                {
+                    textureReference.objectReferenceValue = null;
+                }
+            }
+            EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Texture Settings", EditorStyles.boldLabel);
@@ -78,13 +86,13 @@ namespace EZUnity
             if (generator.textureReference == null)
             {
                 string path = AssetDatabase.GetAssetPath(generator);
-                path = string.Format("{0}.{1}", path.Substring(0, path.Length - 6), "png");
+                string prefix = path.Substring(0, path.Length - 6);
                 int index = 0;
-                while (File.Exists(path))
+                do
                 {
-                    path = string.Format("{0}_{1:D2}.{2}", path.Substring(0, path.Length - 6), index, "png");
+                    path = string.Format("{0}_{1:D2}.{2}", prefix, index, "png");
                     index++;
-                }
+                } while (File.Exists(path));
                 File.WriteAllBytes(path, generator.GetTextureData());
                 AssetDatabase.Refresh();
                 OnTextureCreated(path);
