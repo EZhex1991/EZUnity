@@ -152,6 +152,15 @@ namespace EZUnity
             EditorGUI.showMixedValue = false;
         }
 
+        public static void SetKeyword<T>(this MaterialEditor materialEditor, T selection) where T : Enum
+        {
+            (materialEditor.target as Material).SetKeyword<T>(selection);
+        }
+        public static void SetKeyword(this MaterialEditor materialEditor, string keyword, bool value)
+        {
+            (materialEditor.target as Material).SetKeyword(keyword, value);
+        }
+
         public static void SetKeyword<T>(this Material mat, T selection) where T : Enum
         {
             foreach (T value in Enum.GetValues(typeof(T)))
