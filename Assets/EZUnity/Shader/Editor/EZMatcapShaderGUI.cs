@@ -15,7 +15,7 @@ public class EZMatcapShaderGUI : EZShaderGUI
     private MaterialProperty _SpecMatcap;
     private MaterialProperty _SpecColor;
 
-    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    public override void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
         MainTextureWithColorGUI(materialEditor, properties);
         BumpGUI(materialEditor, properties);
@@ -28,9 +28,8 @@ public class EZMatcapShaderGUI : EZShaderGUI
         _SpecMatcap = FindProperty("_SpecMatcap", properties);
         _SpecColor = FindProperty("_SpecColor", properties);
 
-        materialEditor.TexturePropertyFeatured(_SpecMatcap, _SpecColor, Keyword_SpecOn, setupRequired);
+        materialEditor.TexturePropertyFeatured(_SpecMatcap, _SpecColor, Keyword_SpecOn, firstCall);
 
         AdvancedOptionsGUI(materialEditor);
-        Setup(materialEditor.target as Material);
     }
 }

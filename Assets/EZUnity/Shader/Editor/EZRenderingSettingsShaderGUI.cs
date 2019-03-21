@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class EZRenderingSettingsShaderGUI : EZShaderGUI
 {
-    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    public override void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
         materialEditor.PropertiesDefaultGUI(properties);
         RenderingSettingsGUI(materialEditor, properties);

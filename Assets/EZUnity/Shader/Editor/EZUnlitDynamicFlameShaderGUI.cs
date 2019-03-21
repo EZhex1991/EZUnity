@@ -27,7 +27,7 @@ public class EZUnlitDynamicFlameShaderGUI : EZShaderGUI
     private MaterialProperty _AlphaFactor;
     private MaterialProperty _ShapeFactor;
 
-    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    public override void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
         _FlameTex = FindProperty("_FlameTex", properties);
         _FlameNoise1 = FindProperty("_FlameNoise1", properties);
@@ -61,6 +61,5 @@ public class EZUnlitDynamicFlameShaderGUI : EZShaderGUI
         }
 
         AdvancedOptionsGUI(materialEditor);
-        Setup(materialEditor.target as Material);
     }
 }

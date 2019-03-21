@@ -41,11 +41,15 @@ public class EZShaderGUI : ShaderGUI
         AlphaPremultiply,
     }
 
-    protected bool setupRequired = true;
-    protected virtual void Setup(Material mat)
+    protected bool firstCall = true;
+    public sealed override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
-        if (!setupRequired) return;
-        setupRequired = false;
+        OnEZShaderGUI(materialEditor, properties);
+        firstCall = false;
+    }
+    public virtual void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    {
+        materialEditor.PropertiesDefaultGUI(properties);
     }
 
     private MaterialProperty _MainTex;
@@ -81,11 +85,11 @@ public class EZShaderGUI : ShaderGUI
         if (uvSelector)
         {
             _SecondUV = FindProperty("_SecondUV", properties);
-            materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, _SecondUV, Keyword_SecondOn, setupRequired);
+            materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, _SecondUV, Keyword_SecondOn, firstCall);
         }
         else
         {
-            materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, Keyword_SecondOn, setupRequired);
+            materialEditor.TexturePropertyFeatured(_SecondTex, _SecondColor, Keyword_SecondOn, firstCall);
         }
         if (scaleOffset && _SecondTex.textureValue != null)
         {
@@ -99,7 +103,7 @@ public class EZShaderGUI : ShaderGUI
     {
         _BumpTex = FindProperty("_BumpTex", properties);
         _Bumpiness = FindProperty("_Bumpiness", properties);
-        materialEditor.TexturePropertyFeatured(_BumpTex, _Bumpiness, Keyword_BumpOn, setupRequired);
+        materialEditor.TexturePropertyFeatured(_BumpTex, _Bumpiness, Keyword_BumpOn, firstCall);
     }
 
     private MaterialProperty _AlphaMode;
@@ -142,7 +146,7 @@ public class EZShaderGUI : ShaderGUI
         materialEditor.ShaderProperty(_OffsetFactor);
         materialEditor.ShaderProperty(_OffsetUnit);
 
-        if (setupRequired)
+        if (firstCall)
         {
             (materialEditor.target as Material).SetKeyword((AlphaMode)_AlphaMode.floatValue);
         }

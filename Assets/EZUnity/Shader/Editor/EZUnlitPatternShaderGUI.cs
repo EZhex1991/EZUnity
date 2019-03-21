@@ -26,7 +26,7 @@ public class EZUnlitPatternShaderGUI : EZShaderGUI
     private MaterialProperty _DensityFactor;
     private MaterialProperty _FillRatio;
 
-    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    public override void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
         MainTextureWithColorGUI(materialEditor, properties);
 
@@ -57,6 +57,5 @@ public class EZUnlitPatternShaderGUI : EZShaderGUI
         }
 
         AdvancedOptionsGUI(materialEditor);
-        Setup(materialEditor.target as Material);
     }
 }
