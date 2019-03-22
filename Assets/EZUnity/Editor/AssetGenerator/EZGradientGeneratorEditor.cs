@@ -8,7 +8,7 @@ using UnityEditor;
 namespace EZUnity
 {
     [CustomEditor(typeof(EZGradientGenerator))]
-    public class EZGradientGeneratorEditor : EZTextureGeneratorEditor
+    public class EZGradientGeneratorEditor : EZTextureGeneratorEditorLayout
     {
         private SerializedProperty gradient;
         private SerializedProperty coordinateMode;
@@ -16,17 +16,15 @@ namespace EZUnity
         private SerializedProperty coordinateY;
         private SerializedProperty rotation;
 
-        protected override void OnEnable()
+        protected override void GetTextureSettings()
         {
-            base.OnEnable();
             gradient = serializedObject.FindProperty("gradient");
             coordinateMode = serializedObject.FindProperty("coordinateMode");
             coordinateX = serializedObject.FindProperty("coordinateX");
             coordinateY = serializedObject.FindProperty("coordinateY");
             rotation = serializedObject.FindProperty("rotation");
         }
-
-        public override void DrawTextureSettings()
+        protected override void DrawTextureSettings()
         {
             EditorGUILayout.PropertyField(gradient);
             EditorGUILayout.PropertyField(coordinateMode);
