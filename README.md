@@ -2,7 +2,9 @@
 
 ## 常用组件和编辑器扩展  
 
-- [EZPhysicsBone](Assets/EZUnity/EZPhysicsBone): 动态骨骼，效果参考来源于AssetStore上的DynamicBone。优势: 支持所有碰撞体（包括MeshCollider，但效果一般）；独立的材质"EZPhysicsBoneMaterial"存放参数，通用性强；代码可读性高，碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展。
+- [EZPhysicsBone](Assets/EZUnity/EZPhysicsBone): 动态骨骼，效果参考来源于AssetStore上的DynamicBone。优势: 支持所有碰撞体（包括MeshCollider，但效果一般）；独立的材质"EZPhysicsBoneMaterial"存放参数，通用性强；代码可读性高，碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展
+
+- [EZAnimation](Assets/EZUnity/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）
 
 - EZRenamer: 批量重命名工具，支持正则式匹配，整理资源目录很方便
 - EZPlayerPrefsEditor: 用于在编辑器下对PlayerPrefs进行编辑，目前只有Win下5.x以上版本可以用
