@@ -20,9 +20,11 @@ namespace EZUnity.Animation
         Status status { get; }
         int segmentIndex { get; }
         float time { get; }
-        float value { get; }
+        float process { get; }
 
         void StartSegment(int index);
+
+        void Play();
         void Pause();
         void Resume();
         void Stop();
@@ -30,32 +32,41 @@ namespace EZUnity.Animation
 
     public delegate void OnAnimationEndAction();
 
-    public abstract class EZAnimation<T, U> : MonoBehaviour, IEZAnimation
-        where T : struct
-        where U : EZAnimationSegment<T>
+    public abstract class EZAnimation<T> : MonoBehaviour, IEZAnimation
+        where T : EZAnimationSegment
     {
         [SerializeField]
-        private bool m_Loop = false;
+        protected bool m_Loop = true;
         public bool loop { get { return m_Loop; } set { m_Loop = value; } }
 
         [SerializeField]
-        private bool m_RestartOnEnable = false;
+        protected bool m_PlayOnAwake = true;
+        public bool playOnAwake { get { return m_PlayOnAwake; } set { m_PlayOnAwake = value; } }
+
+        [SerializeField]
+        protected bool m_RestartOnEnable = false;
         public bool restartOnEnable { get { return m_RestartOnEnable; } set { m_RestartOnEnable = value; } }
 
         [SerializeField]
-        private AnimatorUpdateMode m_UpdateMode = AnimatorUpdateMode.Normal;
+        protected AnimatorUpdateMode m_UpdateMode = AnimatorUpdateMode.Normal;
         public AnimatorUpdateMode updateMode { get { return m_UpdateMode; } set { m_UpdateMode = value; } }
 
-        [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("m_PhaseList")]
-        private List<U> m_Segments = new List<U>();
-        public List<U> segments { get { return m_Segments; } set { m_Segments = value; } }
+        [SerializeField]
+        protected Status m_Status = Status.Stopped;
+        public Status status { get { return m_Status; } protected set { m_Status = value; } }
+        [SerializeField]
+        protected int m_SegmentIndex;
+        public int segmentIndex { get { return m_SegmentIndex; } protected set { m_SegmentIndex = value; } }
+        [SerializeField]
+        protected float m_Time;
+        public float time { get { return m_Time; } protected set { m_Time = value; } }
 
-        public Status status { get; protected set; }
-        public int segmentIndex { get; protected set; }
-        public U segment { get; protected set; }
+        [SerializeField]
+        protected List<T> m_Segments = new List<T>();
+        public List<T> segments { get { return m_Segments; } set { m_Segments = value; } }
 
-        public float time { get; protected set; }
-        public float value { get; protected set; }
+        public T segment { get { return segments[segmentIndex]; } }
+        public float process { get; protected set; }
 
         public event OnAnimationEndAction onAnimationEndEvent;
 
@@ -64,13 +75,13 @@ namespace EZUnity.Animation
             if (index >= segments.Count) return;
             status = Status.Running;
             segmentIndex = index;
-            segment = segments[segmentIndex];
+            time = 0;
             OnSegmentStart();
             ProcessSegment();
         }
         protected virtual void ProcessSegment()
         {
-            value = segment.duration <= 0 ? 1 : segment.curve.Evaluate(time);
+            process = segment.duration <= 0 ? 1 : segment.curve.Evaluate(time);
             OnSegmentUpdate();
             if (time > segment.duration)
             {
@@ -99,6 +110,10 @@ namespace EZUnity.Animation
             }
         }
 
+        public void Play()
+        {
+            StartSegment(0);
+        }
         public void Pause()
         {
             if (status == Status.Running)
@@ -113,14 +128,12 @@ namespace EZUnity.Animation
         {
             status = Status.Stopped;
             segmentIndex = 0;
-            segment = segments[segmentIndex];
             time = 0;
-            value = 0;
+            process = 0;
         }
 
         protected virtual void OnSegmentStart()
         {
-            time = 0;
         }
         protected abstract void OnSegmentUpdate();
         protected virtual void OnSegmentStop()
@@ -133,16 +146,13 @@ namespace EZUnity.Animation
             return segment != null && status == Status.Running;
         }
 
-        protected virtual void Start()
+        protected virtual void Awake()
         {
-            StartSegment(0);
+            if (playOnAwake) Play();
         }
         protected virtual void OnEnable()
         {
-            if (restartOnEnable)
-            {
-                StartSegment(0);
-            }
+            if (restartOnEnable) Play();
         }
         protected void Update()
         {
