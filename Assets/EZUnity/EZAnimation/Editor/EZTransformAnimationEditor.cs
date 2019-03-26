@@ -66,6 +66,7 @@ namespace EZUnity.Animation
                         {
                             Undo.RegisterCompleteObjectUndo(target, "Path Modify");
                             seg.startTangent = startTangentPosition;
+                            EditorUtility.SetDirty(target);
                         }
                         Handles.DrawDottedLine(Vector3.zero, seg.startTangent, 1);
 
@@ -76,6 +77,7 @@ namespace EZUnity.Animation
                         {
                             Undo.RegisterCompleteObjectUndo(target, "Path Modify");
                             seg.endTangent = endTangentPosition;
+                            EditorUtility.SetDirty(target);
                         }
                         Handles.DrawDottedLine(Vector3.zero, seg.endTangent, 1);
                     }
