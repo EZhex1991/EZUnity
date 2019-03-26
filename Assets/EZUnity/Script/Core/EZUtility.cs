@@ -55,38 +55,37 @@ namespace EZUnity
             get { return Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork; }
         }
 
-        public static void DrawGizmosPolyline(bool close, params Vector3[] vertices)
+        public static void DrawGizmosPolyLine(params Vector3[] vertices)
         {
-            int i = 0;
-            while (i < vertices.Length - 1)
+            for (int i = 0; i < vertices.Length - 1; i++)
             {
                 Gizmos.DrawLine(vertices[i], vertices[i + 1]);
-                i++;
             }
-            if (close) Gizmos.DrawLine(vertices[i], vertices[0]);
         }
 
         public static void DrawGizmosArrow(Vector3 startPoint, Vector3 direction, float halfWidth, Vector3 normal)
         {
-            Vector3 sideStep = Vector3.Cross(direction, normal).normalized * halfWidth * 0.5f;
-            Vector3[] vertices = new Vector3[7];
-            vertices[3] = startPoint + direction;
-            vertices[0] = startPoint + sideStep;
-            vertices[6] = startPoint - sideStep;
+            Vector3 sideDir = Vector3.Cross(direction, normal).normalized * halfWidth;
+            Vector3[] vertices = new Vector3[8];
+            vertices[0] = startPoint + sideDir * 0.5f;
             vertices[1] = vertices[0] + direction * 0.5f;
-            vertices[5] = vertices[6] + direction * 0.5f;
-            vertices[2] = vertices[1] + sideStep;
-            vertices[4] = vertices[5] - sideStep;
-            DrawGizmosPolyline(true, vertices);
+            vertices[2] = vertices[1] + sideDir * 0.5f;
+            vertices[3] = startPoint + direction;
+            vertices[4] = startPoint - sideDir + direction * 0.5f;
+            vertices[5] = vertices[4] + sideDir * 0.5f;
+            vertices[6] = startPoint - sideDir;
+            vertices[7] = vertices[0];
+            DrawGizmosPolyLine(vertices);
         }
         public static void DrawGizmosArrowTriangle(Vector3 startPoint, Vector3 direction, float halfWidth, Vector3 normal)
         {
             Vector3 sideDirection = Vector3.Cross(direction, normal).normalized * halfWidth;
-            Vector3[] vertices = new Vector3[3];
+            Vector3[] vertices = new Vector3[4];
             vertices[0] = startPoint + direction;
             vertices[1] = startPoint + sideDirection;
             vertices[2] = startPoint - sideDirection;
-            DrawGizmosPolyline(true, vertices);
+            vertices[3] = vertices[0];
+            DrawGizmosPolyLine(vertices);
         }
         public static void DrawGizmosCamera(Camera camera)
         {
