@@ -73,21 +73,11 @@ namespace EZUnity
             vertices[3] = startPoint + direction;
             vertices[4] = startPoint - sideDir + direction * 0.5f;
             vertices[5] = vertices[4] + sideDir * 0.5f;
-            vertices[6] = startPoint - sideDir;
+            vertices[6] = startPoint - sideDir * 0.5f;
             vertices[7] = vertices[0];
             DrawGizmosPolyLine(vertices);
         }
-        public static void DrawGizmosArrowTriangle(Vector3 startPoint, Vector3 direction, float halfWidth, Vector3 normal)
-        {
-            Vector3 sideDirection = Vector3.Cross(direction, normal).normalized * halfWidth;
-            Vector3[] vertices = new Vector3[4];
-            vertices[0] = startPoint + direction;
-            vertices[1] = startPoint + sideDirection;
-            vertices[2] = startPoint - sideDirection;
-            vertices[3] = vertices[0];
-            DrawGizmosPolyLine(vertices);
-        }
-        public static void DrawGizmosCamera(Camera camera)
+        public static void DrawGizmosCameraFrustum(Camera camera)
         {
             Gizmos.matrix = Matrix4x4.TRS(camera.transform.position, camera.transform.rotation, Vector3.one);
             if (camera.orthographic)

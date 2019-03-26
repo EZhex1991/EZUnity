@@ -121,13 +121,13 @@ namespace EZUnity
             if (targetCamera != null)
             {
                 Gizmos.color = Color.grey;
-                EZUtility.DrawGizmosCamera(targetCamera);
+                EZUtility.DrawGizmosCameraFrustum(targetCamera);
             }
 
             if (reflectionCamera != null)
             {
                 Gizmos.color = Color.green;
-                EZUtility.DrawGizmosCamera(reflectionCamera);
+                EZUtility.DrawGizmosCameraFrustum(reflectionCamera);
             }
         }
     }
