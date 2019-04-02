@@ -26,12 +26,12 @@ namespace EZUnity.Animation
 
         protected override void OnSegmentUpdate()
         {
-            rectTransform.anchoredPosition = Vector2.Lerp(segment.startRect.anchoredPosition, segment.endRect.anchoredPosition, process);
-            rectTransform.anchorMin = Vector2.Lerp(segment.startRect.anchorMin, segment.endRect.anchorMin, process);
-            rectTransform.anchorMax = Vector2.Lerp(segment.startRect.anchorMax, segment.endRect.anchorMax, process);
-            rectTransform.sizeDelta = Vector2.Lerp(segment.startRect.sizeDelta, segment.endRect.sizeDelta, process);
-            rectTransform.rotation = Quaternion.Lerp(segment.startRect.rotation, segment.endRect.rotation, process);
-            rectTransform.localScale = Vector3.Lerp(segment.startRect.localScale, segment.endRect.localScale, process);
+            rectTransform.anchoredPosition = Vector2.Lerp(activeSegment.startRect.anchoredPosition, activeSegment.endRect.anchoredPosition, segmentProcess);
+            rectTransform.anchorMin = Vector2.Lerp(activeSegment.startRect.anchorMin, activeSegment.endRect.anchorMin, segmentProcess);
+            rectTransform.anchorMax = Vector2.Lerp(activeSegment.startRect.anchorMax, activeSegment.endRect.anchorMax, segmentProcess);
+            rectTransform.sizeDelta = Vector2.Lerp(activeSegment.startRect.sizeDelta, activeSegment.endRect.sizeDelta, segmentProcess);
+            rectTransform.rotation = Quaternion.Lerp(activeSegment.startRect.rotation, activeSegment.endRect.rotation, segmentProcess);
+            rectTransform.localScale = Vector3.Lerp(activeSegment.startRect.localScale, activeSegment.endRect.localScale, segmentProcess);
         }
 
         private void Reset()

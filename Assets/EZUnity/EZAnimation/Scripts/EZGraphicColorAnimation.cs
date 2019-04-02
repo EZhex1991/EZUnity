@@ -27,7 +27,7 @@ namespace EZUnity.Animation
 
         protected override void OnSegmentUpdate()
         {
-            targetGraphic.color = segment.gradient.Evaluate(process);
+            targetGraphic.color = activeSegment.gradient.Evaluate(segmentProcess);
         }
 
         private void Reset()

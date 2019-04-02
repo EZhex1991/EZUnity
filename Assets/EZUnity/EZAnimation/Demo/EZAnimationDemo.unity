@@ -167,8 +167,6 @@ MonoBehaviour:
   m_RestartOnEnable: 0
   m_UpdateMode: 0
   m_Status: 3
-  m_SegmentIndex: 0
-  m_Time: 0
   m_Segments:
   - m_Duration: 2
     m_Curve:
@@ -206,6 +204,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_StartRect: {fileID: 1712881438}
     m_EndRect: {fileID: 778824747}
+  m_Time: 3.7960808
   m_RectTransform: {fileID: 37458112}
 --- !u!114 &37458114
 MonoBehaviour:
@@ -244,6 +243,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37458111}
   m_CullTransparentMesh: 0
+--- !u!1 &204644904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 204644906}
+  - component: {fileID: 204644905}
+  m_Layer: 0
+  m_Name: EZAnimationPlayable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &204644905
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204644904}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 114984047386234052, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
+    value: {fileID: 1357364095}
+  - key: {fileID: 114241080540182802, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
+    value: {fileID: 1712881439}
+  - key: {fileID: 114105764493577432, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
+    value: {fileID: 37458113}
+  m_ExposedReferences:
+    m_References: []
+--- !u!4 &204644906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204644904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &392074414
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,13 +859,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810f427afb0b7be49a0c5686abf37d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Loop: 1
+  m_Loop: 0
   m_PlayOnAwake: 1
   m_RestartOnEnable: 0
   m_UpdateMode: 0
   m_Status: 3
-  m_SegmentIndex: 0
-  m_Time: 0
   m_Segments:
   - m_Duration: 1
     m_Curve:
@@ -930,6 +981,7 @@ MonoBehaviour:
     m_EndPoint: {fileID: 2012272854}
     m_StartTangent: {x: 14.5859375, y: 5.7617188, z: 2.6328125}
     m_EndTangent: {x: -3.0229797, y: 0.8015623, z: 1.719531}
+  m_Time: 3.7960808
   m_TargetTransform: {fileID: 1357364099}
   m_PathMode: 1
 --- !u!65 &1357364096
@@ -1142,7 +1194,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -104, y: -309.6}
+  m_AnchoredPosition: {x: -104, y: -309.59998}
   m_SizeDelta: {x: -208, y: -619.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1712881439
@@ -1162,8 +1214,6 @@ MonoBehaviour:
   m_RestartOnEnable: 0
   m_UpdateMode: 0
   m_Status: 3
-  m_SegmentIndex: 0
-  m_Time: 0
   m_Segments:
   - m_Duration: 1
     m_Curve:
@@ -1336,6 +1386,7 @@ MonoBehaviour:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
+  m_Time: 3.7960808
   m_TargetGraphic: {fileID: 1712881440}
 --- !u!114 &1712881440
 MonoBehaviour:

@@ -44,21 +44,21 @@ namespace EZUnity.Animation
                     OnBezierUpdate();
                     break;
             }
-            targetTransform.rotation = Quaternion.Lerp(segment.startPoint.rotation, segment.endPoint.rotation, process);
-            targetTransform.localScale = Vector3.Lerp(segment.startPoint.localScale, segment.endPoint.localScale, process);
+            targetTransform.rotation = Quaternion.Lerp(activeSegment.startPoint.rotation, activeSegment.endPoint.rotation, segmentProcess);
+            targetTransform.localScale = Vector3.Lerp(activeSegment.startPoint.localScale, activeSegment.endPoint.localScale, segmentProcess);
         }
         private void OnLinearUpdate()
         {
-            targetTransform.position = Vector3.Lerp(segment.startPoint.position, segment.endPoint.position, process);
+            targetTransform.position = Vector3.Lerp(activeSegment.startPoint.position, activeSegment.endPoint.position, segmentProcess);
         }
         private void OnBezierUpdate()
         {
-            float t1 = process;
-            float t2 = 1 - process;
-            Vector3 p1 = segment.startPoint.position;
-            Vector3 p2 = p1 + segment.startTangent;
-            Vector3 p3 = segment.endPoint.position + segment.endTangent;
-            Vector3 p4 = segment.endPoint.position;
+            float t1 = segmentProcess;
+            float t2 = 1 - segmentProcess;
+            Vector3 p1 = activeSegment.startPoint.position;
+            Vector3 p2 = p1 + activeSegment.startTangent;
+            Vector3 p3 = activeSegment.endPoint.position + activeSegment.endTangent;
+            Vector3 p4 = activeSegment.endPoint.position;
             targetTransform.position = p1 * t2 * t2 * t2
                 + 3 * p2 * t2 * t2 * t1
                 + 3 * p3 * t2 * t1 * t1

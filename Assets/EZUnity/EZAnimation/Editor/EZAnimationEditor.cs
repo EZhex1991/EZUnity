@@ -21,7 +21,6 @@ namespace EZUnity.Animation
         protected SerializedProperty m_RestartOnEnable;
         protected SerializedProperty m_UpdateMode;
         protected SerializedProperty m_Status;
-        protected SerializedProperty m_SegmentIndex;
         protected SerializedProperty m_Time;
         protected SerializedProperty m_Segments;
         protected ReorderableList segments;
@@ -41,7 +40,6 @@ namespace EZUnity.Animation
             m_RestartOnEnable = serializedObject.FindProperty("m_RestartOnEnable");
             m_UpdateMode = serializedObject.FindProperty("m_UpdateMode");
             m_Status = serializedObject.FindProperty("m_Status");
-            m_SegmentIndex = serializedObject.FindProperty("m_SegmentIndex");
             m_Time = serializedObject.FindProperty("m_Time");
             m_Segments = serializedObject.FindProperty("m_Segments");
             segments = new ReorderableList(serializedObject, m_Segments, true, true, true, true)
@@ -94,7 +92,6 @@ namespace EZUnity.Animation
             EditorGUILayout.PropertyField(m_PlayOnAwake);
             EditorGUILayout.PropertyField(m_RestartOnEnable);
             EditorGUILayout.PropertyField(m_UpdateMode);
-            EditorGUILayout.PropertyField(m_SegmentIndex);
             EditorGUILayout.PropertyField(m_Time);
             DrawOtherProperties();
             segments.DoLayoutList();
