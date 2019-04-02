@@ -204,7 +204,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_StartRect: {fileID: 1712881438}
     m_EndRect: {fileID: 778824747}
-  m_Time: 3.7960808
+  m_Time: 3.6166666
   m_RectTransform: {fileID: 37458112}
 --- !u!114 &37458114
 MonoBehaviour:
@@ -275,12 +275,14 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: 114984047386234052, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
+  - key: {fileID: 0}
     value: {fileID: 1357364095}
   - key: {fileID: 114241080540182802, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
     value: {fileID: 1712881439}
   - key: {fileID: 114105764493577432, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
     value: {fileID: 37458113}
+  - key: {fileID: 114659376504695736, guid: aa5f6267d07966749a3a0a0f7ed7900c, type: 2}
+    value: {fileID: 1357364095}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &204644906
@@ -981,7 +983,7 @@ MonoBehaviour:
     m_EndPoint: {fileID: 2012272854}
     m_StartTangent: {x: 14.5859375, y: 5.7617188, z: 2.6328125}
     m_EndTangent: {x: -3.0229797, y: 0.8015623, z: 1.719531}
-  m_Time: 3.7960808
+  m_Time: 3.6166666
   m_TargetTransform: {fileID: 1357364099}
   m_PathMode: 1
 --- !u!65 &1357364096
@@ -1386,7 +1388,7 @@ MonoBehaviour:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-  m_Time: 3.7960808
+  m_Time: 3.6166666
   m_TargetGraphic: {fileID: 1712881440}
 --- !u!114 &1712881440
 MonoBehaviour:
