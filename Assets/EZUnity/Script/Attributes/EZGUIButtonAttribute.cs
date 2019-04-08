@@ -28,7 +28,7 @@ namespace EZUnity
         public EZInspectorButtonAttribute(string methodName, ButtonLayout layout = ButtonLayout.Above)
         {
             this.buttonLabel = methodName;
-            this.methodName = methodName;
+            this.methodName = methodName.Replace(" ", "");
             this.layout = layout;
         }
         public EZInspectorButtonAttribute(string buttonLabel, string methodName, ButtonLayout layout = ButtonLayout.Above)
