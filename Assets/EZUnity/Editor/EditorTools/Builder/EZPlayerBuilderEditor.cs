@@ -11,9 +11,11 @@ namespace EZUnity
     [CustomEditor(typeof(EZPlayerBuilder)), CanEditMultipleObjects]
     public class EZPlayerBuilderEditor : Editor
     {
-        protected EZPlayerBuilder builder;
+        protected EZPlayerBuilder playerBuilder;
 
         protected SerializedProperty m_ConfigButDontBuild;
+
+        protected SerializedProperty m_BundleBuilder;
 
         protected SerializedProperty m_LocationPathName;
         protected SerializedProperty m_Scenes;
@@ -27,8 +29,9 @@ namespace EZUnity
 
         protected void OnEnable()
         {
-            builder = target as EZPlayerBuilder;
+            playerBuilder = target as EZPlayerBuilder;
             m_ConfigButDontBuild = serializedObject.FindProperty("configButDontBuild");
+            m_BundleBuilder = serializedObject.FindProperty("bundleBuilder");
             m_LocationPathName = serializedObject.FindProperty("locationPathName");
             m_Scenes = serializedObject.FindProperty("scenes");
             m_CompanyName = serializedObject.FindProperty("companyName");
@@ -50,29 +53,29 @@ namespace EZUnity
                 EditorGUILayout.PropertyField(m_ConfigButDontBuild);
                 if (GUILayout.Button("Android"))
                 {
-                    builder.Execute(BuildTargetGroup.Android, BuildTarget.Android);
+                    playerBuilder.Execute(BuildTargetGroup.Android, BuildTarget.Android);
                     GUIUtility.ExitGUI();
                 }
                 if (GUILayout.Button("iOS"))
                 {
-                    builder.Execute(BuildTargetGroup.iOS, BuildTarget.iOS);
+                    playerBuilder.Execute(BuildTargetGroup.iOS, BuildTarget.iOS);
                     GUIUtility.ExitGUI();
                 }
                 {
                     EditorGUILayout.BeginHorizontal();
                     if (GUILayout.Button("Windows"))
                     {
-                        builder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
+                        playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
                         GUIUtility.ExitGUI();
                     }
                     if (GUILayout.Button("Windows64"))
                     {
-                        builder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
+                        playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
                         GUIUtility.ExitGUI();
                     }
                     if (GUILayout.Button("OSX"))
                     {
-                        builder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+                        playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
                         GUIUtility.ExitGUI();
                     }
                     EditorGUILayout.EndHorizontal();
@@ -91,6 +94,7 @@ namespace EZUnity
                 }
                 EditorGUILayout.EndHorizontal();
             }
+            EditorGUILayout.PropertyField(m_BundleBuilder);
             EditorGUILayout.PropertyField(m_Scenes, true);
             EditorGUILayout.Space();
 

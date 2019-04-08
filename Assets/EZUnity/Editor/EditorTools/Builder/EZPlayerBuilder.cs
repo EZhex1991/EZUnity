@@ -15,6 +15,8 @@ namespace EZUnity
     {
         public bool configButDontBuild;
 
+        public EZBundleBuilder bundleBuilder;
+
         public string locationPathName;
         public SceneAsset[] scenes;
 
@@ -58,6 +60,10 @@ namespace EZUnity
         {
             Config(buildTargetGroup, buildTarget);
             if (configButDontBuild) return;
+            if (bundleBuilder != null)
+            {
+                bundleBuilder.Execute(buildTarget);
+            }
             BuildPlayerOptions options = new BuildPlayerOptions();
             string[] scenePaths = new string[scenes.Length];
             for (int i = 0; i < scenePaths.Length; i++)

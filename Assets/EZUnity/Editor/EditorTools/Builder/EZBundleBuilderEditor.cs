@@ -9,9 +9,11 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CustomEditor(typeof(EZBundleObject))]
-    public class EZBundleEditor : Editor
+    [CustomEditor(typeof(EZBundleBuilder))]
+    public class EZBundleBuilderEditor : Editor
     {
+        private EZBundleBuilder bundleBuilder;
+
         private SerializedProperty m_BuildTarget;
         private SerializedProperty m_OutputPath;
         private SerializedProperty m_ListFileName;
@@ -33,6 +35,7 @@ namespace EZUnity
 
         void OnEnable()
         {
+            bundleBuilder = target as EZBundleBuilder;
             m_BuildTarget = serializedObject.FindProperty("buildTarget");
             m_OutputPath = serializedObject.FindProperty("outputPath");
             m_ListFileName = serializedObject.FindProperty("listFileName");
@@ -55,10 +58,7 @@ namespace EZUnity
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            EZEditorGUIUtility.ScriptTitle(target);
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Target", target, typeof(EZBundleObject), false);
-            GUI.enabled = true;
+            EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, true);
 
             DrawFunctionButtons();
             DrawBaseProperties();
@@ -95,7 +95,7 @@ namespace EZUnity
         {
             if (GUILayout.Button("Build Bundle"))
             {
-                EditorApplication.delayCall += delegate () { EZBundleBuilder.BuildBundle(target as EZBundleObject, m_ManagerMode.boolValue); };
+                EditorApplication.delayCall += delegate () { bundleBuilder.Execute(); };
             }
         }
         private void DrawBaseProperties()

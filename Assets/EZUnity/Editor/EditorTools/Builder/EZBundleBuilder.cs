@@ -1,5 +1,5 @@
 /* Author:          ezhex1991@outlook.com
- * CreateTime:      2017-03-08 18:30:08
+ * CreateTime:      2017-03-06 14:13:28
  * Organization:    #ORGANIZATION#
  * Description:     
  */
@@ -15,7 +15,21 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZBundleBuilder
+    public enum AssetsViewOption
+    {
+        Object = 0,
+        Path = 1,
+        PathAndObject = 2,
+    }
+    public enum BundleDependenciesViewOption
+    {
+        DontShow = 0,
+        Direct = 1,
+        Recursive = 2,
+    }
+
+    [CreateAssetMenu(fileName = "EZBundleBuilder", menuName = "EZUnity/EZBundleBuilder", order = EZUtility.AssetOrder)]
+    public class EZBundleBuilder : ScriptableObject
     {
         [AttributeUsage(AttributeTargets.Method)]
         public class OnPreBuildAttribute : Attribute
@@ -26,6 +40,21 @@ namespace EZUnity
         public class OnPostBuildAttribute : Attribute
         {
             public int priority;
+        }
+
+        [Serializable]
+        public class CopyInfo
+        {
+            public string destDirPath = "";
+            public string sourDirPath = "";
+        }
+        [Serializable]
+        public class BundleInfo
+        {
+            public string bundleName = "";
+            public string filePattern = "*.*";
+            public SearchOption searchOption = SearchOption.AllDirectories;
+            public string dirPath = "";
         }
         [Serializable]
         public class FileInfo
@@ -38,29 +67,51 @@ namespace EZUnity
         protected const char DELIMITER = '|';
         protected static BuildAssetBundleOptions buildOptions = BuildAssetBundleOptions.DeterministicAssetBundle;
 
-        public static void BuildBundle(EZBundleObject ezBundle, bool managerMode)
+        public BuildTarget buildTarget = BuildTarget.Android;
+        public string outputPath = "Assets/StreamingAssets";
+        public string listFileName = "files.txt";
+        public bool managerMode = false;
+        public bool forceRebuild = false;
+
+        public List<CopyInfo> copyList = new List<CopyInfo>();
+        public List<BundleInfo> bundleList = new List<BundleInfo>();
+
+        // view options
+        public bool copyListFoldout = true;
+        public bool bundleListFoldout = true;
+        public AssetsViewOption showAssets = AssetsViewOption.Object;
+        public BundleDependenciesViewOption showDependencies = BundleDependenciesViewOption.Recursive;
+
+        public void Execute()
+        {
+            Execute(buildTarget);
+        }
+        public void Execute(BuildTarget buildTarget)
         {
             OnPreBuild();
-            if (ezBundle.forceRebuild && Directory.Exists(ezBundle.outputPath)) Directory.Delete(ezBundle.outputPath, true);
-            Directory.CreateDirectory(ezBundle.outputPath);
+            if (forceRebuild && Directory.Exists(outputPath)) Directory.Delete(outputPath, true);
+            Directory.CreateDirectory(outputPath);
             AssetDatabase.Refresh();
-            CopyDirectories(ezBundle);
+            CopyDirectories();
 
             AssetDatabase.Refresh();
+            AssetBundleManifest manifest;
             if (managerMode)
             {
-                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.outputPath, buildOptions, ezBundle.buildTarget));
+                manifest = BuildPipeline.BuildAssetBundles(outputPath, buildOptions, buildTarget);
             }
             else
             {
-                OnPostBuild(BuildPipeline.BuildAssetBundles(ezBundle.outputPath, GetBuildList(ezBundle), buildOptions, ezBundle.buildTarget));
+                manifest = BuildPipeline.BuildAssetBundles(outputPath, GetBuildList(), buildOptions, buildTarget);
             }
-            if (!string.IsNullOrEmpty(ezBundle.listFileName)) CreateFileList(ezBundle.outputPath, ezBundle.listFileName);
+            OnPostBuild(manifest);
+            if (!string.IsNullOrEmpty(listFileName)) CreateFileList(outputPath, listFileName);
             AssetDatabase.Refresh();
 
             Debug.Log("build complete.");
         }
-        protected static void OnPreBuild()
+
+        protected void OnPreBuild()
         {
             foreach (Type type in (from type in EZEditorUtility.GetAllTypes()
                                    where type.IsClass
@@ -75,7 +126,7 @@ namespace EZUnity
                 }
             }
         }
-        protected static void OnPostBuild(AssetBundleManifest manifest)
+        protected void OnPostBuild(AssetBundleManifest manifest)
         {
             foreach (Type type in (from type in EZEditorUtility.GetAllTypes()
                                    where type.IsClass
@@ -91,9 +142,9 @@ namespace EZUnity
             }
         }
 
-        protected static void CopyDirectories(EZBundleObject ezBundle)
+        protected void CopyDirectories()
         {
-            foreach (EZBundleObject.CopyInfo copyInfo in ezBundle.copyList)
+            foreach (CopyInfo copyInfo in copyList)
             {
                 string sour = copyInfo.sourDirPath;
                 string dest = copyInfo.destDirPath;
@@ -110,25 +161,26 @@ namespace EZUnity
                 }
             }
         }
-        protected static AssetBundleBuild[] GetBuildList(EZBundleObject ezBundle)
+        protected AssetBundleBuild[] GetBuildList()
         {
             List<AssetBundleBuild> buildList = new List<AssetBundleBuild>();
-            foreach (EZBundleObject.BundleInfo ezBundleInfo in ezBundle.bundleList)
+            foreach (BundleInfo bundleInfo in bundleList)
             {
-                if (ezBundleInfo.bundleName == "") continue;
-                if (ezBundleInfo.filePattern == "") ezBundleInfo.filePattern = "*.*";
-                string[] files = Directory.GetFiles(ezBundleInfo.dirPath, ezBundleInfo.filePattern, ezBundleInfo.searchOption);
+                if (bundleInfo.bundleName == "") continue;
+                if (bundleInfo.filePattern == "") bundleInfo.filePattern = "*.*";
+                string[] files = Directory.GetFiles(bundleInfo.dirPath, bundleInfo.filePattern, bundleInfo.searchOption);
                 for (int i = 0; i < files.Length; i++)
                 {
                     files[i] = files[i].Replace('\\', '/');
                 }
                 AssetBundleBuild build = new AssetBundleBuild();
-                build.assetBundleName = ezBundleInfo.bundleName;
+                build.assetBundleName = bundleInfo.bundleName;
                 build.assetNames = files;
                 buildList.Add(build);
             }
             return buildList.ToArray();
         }
+
         protected static void CreateFileList(string dirPath, string listFileName)
         {
             string listFilePath = Path.Combine(dirPath, listFileName);
@@ -152,7 +204,6 @@ namespace EZUnity
             streamWriter.Close();
             File.Copy(listFilePath, Path.Combine("Assets/Resources", listFileName), true);
         }
-
         protected static void DirTraverse(string dirPath, List<string> fileList)
         {
             if (!Directory.Exists(dirPath)) return;
