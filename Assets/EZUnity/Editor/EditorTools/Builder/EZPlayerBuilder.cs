@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
@@ -13,10 +14,19 @@ namespace EZUnity
     [CreateAssetMenu(fileName = "EZPlayerBuilder", menuName = "EZUnity/EZPlayerBuilder", order = EZUtility.AssetOrder)]
     public class EZPlayerBuilder : ScriptableObject
     {
+        public const string Wildcard_Date = "<Date>";
+        public const string Wildcard_Time = "<Time>";
+        public const string Wildcard_CompanyName = "<CompanyName>";
+        public const string Wildcard_ProductName = "<ProductName>";
+        public const string Wildcard_BundleIdentifier = "<BundleIdentifier>";
+        public const string Wildcard_BundleVersion = "<BundleVersion>";
+        public const string Wildcard_BuildNumber = "<BuildNumber>";
+
         public bool configButDontBuild;
 
         public EZBundleBuilder bundleBuilder;
 
+        [Tooltip("Wildcards: <Date>|<Time>|<CompanyName>|<ProductName>|<BundleIdentifier>|<BundleVersion>|<BuildNumber>")]
         public string locationPathName;
         public SceneAsset[] scenes;
 
@@ -76,16 +86,24 @@ namespace EZUnity
                 locationPathName = EditorUtility.SaveFolderPanel("Choose Output Folder", "", "");
                 if (string.IsNullOrEmpty(locationPathName)) return;
             }
+            string path = locationPathName
+                .Replace(Wildcard_BuildNumber, buildNumber.ToString())
+                .Replace(Wildcard_BundleIdentifier, bundleIdentifier)
+                .Replace(Wildcard_BundleVersion, bundleVersion)
+                .Replace(Wildcard_CompanyName, companyName)
+                .Replace(Wildcard_Date, DateTime.Now.ToString("yyyyMMdd"))
+                .Replace(Wildcard_ProductName, productName)
+                .Replace(Wildcard_Time, DateTime.Now.ToString("HHmmss"));
             switch (buildTarget)
             {
                 case BuildTarget.StandaloneWindows:
-                    options.locationPathName = string.Format("{0}/{1}.exe", locationPathName, PlayerSettings.productName);
+                    options.locationPathName = string.Format("{0}/{1}.exe", path, PlayerSettings.productName);
                     break;
                 case BuildTarget.StandaloneWindows64:
-                    options.locationPathName = string.Format("{0}/{1}.exe", locationPathName, PlayerSettings.productName);
+                    options.locationPathName = string.Format("{0}/{1}.exe", path, PlayerSettings.productName);
                     break;
                 default:
-                    options.locationPathName = locationPathName;
+                    options.locationPathName = path;
                     break;
             }
             options.target = buildTarget;
