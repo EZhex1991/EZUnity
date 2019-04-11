@@ -58,9 +58,6 @@ namespace EZUnity.Framework
         private int m_SleepTimeout = SleepTimeout.NeverSleep;
         public int sleepTimeout { get { return m_SleepTimeout; } set { m_SleepTimeout = value; } }
         [SerializeField]
-        private bool m_RunInBackground = false;
-        public bool runInBackground { get { return m_RunInBackground; } set { m_RunInBackground = value; } }
-        [SerializeField]
         private int m_TargetFrameRate = 30;
         public int targetFrameRate { get { return m_TargetFrameRate; } set { m_TargetFrameRate = value; } }
         #endregion

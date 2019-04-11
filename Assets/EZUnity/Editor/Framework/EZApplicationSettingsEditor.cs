@@ -16,7 +16,6 @@ namespace EZUnity.Framework
         SerializedProperty m_RunModeInApp;
 
         SerializedProperty m_SleepTimeout;
-        SerializedProperty m_RunInBackground;
         SerializedProperty m_TargetFrameRate;
 
         SerializedProperty m_AndroidServer;
@@ -39,7 +38,6 @@ namespace EZUnity.Framework
             m_RunModeInApp = serializedObject.FindProperty("m_RunModeInApp");
 
             m_SleepTimeout = serializedObject.FindProperty("m_SleepTimeout");
-            m_RunInBackground = serializedObject.FindProperty("m_RunInBackground");
             m_TargetFrameRate = serializedObject.FindProperty("m_TargetFrameRate");
 
             m_AndroidServer = serializedObject.FindProperty("m_AndroidServer");
@@ -105,7 +103,7 @@ namespace EZUnity.Framework
                 new string[] { "Never Sleep", "System Setting" },
                 new int[] { SleepTimeout.NeverSleep, SleepTimeout.SystemSetting }
                 );
-            EditorGUILayout.PropertyField(m_RunInBackground);
+            PlayerSettings.runInBackground = EditorGUILayout.Toggle("Run In Background", Application.runInBackground);
             QualitySettings.vSyncCount = EditorGUILayout.IntSlider("V Sync Count", QualitySettings.vSyncCount, 0, 4);
             if (QualitySettings.vSyncCount == 0)
             {

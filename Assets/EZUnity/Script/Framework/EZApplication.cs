@@ -45,7 +45,6 @@ namespace EZUnity.Framework
         protected override void Init()
         {
             Screen.sleepTimeout = settings.sleepTimeout;
-            Application.runInBackground = settings.runInBackground;
             Application.targetFrameRate = settings.targetFrameRate;
             System.IO.Directory.CreateDirectory(persistentDataPath);
             if (onApplicationStartEvent != null) onApplicationStartEvent();
