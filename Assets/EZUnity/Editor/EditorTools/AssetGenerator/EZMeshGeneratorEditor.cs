@@ -18,8 +18,16 @@ namespace EZUnity
             {
                 if (m_PreviewMaterial == null)
                 {
-                    m_PreviewMaterial = new Material(Shader.Find("VR/SpatialMapping/Wireframe"));
-                    m_PreviewMaterial.SetInt("_WireThickness", 400);
+                    Shader wireframeShader = Shader.Find("VR/SpatialMapping/Wireframe");
+                    if (wireframeShader == null)
+                    {
+                        m_PreviewMaterial = EZEditorUtility.defaultMaterial;
+                    }
+                    else
+                    {
+                        m_PreviewMaterial = new Material(wireframeShader);
+                        m_PreviewMaterial.hideFlags = HideFlags.HideAndDontSave;
+                    }
                 }
                 return m_PreviewMaterial;
             }
@@ -44,9 +52,7 @@ namespace EZUnity
             if (GUILayout.Button("Generate Mesh"))
             {
                 string path = AssetDatabase.GetAssetPath(target);
-                AssetDatabase.ImportAsset(path); // unity bug (2018.2.7), Reset option set asset name to empty
-                string assetName = "New Mesh.mesh";
-                path = path.Substring(0, path.LastIndexOf('/') + 1) + assetName;
+                path = path.Substring(0, path.Length - ".asset".Length) + ".mesh";
                 AssetDatabase.CreateAsset(Instantiate(generator.mesh), AssetDatabase.GenerateUniqueAssetPath(path));
             }
         }

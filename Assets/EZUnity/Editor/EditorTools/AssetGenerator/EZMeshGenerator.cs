@@ -9,13 +9,13 @@ namespace EZUnity
 {
     public abstract class EZMeshGenerator : ScriptableObject
     {
-        private Mesh m_Mesh;
+        private Mesh m_TargetMesh;
         public Mesh mesh
         {
             get
             {
-                if (m_Mesh == null) m_Mesh = new Mesh();
-                return m_Mesh;
+                if (m_TargetMesh == null) m_TargetMesh = new Mesh();
+                return m_TargetMesh;
             }
         }
 

@@ -1,0 +1,68 @@
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2019-03-18 10:38:24
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+namespace EZUnity
+{
+    public abstract class EZTextureGenerator : ScriptableObject
+    {
+        public Vector2Int resolution = new Vector2Int(256, 256);
+        public TextureFormat textureFormat = TextureFormat.RGB24;
+        [UnityEngine.Serialization.FormerlySerializedAs("textureReference")]
+        public Texture2D targetTexture;
+
+        public void ApplyToTexture(Texture2D texture)
+        {
+            SetPixels(texture);
+            texture.Apply();
+        }
+        protected abstract void SetPixels(Texture2D texture);
+
+        public byte[] GetTextureData(Vector2Int resolution, TextureFormat textureFormat)
+        {
+            Texture2D texture = new Texture2D(resolution.x, resolution.y, textureFormat, false);
+            ApplyToTexture(texture);
+            byte[] bytes = texture.EncodeToPNG();
+            DestroyImmediate(texture);
+            return bytes;
+        }
+
+        public virtual void GenerateTexture()
+        {
+            if (targetTexture == null)
+            {
+                string path = AssetDatabase.GetAssetPath(this);
+                string prefix = path.Substring(0, path.Length - 6);
+                int index = 0;
+                do
+                {
+                    path = string.Format("{0}_{1:D2}.{2}", prefix, index, "png");
+                    index++;
+                } while (File.Exists(path));
+                File.WriteAllBytes(path, GetTextureData(resolution, textureFormat));
+                AssetDatabase.Refresh();
+                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                OnTextureCreated(importer);
+                importer.SaveAndReimport();
+                targetTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            }
+            else
+            {
+                string path = AssetDatabase.GetAssetPath(targetTexture);
+                File.WriteAllBytes(path, GetTextureData(resolution, textureFormat));
+                AssetDatabase.Refresh();
+            }
+        }
+        public virtual void OnTextureCreated(TextureImporter importer)
+        {
+            importer.mipmapEnabled = false;
+            importer.isReadable = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+        }
+    }
+}
