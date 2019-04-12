@@ -58,7 +58,7 @@ namespace EZUnity
                 AssetDatabase.Refresh();
             }
         }
-        public virtual void OnTextureCreated(TextureImporter importer)
+        protected virtual void OnTextureCreated(TextureImporter importer)
         {
             importer.mipmapEnabled = false;
             importer.isReadable = true;
