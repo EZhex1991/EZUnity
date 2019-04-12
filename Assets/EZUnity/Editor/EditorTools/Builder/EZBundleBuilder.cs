@@ -28,7 +28,7 @@ namespace EZUnity
         Recursive = 2,
     }
 
-    [CreateAssetMenu(fileName = "EZBundleBuilder", menuName = "EZUnity/EZBundleBuilder", order = EZUtility.AssetOrder)]
+    [CreateAssetMenu(fileName = "EZBundleBuilder", menuName = "EZUnity/EZBundleBuilder", order = EZUnityMenuOrder.EZBundleBuilder)]
     public class EZBundleBuilder : ScriptableObject
     {
         [AttributeUsage(AttributeTargets.Method)]

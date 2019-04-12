@@ -9,8 +9,6 @@ namespace EZUnity
 {
     public static partial class EZUtility
     {
-        public const int AssetOrder = 1000;
-
         public static Gradient GradientFadeOut()
         {
             GradientColorKey[] colorKeys = new GradientColorKey[]

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CreateAssetMenu(fileName = "EZPlaneGenerator", menuName = "EZUnity/EZPlaneGenerator", order = EZUtility.AssetOrder)]
+    [CreateAssetMenu(fileName = "EZPlaneGenerator", menuName = "EZUnity/EZPlaneGenerator", order = EZUnityMenuOrder.EZPlaneGenerator)]
     public class EZPlaneGenerator : EZMeshGenerator
     {
         [SerializeField]

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZUnity.PhysicsCompnent
 {
-    [CreateAssetMenu(fileName = "PBMat", menuName = "EZUnity/EZPhysicsBoneMaterial", order = EZUtility.AssetOrder)]
+    [CreateAssetMenu(fileName = "PBMat", menuName = "EZUnity/EZPhysicsBoneMaterial", order = EZUnityMenuOrder.EZPhysicsBoneMaterial)]
     public class EZPhysicsBoneMaterial : ScriptableObject
     {
         [SerializeField, Range(0, 1)]

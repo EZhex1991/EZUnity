@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CreateAssetMenu(fileName = "EZStringAsset", menuName = "EZUnity/EZStringAsset", order = EZUtility.AssetOrder)]
+    [CreateAssetMenu(fileName = "EZStringAsset", menuName = "EZUnity/EZStringAsset", order = EZUnityMenuOrder.EZStringAsset)]
     public class EZStringAsset : ScriptableObject, ISerializationCallbackReceiver
     {
         public static Language GlobalLanguageSetting = Language.Chinese;

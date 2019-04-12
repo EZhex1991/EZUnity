@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CreateAssetMenu(fileName = "EZImageCapture", menuName = "EZUnity/EZImageCapture", order = EZUtility.AssetOrder)]
+    [CreateAssetMenu(fileName = "EZImageCapture", menuName = "EZUnity/EZImageCapture", order = EZUnityMenuOrder.EZImageCapture)]
     public class EZImageCapture : ScriptableObject
     {
         public Vector2Int resolution = new Vector2Int(1920, 1080);
