@@ -21,12 +21,13 @@ namespace EZUnity
         public const string Wildcard_BundleIdentifier = "<BundleIdentifier>";
         public const string Wildcard_BundleVersion = "<BundleVersion>";
         public const string Wildcard_BuildNumber = "<BuildNumber>";
+        public const string Wildcard_BuildTarget = "<BuildTarget>";
 
         public bool configButDontBuild;
 
         public EZBundleBuilder bundleBuilder;
 
-        [Tooltip("Wildcards: <Date>|<Time>|<CompanyName>|<ProductName>|<BundleIdentifier>|<BundleVersion>|<BuildNumber>")]
+        [Tooltip("Wildcards: <Date>|<Time>|<CompanyName>|<ProductName>|<BundleIdentifier>|<BundleVersion>|<BuildNumber>|<BuildTarget>")]
         public string locationPathName;
         public SceneAsset[] scenes;
 
@@ -87,6 +88,7 @@ namespace EZUnity
                 if (string.IsNullOrEmpty(locationPathName)) return;
             }
             string path = locationPathName
+                .Replace(Wildcard_BuildTarget, buildTarget.ToString())
                 .Replace(Wildcard_BuildNumber, buildNumber.ToString())
                 .Replace(Wildcard_BundleIdentifier, bundleIdentifier)
                 .Replace(Wildcard_BundleVersion, bundleVersion)
