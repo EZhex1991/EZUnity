@@ -53,7 +53,7 @@ namespace EZUnity
             {
                 string path = AssetDatabase.GetAssetPath(target);
                 path = path.Substring(0, path.Length - ".asset".Length) + ".mesh";
-                AssetDatabase.CreateAsset(Instantiate(generator.mesh), AssetDatabase.GenerateUniqueAssetPath(path));
+                AssetDatabase.CreateAsset(Instantiate(generator.targetMesh), AssetDatabase.GenerateUniqueAssetPath(path));
             }
         }
 
@@ -68,7 +68,7 @@ namespace EZUnity
         public override void OnInteractivePreviewGUI(Rect r, GUIStyle background)
         {
             preview.BeginPreview(r, background);
-            preview.DrawMesh(generator.mesh, Matrix4x4.identity, previewMaterial, 0);
+            preview.DrawMesh(generator.targetMesh, Matrix4x4.identity, previewMaterial, 0);
             preview.camera.transform.SetPositionAndRotation(Vector3.forward * -5, Quaternion.identity);
             preview.Render();
             Texture texture = preview.EndPreview();

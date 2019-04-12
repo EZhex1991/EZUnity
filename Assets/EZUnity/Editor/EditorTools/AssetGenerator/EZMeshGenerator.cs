@@ -10,7 +10,7 @@ namespace EZUnity
     public abstract class EZMeshGenerator : ScriptableObject
     {
         private Mesh m_TargetMesh;
-        public Mesh mesh
+        public Mesh targetMesh
         {
             get
             {

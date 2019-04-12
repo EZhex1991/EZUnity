@@ -17,7 +17,7 @@ namespace EZUnity
 
         public override void GenerateMesh()
         {
-            mesh.Clear();
+            targetMesh.Clear();
             Vector3[] vertices = new Vector3[vertexCount.x * vertexCount.y];
             Vector2[] uv = new Vector2[vertexCount.x * vertexCount.y];
             int[] triangles = new int[(subdivision.x) * (subdivision.y) * 6];
@@ -42,10 +42,10 @@ namespace EZUnity
                     triangles[triangleIndex++] = bottomRight;
                 }
             }
-            mesh.vertices = vertices;
-            mesh.uv = uv;
-            mesh.triangles = triangles;
-            mesh.RecalculateNormals();
+            targetMesh.vertices = vertices;
+            targetMesh.uv = uv;
+            targetMesh.triangles = triangles;
+            targetMesh.RecalculateNormals();
         }
 
         protected override void OnValidate()
