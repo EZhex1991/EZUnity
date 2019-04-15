@@ -46,11 +46,6 @@ namespace EZUnity
             }
         }
 
-        [MenuItem(ROOT_NAME + "/Script Template Manager", false, PRIORITY + 1100)]
-        private static void ScriptTemplate()
-        {
-            EditorWindow.GetWindow<EZScriptTemplateManager>("Script Template Manager").Show();
-        }
         [MenuItem(ROOT_NAME + "/Renamer", false, PRIORITY + 1101)]
         private static void Renamer()
         {
@@ -91,6 +86,14 @@ namespace EZUnity
         private static void ShaderKeywordManager()
         {
             EditorWindow.GetWindow<EZShaderKeywordManager>("Keyword Manager").Show();
+        }
+
+
+        [SettingsProvider]
+        private static SettingsProvider CreateEZScriptSettingsProvider()
+        {
+            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZSettings/EZScriptSettings", EZScriptSettings.Instance);
+            return provider;
         }
     }
 }

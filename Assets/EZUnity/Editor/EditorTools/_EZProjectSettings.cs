@@ -10,8 +10,8 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public abstract class EZScriptableSingleton<T> : ScriptableObject
-        where T : EZScriptableSingleton<T>
+    public abstract class EZProjectSettings<T> : ScriptableObject
+        where T : EZProjectSettings<T>
     {
         public abstract string assetPath { get; }
 
@@ -29,26 +29,10 @@ namespace EZUnity
             }
         }
 
-        internal EZScriptableSingleton()
+        internal EZProjectSettings()
         {
             if (m_Instance != null)
                 Debug.LogError(typeof(T) + " already exists!");
-        }
-
-        //[SettingsProvider]
-        private static SettingsProvider CreateSettingsProvider()
-        {
-            Instance.Load();
-            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/" + typeof(T).Name, Instance);
-            provider.activateHandler += (searchContext, rootElement) =>
-            {
-                if (provider.settingsEditor != null &&
-                    provider.settingsEditor.serializedObject.UpdateIfRequiredOrScript())
-                {
-                    provider.Repaint();
-                }
-            };
-            return provider;
         }
 
         public void Load()

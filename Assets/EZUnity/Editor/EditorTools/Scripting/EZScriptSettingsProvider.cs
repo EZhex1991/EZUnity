@@ -9,56 +9,45 @@ using System.Linq;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
 
 namespace EZUnity
 {
-    public class EZScriptSettingsProvider : SettingsProvider
+    [CustomEditor(typeof(EZScriptSettings))]
+    public class EZScriptSettingsEditor : Editor
     {
         private string UnityScriptTemplatesDirPath { get { return EditorApplication.applicationContentsPath + "/Resources/ScriptTemplates/"; } }
         private TextAsset[] newTemplates;
         private string[] allTemplates;
 
-        private bool templatesFoldout = true;
-        private bool patternFoldout = true;
         private Vector2 scrollRect;
 
-        private EZScriptSettings settings { get { return EZScriptSettings.Instance; } }
-        private SerializedObject serializedObject;
-
+        private EZScriptSettings settings;
         private SerializedProperty m_TimeFormat;
         private SerializedProperty m_ExtensionList;
         private SerializedProperty m_PatternList;
         private ReorderableList patternList;
 
-        public EZScriptSettingsProvider(string path, SettingsScope scope) : base(path, scope) { }
-
-        [SettingsProvider]
-        private static SettingsProvider CreateSettingsProvider()
+        public void OnEnable()
         {
-            SettingsProvider provider = new EZScriptSettingsProvider("Project/EZSettings/EZScript", SettingsScope.Project);
-            return provider;
-        }
-
-        public override void OnActivate(string searchContext, VisualElement rootElement)
-        {
-            base.OnActivate(searchContext, rootElement);
+            settings = target as EZScriptSettings;
             GetUnityTemplates();
-            serializedObject = new SerializedObject(settings);
             m_TimeFormat = serializedObject.FindProperty("timeFormat");
             m_ExtensionList = serializedObject.FindProperty("extensionList");
             m_PatternList = serializedObject.FindProperty("patternList");
-            patternList = new ReorderableList(serializedObject, m_PatternList, true, true, true, true);
-            patternList.drawHeaderCallback = DrawPatternListHeader;
-            patternList.drawElementCallback = DrawPatternListElement;
+            patternList = new ReorderableList(serializedObject, m_PatternList, true, true, true, true)
+            {
+                drawHeaderCallback = DrawPatternListHeader,
+                drawElementCallback = DrawPatternListElement
+            };
             GetSelectedTemplates();
             Selection.selectionChanged += GetSelectedTemplates;
         }
-        public override void OnGUI(string searchContext)
+        public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
             scrollRect = EditorGUILayout.BeginScrollView(scrollRect);
+            DrawAddTemplates();
             DrawTemplateList();
             EditorGUILayout.Space();
             DrawPatternList();
@@ -66,9 +55,8 @@ namespace EZUnity
 
             serializedObject.ApplyModifiedProperties();
         }
-        public override void OnDeactivate()
+        public void OnDisable()
         {
-            base.OnDeactivate();
             settings.Save();
             Selection.selectionChanged -= GetSelectedTemplates;
         }
@@ -76,64 +64,28 @@ namespace EZUnity
         protected void DrawTemplateList()
         {
             EditorGUILayout.LabelField("Template List", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("File Name Format: [priority]-[menu text]__[submenu text]-[default name].[ext].txt");
-            DrawAddTemplates();
-            templatesFoldout = EditorGUILayout.Foldout(templatesFoldout, "Templates in UnityEditor");
-            if (templatesFoldout)
+            for (int i = 0; i < allTemplates.Length; i++)
             {
-                for (int i = 0; i < allTemplates.Length; i++)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(" # " + i.ToString("00"), new GUILayoutOption[] { GUILayout.Width(40), });
-                    EditorGUILayout.TextField(allTemplates[i]);
-                    DrawDeleteTemplateButton(allTemplates[i]);
-                    EditorGUILayout.EndHorizontal();
-                }
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(" # " + i.ToString("00"), new GUILayoutOption[] { GUILayout.Width(40), });
+                EditorGUILayout.TextField(allTemplates[i]);
+                DrawDeleteTemplateButton(allTemplates[i]);
+                EditorGUILayout.EndHorizontal();
             }
         }
         protected void DrawPatternList()
         {
-            EditorGUILayout.LabelField("Pattern", EditorStyles.boldLabel);
-
+            EditorGUILayout.LabelField("Patterns", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(m_TimeFormat);
             if (GUILayout.Button("Handle patterns in selected file"))
             {
                 string filePath = AssetDatabase.GetAssetPath(Selection.activeObject);
                 EZScriptProcessor.Replace(filePath);
             }
-            EditorGUILayout.PropertyField(m_TimeFormat);
-            patternFoldout = EditorGUILayout.Foldout(patternFoldout, "Patterns");
-            if (patternFoldout)
-            {
-                DrawConstPatternList();
-                DrawCustomPatternList();
-            }
-            DrawExtensionList();
-        }
-
-        protected void DrawExtensionList()
-        {
-            EditorGUILayout.PropertyField(m_ExtensionList, true);
-        }
-        protected void DrawConstPatternList()
-        {
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("    00", new GUILayoutOption[] { GUILayout.Width(40), });
-                EditorGUILayout.LabelField("#SCRIPTNAME#", new GUILayoutOption[] { GUILayout.Width(140), });
-                EditorGUILayout.LabelField("System.IO.Path.GetFileNameWithoutExtension(filePath)");
-                EditorGUILayout.EndHorizontal();
-            }
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("    01", new GUILayoutOption[] { GUILayout.Width(40), });
-                EditorGUILayout.LabelField("#CREATETIME#", new GUILayoutOption[] { GUILayout.Width(140), });
-                EditorGUILayout.LabelField("System.DateTime.Now.ToString()");
-                EditorGUILayout.EndHorizontal();
-            }
-        }
-        protected void DrawCustomPatternList()
-        {
+            EditorGUILayout.LabelField("00 #SCRIPTNAME#", "System.IO.Path.GetFileNameWithoutExtension(filePath)");
+            EditorGUILayout.LabelField("01 #CREATETIME#", "System.DateTime.Now.ToString()");
             patternList.DoLayoutList();
+            EditorGUILayout.PropertyField(m_ExtensionList, true);
         }
 
         protected void DrawPatternListHeader(Rect rect)
@@ -151,21 +103,23 @@ namespace EZUnity
 
         protected void DrawAddTemplates()
         {
+            EditorGUILayout.LabelField("Add Templates", EditorStyles.boldLabel);
             if (newTemplates.Length == 0)
             {
-                EditorGUILayout.HelpBox("No Template File Selected", MessageType.Info);
-                return;
+                EditorGUILayout.HelpBox("No Template File Selected\n\nFile Name Format: [priority]-[menu text]__[submenu text]-[default name].[ext].txt", MessageType.Info);
             }
-            EditorGUILayout.LabelField("Add Templates");
-            EditorGUI.indentLevel++;
-            Color originalColor = GUI.backgroundColor;
-            for (int i = 0; i < newTemplates.Length; i++)
+            else
             {
-                GUI.backgroundColor = allTemplates.Contains(newTemplates[i].name + ".txt") ? Color.red : originalColor;
-                EditorGUILayout.ObjectField(newTemplates[i], typeof(TextAsset), false);
+                EditorGUI.indentLevel++;
+                Color originalColor = GUI.backgroundColor;
+                for (int i = 0; i < newTemplates.Length; i++)
+                {
+                    GUI.backgroundColor = allTemplates.Contains(newTemplates[i].name + ".txt") ? Color.red : originalColor;
+                    EditorGUILayout.ObjectField(newTemplates[i], typeof(TextAsset), false);
+                }
+                GUI.backgroundColor = originalColor;
+                EditorGUI.indentLevel--;
             }
-            GUI.backgroundColor = originalColor;
-            EditorGUI.indentLevel--;
             if (GUILayout.Button("Add selected files to templates (red indicate replacement)"))
             {
                 foreach (TextAsset template in newTemplates)

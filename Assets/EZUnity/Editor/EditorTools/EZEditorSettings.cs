@@ -9,7 +9,7 @@ using UnityEngine;
 namespace EZUnity
 {
     [InitializeOnLoad]
-    public class EZEditorSettings : EZScriptableSingleton<EZEditorSettings>
+    public class EZEditorSettings : EZProjectSettings<EZEditorSettings>
     {
         public override string assetPath => "ProjectSettings/EZEditorSettings.asset";
 
@@ -18,10 +18,10 @@ namespace EZUnity
 
         static EZEditorSettings()
         {
-            EditorApplication.hierarchyWindowItemOnGUI += DrawChildCount;
+            EditorApplication.hierarchyWindowItemOnGUI += DrawActiveToggleOnHierarchy;
         }
 
-        private static void DrawChildCount(int instanceID, Rect selectionRect)
+        private static void DrawActiveToggleOnHierarchy(int instanceID, Rect selectionRect)
         {
             if (!Instance.hierarchyToggleEnabled) return;
             Object item = EditorUtility.InstanceIDToObject(instanceID);
@@ -38,5 +38,6 @@ namespace EZUnity
                 }
             }
         }
+
     }
 }
