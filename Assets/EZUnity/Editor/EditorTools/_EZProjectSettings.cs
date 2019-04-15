@@ -23,6 +23,7 @@ namespace EZUnity
                 if (m_Instance == null)
                 {
                     m_Instance = CreateInstance<T>();
+                    m_Instance.hideFlags = HideFlags.DontSave;
                     m_Instance.Load();
                 }
                 return m_Instance;
