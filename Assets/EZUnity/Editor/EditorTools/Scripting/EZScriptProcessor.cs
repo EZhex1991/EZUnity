@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace EZUnity
 {
-    public class EZScriptTemplateProcessor : UnityEditor.AssetModificationProcessor
+    public class EZScriptProcessor : UnityEditor.AssetModificationProcessor
     {
         public enum CheckResult
         {
@@ -17,7 +17,7 @@ namespace EZUnity
             Script = 2,
         }
 
-        private static EZScriptTemplateObject ezScriptTemplate { get { return EZScriptTemplateObject.Instance; } }
+        private static EZScriptSettings ezScriptTemplate { get { return EZScriptSettings.Instance; } }
 
         private static void OnWillCreateAsset(string metaPath)
         {
@@ -32,7 +32,7 @@ namespace EZUnity
                 string content = File.ReadAllText(filePath);
                 content = content.Replace("#SCRIPTNAME", Path.GetFileNameWithoutExtension(filePath));
                 content = content.Replace("#CREATETIME#", System.DateTime.Now.ToString(ezScriptTemplate.timeFormat));
-                foreach (EZScriptTemplateObject.Pattern pattern in ezScriptTemplate.patternList)
+                foreach (EZScriptSettings.Pattern pattern in ezScriptTemplate.patternList)
                 {
                     if (!string.IsNullOrEmpty(pattern.Value)) content = content.Replace(pattern.Key, pattern.Value);
                 }

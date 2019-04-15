@@ -9,10 +9,11 @@ using System.Linq;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 namespace EZUnity
 {
-    public class EZScriptTemplateManager : EZEditorWindow
+    public class EZScriptSettingsProvider : SettingsProvider
     {
         private string UnityScriptTemplatesDirPath { get { return EditorApplication.applicationContentsPath + "/Resources/ScriptTemplates/"; } }
         private TextAsset[] newTemplates;
@@ -22,49 +23,54 @@ namespace EZUnity
         private bool patternFoldout = true;
         private Vector2 scrollRect;
 
-        private EZScriptTemplateObject ezScriptTemplate { get { return EZScriptTemplateObject.Instance; } }
-        private SerializedObject so_EZScriptTemplate;
+        private EZScriptSettings settings { get { return EZScriptSettings.Instance; } }
+        private SerializedObject serializedObject;
+
         private SerializedProperty m_TimeFormat;
         private SerializedProperty m_ExtensionList;
         private SerializedProperty m_PatternList;
         private ReorderableList patternList;
 
-        protected void OnEnable()
+        public EZScriptSettingsProvider(string path, SettingsScope scope) : base(path, scope) { }
+
+        [SettingsProvider]
+        private static SettingsProvider CreateSettingsProvider()
         {
-            GetUnityTemplates();
+            SettingsProvider provider = new EZScriptSettingsProvider("Project/EZSettings/EZScript", SettingsScope.Project);
+            return provider;
         }
-        protected void OnFocus()
+
+        public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            ezScriptTemplate.Load();
-            so_EZScriptTemplate = new SerializedObject(ezScriptTemplate);
-            m_TimeFormat = so_EZScriptTemplate.FindProperty("timeFormat");
-            m_ExtensionList = so_EZScriptTemplate.FindProperty("extensionList");
-            m_PatternList = so_EZScriptTemplate.FindProperty("patternList");
-            patternList = new ReorderableList(so_EZScriptTemplate, m_PatternList, true, true, true, true);
+            base.OnActivate(searchContext, rootElement);
+            GetUnityTemplates();
+            serializedObject = new SerializedObject(settings);
+            m_TimeFormat = serializedObject.FindProperty("timeFormat");
+            m_ExtensionList = serializedObject.FindProperty("extensionList");
+            m_PatternList = serializedObject.FindProperty("patternList");
+            patternList = new ReorderableList(serializedObject, m_PatternList, true, true, true, true);
             patternList.drawHeaderCallback = DrawPatternListHeader;
             patternList.drawElementCallback = DrawPatternListElement;
             GetSelectedTemplates();
+            Selection.selectionChanged += GetSelectedTemplates;
         }
-        protected void OnSelectionChange()
+        public override void OnGUI(string searchContext)
         {
-            GetSelectedTemplates();
-        }
-        protected void OnLostFocus()
-        {
-            ezScriptTemplate.Save();
-        }
-
-        protected void OnGUI()
-        {
-            DrawWindowHeader();
-            so_EZScriptTemplate.Update();
+            serializedObject.Update();
 
             scrollRect = EditorGUILayout.BeginScrollView(scrollRect);
             DrawTemplateList();
             EditorGUILayout.Space();
             DrawPatternList();
             EditorGUILayout.EndScrollView();
-            so_EZScriptTemplate.ApplyModifiedProperties();
+
+            serializedObject.ApplyModifiedProperties();
+        }
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            settings.Save();
+            Selection.selectionChanged -= GetSelectedTemplates;
         }
 
         protected void DrawTemplateList()
@@ -92,7 +98,7 @@ namespace EZUnity
             if (GUILayout.Button("Handle patterns in selected file"))
             {
                 string filePath = AssetDatabase.GetAssetPath(Selection.activeObject);
-                EZScriptTemplateProcessor.Replace(filePath);
+                EZScriptProcessor.Replace(filePath);
             }
             EditorGUILayout.PropertyField(m_TimeFormat);
             patternFoldout = EditorGUILayout.Foldout(patternFoldout, "Patterns");
@@ -198,7 +204,7 @@ namespace EZUnity
         private void GetSelectedTemplates()
         {
             newTemplates = (from template in Selection.GetFiltered<TextAsset>(SelectionMode.Assets)
-                            where EZScriptTemplateProcessor.CheckTemplate(template.name + ".txt") == EZScriptTemplateProcessor.CheckResult.Template
+                            where EZScriptProcessor.CheckTemplate(template.name + ".txt") == EZScriptProcessor.CheckResult.Template
                             select template).ToArray();
             Repaint();
         }
