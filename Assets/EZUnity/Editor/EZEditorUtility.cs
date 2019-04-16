@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UObject = UnityEngine.Object;
 
 namespace EZUnity
 {
@@ -60,6 +61,38 @@ namespace EZUnity
                 if (m_DefaultMaterial == null)
                     m_DefaultMaterial = AssetDatabase.GetBuiltinExtraResource<Material>("Default-Material.mat");
                 return m_DefaultMaterial;
+            }
+        }
+
+        public static List<Shader> GetAllShaders(bool supportedOnly)
+        {
+            List<Shader> shaders = new List<Shader>();
+            ShaderInfo[] shaderInfos = ShaderUtil.GetAllShaderInfo();
+            for (int i = 0; i < shaderInfos.Length; i++)
+            {
+                ShaderInfo info = shaderInfos[i];
+                if (supportedOnly && !info.supported) continue;
+                shaders.Add(Shader.Find(info.name));
+            }
+            return shaders;
+        }
+
+        private static List<Shader> m_BuiltinShaders;
+        public static List<Shader> builtinShaders
+        {
+            get
+            {
+                if (m_BuiltinShaders == null)
+                {
+                    m_BuiltinShaders = new List<Shader>();
+                    foreach (UObject asset in AssetDatabase.LoadAllAssetsAtPath("Resources/unity_builtin_extra")
+                                                .Where(obj => { Debug.Log(obj.GetType()); return obj is Shader; }))
+                    {
+                        m_BuiltinShaders.Add(asset as Shader);
+                    }
+                    m_BuiltinShaders.Sort((s1, s2) => string.Compare(s1.name, s2.name));
+                }
+                return m_BuiltinShaders;
             }
         }
     }
