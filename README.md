@@ -21,12 +21,18 @@
 
 ## 附加资源（右键菜单/Create/EZUnity/...）
 
-- [EZScriptStatistics](Assets/EZUnity/Editor/EditorTools/Scripting): 用来统计代码量的工具，可以通过正则式来对代码文件进行分类统计，需要预先对代码模板进行设置。通过指定IncludePaths、ExcludePaths和正则式匹配来统计代码
+- EZMeshGenerator:
+  - EZPlaneGenerator: 用来生成自定义平面的工具
+- EZTextureGenerator:
+  - EZTextureChannelModifier: 用来调整图片通道的图片生成工具
+  - EZGradientGenerator: 使用渐变和坐标曲线生成图片的工具
+- EZImageCapture: 截图工具
 - [EZBuilder](Assets/EZUnity/Editor/EditorTools/Builder):
   - EZPlayerBuilder: Build Player Pipeline，打包工具。
   - EZBundleBuilder: Build Bundle Pipeline，AssetBundle构建工具。两种模式：  
     - EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行build。
     - Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
+- [EZScriptStatistics](Assets/EZUnity/Editor/EditorTools/Scripting): 用来统计代码量的工具，可以通过正则式来对代码文件进行分类统计，需要预先对代码模板进行设置。通过指定IncludePaths、ExcludePaths和正则式匹配来统计代码
 
 ## 一些比较有意思的Shader
 
