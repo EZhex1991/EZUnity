@@ -37,7 +37,13 @@ namespace EZUnity
 
         protected override void DrawTextureSettings()
         {
+            EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(m_ReferenceTexture);
+            if (EditorGUI.EndChangeCheck())
+            {
+                Texture2D texture = m_ReferenceTexture.objectReferenceValue as Texture2D;
+                if (texture != null) resolution.vector2IntValue = new Vector2Int(texture.width, texture.height);
+            }
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(m_ChannelR);
