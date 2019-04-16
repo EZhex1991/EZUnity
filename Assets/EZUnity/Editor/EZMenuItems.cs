@@ -99,7 +99,7 @@ namespace EZUnity
         [SettingsProvider]
         private static SettingsProvider CreateEZGrapicSettingsProvider()
         {
-            EZGraphicsSettings provider = new EZGraphicsSettings("Project/EZSettings/EZGraphicSettings", SettingsScope.Project);
+            EZGraphicsSettings provider = new EZGraphicsSettings("Project/EZSettings/EZGraphicsSettings", SettingsScope.Project);
             return provider;
         }
     }
