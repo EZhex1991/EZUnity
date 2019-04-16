@@ -10,6 +10,8 @@
 
 ## EZGraphicSettings
 
+提供一个编辑Always Included Shaders的工具
+
 ![EZGraphicSettings](.SamplePicture/EZGraphicSettings.png)
 
 ## EZScriptSettings
