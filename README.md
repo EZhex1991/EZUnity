@@ -11,7 +11,7 @@
 - Renamer: 批量重命名工具窗口，支持正则式匹配，整理资源目录很方便
 - Guid Generator: 生成Guid的工具窗口
 - Asset Bundle Manager: [Obsolete]老的Bundle管理工具
-- PlayerPrefs Editor: PlayerPrefs编辑工具，目前只有Win下5.x以上版本可以用
+- PlayerPrefs Editor: PlayerPrefs编辑工具，目前只有Win下可以用
 
 ## 项目附加设置(ProjectSettings/EZUnity/..)
 
