@@ -52,6 +52,7 @@ namespace EZUnity
                 list.serializedProperty.DeleteArrayElementAtIndex(list.index);
                 list.serializedProperty.DeleteArrayElementAtIndex(list.index);
             }
+            serializedObject.ApplyModifiedProperties();
         }
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
