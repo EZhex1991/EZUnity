@@ -69,5 +69,16 @@ namespace EZUnity
                 EditorGUILayout.EndHorizontal();
             }
         }
+        protected override void DrawGenerateButton()
+        {
+            base.DrawGenerateButton();
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Open Modifier Window (Batch Mode)"))
+            {
+                var window = EditorWindow.GetWindow<EZTextureChannelModifierWindow>("Texture Channel Modifier");
+                window.modifier = target as EZTextureChannelModifier;
+                window.Show();
+            }
+        }
     }
 }

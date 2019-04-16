@@ -50,6 +50,27 @@ namespace EZUnity
             }
         }
 
+        public Texture2D ResampleTexture(Texture2D texture)
+        {
+            Texture2D newTexture = new Texture2D(texture.width, texture.height, textureFormat, false);
+            for (int x = 0; x < texture.width; x++)
+            {
+                for (int y = 0; y < texture.height; y++)
+                {
+                    Color color = texture.GetPixel(x, y);
+                    Color newColor = new Color(
+                        FloatFromChannel(color, channelR, curveR),
+                        FloatFromChannel(color, channelG, curveG),
+                        FloatFromChannel(color, channelB, curveB),
+                        FloatFromChannel(color, channelA, curveA)
+                    );
+                    newTexture.SetPixel(x, y, newColor);
+                }
+            }
+            newTexture.Apply();
+            return newTexture;
+        }
+
         public float FloatFromChannel(Color color, Channel channel, AnimationCurve curve)
         {
             float value = 1;
