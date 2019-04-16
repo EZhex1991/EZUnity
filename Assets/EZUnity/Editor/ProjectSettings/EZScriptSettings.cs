@@ -9,7 +9,7 @@ using System.IO;
 
 namespace EZUnity
 {
-    public class EZScriptSettings : EZProjectSettings<EZScriptSettings>
+    public class EZScriptSettings : _EZProjectSettingsSingleton<EZScriptSettings>
     {
         public override string assetPath => "ProjectSettings/EZScriptSettings.asset";
 

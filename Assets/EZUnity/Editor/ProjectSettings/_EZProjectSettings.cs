@@ -10,8 +10,8 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public abstract class EZProjectSettings<T> : ScriptableObject
-        where T : EZProjectSettings<T>
+    public abstract class _EZProjectSettingsSingleton<T> : ScriptableObject
+        where T : _EZProjectSettingsSingleton<T>
     {
         public abstract string assetPath { get; }
 
@@ -30,7 +30,7 @@ namespace EZUnity
             }
         }
 
-        internal EZProjectSettings()
+        internal _EZProjectSettingsSingleton()
         {
             if (m_Instance != null)
                 Debug.LogError(typeof(T) + " already exists!");
