@@ -2,7 +2,9 @@
 
 ## EZEditorSettings
 
-`Hierarchy Toggle Enabled`: 是否在Hierarchy窗口显示ActiveToggle
+- `Hierarchy Toggle Enabled`: 是否在Hierarchy窗口显示ActiveToggle
+- `Importer Preset Enabled`: 开启该选项后，新资源导入时会寻找目录中的ImporterPreset，文件名包含某个Tag的资源会优先寻找以该Tag为后缀的Preset  
+（寻找顺序：同级目录TaggedImporter => 同级目录DefaultImporter => {父级目录TaggedImporter => 父级目录DefaultImport} 递归）
 
 ![EZEditorSettings](.SamplePicture/EZEditorSettings.png)
 

@@ -15,16 +15,16 @@
 
 ## 项目附加设置(ProjectSettings/EZUnity/..)
 
-- [EZEditorSettings](Assets/EZUnity/Editor/ProjectSettings): 开启某些选项后会在部分窗口上添加控件，提高界面的空间利用率
-- [EZGraphicsSettings](Assets/EZUnity/Editor/ProjectSettings): 功能开发中
+- [EZEditorSettings](Assets/EZUnity/Editor/ProjectSettings): 开启某些选项能提高工作效率
+- [EZGraphicsSettings](Assets/EZUnity/Editor/ProjectSettings): 提供更加方便的界面来管理AlwaysIncludedShaders，其他功能开发中
 - [EZScriptSettings](Assets/EZUnity/Editor/ProjectSettings): 提供脚本模板的管理功能
 
 ## 附加资源（右键菜单/Create/EZUnity/...）
 
 - EZMeshGenerator:
-  - EZPlaneGenerator: 用来生成自定义平面的工具
+  - EZPlaneGenerator: 用来生成自定义平面网格的工具
 - EZTextureGenerator:
-  - EZTextureChannelModifier: 用来调整图片通道的图片生成工具
+  - EZTextureChannelModifier: 用来调整图片通道的工具
   - EZGradientGenerator: 使用渐变和坐标曲线生成图片的工具
 - EZImageCapture: 截图工具
 - [EZBuilder](Assets/EZUnity/Editor/EditorTools/Builder):
