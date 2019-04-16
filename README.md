@@ -10,17 +10,18 @@
 
 - EZPlayerPrefsEditor: 用于在编辑器下对PlayerPrefs进行编辑，目前只有Win下5.x以上版本可以用
 
-- [EZScripting](Assets/EZUnity/Editor/EditorTools/Scripting):
-  - EZScriptTemplate: 脚本模板管理工具（之前是“添加”工具，现在可以直接在Unity里“删除”代码模板了，添加和删除模板后重启Unity才有效）
-  - EZScriptStatistics: 用来统计代码量的工具，可以通过正则式来对代码文件进行分类统计，需要预先对代码模板进行设置。通过指定IncludePaths、ExcludePaths和正则式匹配来统计代码
-
-- [EZAssetProcessor](Assets/EZUnity/Editor/EditorTools/AssetProcessor): 用于对命名满足一定规范的资源进行默认的导入参数修改，命名规则比较有主观性，通用性不高，仅可作为代码参考（为了防止对别人的项目造成破坏，这个需要加宏`EZASSETPOSTPROCESSOR`启用）
+- [EZScriptStatistics](Assets/EZUnity/Editor/EditorTools/Scripting): 用来统计代码量的工具，可以通过正则式来对代码文件进行分类统计，需要预先对代码模板进行设置。通过指定IncludePaths、ExcludePaths和正则式匹配来统计代码
 
 - [EZBuilder](Assets/EZUnity/Editor/EditorTools/Builder):
   - EZPlayerBuilder: Build Player Pipeline，打包工具。
   - EZBundleBuilder: Build Bundle Pipeline，AssetBundle构建工具。两种模式：  
     - EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行build。
     - Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
+
+- [EZProjectSettings](Assets/EZUnity/Editor/ProjectSettings): 一些附加的项目设置
+  - EZEditorSettings: 开启某些选项后会在部分窗口上添加控件，提高界面的空间利用率
+  - EZGraphicsSettings: 功能开发中
+  - EZScriptSettings: 提供脚本模板的管理功能
 
 ## 一些比较有意思的Shader
 
