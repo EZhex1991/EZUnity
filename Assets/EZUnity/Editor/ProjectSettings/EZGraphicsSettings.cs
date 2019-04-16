@@ -97,7 +97,7 @@ namespace EZUnity
                 EditorGUILayout.ObjectField(shader, typeof(Shader), true);
                 if (includedShaders.ContainsKey(shader))
                 {
-                    if (GUILayout.Button("Remove From Include"))
+                    if (GUILayout.Button("Remove From Included"))
                     {
                         m_AlwaysIncludedShaders.DeleteArrayElementAtIndex(includedShaders[shader]);
                         m_AlwaysIncludedShaders.DeleteArrayElementAtIndex(includedShaders[shader]);
