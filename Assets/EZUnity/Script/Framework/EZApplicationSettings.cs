@@ -3,41 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using System.IO;
 using UnityEngine;
 
 namespace EZUnity.Framework
 {
-    public class EZApplicationSettings : ScriptableObject
+    public class EZApplicationSettings : _EZScriptableObjectSingleton<EZApplicationSettings>
     {
-        // 必须放置在Resources目录下！
-        public const string FolderPath = "Assets/Resources";
-        private static EZApplicationSettings m_Instance;
-        public static EZApplicationSettings Instance
-        {
-            get
-            {
-                if (m_Instance == null)
-                {
-                    var assets = Resources.LoadAll<EZApplicationSettings>("");
-                    if (assets.Length == 0)
-                    {
-                        m_Instance = CreateInstance<EZApplicationSettings>();
-#if UNITY_EDITOR
-                        string assetName = typeof(EZApplicationSettings).Name + ".asset";
-                        Directory.CreateDirectory(FolderPath);
-                        UnityEditor.AssetDatabase.CreateAsset(m_Instance, Path.Combine(FolderPath, assetName));
-#endif
-                    }
-                    else
-                    {
-                        m_Instance = assets[0];
-                    }
-                }
-                return m_Instance;
-            }
-        }
-
         [SerializeField]
         private RunMode m_RunModeInEditor = RunMode.Develop;
         [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
