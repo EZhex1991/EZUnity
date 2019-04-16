@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace EZUnity
 {
-    public class EZFontReferenceViewer : EZEditorWindow
+    public class EZFontReferenceViewer : EditorWindow
     {
         private Text[] texts;
         private Vector2 scrollPosition;
@@ -21,7 +21,7 @@ namespace EZUnity
 
         protected void OnGUI()
         {
-            DrawWindowHeader();
+            EZEditorGUIUtility.WindowTitle(this);
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             for (int i = 0; i < texts.Length; i++)
             {

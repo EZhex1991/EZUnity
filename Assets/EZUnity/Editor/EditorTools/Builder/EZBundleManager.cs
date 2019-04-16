@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZBundleManager : EZEditorWindow
+    public class EZBundleManager : EditorWindow
     {
         public class BundleInfo
         {
@@ -39,7 +39,7 @@ namespace EZUnity
 
         protected void OnGUI()
         {
-            DrawWindowHeader();
+            EZEditorGUIUtility.WindowTitle(this);
             showAssets = (AssetsViewOption)EditorGUILayout.EnumPopup("Show Assets", showAssets);
             showDependencies = (BundleDependenciesViewOption)EditorGUILayout.EnumPopup("Show Dependencies", showDependencies);
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);

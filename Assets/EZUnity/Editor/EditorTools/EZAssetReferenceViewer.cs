@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZAssetReferenceViewer : EZEditorWindow
+    public class EZAssetReferenceViewer : EditorWindow
     {
         private Object target;
 
@@ -80,7 +80,7 @@ namespace EZUnity
 
         protected void OnGUI()
         {
-            DrawWindowHeader();
+            EZEditorGUIUtility.WindowTitle(this);
             EditorGUILayout.ObjectField("Target", target, typeof(Object), true);
             EditorGUILayout.BeginHorizontal();
 

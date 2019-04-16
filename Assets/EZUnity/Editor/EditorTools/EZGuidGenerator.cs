@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZGuidGenerator : EZEditorWindow
+    public class EZGuidGenerator : EditorWindow
     {
         public System.Guid systemGuid;
         public UnityEditor.GUID unityGuid;
@@ -26,7 +26,7 @@ namespace EZUnity
 
         protected void OnGUI()
         {
-            DrawWindowHeader();
+            EZEditorGUIUtility.WindowTitle(this);
             if (GUILayout.Button("Refresh"))
             {
                 RefreshGuid();

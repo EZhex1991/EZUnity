@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZRenamer : EZEditorWindow
+    public class EZRenamer : EditorWindow
     {
         public enum CaseConversion
         {
@@ -185,7 +185,7 @@ namespace EZUnity
         }
         protected void OnGUI()
         {
-            DrawWindowHeader();
+            EZEditorGUIUtility.WindowTitle(this);
             DrawConfig();
             EditorGUILayout.Space();
             DrawButton();

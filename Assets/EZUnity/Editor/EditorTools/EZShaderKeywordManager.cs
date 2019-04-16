@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZShaderKeywordManager : EZEditorWindow
+    public class EZShaderKeywordManager : EditorWindow
     {
         public static List<Material> materials = new List<Material>();
         public static Dictionary<string, List<Material>> keywordReference = new Dictionary<string, List<Material>>();
@@ -63,7 +63,7 @@ namespace EZUnity
 
         protected void OnGUI()
         {
-            DrawWindowHeader();
+            EZEditorGUIUtility.WindowTitle(this);
 
             Material selection = Selection.activeObject as Material;
 

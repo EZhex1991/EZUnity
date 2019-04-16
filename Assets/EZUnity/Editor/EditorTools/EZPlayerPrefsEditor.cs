@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZPlayerPrefsEditor : EZEditorWindow
+    public class EZPlayerPrefsEditor : EditorWindow
     {
         private enum ValueType { String = 0, Int = 1, Float = 2 }
         [Serializable]
@@ -77,7 +77,7 @@ namespace EZUnity
 
         protected void OnGUI()
         {
-            DrawWindowHeader();
+            EZEditorGUIUtility.WindowTitle(this);
             if (GUILayout.Button("Refresh"))
             {
                 Refresh();
