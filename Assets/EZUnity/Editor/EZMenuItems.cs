@@ -88,12 +88,20 @@ namespace EZUnity
         private static SettingsProvider CreateEZScriptSettingsProvider()
         {
             AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZUnity/EZScriptSettings", EZScriptSettings.Instance);
+            provider.guiHandler += (searchContext) =>
+            {
+                if (GUI.changed) EZScriptSettings.Instance.Save();
+            };
             return provider;
         }
         [SettingsProvider]
         private static SettingsProvider CreateEZEditorSettingsProvider()
         {
             AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZUnity/EZEditorSettings", EZEditorSettings.Instance);
+            provider.guiHandler += (searchContext) =>
+            {
+                if (GUI.changed) EZEditorSettings.Instance.Save();
+            };
             return provider;
         }
         [SettingsProvider]
