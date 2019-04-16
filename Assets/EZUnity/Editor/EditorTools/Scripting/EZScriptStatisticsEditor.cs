@@ -44,11 +44,9 @@ namespace EZUnity
 
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptTitle(target);
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Target Object", target, typeof(EZScriptStatisticsObject), true);
-            GUI.enabled = true;
             serializedObject.Update();
+            EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
+
             EditorGUILayout.BeginHorizontal();
             if (targetObject.result.Count != 0)
             {

@@ -28,8 +28,9 @@ namespace EZUnity
         }
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptTitle(target);
             serializedObject.Update();
+            EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
+
             EditorGUILayout.PropertyField(m_FilePath);
             if (GUILayout.Button("Open Folder"))
             {
@@ -56,6 +57,7 @@ namespace EZUnity
                 capturer.CameraCapture(camera, GetPath());
             }
             GUI.enabled = true;
+
             serializedObject.ApplyModifiedProperties();
         }
 

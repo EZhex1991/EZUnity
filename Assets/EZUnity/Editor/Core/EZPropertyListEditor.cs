@@ -29,9 +29,11 @@ namespace EZUnity
 
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptTitle(target);
             serializedObject.Update();
+            EZEditorGUIUtility.MonoBehaviourTitle(target as MonoBehaviour);
+
             elementList.DoLayoutList();
+
             serializedObject.ApplyModifiedProperties();
         }
 

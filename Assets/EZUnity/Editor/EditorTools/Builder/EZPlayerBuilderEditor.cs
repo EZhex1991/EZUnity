@@ -45,8 +45,8 @@ namespace EZUnity
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-
             EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
+
             if (!serializedObject.isEditingMultipleObjects)
             {
                 EditorGUILayout.LabelField("Build", EditorStyles.boldLabel);

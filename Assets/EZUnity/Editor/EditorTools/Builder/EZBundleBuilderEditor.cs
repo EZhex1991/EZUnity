@@ -58,7 +58,7 @@ namespace EZUnity
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, true);
+            EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
 
             DrawFunctionButtons();
             DrawBaseProperties();

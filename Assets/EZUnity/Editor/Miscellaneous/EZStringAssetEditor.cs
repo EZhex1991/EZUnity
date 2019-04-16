@@ -77,11 +77,13 @@ namespace EZUnity
 
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptTitle(target);
             serializedObject.Update();
+            EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
+
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
             itemList.DoLayoutList();
             GUILayout.EndScrollView();
+
             serializedObject.ApplyModifiedProperties();
         }
     }

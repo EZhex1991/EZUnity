@@ -5,6 +5,7 @@
  */
 #if XLUA
 using UnityEditor;
+using UnityEngine;
 
 namespace EZUnity.XLuaExtension
 {
@@ -21,10 +22,12 @@ namespace EZUnity.XLuaExtension
 
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptTitle(target);
             serializedObject.Update();
+            EZEditorGUIUtility.MonoBehaviourTitle(target as MonoBehaviour);
+
             EditorGUILayout.PropertyField(m_ModuleName);
             elementList.DoLayoutList();
+
             serializedObject.ApplyModifiedProperties();
         }
     }

@@ -38,14 +38,16 @@ namespace EZUnity
 
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptTitle(target);
             serializedObject.Update();
+            EZEditorGUIUtility.MonoBehaviourTitle(target as MonoBehaviour);
+
             DrawOtherProperties();
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(m_AllowSwitchOff);
             EditorGUILayout.PropertyField(m_SwitchOnStart);
             EditorGUILayout.PropertyField(m_Next);
             optionList.DoLayoutList();
+
             serializedObject.ApplyModifiedProperties();
         }
         protected virtual void DrawOtherProperties()

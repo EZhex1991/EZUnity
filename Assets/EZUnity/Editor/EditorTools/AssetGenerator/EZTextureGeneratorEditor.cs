@@ -49,8 +49,8 @@ namespace EZUnity
 
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptableObjectTitle(target as EZTextureGenerator, true);
             serializedObject.Update();
+            EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("File Settings", EditorStyles.boldLabel);

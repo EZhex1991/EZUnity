@@ -86,6 +86,7 @@ namespace EZUnity.Animation
         {
             serializedObject.Update();
             EZEditorGUIUtility.MonoBehaviourTitle(target as MonoBehaviour);
+
             DrawController();
             EditorGUILayout.PropertyField(m_Target);
             EditorGUILayout.PropertyField(m_Loop);
@@ -95,6 +96,7 @@ namespace EZUnity.Animation
             EditorGUILayout.PropertyField(m_Time);
             DrawOtherProperties();
             segments.DoLayoutList();
+
             serializedObject.ApplyModifiedProperties();
         }
         public virtual void DrawController()

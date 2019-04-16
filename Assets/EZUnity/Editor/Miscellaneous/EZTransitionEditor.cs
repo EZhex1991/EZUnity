@@ -4,6 +4,7 @@
  * Description:     自定义Selectable的Transition（依赖Selectable而不是继承Selectable）
  */
 using UnityEditor;
+using UnityEngine;
 
 namespace EZUnity
 {
@@ -32,7 +33,8 @@ namespace EZUnity
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            EZEditorGUIUtility.ScriptTitle(target);
+            EZEditorGUIUtility.MonoBehaviourTitle(target as MonoBehaviour);
+
             EditorGUILayout.PropertyField(m_TransitionType);
             EditorGUI.indentLevel++;
             switch (m_TransitionType.enumValueIndex)
@@ -69,6 +71,7 @@ namespace EZUnity
                     break;
             }
             EditorGUI.indentLevel--;
+
             serializedObject.ApplyModifiedProperties();
         }
     }
