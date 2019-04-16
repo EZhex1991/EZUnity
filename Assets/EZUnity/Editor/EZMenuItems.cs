@@ -77,11 +77,6 @@ namespace EZUnity
             EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefs Editor").Show();
         }
 
-        [MenuItem(ROOT_NAME + "/Experimental/Include Built-in Shaders", false, PRIORITY + 5000)]
-        private static void IncludeBuiltinShaders()
-        {
-            EZGraphicsSettings.IncludeBuiltinShaders();
-        }
         [MenuItem(ROOT_NAME + "/Experimental/Shader Keyword Manager", false, PRIORITY + 5001)]
         private static void ShaderKeywordManager()
         {
@@ -93,6 +88,18 @@ namespace EZUnity
         private static SettingsProvider CreateEZScriptSettingsProvider()
         {
             AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZSettings/EZScriptSettings", EZScriptSettings.Instance);
+            return provider;
+        }
+        [SettingsProvider]
+        private static SettingsProvider CreateEZEditorSettingsProvider()
+        {
+            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZSettings/EZEditorSettings", EZEditorSettings.Instance);
+            return provider;
+        }
+        [SettingsProvider]
+        private static SettingsProvider CreateEZGrapicSettingsProvider()
+        {
+            EZGraphicsSettings provider = new EZGraphicsSettings("Project/EZSettings/EZGraphicSettings", SettingsScope.Project);
             return provider;
         }
     }
