@@ -37,9 +37,14 @@ namespace EZUnity
             targetTexture = serializedObject.FindProperty("targetTexture");
             GetProperties();
             RefreshPreview();
+            Undo.undoRedoPerformed += RefreshPreview;
         }
         protected virtual void GetProperties()
         {
+        }
+        protected void OnDisable()
+        {
+            Undo.undoRedoPerformed -= RefreshPreview;
         }
 
         public override void OnInspectorGUI()
