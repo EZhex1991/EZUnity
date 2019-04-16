@@ -1,6 +1,6 @@
 ## EZScriptTemplate (Obsolete)
 
-老的管理窗口废弃，新窗口位于ProjectSettings界面中，详见[EZProjectSettings](../ProjectSettings)
+老的管理窗口废弃，新窗口位于ProjectSettings界面中，详见[EZProjectSettings](../../ProjectSettings)
 
 ## EZScriptStatistics
 
@@ -8,7 +8,7 @@
 
 需要事先说明的是，代码量并不能作为一个程序猿的考核标准，只应作为项目和个人的工作情况分析，不应在人与人、项目与项目间进行比较。
 
-![](.SamplePicture/EZScriptStatistics.png)
+![EZScriptStatistics](.SamplePicture/EZScriptStatistics.png)
 
 需要统计的范围在File Association中配置，"File Patterns", "Include Paths", "Exclude Paths"分别为要分析统计的文件后缀，要统计的目录，和需要排除在外的目录。
 
