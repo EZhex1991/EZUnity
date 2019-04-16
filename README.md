@@ -1,27 +1,32 @@
 # EZUnity
 
-## 常用组件和编辑器扩展  
+## 常用组件
 
 - [EZPhysicsBone](Assets/EZUnity/EZPhysicsBone): 动态骨骼，效果参考来源于AssetStore上的DynamicBone。优势: 支持所有碰撞体（包括MeshCollider，但效果一般）；独立的材质"EZPhysicsBoneMaterial"存放参数，通用性强；代码可读性高，碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展
-
 - [EZAnimation](Assets/EZUnity/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）
 
-- EZRenamer: 批量重命名工具，支持正则式匹配，整理资源目录很方便
+## 功能菜单（EZUnity/..）
 
-- EZPlayerPrefsEditor: 用于在编辑器下对PlayerPrefs进行编辑，目前只有Win下5.x以上版本可以用
+- Save Assets: Editor下部分资源的修改不会立马写入到磁盘，使用该菜单强制存档资源
+- Renamer: 批量重命名工具窗口，支持正则式匹配，整理资源目录很方便
+- Guid Generator: 生成Guid的工具窗口
+- Asset Bundle Manager: [Obsolete]老的Bundle管理工具
+- PlayerPrefs Editor: PlayerPrefs编辑工具，目前只有Win下5.x以上版本可以用
+
+## 项目附加设置(ProjectSettings/EZUnity/..)
+
+- [EZEditorSettings](Assets/EZUnity/Editor/ProjectSettings): 开启某些选项后会在部分窗口上添加控件，提高界面的空间利用率
+- [EZGraphicsSettings](Assets/EZUnity/Editor/ProjectSettings): 功能开发中
+- [EZScriptSettings](Assets/EZUnity/Editor/ProjectSettings): 提供脚本模板的管理功能
+
+## 附加资源（右键菜单/Create/EZUnity/...）
 
 - [EZScriptStatistics](Assets/EZUnity/Editor/EditorTools/Scripting): 用来统计代码量的工具，可以通过正则式来对代码文件进行分类统计，需要预先对代码模板进行设置。通过指定IncludePaths、ExcludePaths和正则式匹配来统计代码
-
 - [EZBuilder](Assets/EZUnity/Editor/EditorTools/Builder):
   - EZPlayerBuilder: Build Player Pipeline，打包工具。
   - EZBundleBuilder: Build Bundle Pipeline，AssetBundle构建工具。两种模式：  
     - EZBundle Mode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行build。
     - Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
-
-- [EZProjectSettings](Assets/EZUnity/Editor/ProjectSettings): 一些附加的项目设置
-  - EZEditorSettings: 开启某些选项后会在部分窗口上添加控件，提高界面的空间利用率
-  - EZGraphicsSettings: 功能开发中
-  - EZScriptSettings: 提供脚本模板的管理功能
 
 ## 一些比较有意思的Shader
 

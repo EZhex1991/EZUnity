@@ -87,19 +87,19 @@ namespace EZUnity
         [SettingsProvider]
         private static SettingsProvider CreateEZScriptSettingsProvider()
         {
-            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZSettings/EZScriptSettings", EZScriptSettings.Instance);
+            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZUnity/EZScriptSettings", EZScriptSettings.Instance);
             return provider;
         }
         [SettingsProvider]
         private static SettingsProvider CreateEZEditorSettingsProvider()
         {
-            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZSettings/EZEditorSettings", EZEditorSettings.Instance);
+            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/EZUnity/EZEditorSettings", EZEditorSettings.Instance);
             return provider;
         }
         [SettingsProvider]
         private static SettingsProvider CreateEZGrapicSettingsProvider()
         {
-            EZGraphicsSettings provider = new EZGraphicsSettings("Project/EZSettings/EZGraphicsSettings", SettingsScope.Project);
+            EZGraphicsSettings provider = new EZGraphicsSettings("Project/EZUnity/EZGraphicsSettings", SettingsScope.Project);
             return provider;
         }
     }
