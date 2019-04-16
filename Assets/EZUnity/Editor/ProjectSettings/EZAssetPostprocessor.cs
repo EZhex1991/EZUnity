@@ -21,13 +21,14 @@ namespace EZUnity
         private void ImportWithPreset(string importerName, string[] importerTags)
         {
             if (string.IsNullOrEmpty(importerName)) return;
+            string taggedImporterName = importerName;
             for (int i = 0; i < importerTags.Length; i++)
             {
                 string tag = importerTags[i];
                 if (string.IsNullOrEmpty(tag)) continue;
                 if (assetName.Contains(tag))
                 {
-                    importerName += tag;
+                    taggedImporterName += tag;
                     break;
                 }
             }
@@ -35,8 +36,13 @@ namespace EZUnity
             string dir = dirPath;
             while (!string.IsNullOrEmpty(dir))
             {
-                string presetPath = string.Format("{0}/{1}.preset", dir, importerName);
+                string presetPath = string.Format("{0}/{1}.preset", dir, taggedImporterName);
                 Preset preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
+                if (preset == null)
+                {
+                    presetPath = string.Format("{0}/{1}.preset", dir, importerName);
+                    preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
+                }
                 if (preset != null)
                 {
                     if (preset.ApplyTo(assetImporter))
