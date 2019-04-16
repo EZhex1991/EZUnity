@@ -32,6 +32,7 @@ namespace EZUnity
         }
         private void RefreshIncludedShaders()
         {
+            serializedObject.Update();
             includedShaders.Clear();
             for (int i = 0; i < m_AlwaysIncludedShaders.arraySize; i++)
             {
@@ -68,6 +69,12 @@ namespace EZUnity
             };
             RefreshShaders();
             RefreshIncludedShaders();
+            Undo.undoRedoPerformed += RefreshIncludedShaders;
+        }
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            Undo.undoRedoPerformed -= RefreshIncludedShaders;
         }
 
         private void DrawAlwaysIncludedShaderListHeader(Rect rect)
@@ -101,6 +108,7 @@ namespace EZUnity
                     {
                         m_AlwaysIncludedShaders.DeleteArrayElementAtIndex(includedShaders[shader]);
                         m_AlwaysIncludedShaders.DeleteArrayElementAtIndex(includedShaders[shader]);
+                        serializedObject.ApplyModifiedProperties();
                         RefreshIncludedShaders();
                     }
                 }
@@ -108,6 +116,7 @@ namespace EZUnity
                 {
                     m_AlwaysIncludedShaders.InsertArrayElementAtIndex(0);
                     m_AlwaysIncludedShaders.GetArrayElementAtIndex(0).objectReferenceValue = shader;
+                    serializedObject.ApplyModifiedProperties();
                     RefreshIncludedShaders();
                 }
                 GUI.enabled = true;
