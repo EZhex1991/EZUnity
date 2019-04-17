@@ -7,7 +7,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+
+#if UNITY_2019_1_OR_NEWER
+using UnityEngine.UIElements;
+#else
 using UnityEngine.Experimental.UIElements;
+#endif
+
 using UObject = UnityEngine.Object;
 
 namespace EZUnity
