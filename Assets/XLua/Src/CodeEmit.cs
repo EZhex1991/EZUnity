@@ -231,7 +231,7 @@ namespace XLua
             {
                 var to_be_impl = group.Key;
 
-                var method_builder = defineImplementMethod(impl_type_builder, to_be_impl, to_be_impl.Attributes, "Invoke" + (genID++));
+                var method_builder = defineImplementMethod(impl_type_builder, to_be_impl, to_be_impl.Attributes, "__Gen_Delegate_Imp" + (genID++));
 
                 emitMethodImpl(to_be_impl, method_builder.GetILGenerator(), false);
 
@@ -683,7 +683,7 @@ namespace XLua
                 {
                     il.Emit(OpCodes.Ldc_I8, (long)Convert.ToUInt64(obj));
                 }
-                else if (typeof(IntPtr) == type || typeof(IntPtr) == type)
+                else if (typeof(IntPtr) == type || typeof(UIntPtr) == type)
                 {
                     il.Emit(OpCodes.Ldloca, localIndex);
                     il.Emit(OpCodes.Initobj, type);
