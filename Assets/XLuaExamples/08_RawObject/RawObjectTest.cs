@@ -19,8 +19,8 @@ namespace EZUnity.Example
         {
             LuaEnv luaenv = new LuaEnv();
             luaenv.DoString(@"
-                local RawByteArray = CS.EZUnity.XLuaExample.RawByteArray
-                local RawObjectTest = CS.EZUnity.XLuaExample.RawObjectTest
+                local RawByteArray = CS.EZUnity.Example.RawByteArray
+                local RawObjectTest = CS.EZUnity.Example.RawObjectTest
                 -- 直接传递byte[]，lua会作为string处理，通过继承RawObject的RawByteArray，实现string以byte[]方式传递
                 local byteArray = RawByteArray.GetBytes('string from lua')
                 local rawByteArray = RawByteArray('string from lua')
