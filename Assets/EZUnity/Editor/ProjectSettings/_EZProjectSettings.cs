@@ -56,7 +56,7 @@ namespace EZUnity
                 Debug.Log(typeof(T) + " instance not exist");
                 return;
             }
-            File.WriteAllText(assetPath, EditorJsonUtility.ToJson(m_Instance));
+            File.WriteAllText(assetPath, EditorJsonUtility.ToJson(m_Instance, true));
         }
     }
 }
