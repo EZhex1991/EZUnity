@@ -27,6 +27,7 @@ namespace EZUnity
                     {
                         m_PreviewMaterial = new Material(wireframeShader);
                         m_PreviewMaterial.hideFlags = HideFlags.HideAndDontSave;
+                        m_PreviewMaterial.SetInt("_WireThickness", 600);
                     }
                 }
                 return m_PreviewMaterial;
