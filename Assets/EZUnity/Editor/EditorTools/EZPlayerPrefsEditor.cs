@@ -28,11 +28,12 @@ namespace EZUnity
         private List<KeyTypePair> pairList = new List<KeyTypePair>();
         private Vector2 scrollPosition;
 
-        private void GetPairsWin()
+        private void GetPairs()
         {
             pairList.Clear();
             string companyName = PlayerSettings.companyName;
             string productName = PlayerSettings.productName;
+#if UNITY_EDITOR_WIN && !NET_STANDARD_2_0
             string subKey = string.Format("{0}\\{1}\\{2}", "Software\\Unity\\UnityEditor", companyName, productName);
             Microsoft.Win32.RegistryKey registryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(subKey);
             if (registryKey != null)
@@ -61,13 +62,12 @@ namespace EZUnity
                     }
                 }
             }
+#endif
         }
+
         private void Refresh()
         {
-            if (Application.platform == RuntimePlatform.WindowsEditor)
-            {
-                GetPairsWin();
-            }
+            GetPairs();
         }
 
         protected void OnEnable()
@@ -78,6 +78,10 @@ namespace EZUnity
         protected void OnGUI()
         {
             EZEditorGUIUtility.WindowTitle(this);
+
+#if UNITY_EDITOR_WIN && NET_STANDARD_2_0
+            EditorGUILayout.HelpBox("Api Compatibility Level Not Supported", MessageType.Error);
+#elif UNITY_EDITOR_WIN
             if (GUILayout.Button("Refresh"))
             {
                 Refresh();
@@ -133,6 +137,9 @@ namespace EZUnity
                 Refresh();
             }
             EditorGUILayout.EndScrollView();
+#else
+            EditorGUILayout.HelpBox("Platform Not Supported", MessageType.Error);
+#endif
         }
     }
 }

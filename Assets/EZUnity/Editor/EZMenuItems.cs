@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public static partial class EZMenuItems
+    public static class EZMenuItems
     {
         private const string ROOT_NAME = "EZUnity";
         private const int PRIORITY = 12000;

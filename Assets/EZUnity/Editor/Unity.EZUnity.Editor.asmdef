@@ -1,0 +1,14 @@
+{
+    "name": "Unity.EZUnity.Editor",
+    "references": [
+        "Unity.EZUnity"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
