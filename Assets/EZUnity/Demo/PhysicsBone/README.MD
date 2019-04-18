@@ -1,14 +1,11 @@
 # EZPhysicsBone
 
-![Example](Demo/.EZPhysicsBoneDemo.gif)
+![EZPhysicsBone](.SamplePicture/EZPhysicsBone.gif)
 
 - Root Bones: 骨骼根节点列表
 - Start Depth: 从第几个层级开始起作用
 - End Node Length: 如果骨骼末端节点不在蒙皮末端，调节该数值补充节点，可以让蒙皮末端的朝向更加自然
 - Material: 使用的材质(`EZPhysicsBoneMaterial`)，如果不指定，运行时会自动使用默认材质
-- Update Mode: 更新方式，Update或者FixedUpdate
-- Min Delta Time: 在编辑器下如果没有设置垂直同步，可能会出现帧率异常高造成速度计算错误而抖动，使用最小间隔来提高计算的准确性，降低抖动
-- Sleep Threshold: 最小速度
 - Collision Layers: 碰撞作用层
 - Extra Colliders: 让普通Collider也能起作用（本来是为了兼容老代码，不过有一定适用范围就保留了）
 - Radius: 骨骼的碰撞球大小

@@ -11,8 +11,13 @@ EZAnimation使用AnimationCurve去做一些插值计算。
 例：
 
 - EZTransformAnimation: 用来对Transform进行移动旋转缩放的动画，每个EZTransformAnimationSegment都包含两个路径点，在PathMode选项中可以选择使用折线或贝塞尔曲线
+
 ![EZTransformAnimation](.SamplePicture/EZTransformAnimation.png)
+
 - EZRectTransformAnimation: 与EZTransformAnimation类似，不再赘述。
+
 ![EZRectTransformAnimation](.SamplePicture/EZRectTransformAnimation.png)
+
 - EZGraphicColorAnimation: 用来对某个有Graphic（及其子类）组件的颜色进行Gradient动画，每个EZColorAnimationSegment都包含一个渐变颜色
+
 ![EZGraphicColorAnimation](.SamplePicture/EZGraphicColorAnimation.png)
