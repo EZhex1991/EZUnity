@@ -10,7 +10,7 @@ using UnityEngine;
 namespace EZUnity
 {
     [CreateAssetMenu(fileName = "EZScriptStatistics", menuName = "EZUnity/EZScriptStatistics", order = EZAssetMenuOrder.EZScriptStatistics)]
-    public class EZScriptStatisticsObject : ScriptableObject
+    public class EZScriptStatistics : ScriptableObject
     {
         public const string AssetName = "EZScriptStatistics";
 
