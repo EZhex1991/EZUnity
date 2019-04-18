@@ -2,7 +2,7 @@
 
 该部分是基于腾讯XLua的扩展，需要导入腾讯的XLua并添加宏`XLUA`启用
 
-## LuaBehaviour
+## EZLuaBehaviour
 
 继承关系：`EZLuaBehaviour`-`EZLuaInjector`-`EZPropertyList`-`MonoBehaviour`
 
@@ -19,7 +19,7 @@
 ![NestedInjector](.SamplePicture/NestedInjector.png)
 ![TypeSelection](.SamplePicture/TypeSelection.png)
 
-## LuaMessage
+## EZLuaMessage
 
 该部分是`MonoBehaviour`消息的一些分类封装
 
