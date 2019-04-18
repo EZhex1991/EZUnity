@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e059bdd10fe697f4c8a6d308a823085a, type: 3}
   m_Name: EZStringAsset
   m_EditorClassIdentifier: 
-  m_Items: []
+  m_Items:
+  - key: package_name
+    ch: EZUnity
+    en: EZUnity
+  - key: author_name
+    ch: "\u718A\u54F2"
+    en: Zack John

@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: EZPlayerBuilder
   m_EditorClassIdentifier: 
   configButDontBuild: 0
-  bundleBuilder: {fileID: 0}
-  locationPathName: 
-  scenes: []
-  companyName: 
-  productName: 
-  bundleIdentifier: 
-  bundleVersion: 
+  bundleBuilder: {fileID: 11400000, guid: 095537d9cad338d4aaa088f9e5ed3e68, type: 2}
+  locationPathName: Builds/<BundleIdentifier>-<BuildTarget>-<BuildNumber>
+  scenes:
+  - {fileID: 102900000, guid: ad7841cbde55f744a86d07e0353be2d9, type: 3}
+  - {fileID: 102900000, guid: 2a2b20e4f6d68fa49ae096f28f8f88c4, type: 3}
+  - {fileID: 102900000, guid: 52c93da08ecc41f478661d04ef720ec6, type: 3}
+  companyName: EZhex1991
+  productName: EZUnity
+  bundleIdentifier: com.ezhex1991.ezunitydemo
+  bundleVersion: 1.0.0
   buildNumber: 0
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: c205825d5b84ab849a540efdc2293779, type: 3}

@@ -12,13 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabd12fc7fdeeaa48934346a03029e5d, type: 3}
   m_Name: EZBundleBuilder
   m_EditorClassIdentifier: 
-  buildTarget: 13
+  buildTarget: 5
   outputPath: Assets/StreamingAssets
   listFileName: files.txt
   managerMode: 0
   forceRebuild: 0
   copyList: []
-  bundleList: []
+  bundleList:
+  - bundleName: demo
+    filePattern: '*.*'
+    searchOption: 1
+    dirPath: EZUnity/Demo
+  - bundleName: demo_assets
+    filePattern: '*.*'
+    searchOption: 1
+    dirPath: EZUnity/DemoAssets
   copyListFoldout: 1
   bundleListFoldout: 1
   showAssets: 0

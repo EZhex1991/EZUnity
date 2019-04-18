@@ -19,12 +19,1269 @@ MonoBehaviour:
   - '*.shader'
   - '*.cginc'
   includePaths:
-  - Assets
+  - Assets/EZUnity
   excludePaths:
-  - Assets/Plugins
+  - Assets/EZUnity/XLuaExtension
   infoLineCount: 5
   authorRegex: ^\W*Author:\s*(\S[\s\S]*)$
   createTimeRegex: ^\W*CreateTime:\s*(\S[\s\S]*)$
   validLineRegex: ^\W*(\S+)[\S\s]*$
-  resultTime: 
-  result: []
+  resultTime: 20190418-144224
+  result:
+  - author: ezhex1991@outlook.com
+    lineCount: 16389
+    validLineCount: 15095
+    proportion: 0.9818525
+    scriptList:
+    - filePath: Assets/EZUnity/Editor/EZEditorGUIUtility.cs
+      fileObject: {fileID: 11500000, guid: 8d832d4703c5eb347a19fcfa19c46fc8, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-11-22 18:08:40
+      orgnization: 
+      lineCount: 92
+      validLineCount: 87
+    - filePath: Assets/EZUnity/Editor/EZEditorUtility.cs
+      fileObject: {fileID: 11500000, guid: 2bc28c386b80a5042ae66b8094b4d983, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: '#CREATETIME#'
+      orgnization: 
+      lineCount: 98
+      validLineCount: 94
+    - filePath: Assets/EZUnity/Editor/EZMenuItems.cs
+      fileObject: {fileID: 11500000, guid: 73c24d14c924a42428940a538ccdf279, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-02-14 15:58:53
+      orgnization: 
+      lineCount: 114
+      validLineCount: 107
+    - filePath: Assets/EZUnity/Editor/Animation/EZAnimationEditor.cs
+      fileObject: {fileID: 11500000, guid: 8529c36f4dfce214e9631a4d1c125960, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-10-31 17:30:50
+      orgnization: 
+      lineCount: 132
+      validLineCount: 121
+    - filePath: Assets/EZUnity/Editor/Animation/EZGraphicColorAnimationEditor.cs
+      fileObject: {fileID: 11500000, guid: 6edf410a23cc88248822f8bf8cbb04df, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-11-02 17:31:02
+      orgnization: 
+      lineCount: 29
+      validLineCount: 27
+    - filePath: Assets/EZUnity/Editor/Animation/EZRectTransformAnimationEditor.cs
+      fileObject: {fileID: 11500000, guid: 64be82b22b9833346a535c76f510bd96, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-11-02 17:30:41
+      orgnization: 
+      lineCount: 40
+      validLineCount: 38
+    - filePath: Assets/EZUnity/Editor/Animation/EZTransformAnimationEditor.cs
+      fileObject: {fileID: 11500000, guid: 8613c9bdc67d3444980c021267f36670, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-11-02 17:30:26
+      orgnization: 
+      lineCount: 88
+      validLineCount: 83
+    - filePath: Assets/EZUnity/Editor/Core/EZKeyCodePropertyDrawer.cs
+      fileObject: {fileID: 11500000, guid: 1880bb6617c082e459d2e4b069a01b00, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-11-07 17:22:30
+      orgnization: 
+      lineCount: 57
+      validLineCount: 56
+    - filePath: Assets/EZUnity/Editor/Core/EZPropertyDrawer.cs
+      fileObject: {fileID: 11500000, guid: ce4ff023e4809c842b2c56bd79d45129, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-11-14 16:17:52
+      orgnization: 
+      lineCount: 172
+      validLineCount: 162
+    - filePath: Assets/EZUnity/Editor/Core/EZPropertyListEditor.cs
+      fileObject: {fileID: 11500000, guid: b32b8542443c63442a24d8ae0d38201f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-07 16:37:12
+      orgnization: 
+      lineCount: 84
+      validLineCount: 78
+    - filePath: Assets/EZUnity/Editor/EditorTools/EZAssetReferenceViewer.cs
+      fileObject: {fileID: 11500000, guid: b2a4edf272f42c842a065eaefb7202a3, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-09 09:47:08
+      orgnization: 
+      lineCount: 124
+      validLineCount: 116
+    - filePath: Assets/EZUnity/Editor/EditorTools/EZFontReferenceViewer.cs
+      fileObject: {fileID: 11500000, guid: b118a7d08fb8d3640b73a39b2659a55c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-14 20:13:43
+      orgnization: 
+      lineCount: 39
+      validLineCount: 36
+    - filePath: Assets/EZUnity/Editor/EditorTools/EZGuidGenerator.cs
+      fileObject: {fileID: 11500000, guid: 9881f003203f7a240b92cb569d62c2df, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-08 11:20:03
+      orgnization: 
+      lineCount: 40
+      validLineCount: 36
+    - filePath: Assets/EZUnity/Editor/EditorTools/EZPlayerPrefsEditor.cs
+      fileObject: {fileID: 11500000, guid: b2c56960f93959a498f322c5f32a3c9b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-01-25 10:15:14
+      orgnization: 
+      lineCount: 145
+      validLineCount: 138
+    - filePath: Assets/EZUnity/Editor/EditorTools/EZRenamer.cs
+      fileObject: {fileID: 11500000, guid: 529718e8353677c4b874dfc7f488e69b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-09-02 18:23:42
+      orgnization: 
+      lineCount: 270
+      validLineCount: 257
+    - filePath: Assets/EZUnity/Editor/EditorTools/EZShaderKeywordManager.cs
+      fileObject: {fileID: 11500000, guid: ac9a53e4167c4a64cb86b28dbf0ffd99, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-13 19:11:36
+      orgnization: 
+      lineCount: 130
+      validLineCount: 122
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZGradientGenerator.cs
+      fileObject: {fileID: 11500000, guid: 67d022496eec62848bde4e5163fdd8c6, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-19 15:53:46
+      orgnization: 
+      lineCount: 114
+      validLineCount: 109
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZMeshGenerator.cs
+      fileObject: {fileID: 11500000, guid: 185ea08e360a30a4b99c1e882f1ded4b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-18 15:05:51
+      orgnization: 
+      lineCount: 34
+      validLineCount: 30
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZMeshGeneratorEditor.cs
+      fileObject: {fileID: 11500000, guid: 99d55848aba84d543afec7e9cb195fa9, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-18 15:09:15
+      orgnization: 
+      lineCount: 78
+      validLineCount: 73
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZPlaneGenerator.cs
+      fileObject: {fileID: 11500000, guid: 9e42808854a154f4c808ee44bc13ae83, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-18 15:05:51
+      orgnization: 
+      lineCount: 58
+      validLineCount: 55
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZTextureChannelModifier.cs
+      fileObject: {fileID: 11500000, guid: 6fdf24c21f62e8c4e9356ddbfbf36a0f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-12 15:22:32
+      orgnization: 
+      lineCount: 95
+      validLineCount: 89
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZTextureChannelModifierEditor.cs
+      fileObject: {fileID: 11500000, guid: e7fabc21d88969e4a877c4a93eae7c3d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-12 16:13:31
+      orgnization: 
+      lineCount: 84
+      validLineCount: 80
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZTextureChannelModifierWindow.cs
+      fileObject: {fileID: 11500000, guid: fc26fe76b118dbc4ba0a0aed2698b1ce, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-16 19:17:24
+      orgnization: 
+      lineCount: 90
+      validLineCount: 83
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZTextureGenerator.cs
+      fileObject: {fileID: 11500000, guid: 411f8b9574c796648b4f8b67de62b911, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-18 10:38:24
+      orgnization: 
+      lineCount: 68
+      validLineCount: 64
+    - filePath: Assets/EZUnity/Editor/EditorTools/AssetGenerator/EZTextureGeneratorEditor.cs
+      fileObject: {fileID: 11500000, guid: 27d45fca3744c42469b12e508ba82083, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-19 09:49:34
+      orgnization: 
+      lineCount: 113
+      validLineCount: 103
+    - filePath: Assets/EZUnity/Editor/EditorTools/Builder/EZBundleBuilder.cs
+      fileObject: {fileID: 11500000, guid: eabd12fc7fdeeaa48934346a03029e5d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-03-06 14:13:28
+      orgnization: 
+      lineCount: 244
+      validLineCount: 229
+    - filePath: Assets/EZUnity/Editor/EditorTools/Builder/EZBundleBuilderEditor.cs
+      fileObject: {fileID: 11500000, guid: 40cbf963765b7614aa8c060a68aa8c6f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-03-08 19:42:27
+      orgnization: 
+      lineCount: 175
+      validLineCount: 157
+    - filePath: Assets/EZUnity/Editor/EditorTools/Builder/EZBundleManager.cs
+      fileObject: {fileID: 11500000, guid: 44aaeaf5edb4dd74b8a10acfc18de3e3, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-02-09 12:05:23
+      orgnization: 
+      lineCount: 156
+      validLineCount: 152
+    - filePath: Assets/EZUnity/Editor/EditorTools/Builder/EZPlayerBuilder.cs
+      fileObject: {fileID: 11500000, guid: d197e1765385f8347aaeeb1fa50979f4, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-02 20:41:29
+      orgnization: 
+      lineCount: 127
+      validLineCount: 120
+    - filePath: Assets/EZUnity/Editor/EditorTools/Builder/EZPlayerBuilderEditor.cs
+      fileObject: {fileID: 11500000, guid: fd9a4dfa5928a7b469b4948dd922035d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-04 16:14:44
+      orgnization: 
+      lineCount: 120
+      validLineCount: 109
+    - filePath: Assets/EZUnity/Editor/EditorTools/ImageCapture/EZImageCapture.cs
+      fileObject: {fileID: 11500000, guid: 3151db92aa47cb4419e894873de98720, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-03 19:54:52
+      orgnization: 
+      lineCount: 70
+      validLineCount: 67
+    - filePath: Assets/EZUnity/Editor/EditorTools/ImageCapture/EZImageCaptureEditor.cs
+      fileObject: {fileID: 11500000, guid: 0364688fcfd16d14b97b69535e9801d3, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-06 10:27:30
+      orgnization: 
+      lineCount: 72
+      validLineCount: 64
+    - filePath: Assets/EZUnity/Editor/EditorTools/Scripting/EZScriptStatisticsEditor.cs
+      fileObject: {fileID: 11500000, guid: 0a471781fa39c97499e79d38bd3df3d6, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-02-22 17:44:56
+      orgnization: 
+      lineCount: 228
+      validLineCount: 217
+    - filePath: Assets/EZUnity/Editor/EditorTools/Scripting/EZScriptStatisticsObject.cs
+      fileObject: {fileID: 11500000, guid: 3e182fe965b6bad48a8ec799c55dd11c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-02-22 16:48:41
+      orgnization: 
+      lineCount: 58
+      validLineCount: 54
+    - filePath: Assets/EZUnity/Editor/Framework/EZApplicationSettingsEditor.cs
+      fileObject: {fileID: 11500000, guid: d21354562d13bdf4784eee024d4986ad, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-01-19 14:03:26
+      orgnization: 
+      lineCount: 135
+      validLineCount: 120
+    - filePath: Assets/EZUnity/Editor/Miscellaneous/EZDigitalClockEditor.cs
+      fileObject: {fileID: 11500000, guid: 78601ce4493024d42a5f090881d5355b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-11 13:20:19
+      orgnization: 
+      lineCount: 26
+      validLineCount: 23
+    - filePath: Assets/EZUnity/Editor/Miscellaneous/EZExplosiveEditor.cs
+      fileObject: {fileID: 11500000, guid: 69b8318dcb55ea246a0a900dacbb8f86, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-28 10:26:34
+      orgnization: 
+      lineCount: 29
+      validLineCount: 27
+    - filePath: Assets/EZUnity/Editor/Miscellaneous/EZGridLayout3DEditor.cs
+      fileObject: {fileID: 11500000, guid: a83a88effb1fe7b43a1d244965326b5b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-08-22 14:20:56
+      orgnization: 
+      lineCount: 38
+      validLineCount: 35
+    - filePath: Assets/EZUnity/Editor/Miscellaneous/EZScrollRectEditor.cs
+      fileObject: {fileID: 11500000, guid: afbfa60d47feba447aadba8d2415eb08, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-08-10 10:03:19
+      orgnization: 
+      lineCount: 39
+      validLineCount: 36
+    - filePath: Assets/EZUnity/Editor/Miscellaneous/EZStringAssetEditor.cs
+      fileObject: {fileID: 11500000, guid: 52ab23512037aab41b97c5e1e142ee99, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-07 18:39:48
+      orgnization: 
+      lineCount: 90
+      validLineCount: 82
+    - filePath: Assets/EZUnity/Editor/Miscellaneous/EZTransitionEditor.cs
+      fileObject: {fileID: 11500000, guid: 8801a546aea21474b89847bd9f6fdf4c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-28-28 10:55:35
+      orgnization: 
+      lineCount: 78
+      validLineCount: 73
+    - filePath: Assets/EZUnity/Editor/Miscellaneous/TrailRendererEditor.cs
+      fileObject: {fileID: 11500000, guid: 70fc99d5937d87249a5dd613dd514b16, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-11-17 14:23:29
+      orgnization: 
+      lineCount: 38
+      validLineCount: 34
+    - filePath: Assets/EZUnity/Editor/Playables/EZTransformTweenDrawer.cs
+      fileObject: {fileID: 11500000, guid: 05701ba1aa358764999e94ac16c90d4e, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-14 11:02:22
+      orgnization: 
+      lineCount: 43
+      validLineCount: 41
+    - filePath: Assets/EZUnity/Editor/Playables/KeyframeClipEditor.cs
+      fileObject: {fileID: 11500000, guid: 4e5c415699df4ea4da9652e813262115, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-04-13 20:25:40
+      orgnization: 
+      lineCount: 78
+      validLineCount: 70
+    - filePath: Assets/EZUnity/Editor/Playables/KeyframeDrawer.cs
+      fileObject: {fileID: 11500000, guid: 8bfb9fd9c625d244bb90fc925ec38f33, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-04-12 12:55:43
+      orgnization: 
+      lineCount: 41
+      validLineCount: 34
+    - filePath: Assets/EZUnity/Editor/ProjectSettings/EZAssetPostprocessor.cs
+      fileObject: {fileID: 11500000, guid: 310dd4087c1d511458647f11ed524422, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-07-17 14:15:07
+      orgnization: 
+      lineCount: 95
+      validLineCount: 87
+    - filePath: Assets/EZUnity/Editor/ProjectSettings/EZEditorSettings.cs
+      fileObject: {fileID: 11500000, guid: e06cf8988cfb8f94f81db0e38d3e9791, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-15 15:52:18
+      orgnization: 
+      lineCount: 56
+      validLineCount: 50
+    - filePath: Assets/EZUnity/Editor/ProjectSettings/EZGraphicsSettings.cs
+      fileObject: {fileID: 11500000, guid: d847c3a061ba2de49820178572c67a65, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-12-25 12:55:52
+      orgnization: 
+      lineCount: 137
+      validLineCount: 125
+    - filePath: Assets/EZUnity/Editor/ProjectSettings/EZScriptProcessor.cs
+      fileObject: {fileID: 11500000, guid: 3b4a8e98f3726a94d8be28d34404e740, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-07-03 18:44:14
+      orgnization: 
+      lineCount: 61
+      validLineCount: 56
+    - filePath: Assets/EZUnity/Editor/ProjectSettings/EZScriptSettings.cs
+      fileObject: {fileID: 11500000, guid: 179ff9f2193dc664e9b3bdfcce67aeed, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2016-08-08 10:49:31
+      orgnization: 
+      lineCount: 42
+      validLineCount: 38
+    - filePath: Assets/EZUnity/Editor/ProjectSettings/EZScriptSettingsEditor.cs
+      fileObject: {fileID: 11500000, guid: cc098f02680f12044bd6fbc77c001a5e, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-03-07 18:22:12
+      orgnization: 
+      lineCount: 172
+      validLineCount: 162
+    - filePath: Assets/EZUnity/Editor/ProjectSettings/_EZProjectSettings.cs
+      fileObject: {fileID: 11500000, guid: 150c32cbd5858b547b6f0d7f627c56db, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-15 16:22:00
+      orgnization: 
+      lineCount: 62
+      validLineCount: 58
+    - filePath: Assets/EZUnity/Editor/ShaderGUI/EZMatcapShaderGUI.cs
+      fileObject: {fileID: 11500000, guid: 4b464bd8857d2d1459c693889a06d1b1, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-05 14:48:17
+      orgnization: 
+      lineCount: 35
+      validLineCount: 27
+    - filePath: Assets/EZUnity/Editor/ShaderGUI/EZRenderingSettingsShaderGUI.cs
+      fileObject: {fileID: 11500000, guid: 0f832f4095af5604199f7a3033376e40, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-21 17:44:54
+      orgnization: 
+      lineCount: 15
+      validLineCount: 14
+    - filePath: Assets/EZUnity/Editor/ShaderGUI/EZShaderGUI.cs
+      fileObject: {fileID: 11500000, guid: d5d06bbd1ad44ef4abafacc8a5d31378, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-05 15:21:25
+      orgnization: 
+      lineCount: 222
+      validLineCount: 210
+    - filePath: Assets/EZUnity/Editor/ShaderGUI/EZShaderGUIUtility.cs
+      fileObject: {fileID: 11500000, guid: 56f9d25a53734844089212004990b83a, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-25 20:16:03
+      orgnization: 
+      lineCount: 187
+      validLineCount: 177
+    - filePath: Assets/EZUnity/Editor/ShaderGUI/EZStandardShaderGUI.cs
+      fileObject: {fileID: 11500000, guid: d2714b58b6ef55f4e91cf2bb53c23ba1, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-21 10:59:14
+      orgnization: 
+      lineCount: 428
+      validLineCount: 380
+    - filePath: Assets/EZUnity/Editor/ShaderGUI/EZUnlitDynamicFlameShaderGUI.cs
+      fileObject: {fileID: 11500000, guid: 30ff7cf3f01107c48abc1c92236ac7a5, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-05 11:12:20
+      orgnization: 
+      lineCount: 65
+      validLineCount: 57
+    - filePath: Assets/EZUnity/Editor/ShaderGUI/EZUnlitPatternShaderGUI.cs
+      fileObject: {fileID: 11500000, guid: f14d5c3f074185e4c9b7be40d1183b80, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-25 19:52:09
+      orgnization: 
+      lineCount: 61
+      validLineCount: 55
+    - filePath: Assets/EZUnity/Editor/Switcher/EZGameObjectSwitcherEditor.cs
+      fileObject: {fileID: 11500000, guid: 35415a7f222d84f46a294c8aa67c7243, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-04-17 15:42:55
+      orgnization: 
+      lineCount: 26
+      validLineCount: 23
+    - filePath: Assets/EZUnity/Editor/Switcher/EZMaterialSwitcherEditor.cs
+      fileObject: {fileID: 11500000, guid: 2c666952f22ee0b4c887c6bad3b7f406, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-04-17 15:51:49
+      orgnization: 
+      lineCount: 29
+      validLineCount: 26
+    - filePath: Assets/EZUnity/Editor/Switcher/EZSwitcherEditor.cs
+      fileObject: {fileID: 11500000, guid: 38a640538aedc33409666be11dbe555e, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-03-21 19:49:17
+      orgnization: 
+      lineCount: 58
+      validLineCount: 51
+    - filePath: Assets/EZUnity/Editor/Switcher/EZTimelineSwitcherEditor.cs
+      fileObject: {fileID: 11500000, guid: b2cdafa519667204fa0fca876fb13268, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-18 10:06:55
+      orgnization: 
+      lineCount: 27
+      validLineCount: 24
+    - filePath: Assets/EZUnity/Runtime/Animation/EZAnimation.cs
+      fileObject: {fileID: 11500000, guid: 293e35071a0a98f42a4b6e3916b578d8, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-10-31 15:25:39
+      orgnization: 
+      lineCount: 226
+      validLineCount: 205
+    - filePath: Assets/EZUnity/Runtime/Animation/EZAnimationClip.cs
+      fileObject: {fileID: 11500000, guid: 5d79a28baacad9d4f9bac1ce55c748f7, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-29 20:41:23
+      orgnization: 
+      lineCount: 20
+      validLineCount: 18
+    - filePath: Assets/EZUnity/Runtime/Animation/EZAnimationPlayableBehaviour.cs
+      fileObject: {fileID: 11500000, guid: 1e6bb7fab31334346adbabd83abb0e84, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-29 20:37:32
+      orgnization: 
+      lineCount: 19
+      validLineCount: 18
+    - filePath: Assets/EZUnity/Runtime/Animation/EZAnimationSegment.cs
+      fileObject: {fileID: 11500000, guid: 88b3c9e19485cf84fa33bb0a009c6216, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-12-11 17:39:15
+      orgnization: 
+      lineCount: 21
+      validLineCount: 20
+    - filePath: Assets/EZUnity/Runtime/Animation/EZColorAnimationSegment.cs
+      fileObject: {fileID: 11500000, guid: e2a6b100cbd15114f85f21df2e413c74, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-12-11 17:45:04
+      orgnization: 
+      lineCount: 18
+      validLineCount: 17
+    - filePath: Assets/EZUnity/Runtime/Animation/EZGraphicColorAnimation.cs
+      fileObject: {fileID: 11500000, guid: 0608d88015b0f824aa2398f0158979e2, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-11-02 17:15:40
+      orgnization: 
+      lineCount: 42
+      validLineCount: 39
+    - filePath: Assets/EZUnity/Runtime/Animation/EZGraphicColorAnimationTrack.cs
+      fileObject: {fileID: 11500000, guid: 5a514511050d2434fa838a4951e285a7, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-29 18:05:26
+      orgnization: 
+      lineCount: 26
+      validLineCount: 25
+    - filePath: Assets/EZUnity/Runtime/Animation/EZRectTransformAnimation.cs
+      fileObject: {fileID: 11500000, guid: 80c39e5e987a05b44890657a8ac24ab0, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-11-02 17:02:01
+      orgnization: 
+      lineCount: 46
+      validLineCount: 43
+    - filePath: Assets/EZUnity/Runtime/Animation/EZRectTransformAnimationSegment.cs
+      fileObject: {fileID: 11500000, guid: b823d45a4f29ff745bceb656c2d5dcca, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-12-11 17:50:56
+      orgnization: 
+      lineCount: 21
+      validLineCount: 20
+    - filePath: Assets/EZUnity/Runtime/Animation/EZRectTransformAnimationTrack.cs
+      fileObject: {fileID: 11500000, guid: f835fe89740072e489506bbe77f5579d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-29 18:05:26
+      orgnization: 
+      lineCount: 25
+      validLineCount: 24
+    - filePath: Assets/EZUnity/Runtime/Animation/EZTransformAnimation.cs
+      fileObject: {fileID: 11500000, guid: 810f427afb0b7be49a0c5686abf37d80, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-10-31 17:21:48
+      orgnization: 
+      lineCount: 125
+      validLineCount: 119
+    - filePath: Assets/EZUnity/Runtime/Animation/EZTransformAnimationSegment.cs
+      fileObject: {fileID: 11500000, guid: 04572858d7c9ab3459f842025c766bc1, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-12-11 17:47:10
+      orgnization: 
+      lineCount: 28
+      validLineCount: 26
+    - filePath: Assets/EZUnity/Runtime/Animation/EZTransformAnimationTrack.cs
+      fileObject: {fileID: 11500000, guid: d7d3e31a8f2f89d4388d2b203919c682, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-29 18:05:26
+      orgnization: 
+      lineCount: 25
+      validLineCount: 24
+    - filePath: Assets/EZUnity/Runtime/Attributes/EZCurveRangeAttribute.cs
+      fileObject: {fileID: 11500000, guid: c4bba5911cd4be24fa7696606ad9f40d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-24 13:22:59
+      orgnization: 
+      lineCount: 55
+      validLineCount: 50
+    - filePath: Assets/EZUnity/Runtime/Attributes/EZGUIButtonAttribute.cs
+      fileObject: {fileID: 11500000, guid: 9f964ba06637c0c4086b0d72f4876be0, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-18 13:27:52
+      orgnization: 
+      lineCount: 115
+      validLineCount: 110
+    - filePath: Assets/EZUnity/Runtime/Attributes/EZHideInInspectorNormal.cs
+      fileObject: {fileID: 11500000, guid: 7d5272ba16a80f64e8eb3c3cb45f2703, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-18 17:04:00
+      orgnization: 
+      lineCount: 31
+      validLineCount: 28
+    - filePath: Assets/EZUnity/Runtime/Core/EZAssetMenuOrder.cs
+      fileObject: {fileID: 11500000, guid: a55311ace81cf1a4e8c518fb9fe39822, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-12 15:57:09
+      orgnization: 
+      lineCount: 28
+      validLineCount: 23
+    - filePath: Assets/EZUnity/Runtime/Core/EZDictionary.cs
+      fileObject: {fileID: 11500000, guid: 3915b83f1a09f0e409eeb322d9c04e65, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-11-29 17:17:10
+      orgnization: 
+      lineCount: 48
+      validLineCount: 44
+    - filePath: Assets/EZUnity/Runtime/Core/EZFractalGizmos.cs
+      fileObject: {fileID: 11500000, guid: 4765473df247cc941a164186838238aa, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-01-27 13:44:14
+      orgnization: 
+      lineCount: 251
+      validLineCount: 233
+    - filePath: Assets/EZUnity/Runtime/Core/EZKeyCode.cs
+      fileObject: {fileID: 11500000, guid: ff5cd2e738325ec4d8729129956d282d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-04-18 17:02:37
+      orgnization: 
+      lineCount: 131
+      validLineCount: 125
+    - filePath: Assets/EZUnity/Runtime/Core/EZPhysicsUtility.cs
+      fileObject: {fileID: 11500000, guid: 3ab71d58e733cc6438302c000324c7d0, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-18 20:43:20
+      orgnization: 
+      lineCount: 205
+      validLineCount: 195
+    - filePath: Assets/EZUnity/Runtime/Core/EZProperty.cs
+      fileObject: {fileID: 11500000, guid: 934097635444d674fad8c9067c8459d4, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-11-14 15:17:18
+      orgnization: 
+      lineCount: 225
+      validLineCount: 209
+    - filePath: Assets/EZUnity/Runtime/Core/EZPropertyList.cs
+      fileObject: {fileID: 11500000, guid: 0d8e1700980e0ec45935616b53c90968, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-07 16:19:38
+      orgnization: 
+      lineCount: 76
+      validLineCount: 67
+    - filePath: Assets/EZUnity/Runtime/Core/EZUnityExtensions.cs
+      fileObject: {fileID: 11500000, guid: d84ae9de5703466489b19892a71d4fff, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-13 19:19:11
+      orgnization: 
+      lineCount: 235
+      validLineCount: 222
+    - filePath: Assets/EZUnity/Runtime/Core/EZUtility.cs
+      fileObject: {fileID: 11500000, guid: e14d07df09f401046a32dbb2fcf3ba39, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-01-24 14:53:33
+      orgnization: 
+      lineCount: 116
+      validLineCount: 106
+    - filePath: Assets/EZUnity/Runtime/Core/_EZMonoBehaviourSingleton.cs
+      fileObject: {fileID: 11500000, guid: a5f397b794ee22645b9fdc452d274921, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-01-16 14:06:29
+      orgnization: 
+      lineCount: 103
+      validLineCount: 94
+    - filePath: Assets/EZUnity/Runtime/Core/_EZScriptableObjectSingleton.cs
+      fileObject: {fileID: 11500000, guid: cbc5e602e8be8dd4590faee837fe8d77, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-04-16 17:13:26
+      orgnization: 
+      lineCount: 42
+      validLineCount: 40
+    - filePath: Assets/EZUnity/Runtime/Framework/EZApplication.cs
+      fileObject: {fileID: 11500000, guid: fe7e02b85bc97db45907d0a23efd81e3, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-19 14:53:50
+      orgnization: 
+      lineCount: 87
+      validLineCount: 80
+    - filePath: Assets/EZUnity/Runtime/Framework/EZApplicationSettings.cs
+      fileObject: {fileID: 11500000, guid: 5b155fe2a46f99d499834e4b33eefd9b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-10 14:51:50
+      orgnization: 
+      lineCount: 79
+      validLineCount: 75
+    - filePath: Assets/EZUnity/Runtime/Framework/EZDatabase.cs
+      fileObject: {fileID: 11500000, guid: 21548de4b510cc444b1fdc525ee3e6df, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-15 20:10:19
+      orgnization: 
+      lineCount: 368
+      validLineCount: 345
+    - filePath: Assets/EZUnity/Runtime/Framework/EZEvent.cs
+      fileObject: {fileID: 11500000, guid: 5d6d13e8fce6a3044876e1f18d9295fc, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-11-26 14:52:00
+      orgnization: 
+      lineCount: 26
+      validLineCount: 22
+    - filePath: Assets/EZUnity/Runtime/Framework/EZEventHub.cs
+      fileObject: {fileID: 11500000, guid: 3e9dad91f5949654b8ac67a2d759cc3c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-11-26 14:35:53
+      orgnization: 
+      lineCount: 90
+      validLineCount: 87
+    - filePath: Assets/EZUnity/Runtime/Framework/EZInputManager.cs
+      fileObject: {fileID: 11500000, guid: 74c49b8e7128fae47b6e16399828d12b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-10 16:20:16
+      orgnization: 
+      lineCount: 79
+      validLineCount: 72
+    - filePath: Assets/EZUnity/Runtime/Framework/EZLogHandler.cs
+      fileObject: {fileID: 11500000, guid: b998f7114f41fba4ca73245559545f85, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-19 13:48:59
+      orgnization: 
+      lineCount: 62
+      validLineCount: 54
+    - filePath: Assets/EZUnity/Runtime/Framework/EZResources.cs
+      fileObject: {fileID: 11500000, guid: 09564db7a0f301d499438f70cc647075, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-13 20:10:05
+      orgnization: 
+      lineCount: 652
+      validLineCount: 631
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZCameraReflection.cs
+      fileObject: {fileID: 11500000, guid: b06701c327ca2b641a3a7ce4b3a6ab1c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-19 13:43:14
+      orgnization: 
+      lineCount: 134
+      validLineCount: 119
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZCameraZoomer.cs
+      fileObject: {fileID: 11500000, guid: d093c9d793e484f408e088fb354cc0af, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-15 15:06:19
+      orgnization: 
+      lineCount: 93
+      validLineCount: 84
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZCircleImage.cs
+      fileObject: {fileID: 11500000, guid: ce0a4d416c33f61439b7e9f03f125568, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-09-30 14:43:23
+      orgnization: 
+      lineCount: 42
+      validLineCount: 40
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZDigitalClock.cs
+      fileObject: {fileID: 11500000, guid: f2254ea7af6b3be4bb35593c15631e6f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-11 13:05:58
+      orgnization: 
+      lineCount: 66
+      validLineCount: 61
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZExplosive.cs
+      fileObject: {fileID: 11500000, guid: a524cd26b4fa0b64786cca000ad45969, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-28 09:41:31
+      orgnization: 
+      lineCount: 60
+      validLineCount: 54
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZFollower.cs
+      fileObject: {fileID: 11500000, guid: af19e74ff5f60ef47bad887229519ea1, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-21 15:58:38
+      orgnization: 
+      lineCount: 33
+      validLineCount: 29
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZGridLayout2D.cs
+      fileObject: {fileID: 11500000, guid: 3caffa0a45ada2e4fa1b05bcc4399c0d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-01-12 17:28:48
+      orgnization: 
+      lineCount: 212
+      validLineCount: 195
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZGridLayout3D.cs
+      fileObject: {fileID: 11500000, guid: 6659af8009226fe42941125d51ab2a1e, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-01-12 17:28:48
+      orgnization: 
+      lineCount: 103
+      validLineCount: 92
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZLoadingPanel.cs
+      fileObject: {fileID: 11500000, guid: b369c9b58db36e5459dd1f303e9b8046, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2016-11-01 17:21:11
+      orgnization: 
+      lineCount: 54
+      validLineCount: 49
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZLookAt.cs
+      fileObject: {fileID: 11500000, guid: 6f769198d74e160458ad44697dc6ded9, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-21 16:17:44
+      orgnization: 
+      lineCount: 30
+      validLineCount: 26
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZLoopScrollRect.cs
+      fileObject: {fileID: 11500000, guid: 35946ac7e329f974d9bc1677ff700bc6, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-11-08 17:33:45
+      orgnization: 
+      lineCount: 78
+      validLineCount: 73
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZMeshDebugger.cs
+      fileObject: {fileID: 11500000, guid: b0bb0d74b61f17143afe41890f24c8fd, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-14 13:11:08
+      orgnization: 
+      lineCount: 94
+      validLineCount: 87
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZOutstand.cs
+      fileObject: {fileID: 11500000, guid: 06177b88e1452804b915299e46ecd49c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-01-12 17:28:48
+      orgnization: 
+      lineCount: 112
+      validLineCount: 100
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZPolygonImage.cs
+      fileObject: {fileID: 11500000, guid: 334d3e3653299554f9d16eaced9e0e44, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-09-30 13:36:20
+      orgnization: 
+      lineCount: 63
+      validLineCount: 61
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZReflection.cs
+      fileObject: {fileID: 11500000, guid: 4e5abe6d77ac5584fb71bfbfc72217ed, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-18 13:42:01
+      orgnization: 
+      lineCount: 124
+      validLineCount: 111
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZScrollRect.cs
+      fileObject: {fileID: 11500000, guid: 14c1c4766337a6e4b905c0918cb6405f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-08-09 18:08:00
+      orgnization: 
+      lineCount: 131
+      validLineCount: 121
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZStringAsset.cs
+      fileObject: {fileID: 11500000, guid: e059bdd10fe697f4c8a6d308a823085a, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-30 21:08:15
+      orgnization: 
+      lineCount: 108
+      validLineCount: 98
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZTimer.cs
+      fileObject: {fileID: 11500000, guid: 6f3b0f523cbeac94ca0e46346b7c043f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-02-01 12:31:35
+      orgnization: 
+      lineCount: 119
+      validLineCount: 109
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZTransformTreeGizmos.cs
+      fileObject: {fileID: 11500000, guid: 5e537950b303c7d44a6ed9a57fae625a, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-22 15:29:49
+      orgnization: 
+      lineCount: 80
+      validLineCount: 77
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZTransition.cs
+      fileObject: {fileID: 11500000, guid: 4a57e27b50f9926479be6f3a567770fc, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-08-31 19:21:33
+      orgnization: 
+      lineCount: 397
+      validLineCount: 373
+    - filePath: Assets/EZUnity/Runtime/Miscellaneous/EZUISorter.cs
+      fileObject: {fileID: 11500000, guid: f82211ac3d9b68d4db0a375cbc8a5a7b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-19 17:16:39
+      orgnization: 
+      lineCount: 102
+      validLineCount: 97
+    - filePath: Assets/EZUnity/Runtime/Mixer/EZMixer.cs
+      fileObject: {fileID: 11500000, guid: cfe5e525b94676a42bf06b21ad40ea17, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-25 19:50:41
+      orgnization: 
+      lineCount: 59
+      validLineCount: 52
+    - filePath: Assets/EZUnity/Runtime/PhysicsBone/EZPhysicsBone.cs
+      fileObject: {fileID: 11500000, guid: 8aa2b9bccfefda549bd1cf67fd922ad8, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-18 19:33:50
+      orgnization: 
+      lineCount: 410
+      validLineCount: 377
+    - filePath: Assets/EZUnity/Runtime/PhysicsBone/EZPhysicsBoneCollider.cs
+      fileObject: {fileID: 11500000, guid: d0a816d64a591274ca69e63d3e547399, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-18 19:34:31
+      orgnization: 
+      lineCount: 81
+      validLineCount: 75
+    - filePath: Assets/EZUnity/Runtime/PhysicsBone/EZPhysicsBoneColliderBase.cs
+      fileObject: {fileID: 11500000, guid: c75a325a03cad234ab1106cee68abc64, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-20 10:45:33
+      orgnization: 
+      lineCount: 26
+      validLineCount: 23
+    - filePath: Assets/EZUnity/Runtime/PhysicsBone/EZPhysicsBoneForce.cs
+      fileObject: {fileID: 11500000, guid: b3e0e7a7eb454834a9a4d800966e3c40, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-27 15:33:33
+      orgnization: 
+      lineCount: 67
+      validLineCount: 59
+    - filePath: Assets/EZUnity/Runtime/PhysicsBone/EZPhysicsBoneMaterial.cs
+      fileObject: {fileID: 11500000, guid: 4d9d9656f4da33d48a28beaf0dfd13df, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-20 11:07:33
+      orgnization: 
+      lineCount: 70
+      validLineCount: 64
+    - filePath: Assets/EZUnity/Runtime/Platform/Android/EZUtility.cs
+      fileObject: {fileID: 11500000, guid: 2cf77f26ceb070541ba2baa919751f9b, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-02-01 17:26:47
+      orgnization: 
+      lineCount: 117
+      validLineCount: 112
+    - filePath: Assets/EZUnity/Runtime/Playables/EZActivationBehaviour.cs
+      fileObject: {fileID: 11500000, guid: 7dbb22104d057e2469a15979a8a58b82, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-16 16:19:22
+      orgnization: 
+      lineCount: 15
+      validLineCount: 14
+    - filePath: Assets/EZUnity/Runtime/Playables/EZActivationClip.cs
+      fileObject: {fileID: 11500000, guid: 556b21cc23cb53d4491d7bcad357cfeb, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-16 16:13:31
+      orgnization: 
+      lineCount: 22
+      validLineCount: 20
+    - filePath: Assets/EZUnity/Runtime/Playables/EZActivationMixer.cs
+      fileObject: {fileID: 11500000, guid: 9af108ee9e8a1904687cdf333e0eb48f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-16 16:22:37
+      orgnization: 
+      lineCount: 39
+      validLineCount: 37
+    - filePath: Assets/EZUnity/Runtime/Playables/EZActivationTrack.cs
+      fileObject: {fileID: 11500000, guid: acfc3f4ec4adce94bb188ff83ee3432c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-16 16:04:35
+      orgnization: 
+      lineCount: 34
+      validLineCount: 32
+    - filePath: Assets/EZUnity/Runtime/Playables/EZMaterialBehaviour.cs
+      fileObject: {fileID: 11500000, guid: d138d827550a1554facbc377a60a2f5d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-24 14:03:36
+      orgnization: 
+      lineCount: 34
+      validLineCount: 30
+    - filePath: Assets/EZUnity/Runtime/Playables/EZMaterialClip.cs
+      fileObject: {fileID: 11500000, guid: eb6d385b0b1c0874bbd9f8adea8e7c1f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-24 14:11:14
+      orgnization: 
+      lineCount: 20
+      validLineCount: 18
+    - filePath: Assets/EZUnity/Runtime/Playables/EZMaterialTrack.cs
+      fileObject: {fileID: 11500000, guid: 7f4f988eda45fe44c97c0f35a29191f7, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-10-24 14:14:25
+      orgnization: 
+      lineCount: 17
+      validLineCount: 15
+    - filePath: Assets/EZUnity/Runtime/Playables/EZTransformTweenBehaviour.cs
+      fileObject: {fileID: 11500000, guid: 30383eee984ed314dbc1613b3f6f8dca, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-22 21:35:32
+      orgnization: 
+      lineCount: 45
+      validLineCount: 40
+    - filePath: Assets/EZUnity/Runtime/Playables/EZTransformTweenClip.cs
+      fileObject: {fileID: 11500000, guid: da0840c8fe91a9c4fba3e41fa0187d48, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-22 21:36:01
+      orgnization: 
+      lineCount: 29
+      validLineCount: 26
+    - filePath: Assets/EZUnity/Runtime/Playables/EZTransformTweenMixer.cs
+      fileObject: {fileID: 11500000, guid: 2c33c7299521daa4b9fc1041a46ee018, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-14 11:25:05
+      orgnization: 
+      lineCount: 101
+      validLineCount: 91
+    - filePath: Assets/EZUnity/Runtime/Playables/EZTransformTweenTrack.cs
+      fileObject: {fileID: 11500000, guid: ee0faddaa1c30064a8c0449ccde2fa47, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-06-22 21:36:33
+      orgnization: 
+      lineCount: 39
+      validLineCount: 36
+    - filePath: Assets/EZUnity/Runtime/Playables/Keyframe.cs
+      fileObject: {fileID: 11500000, guid: 0cf3875445b5e5443825c490dbdc47ce, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-04-12 10:14:27
+      orgnization: 
+      lineCount: 39
+      validLineCount: 34
+    - filePath: Assets/EZUnity/Runtime/Playables/KeyframeBehaviour.cs
+      fileObject: {fileID: 11500000, guid: 1ce28eab399260748ab4c50a1d72ea88, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-04-17 10:35:36
+      orgnization: 
+      lineCount: 62
+      validLineCount: 57
+    - filePath: Assets/EZUnity/Runtime/Playables/KeyframeClip.cs
+      fileObject: {fileID: 11500000, guid: 73bec531f1dd8dc41a9bc7138c89fca9, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-04-17 10:35:16
+      orgnization: 
+      lineCount: 34
+      validLineCount: 31
+    - filePath: Assets/EZUnity/Runtime/Playables/KeyframeUtility.cs
+      fileObject: {fileID: 11500000, guid: 5f7e65f59c897784686cdce21a70ccc2, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-04-12 15:20:40
+      orgnization: 
+      lineCount: 119
+      validLineCount: 116
+    - filePath: Assets/EZUnity/Runtime/PostEffects/EZDepthEffects.cs
+      fileObject: {fileID: 11500000, guid: 502a82e5b3792334c9a91f7051a4648c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-31 16:30:04
+      orgnization: 
+      lineCount: 44
+      validLineCount: 40
+    - filePath: Assets/EZUnity/Runtime/Switcher/EZGameObjectSwitcher.cs
+      fileObject: {fileID: 11500000, guid: 4196dd0d9b514f24ebf451b44c92af16, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-03-21 19:11:54
+      orgnization: 
+      lineCount: 36
+      validLineCount: 32
+    - filePath: Assets/EZUnity/Runtime/Switcher/EZMaterialSwitcher.cs
+      fileObject: {fileID: 11500000, guid: 4bc01632fac8b5f459dee5839299ac0a, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-04-17 15:52:08
+      orgnization: 
+      lineCount: 28
+      validLineCount: 25
+    - filePath: Assets/EZUnity/Runtime/Switcher/EZSwitcher.cs
+      fileObject: {fileID: 11500000, guid: 7488d86498d4e6e42bde949ef1115ac3, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-04-17 15:25:24
+      orgnization: 
+      lineCount: 44
+      validLineCount: 38
+    - filePath: Assets/EZUnity/Runtime/Switcher/EZTimelineSwitcher.cs
+      fileObject: {fileID: 11500000, guid: 9c9841ee7b8087549897bf453ee5503c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-05-18 10:06:26
+      orgnization: 
+      lineCount: 23
+      validLineCount: 21
+    - filePath: Assets/EZUnity/Runtime/UniSDK/AccountBase.cs
+      fileObject: {fileID: 11500000, guid: 494c90d37880d09418c3716ce9e0a7df, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-01-09 17:51:53
+      orgnization: 
+      lineCount: 80
+      validLineCount: 73
+    - filePath: Assets/EZUnity/Runtime/UniSDK/Notification.cs
+      fileObject: {fileID: 11500000, guid: 686d940fa8e4f414ab3b1229f4201fe6, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-01-16 12:13:04
+      orgnization: 
+      lineCount: 74
+      validLineCount: 70
+    - filePath: Assets/EZUnity/Runtime/UniSDK/NotificationBase.cs
+      fileObject: {fileID: 11500000, guid: 420c79ea856f19c4ea673f4609805229, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-01-16 11:54:38
+      orgnization: 
+      lineCount: 87
+      validLineCount: 73
+    - filePath: Assets/EZUnity/Runtime/UniSDK/PolyAD.cs
+      fileObject: {fileID: 11500000, guid: 5b8f96e427f023a41a9176e4dabe28c9, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-07-24 14:43:03
+      orgnization: 
+      lineCount: 93
+      validLineCount: 86
+    - filePath: Assets/EZUnity/Runtime/UniSDK/PolyADBase.cs
+      fileObject: {fileID: 11500000, guid: 258d0f6457fd7454db549bd5e2208ca6, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-01-08 18:19:35
+      orgnization: 
+      lineCount: 197
+      validLineCount: 188
+    - filePath: Assets/EZUnity/Runtime/UniSDK/UnityPurchasing.cs
+      fileObject: {fileID: 11500000, guid: 1cd6cedfdb5ca2b4f86b2ead53849cbb, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2017-07-19 10:53:58
+      orgnization: 
+      lineCount: 140
+      validLineCount: 136
+    - filePath: Assets/EZUnity/Runtime/UniSDK/UnityPurchasingBase.cs
+      fileObject: {fileID: 11500000, guid: 0a7d7e4b293b9de43af1abc456bd44d6, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-01-12 12:24:57
+      orgnization: 
+      lineCount: 118
+      validLineCount: 110
+    - filePath: Assets/EZUnity/Runtime/UniSDK/_Delegates.cs
+      fileObject: {fileID: 11500000, guid: 607f4fa3bb6893940a018cc231ea3ec5, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-03-12 13:52:22
+      orgnization: 
+      lineCount: 14
+      validLineCount: 12
+    - filePath: Assets/EZUnity/Shaders/Fur.shader
+      fileObject: {fileID: 4800000, guid: 484e3a15ea4dd114c9ab51115470592e, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-06 11:42:19
+      orgnization: 
+      lineCount: 194
+      validLineCount: 163
+    - filePath: Assets/EZUnity/Shaders/Matcap.shader
+      fileObject: {fileID: 4800000, guid: 6fd7775d4bead024889c1d23c4ca3f46, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-22 19:33:10
+      orgnization: 
+      lineCount: 116
+      validLineCount: 100
+    - filePath: Assets/EZUnity/Shaders/_Debug.shader
+      fileObject: {fileID: 4800000, guid: e12be64f21cf1b941a103fae8f16eb2a, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-09-18 15:34:29
+      orgnization: 
+      lineCount: 79
+      validLineCount: 70
+    - filePath: Assets/EZUnity/Shaders/_Dummy.shader
+      fileObject: {fileID: 4800000, guid: f7300645d9df4ed429b35224d52f4046, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: '#CREATETIME#'
+      orgnization: 
+      lineCount: 22
+      validLineCount: 21
+    - filePath: Assets/EZUnity/Shaders/Effects/Effects_EZOutline.shader
+      fileObject: {fileID: 4800000, guid: 7baa7d2efa82cea4ba5749e8533fba11, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-31 16:41:15
+      orgnization: 
+      lineCount: 89
+      validLineCount: 78
+    - filePath: Assets/EZUnity/Shaders/Effects/Effects_EZReflection.shader
+      fileObject: {fileID: 4800000, guid: 2c2235abee4d1d5478883a6499c5527a, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-02-18 16:44:03
+      orgnization: 
+      lineCount: 53
+      validLineCount: 47
+    - filePath: Assets/EZUnity/Shaders/Surface/ColorFilter.shader
+      fileObject: {fileID: 4800000, guid: 8656d4a5248b35b4791d61275dec365f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: '#CREATETIME#'
+      orgnization: 
+      lineCount: 54
+      validLineCount: 46
+    - filePath: Assets/EZUnity/Shaders/Surface/StripeCutoff.shader
+      fileObject: {fileID: 4800000, guid: 75f34ae1b1fde5f41b09cb75a1dadf8c, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: '#CREATETIME#'
+      orgnization: 
+      lineCount: 58
+      validLineCount: 51
+    - filePath: Assets/EZUnity/Shaders/Unlit/Advanced(Black).shader
+      fileObject: {fileID: 4800000, guid: 49ef0ea425dd2314d9e00eed81175903, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-11 14:59:08
+      orgnization: 
+      lineCount: 72
+      validLineCount: 63
+    - filePath: Assets/EZUnity/Shaders/Unlit/Advanced.shader
+      fileObject: {fileID: 4800000, guid: 3174e1680008a9f4bacecc496f190e36, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-12-11 14:56:26
+      orgnization: 
+      lineCount: 72
+      validLineCount: 63
+    - filePath: Assets/EZUnity/Shaders/Unlit/DynamicFlame.shader
+      fileObject: {fileID: 4800000, guid: 15859192ab2260a4d9c163c8b307fff5, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-07-31 16:44:46
+      orgnization: 
+      lineCount: 123
+      validLineCount: 113
+    - filePath: Assets/EZUnity/Shaders/Unlit/DynamicGas.shader
+      fileObject: {fileID: 4800000, guid: 92f5317397f1ce04d88ccdc159d4a238, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-24 10:11:02
+      orgnization: 
+      lineCount: 103
+      validLineCount: 87
+    - filePath: Assets/EZUnity/Shaders/Unlit/DynamicLiquid.shader
+      fileObject: {fileID: 4800000, guid: e05eb72ca43a0a54586bfe0faeaef670, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-24 10:11:02
+      orgnization: 
+      lineCount: 136
+      validLineCount: 116
+    - filePath: Assets/EZUnity/Shaders/Unlit/EdgeFadeOut.shader
+      fileObject: {fileID: 4800000, guid: 52b70a777d4880c4c9948d3e6294894a, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-08 11:14:59
+      orgnization: 
+      lineCount: 66
+      validLineCount: 55
+    - filePath: Assets/EZUnity/Shaders/Unlit/MultiTexture3x.shader
+      fileObject: {fileID: 4800000, guid: f6c36ce0485215a43aac05773245e94d, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-08-24 13:48:29
+      orgnization: 
+      lineCount: 139
+      validLineCount: 123
+    - filePath: Assets/EZUnity/Shaders/Unlit/Pattern.shader
+      fileObject: {fileID: 4800000, guid: 80af8b7f7384f7e409ffb4acb319b08e, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-01-16 14:02:40
+      orgnization: 
+      lineCount: 132
+      validLineCount: 119
+    - filePath: Assets/EZUnity/Shaders/Unlit/Simple(Black).shader
+      fileObject: {fileID: 4800000, guid: 1d515503b957e3749879270935689741, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-11 15:57:05
+      orgnization: 
+      lineCount: 49
+      validLineCount: 43
+    - filePath: Assets/EZUnity/Shaders/Unlit/Simple(Slide).shader
+      fileObject: {fileID: 4800000, guid: db50e6b0dad1f5d459c59913c892aa72, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2018-07-31 16:44:46
+      orgnization: 
+      lineCount: 55
+      validLineCount: 47
+    - filePath: Assets/EZUnity/Shaders/Unlit/Simple.shader
+      fileObject: {fileID: 4800000, guid: 869a7c3155f120840b17b60100fd60e6, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-11 15:57:05
+      orgnization: 
+      lineCount: 49
+      validLineCount: 43
+    - filePath: Assets/EZUnity/Shaders/CGIncludes/EZUnity.cginc
+      fileObject: {fileID: 10900000, guid: e7837496388bb294db063c0ad9876287, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-06 20:21:31
+      orgnization: 
+      lineCount: 100
+      validLineCount: 95
+    - filePath: Assets/EZUnity/Shaders/CGIncludes/Fur.cginc
+      fileObject: {fileID: 10900000, guid: f667e44e161927947841901e98f8766f, type: 3}
+      author: ezhex1991@outlook.com
+      createTime: 2019-03-06 13:42:09
+      orgnization: 
+      lineCount: 139
+      validLineCount: 115
+    foldout: 0
+  - author: '#AUTHORNAME#'
+    lineCount: 11
+    validLineCount: 10
+    proportion: 0.0006504488
+    scriptList:
+    - filePath: Assets/EZUnity/Demo/ScriptTemplates/90-EZUnity__LuaScript-NewLuaScript.lua.txt
+      fileObject: {fileID: 4900000, guid: 5a875367afed7b84185f7bf3053f6f87, type: 3}
+      author: '#AUTHORNAME#'
+      createTime: '#CREATETIME#'
+      orgnization: 
+      lineCount: 11
+      validLineCount: 10
+    foldout: 0
+  - author: 
+    lineCount: 349
+    validLineCount: 269
+    proportion: 0.017497074
+    scriptList:
+    - filePath: Assets/EZUnity/Shaders/EZStandard.shader
+      fileObject: {fileID: 4800000, guid: bc7d0791eb3777841b1a316a14013acc, type: 3}
+      author: 
+      createTime: 
+      orgnization: 
+      lineCount: 349
+      validLineCount: 269
+    foldout: 0
