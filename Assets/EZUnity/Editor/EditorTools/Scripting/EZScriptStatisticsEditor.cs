@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CustomEditor(typeof(EZScriptStatisticsObject))]
+    [CustomEditor(typeof(EZScriptStatistics))]
     public class EZScriptStatisticsEditor : Editor
     {
         private static bool showAsAsset;
@@ -27,7 +27,7 @@ namespace EZUnity
         SerializedProperty m_CreateTimeRegex;
         SerializedProperty m_ValidLineRegex;
 
-        EZScriptStatisticsObject targetObject;
+        EZScriptStatistics targetObject;
         private Vector2 scrollPosition;
 
         void OnEnable()
@@ -39,32 +39,22 @@ namespace EZUnity
             m_AuthorRegex = serializedObject.FindProperty("authorRegex");
             m_CreateTimeRegex = serializedObject.FindProperty("createTimeRegex");
             m_ValidLineRegex = serializedObject.FindProperty("validLineRegex");
-            targetObject = target as EZScriptStatisticsObject;
+            targetObject = target as EZScriptStatistics;
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
             EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
-
-            EditorGUILayout.BeginHorizontal();
-            if (targetObject.result.Count != 0)
-            {
-                EditorGUILayout.LabelField("Result Time: " + targetObject.resultTime);
-            }
-            if (GUILayout.Button("Refresh"))
-            {
-                RefreshResult();
-            }
-            EditorGUILayout.EndHorizontal();
-
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+
             EditorGUILayout.LabelField("File Association", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(m_FilePatterns, true);
             EditorGUILayout.PropertyField(m_IncludePaths, true);
             EditorGUILayout.PropertyField(m_ExcludePaths, true);
             EditorGUI.indentLevel--;
+
             EditorGUILayout.LabelField("Analysis", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(m_InfoLineCount);
@@ -76,10 +66,20 @@ namespace EZUnity
                 .AppendLine(@"'^\W*(\S+)[\S\s]*$': line contains non-white-space characters")
                 .ToString(), MessageType.Info);
             EditorGUI.indentLevel--;
-            EditorGUILayout.LabelField("Result", EditorStyles.boldLabel);
+
+            if (GUILayout.Button("Refresh"))
+            {
+                RefreshResult();
+            }
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Result: " + targetObject.resultTime, EditorStyles.boldLabel);
+            showAsAsset = EditorGUILayout.Toggle("Show Script As TextAsset", showAsAsset);
+            EditorGUILayout.EndHorizontal();
             EditorGUI.indentLevel++;
             DrawResult(targetObject);
             EditorGUI.indentLevel--;
+
             EditorGUILayout.EndScrollView();
             serializedObject.ApplyModifiedProperties();
         }
@@ -130,9 +130,9 @@ namespace EZUnity
             if (targetObject.result.Count != 0)
             {
                 string assetPath = AssetDatabase.GetAssetPath(target);
-                string fileName = EZScriptStatisticsObject.AssetName + "-" + targetObject.resultTime;
+                string fileName = EZScriptStatistics.AssetName + "-" + targetObject.resultTime;
                 string filePath = assetPath.Replace(target.name, fileName);
-                AssetDatabase.CreateAsset(Instantiate(target as EZScriptStatisticsObject), filePath);
+                AssetDatabase.CreateAsset(Instantiate(target as EZScriptStatistics), filePath);
             }
         }
         private bool IsValidPath(string filePath)
@@ -193,10 +193,8 @@ namespace EZUnity
             }
         }
 
-        private void DrawResult(EZScriptStatisticsObject targetObject)
+        private void DrawResult(EZScriptStatistics targetObject)
         {
-            showAsAsset = EditorGUILayout.Toggle("Show Script As TextAsset", showAsAsset);
-
             foreach (Contributor contributor in targetObject.result)
             {
                 EditorGUILayout.BeginHorizontal();
