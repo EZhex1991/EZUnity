@@ -19,7 +19,8 @@ namespace EZUnity
         static EZScriptSettings()
         {
             string oldPath = "ProjectSettings/EZScriptTemplate.asset";
-            if (File.Exists(oldPath)) File.Move(oldPath, "ProjectSettings/EZScriptSettings.asset");
+            string newPath = "ProjectSettings/EZScriptSettings.asset";
+            if (File.Exists(oldPath) && !File.Exists(newPath)) File.Move(oldPath, newPath);
         }
 
         [Serializable]
