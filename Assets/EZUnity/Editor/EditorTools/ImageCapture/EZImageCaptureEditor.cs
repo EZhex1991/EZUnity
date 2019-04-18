@@ -40,11 +40,14 @@ namespace EZUnity
             }
 
             EditorGUILayout.Space();
-            if (GUILayout.Button("Screen Capture"))
+            EditorGUILayout.HelpBox("Game View Capture is only available when playing", MessageType.Info);
+            GUI.enabled = EditorApplication.isPlaying;
+            if (GUILayout.Button("Game View Capture"))
             {
                 if (!string.IsNullOrEmpty(m_FilePath.stringValue)) Directory.CreateDirectory(m_FilePath.stringValue);
                 capturer.ScreenCapture(GetPath());
             }
+            GUI.enabled = true;
 
             EditorGUILayout.Space();
             camera = (Camera)EditorGUILayout.ObjectField("Target Camera", camera, typeof(Camera), true);
