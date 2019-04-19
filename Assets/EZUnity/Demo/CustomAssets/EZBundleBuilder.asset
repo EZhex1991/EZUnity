@@ -12,21 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabd12fc7fdeeaa48934346a03029e5d, type: 3}
   m_Name: EZBundleBuilder
   m_EditorClassIdentifier: 
-  buildTarget: 5
+  buildTarget: 13
   outputPath: Assets/StreamingAssets
   listFileName: files.txt
   managerMode: 0
   forceRebuild: 0
   copyList: []
   bundleList:
-  - bundleName: demo
+  - bundleName: script_lua
     filePattern: '*.*'
     searchOption: 1
-    dirPath: EZUnity/Demo
-  - bundleName: demo_assets
-    filePattern: '*.*'
-    searchOption: 1
-    dirPath: EZUnity/DemoAssets
+    dirPath: Assets/Example/Script_Lua_txt
+  - bundleName: spaceshooter_assets
+    filePattern: '*.prefab'
+    searchOption: 0
+    dirPath: Assets/Example/02_SpaceShooter/_Complete-Lua
+  - bundleName: spaceshooter
+    filePattern: SpaceShooter.unity
+    searchOption: 0
+    dirPath: Assets/Example/02_SpaceShooter/_Complete-Lua
   copyListFoldout: 1
   bundleListFoldout: 1
   showAssets: 0

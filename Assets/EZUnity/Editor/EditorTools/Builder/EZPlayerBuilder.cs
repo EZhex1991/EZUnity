@@ -104,6 +104,9 @@ namespace EZUnity
                 case BuildTarget.StandaloneWindows64:
                     options.locationPathName = string.Format("{0}/{1}.exe", path, PlayerSettings.productName);
                     break;
+                case BuildTarget.Android:
+                    options.locationPathName = string.Format("{0}.apk", path);
+                    break;
                 default:
                     options.locationPathName = path;
                     break;
