@@ -77,15 +77,6 @@ namespace EZUnity
             }
         }
 
-        public static void BlendMode(this MaterialEditor materialEditor, MaterialProperty property)
-        {
-            materialEditor.EnumPopup<UnityEngine.Rendering.BlendMode>(property);
-        }
-        public static void CullMode(this MaterialEditor materialEditor, MaterialProperty property)
-        {
-            materialEditor.EnumPopup<UnityEngine.Rendering.CullMode>(property);
-        }
-
         public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, params GUILayoutOption[] options) where T : Enum
         {
             materialEditor.EnumPopup<T>(property, (mat, selection) =>

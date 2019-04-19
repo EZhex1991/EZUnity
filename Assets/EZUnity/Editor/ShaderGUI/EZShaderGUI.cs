@@ -136,13 +136,13 @@ public class EZShaderGUI : ShaderGUI
             {
                 materialEditor.ShaderProperty(_AlphaClipThreshold);
             }
-            materialEditor.BlendMode(_SrcBlendMode);
-            materialEditor.BlendMode(_DstBlendMode);
+            materialEditor.ShaderProperty(_SrcBlendMode);
+            materialEditor.ShaderProperty(_DstBlendMode);
             materialEditor.Toggle(_ZWriteMode);
             EditorGUI.indentLevel--;
         }
 
-        materialEditor.CullMode(_CullMode);
+        materialEditor.ShaderProperty(_CullMode);
         materialEditor.ShaderProperty(_OffsetFactor);
         materialEditor.ShaderProperty(_OffsetUnit);
 
