@@ -16,6 +16,7 @@ MonoBehaviour:
   textureFormat: 3
   targetTexture: {fileID: 2800000, guid: 3fb227a27302a1243bf9d8d91656722f, type: 3}
   referenceTexture: {fileID: 2800000, guid: b265333c3b2169741a8bdf4bedd584c8, type: 3}
+  overrideTextureR: {fileID: 0}
   channelR: 1
   curveR:
     serializedVersion: 2
@@ -41,6 +42,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  overrideTextureG: {fileID: 0}
   channelG: 0
   curveG:
     serializedVersion: 2
@@ -66,7 +68,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  channelB: 2
+  overrideTextureB: {fileID: 2800000, guid: 13da0421737d9f947a9e1684bcbcc7ce, type: 3}
+  channelB: 1
   curveB:
     serializedVersion: 2
     m_Curve:
@@ -91,6 +94,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  overrideTextureA: {fileID: 0}
   channelA: 3
   curveA:
     serializedVersion: 2
