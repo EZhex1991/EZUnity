@@ -64,5 +64,23 @@ namespace EZUnity
             importer.isReadable = true;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
         }
+
+        public enum Channel { R, G, B, A }
+        public static float GetChannel(Color color, Channel channel)
+        {
+            switch (channel)
+            {
+                case Channel.R:
+                    return color.r;
+                case Channel.G:
+                    return color.g;
+                case Channel.B:
+                    return color.b;
+                case Channel.A:
+                    return color.a;
+                default:
+                    return 0;
+            }
+        }
     }
 }
