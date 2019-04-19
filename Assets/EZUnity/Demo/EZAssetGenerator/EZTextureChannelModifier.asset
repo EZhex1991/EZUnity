@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EZTextureChannelModifier
   m_EditorClassIdentifier: 
   resolution: {x: 256, y: 256}
-  textureFormat: 3
+  textureFormat: 4
   targetTexture: {fileID: 2800000, guid: 3fb227a27302a1243bf9d8d91656722f, type: 3}
   referenceTexture: {fileID: 2800000, guid: b265333c3b2169741a8bdf4bedd584c8, type: 3}
   overrideTextureR: {fileID: 0}
