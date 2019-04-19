@@ -3,13 +3,13 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Unlit/DynamicLiquid" {
+Shader "EZUnity/Unlit/DynamicFluid" {
 	Properties {
 		[Header(Base)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
-		[Header(Glossy)]
+		[Header(Trasparency)]
 		[PowerSlider(8)]_AlphaPower ("Alpha Power", Range(0.1, 128)) = 4
 		_Refrection ("Refrection", Vector) = (1.1, 1.2, 1.3, 1)
 
