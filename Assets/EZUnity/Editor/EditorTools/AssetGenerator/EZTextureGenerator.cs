@@ -12,7 +12,7 @@ namespace EZUnity
     public abstract class EZTextureGenerator : ScriptableObject
     {
         public Vector2Int resolution = new Vector2Int(256, 256);
-        public TextureFormat textureFormat = TextureFormat.RGB24;
+        public TextureFormat textureFormat = TextureFormat.RGBA32;
         [UnityEngine.Serialization.FormerlySerializedAs("textureReference")]
         public Texture2D targetTexture;
 
