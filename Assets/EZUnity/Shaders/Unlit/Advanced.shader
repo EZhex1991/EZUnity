@@ -10,14 +10,14 @@ Shader "EZUnity/Unlit/Advanced" {
 		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
 		
 		// Rendering Settings
-		[KeywordEnum(None, AlphaTest, AlphaBlend, AlphaPremultiply)] _AlphaMode ("Alpha Mode", Float) = 0
-		_AlphaClipThreshold ("Alpha Clip Threshold", Range(0, 1)) = 0.5
-		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlendMode ("Src Blend Mode", Float) = 1
-		[Enum(UnityEngine.Rendering.BlendMode)] _DstBlendMode ("Dst Blend Mode", Float) = 0
-		[Toggle] _ZWriteMode ("ZWrite", Float) = 1
-		[Enum(UnityEngine.Rendering.CullMode)] _CullMode ("Cull Mode", Float) = 2
-		_OffsetFactor ("Offset Factor", Float) = 0
-		_OffsetUnit ("Offset Unit", Float) = 0
+		[HideInInspector][KeywordEnum(None, AlphaTest, AlphaBlend, AlphaPremultiply)] _AlphaMode ("Alpha Mode", Float) = 0
+		[HideInInspector]_AlphaClipThreshold ("Alpha Clip Threshold", Range(0, 1)) = 0.5
+		[HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _SrcBlendMode ("Src Blend Mode", Float) = 1
+		[HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _DstBlendMode ("Dst Blend Mode", Float) = 0
+		[HideInInspector][Toggle] _ZWriteMode ("ZWrite", Float) = 1
+		[HideInInspector][Enum(UnityEngine.Rendering.CullMode)] _CullMode ("Cull Mode", Float) = 2
+		[HideInInspector]_OffsetFactor ("Offset Factor", Float) = 0
+		[HideInInspector]_OffsetUnit ("Offset Unit", Float) = 0
 	}
 	CustomEditor "EZRenderingSettingsShaderGUI"
 	SubShader {
