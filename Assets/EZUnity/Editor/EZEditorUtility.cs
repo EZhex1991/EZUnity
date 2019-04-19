@@ -18,7 +18,8 @@ namespace EZUnity
         public static IEnumerable<Type> GetAllTypes(bool excludeGeneric = true)
         {
             List<Type> types = new List<Type>();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where((assembly) => !assembly.IsDynamic);
             foreach (Assembly assembly in assemblies)
             {
                 types.AddRange((from type in assembly.GetExportedTypes()

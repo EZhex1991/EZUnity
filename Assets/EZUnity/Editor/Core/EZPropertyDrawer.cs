@@ -46,7 +46,6 @@ namespace EZUnity
             string assemblyName = assembly.GetName().Name;
             // filter out editor assemblies
             if (assemblyName.StartsWith("UnityEditor") || assemblyName.EndsWith("Editor")) return false;
-            Debug.Log(assemblyName);
             // package assemblies or project assemblies
             if (assemblyName.StartsWith("Unity") || assemblyName == "Assembly-CSharp") return true;
             return false;
