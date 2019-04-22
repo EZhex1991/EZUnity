@@ -381,8 +381,6 @@ MonoBehaviour:
   m_StartDepth: 2
   m_EndNodeLength: 0
   m_Material: {fileID: 11400000, guid: dd5e3de4c577af841a5059eb6372e000, type: 2}
-  m_UpdateMode: 0
-  m_MinDeltaTime: 0.02
   m_SleepThreshold: 0.05
   m_CollisionLayers:
     serializedVersion: 2
@@ -413,7 +411,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Gravity: {x: 0, y: -2, z: 0}
+  m_Gravity: {x: 0, y: -0.1, z: 0}
   m_ForceModule: {fileID: 303139638}
 --- !u!4 &260083085
 Transform:
@@ -461,8 +459,6 @@ MonoBehaviour:
   m_StartDepth: 2
   m_EndNodeLength: 0
   m_Material: {fileID: 11400000, guid: a36058e28b63a5949b4a88f8602f302e, type: 2}
-  m_UpdateMode: 0
-  m_MinDeltaTime: 0.02
   m_SleepThreshold: 0.05
   m_CollisionLayers:
     serializedVersion: 2
@@ -493,7 +489,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Gravity: {x: 0, y: -2, z: 0}
+  m_Gravity: {x: 0, y: -0.1, z: 0}
   m_ForceModule: {fileID: 303139638}
 --- !u!1 &303139637
 GameObject:
@@ -525,8 +521,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UseLocalDirection: 0
-  m_Direction: {x: -2, y: 2, z: 0}
-  m_Turbulence: {x: 5, y: -5, z: 10}
+  m_Direction: {x: -0.1, y: 0.1, z: 0}
+  m_Turbulence: {x: 0.25, y: -0.25, z: 0.5}
   m_TurbulenceTimeCycle: 10
   m_Conductivity: 0.1
   m_TurbulenceXCurve:

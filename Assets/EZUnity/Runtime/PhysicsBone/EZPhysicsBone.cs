@@ -331,7 +331,7 @@ namespace EZUnity.PhysicsCompnent
                 {
                     force += forceModule.GetForce(node.normalizedLength);
                 }
-                node.position += force * deltaTime * (1 - sharedMaterial.GetResistance(node.normalizedLength));
+                node.position += force * (1 - sharedMaterial.GetResistance(node.normalizedLength));
 
                 // Stiffness (shape keeper)
                 Vector3 parentOffset = node.parent.position - node.parent.transform.position;
