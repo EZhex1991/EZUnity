@@ -17,9 +17,9 @@ namespace EZUnity
 
         public static void WindowTitle(EditorWindow target)
         {
-            EditorGUILayout.LabelField(target.titleContent.text, EditorStyles.centeredGreyMiniLabel);
             GUI.enabled = false;
             EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target), typeof(MonoScript), false);
+            EditorGUILayout.Space();
             GUI.enabled = true;
         }
         public static void ScriptableObjectTitle(ScriptableObject target, bool showTarget = true)
