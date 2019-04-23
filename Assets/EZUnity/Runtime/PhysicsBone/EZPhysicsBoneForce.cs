@@ -57,7 +57,7 @@ namespace EZUnity.PhysicsCompnent
 
         private void OnDrawGizmosSelected()
         {
-            Vector3 force0 = GetForce(0);
+            Vector3 force0 = GetForce(0) * 50;
             float width = force0.magnitude * 0.2f;
             Gizmos.DrawRay(transform.position, force0);
             EZUtility.DrawGizmosArrow(transform.position, force0, width, transform.up);
