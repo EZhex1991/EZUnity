@@ -76,13 +76,17 @@ namespace EZUnity
         {
             EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefs Editor").Show();
         }
+        [MenuItem(ROOT_NAME + "/Color Blender", false, PRIORITY + 1107)]
+        private static void ColorBlender()
+        {
+            EditorWindow.GetWindow<EZColorBlender>("Color Blender").Show();
+        }
 
         [MenuItem(ROOT_NAME + "/Experimental/Shader Keyword Manager", false, PRIORITY + 5001)]
         private static void ShaderKeywordManager()
         {
             EditorWindow.GetWindow<EZShaderKeywordManager>("Keyword Manager").Show();
         }
-
 
         [SettingsProvider]
         private static SettingsProvider CreateEZScriptSettingsProvider()
