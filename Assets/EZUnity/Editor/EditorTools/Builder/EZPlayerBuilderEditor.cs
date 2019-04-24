@@ -51,35 +51,7 @@ namespace EZUnity
             {
                 EditorGUILayout.LabelField("Build", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(m_ConfigButDontBuild);
-                if (GUILayout.Button("Android"))
-                {
-                    playerBuilder.Execute(BuildTargetGroup.Android, BuildTarget.Android);
-                    GUIUtility.ExitGUI();
-                }
-                if (GUILayout.Button("iOS"))
-                {
-                    playerBuilder.Execute(BuildTargetGroup.iOS, BuildTarget.iOS);
-                    GUIUtility.ExitGUI();
-                }
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    if (GUILayout.Button("Windows"))
-                    {
-                        playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
-                        GUIUtility.ExitGUI();
-                    }
-                    if (GUILayout.Button("Windows64"))
-                    {
-                        playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
-                        GUIUtility.ExitGUI();
-                    }
-                    if (GUILayout.Button("OSX"))
-                    {
-                        playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
-                        GUIUtility.ExitGUI();
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
+                DrawBuildButtons();
                 EditorGUILayout.Space();
             }
 
@@ -115,6 +87,38 @@ namespace EZUnity
             EditorGUILayout.PropertyField(m_Icon);
 
             serializedObject.ApplyModifiedProperties();
+        }
+        public void DrawBuildButtons()
+        {
+            if (GUILayout.Button("Android"))
+            {
+                playerBuilder.Execute(BuildTargetGroup.Android, BuildTarget.Android);
+                GUIUtility.ExitGUI();
+            }
+            if (GUILayout.Button("iOS"))
+            {
+                playerBuilder.Execute(BuildTargetGroup.iOS, BuildTarget.iOS);
+                GUIUtility.ExitGUI();
+            }
+            {
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Windows"))
+                {
+                    playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
+                    GUIUtility.ExitGUI();
+                }
+                if (GUILayout.Button("Windows64"))
+                {
+                    playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
+                    GUIUtility.ExitGUI();
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            if (GUILayout.Button("OSX"))
+            {
+                playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+                GUIUtility.ExitGUI();
+            }
         }
     }
 }

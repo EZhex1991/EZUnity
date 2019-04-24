@@ -14,7 +14,6 @@ namespace EZUnity
     {
         private EZBundleBuilder bundleBuilder;
 
-        private SerializedProperty m_BuildTarget;
         private SerializedProperty m_OutputPath;
         private SerializedProperty m_ListFileName;
         private SerializedProperty m_ManagerMode;
@@ -36,7 +35,6 @@ namespace EZUnity
         void OnEnable()
         {
             bundleBuilder = target as EZBundleBuilder;
-            m_BuildTarget = serializedObject.FindProperty("buildTarget");
             m_OutputPath = serializedObject.FindProperty("outputPath");
             m_ListFileName = serializedObject.FindProperty("listFileName");
             m_ManagerMode = serializedObject.FindProperty("managerMode");
@@ -60,10 +58,16 @@ namespace EZUnity
             serializedObject.Update();
             EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject, !serializedObject.isEditingMultipleObjects);
 
-            DrawFunctionButtons();
+            if (!serializedObject.isEditingMultipleObjects)
+            {
+                EditorGUILayout.LabelField("Build", EditorStyles.boldLabel);
+                DrawBuildButtons();
+                EditorGUILayout.Space();
+            }
+
+            EditorGUILayout.LabelField("Build Options", EditorStyles.boldLabel);
             DrawBaseProperties();
 
-            EditorGUILayout.Space();
             if (m_CopyListFoldout.boolValue = EditorGUILayout.Foldout(m_CopyListFoldout.boolValue, string.Format("Copy List ({0})", copyList.count)))
             {
                 copyList.DoLayoutList();
@@ -91,16 +95,36 @@ namespace EZUnity
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void DrawFunctionButtons()
+        private void DrawBuildButtons()
         {
-            if (GUILayout.Button("Build Bundle"))
+            if (GUILayout.Button("Android"))
             {
-                EditorApplication.delayCall += delegate () { bundleBuilder.Execute(); };
+                EditorApplication.delayCall += delegate () { bundleBuilder.Execute(BuildTarget.Android); };
+            }
+            if (GUILayout.Button("iOS"))
+            {
+                EditorApplication.delayCall += delegate () { bundleBuilder.Execute(BuildTarget.iOS); };
+            }
+            {
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button("Windows"))
+                {
+                    EditorApplication.delayCall += delegate () { bundleBuilder.Execute(BuildTarget.StandaloneWindows); };
+                }
+                if (GUILayout.Button("Windows64"))
+                {
+                    EditorApplication.delayCall += delegate () { bundleBuilder.Execute(BuildTarget.StandaloneWindows64); };
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            if (GUILayout.Button("OSX"))
+            {
+                EditorApplication.delayCall += delegate () { bundleBuilder.Execute(BuildTarget.StandaloneOSX); };
             }
         }
+
         private void DrawBaseProperties()
         {
-            EditorGUILayout.PropertyField(m_BuildTarget);
             EditorGUILayout.PropertyField(m_OutputPath);
             EditorGUILayout.PropertyField(m_ListFileName);
             EditorGUILayout.PropertyField(m_ForceRebuild);

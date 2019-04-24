@@ -67,7 +67,6 @@ namespace EZUnity
         protected const char DELIMITER = '|';
         protected static BuildAssetBundleOptions buildOptions = BuildAssetBundleOptions.DeterministicAssetBundle;
 
-        public BuildTarget buildTarget = BuildTarget.Android;
         public string outputPath = "Assets/StreamingAssets";
         public string listFileName = "files.txt";
         public bool managerMode = false;
@@ -82,10 +81,6 @@ namespace EZUnity
         public AssetsViewOption showAssets = AssetsViewOption.Object;
         public BundleDependenciesViewOption showDependencies = BundleDependenciesViewOption.Recursive;
 
-        public void Execute()
-        {
-            Execute(buildTarget);
-        }
         public void Execute(BuildTarget buildTarget)
         {
             OnPreBuild();
