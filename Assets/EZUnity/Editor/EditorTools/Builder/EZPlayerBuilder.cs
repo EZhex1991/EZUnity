@@ -4,7 +4,6 @@
  * Description:     
  */
 using System;
-using System.IO;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
@@ -112,7 +111,7 @@ namespace EZUnity
                     break;
             }
             options.target = buildTarget;
-            options.options = BuildOptions.None;
+            options.options = BuildOptions.ShowBuiltPlayer;
             BuildReport report = BuildPipeline.BuildPlayer(options);
             var summary = report.summary;
             switch (summary.result)
@@ -122,7 +121,6 @@ namespace EZUnity
                     break;
                 case BuildResult.Succeeded:
                     Debug.Log("Build Succeeded");
-                    Application.OpenURL(Directory.GetParent(summary.outputPath).FullName);
                     break;
             }
         }
