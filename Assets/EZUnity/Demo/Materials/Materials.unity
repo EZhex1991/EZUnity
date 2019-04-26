@@ -489,12 +489,12 @@ PrefabInstance:
     - target: {fileID: 1939335288039699594, guid: 31b6dc2db4e3bfd4cb80253592f7afa4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1939335288039699594, guid: 31b6dc2db4e3bfd4cb80253592f7afa4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1939335288039699594, guid: 31b6dc2db4e3bfd4cb80253592f7afa4,
         type: 3}
@@ -561,11 +561,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5abe6d77ac5584fb71bfbfc72217ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8400000, guid: 998a8781c362d964993e7fcc1bc7bbb4, type: 2}
+  renderReflection: 1
+  renderRefraction: 1
+  reflectionTexture: {fileID: 8400000, guid: 998a8781c362d964993e7fcc1bc7bbb4, type: 2}
+  refractionTexture: {fileID: 8400000, guid: dafc9e18ca63dfd4ba41af0bcc4080e6, type: 2}
   reflectionLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  reflectionNormal: {x: 0, y: 0, z: 1}
+  refractionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  normalDirection: {x: 0, y: 0, z: 1}
   clipPlaneOffset: 0.05
 --- !u!1 &986443056
 GameObject:

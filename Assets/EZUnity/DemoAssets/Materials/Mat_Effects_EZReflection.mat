@@ -27,6 +27,11 @@ Material:
         m_Texture: {fileID: 8400000, guid: 998a8781c362d964993e7fcc1bc7bbb4, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    - _RefractionTex:
+        m_Texture: {fileID: 8400000, guid: dafc9e18ca63dfd4ba41af0bcc4080e6, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BlendFactor: 0.3
     m_Colors:
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}

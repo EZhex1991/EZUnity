@@ -11,32 +11,46 @@ namespace EZUnity
     [ExecuteInEditMode]
     public class EZReflection : MonoBehaviour
     {
+        public const string TAG_REFLECTION = "EZReflection";
+        public const string TAG_REFRACTION = "EZRefraction";
+
         public static bool isRendering;
 
-        public RenderTexture renderTexture;
+        public bool renderReflection = true;
+        public bool renderRefraction = false;
+
+        [UnityEngine.Serialization.FormerlySerializedAs("renderTexture")]
+        public RenderTexture reflectionTexture;
+        public RenderTexture refractionTexture;
+
         public LayerMask reflectionLayers = -1;
-        public Vector3 reflectionNormal = Vector3.forward;
+        public LayerMask refractionLayers = -1;
+
+        [UnityEngine.Serialization.FormerlySerializedAs("reflectionNormal")]
+        public Vector3 normalDirection = Vector3.forward;
+
         public float clipPlaneOffset = 0.05f;
 
-        private Dictionary<Camera, Camera> reflectionCameras = new Dictionary<Camera, Camera>();
+        private Dictionary<Camera, Camera> m_ReflectionCameras = new Dictionary<Camera, Camera>();
+        private Dictionary<Camera, Camera> m_RefractionCameras = new Dictionary<Camera, Camera>();
 
-        private Camera GetReflectionCamera(Camera camera)
+        private Camera GetRenderCamera(Dictionary<Camera, Camera> dict, Camera targetCamera, string tag)
         {
-            Camera reflectionCamera;
-            reflectionCameras.TryGetValue(camera, out reflectionCamera);
-            if (reflectionCamera == null)
+            Camera renderCamera;
+            dict.TryGetValue(targetCamera, out renderCamera);
+            if (renderCamera == null)
             {
-                GameObject go = new GameObject(string.Format("EZReflection-{0}-{1}", GetInstanceID(), camera.GetInstanceID()));
-                reflectionCamera = go.AddComponent<Camera>();
-                reflectionCamera.enabled = false;
-                reflectionCamera.transform.position = transform.position;
-                reflectionCamera.transform.rotation = transform.rotation;
+                GameObject go = new GameObject(string.Format("{0}-{1}-{2}", GetInstanceID(), targetCamera.GetInstanceID(), tag));
+                renderCamera = go.AddComponent<Camera>();
+                renderCamera.enabled = false;
+                renderCamera.transform.position = transform.position;
+                renderCamera.transform.rotation = transform.rotation;
                 go.AddComponent<FlareLayer>();
                 go.AddComponent<Skybox>();
                 go.hideFlags = HideFlags.HideAndDontSave;
-                reflectionCameras[camera] = reflectionCamera;
+                dict[targetCamera] = renderCamera;
             }
-            return reflectionCamera;
+            return renderCamera;
         }
         private void SetCamera(Camera src, Camera dst)
         {
@@ -75,50 +89,72 @@ namespace EZUnity
 
         private void OnWillRenderObject()
         {
-            if (!enabled || renderTexture == null) return;
+            if (!enabled) return;
 
             Camera targetCamera = Camera.current;
             if (targetCamera == null) return;
-            Camera reflectionCamera = GetReflectionCamera(targetCamera);
-
             if (isRendering) return;
             isRendering = true;
-            GL.invertCulling = true;
-            RenderTexture.active = renderTexture;
-
-            SetCamera(targetCamera, reflectionCamera);
-            reflectionCamera.cullingMask = reflectionLayers;
-            reflectionCamera.targetTexture = renderTexture;
 
             Vector3 position = transform.position;
-            Vector3 normal = transform.TransformDirection(reflectionNormal);
-            float offset = -Vector3.Dot(normal, position) - clipPlaneOffset;
-            Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, offset);
+            Vector3 normal = transform.TransformDirection(normalDirection);
 
-            Matrix4x4 reflectionMatrix = Matrix4x4.zero;
-            EZUtility.GetReflectionMatrix(reflectionPlane, ref reflectionMatrix);
+            if (renderRefraction && refractionTexture != null)
+            {
+                Camera refractionCamera = GetRenderCamera(m_RefractionCameras, targetCamera, TAG_REFRACTION);
+                SetCamera(targetCamera, refractionCamera);
+                refractionCamera.cullingMask = ~(1 << 4) & refractionLayers;
+                refractionCamera.targetTexture = refractionTexture;
+                RenderTexture.active = refractionTexture;
 
-            reflectionCamera.worldToCameraMatrix = targetCamera.worldToCameraMatrix * reflectionMatrix;
-            Vector4 clipPlane = GetCameraSpacePlane(reflectionCamera, position, normal);
-            reflectionCamera.projectionMatrix = targetCamera.CalculateObliqueMatrix(clipPlane);
+                refractionCamera.worldToCameraMatrix = targetCamera.worldToCameraMatrix;
+                Vector4 clipPlane = GetCameraSpacePlane(refractionCamera, position, normal, -1);
+                refractionCamera.projectionMatrix = targetCamera.CalculateObliqueMatrix(clipPlane);
+                refractionCamera.cullingMatrix = targetCamera.projectionMatrix * targetCamera.worldToCameraMatrix;
 
-            reflectionCamera.transform.position = reflectionMatrix.MultiplyPoint(targetCamera.transform.position);
-            Vector3 forward = reflectionMatrix.MultiplyVector(targetCamera.transform.forward);
-            Vector3 up = reflectionMatrix.MultiplyVector(targetCamera.transform.up);
-            reflectionCamera.transform.rotation = Quaternion.LookRotation(forward, up);
-            reflectionCamera.Render();
+                refractionCamera.transform.position = targetCamera.transform.position;
+                refractionCamera.transform.rotation = targetCamera.transform.rotation;
+                refractionCamera.Render();
+            }
+            if (renderReflection && refractionTexture != null)
+            {
+                Camera reflectionCamera = GetRenderCamera(m_ReflectionCameras, targetCamera, TAG_REFLECTION);
+                SetCamera(targetCamera, reflectionCamera);
+                reflectionCamera.cullingMask = ~(1 << 4) & reflectionLayers;
+                reflectionCamera.targetTexture = reflectionTexture;
+                RenderTexture.active = reflectionTexture;
+
+                float offset = -Vector3.Dot(normal, position) - clipPlaneOffset;
+                Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, offset);
+
+                Matrix4x4 reflectionMatrix = Matrix4x4.zero;
+                EZUtility.GetReflectionMatrix(reflectionPlane, ref reflectionMatrix);
+
+                reflectionCamera.worldToCameraMatrix = targetCamera.worldToCameraMatrix * reflectionMatrix;
+                Vector4 clipPlane = GetCameraSpacePlane(reflectionCamera, position, normal);
+                reflectionCamera.projectionMatrix = targetCamera.CalculateObliqueMatrix(clipPlane);
+                reflectionCamera.cullingMatrix = targetCamera.projectionMatrix * targetCamera.worldToCameraMatrix;
+
+                GL.invertCulling = true;
+                reflectionCamera.transform.position = reflectionMatrix.MultiplyPoint(targetCamera.transform.position);
+                Vector3 forward = reflectionMatrix.MultiplyVector(targetCamera.transform.forward);
+                Vector3 up = reflectionMatrix.MultiplyVector(targetCamera.transform.up);
+                reflectionCamera.transform.rotation = Quaternion.LookRotation(forward, up);
+                reflectionCamera.Render();
+                reflectionCamera.transform.position = targetCamera.transform.position;
+                GL.invertCulling = false;
+            }
 
             RenderTexture.active = null;
-            GL.invertCulling = false;
             isRendering = false;
         }
         private void OnDisable()
         {
-            foreach (var pair in reflectionCameras)
+            foreach (var pair in m_ReflectionCameras)
             {
                 DestroyImmediate(pair.Value.gameObject);
             }
-            reflectionCameras.Clear();
+            m_ReflectionCameras.Clear();
         }
     }
 }
