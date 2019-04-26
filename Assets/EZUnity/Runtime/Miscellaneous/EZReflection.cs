@@ -116,7 +116,7 @@ namespace EZUnity
                 refractionCamera.transform.rotation = targetCamera.transform.rotation;
                 refractionCamera.Render();
             }
-            if (renderReflection && refractionTexture != null)
+            if (renderReflection && reflectionTexture != null)
             {
                 Camera reflectionCamera = GetRenderCamera(m_ReflectionCameras, targetCamera, TAG_REFLECTION);
                 SetCamera(targetCamera, reflectionCamera);
