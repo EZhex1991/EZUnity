@@ -64,9 +64,10 @@ namespace EZUnity
         private void DrawChannelSettings(SerializedProperty overrideTexture, SerializedProperty channel, SerializedProperty curve)
         {
             EditorGUILayout.BeginHorizontal();
+            float fieldWidth = (EditorGUIUtility.currentViewWidth - EditorGUIUtility.labelWidth) * 0.1f;
             EditorGUILayout.PropertyField(overrideTexture, new GUIContent(channel.displayName));
-            EditorGUILayout.PropertyField(channel, GUIContent.none);
-            EditorGUILayout.PropertyField(curve, GUIContent.none);
+            EditorGUILayout.PropertyField(channel, GUIContent.none, GUILayout.MaxWidth(fieldWidth));
+            EditorGUILayout.PropertyField(curve, GUIContent.none, GUILayout.MaxWidth(fieldWidth * 3));
             EditorGUILayout.EndHorizontal();
         }
 
