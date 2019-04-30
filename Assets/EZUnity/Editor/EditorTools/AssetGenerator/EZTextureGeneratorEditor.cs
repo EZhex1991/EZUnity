@@ -15,6 +15,7 @@ namespace EZUnity
 
         protected SerializedProperty resolution;
         protected SerializedProperty textureFormat;
+        protected SerializedProperty textureEncoding;
         protected SerializedProperty targetTexture;
 
         protected virtual Vector2Int previewResolution { get { return new Vector2Int(128, 128); } }
@@ -34,6 +35,7 @@ namespace EZUnity
             generator = target as EZTextureGenerator;
             resolution = serializedObject.FindProperty("resolution");
             textureFormat = serializedObject.FindProperty("textureFormat");
+            textureEncoding = serializedObject.FindProperty("textureEncoding");
             targetTexture = serializedObject.FindProperty("targetTexture");
             GetProperties();
             RefreshPreview();
@@ -70,6 +72,7 @@ namespace EZUnity
         {
             EditorGUILayout.PropertyField(resolution);
             EditorGUILayout.PropertyField(textureFormat);
+            EditorGUILayout.PropertyField(textureEncoding);
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.PropertyField(targetTexture);

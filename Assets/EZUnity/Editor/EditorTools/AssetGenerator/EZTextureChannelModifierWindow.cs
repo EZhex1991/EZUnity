@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,6 +18,27 @@ namespace EZUnity
         private void RefreshSelectedTextures()
         {
             selectedTextures = Selection.GetFiltered<Texture2D>(SelectionMode.Assets | SelectionMode.Editable);
+        }
+        private void OverrideTexture(Texture2D texture)
+        {
+            string filePath = AssetDatabase.GetAssetPath(texture);
+            string extension = Path.GetExtension(filePath).ToLower();
+            if (extension == ".png")
+            {
+                File.WriteAllBytes(filePath, modifier.ResampleTexture(texture).Encode(TextureEncoding.PNG));
+            }
+            else if (extension == ".jpg")
+            {
+                File.WriteAllBytes(filePath, modifier.ResampleTexture(texture).Encode(TextureEncoding.JPG));
+            }
+            else if (extension == ".tga")
+            {
+                File.WriteAllBytes(filePath, modifier.ResampleTexture(texture).Encode(TextureEncoding.TGA));
+            }
+            else
+            {
+                Debug.LogError("Unknown texture extension, supported extensions are {'png'|'jpg'|'tga'}");
+            }
         }
 
         private void OnEnable()
@@ -68,9 +90,7 @@ namespace EZUnity
                 {
                     for (int i = 0; i < selectedTextures.Length; i++)
                     {
-                        Texture2D texture = selectedTextures[i];
-                        string filePath = AssetDatabase.GetAssetPath(texture);
-                        System.IO.File.WriteAllBytes(filePath, modifier.ResampleTexture(texture).EncodeToPNG());
+                        OverrideTexture(selectedTextures[i]);
                     }
                     AssetDatabase.Refresh();
                 }

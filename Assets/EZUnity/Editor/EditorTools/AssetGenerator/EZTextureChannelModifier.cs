@@ -13,22 +13,22 @@ namespace EZUnity
         public Texture2D referenceTexture;
 
         public Texture2D overrideTextureR;
-        public Channel channelR = Channel.R;
+        public ColorChannel channelR = ColorChannel.R;
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve curveR = AnimationCurve.Linear(0, 0, 1, 1);
 
         public Texture2D overrideTextureG;
-        public Channel channelG = Channel.G;
+        public ColorChannel channelG = ColorChannel.G;
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve curveG = AnimationCurve.Linear(0, 0, 1, 1);
 
         public Texture2D overrideTextureB;
-        public Channel channelB = Channel.B;
+        public ColorChannel channelB = ColorChannel.B;
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve curveB = AnimationCurve.Linear(0, 0, 1, 1);
 
         public Texture2D overrideTextureA;
-        public Channel channelA = Channel.A;
+        public ColorChannel channelA = ColorChannel.A;
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve curveA = AnimationCurve.Linear(0, 0, 1, 1);
 
@@ -44,10 +44,10 @@ namespace EZUnity
                         float coordY = (float)y / (texture.height - 1);
                         Color color = referenceTexture.GetPixelBilinear(coordX, coordY);
                         Color newColor = new Color(
-                            curveR.Evaluate(GetChannel(overrideTextureR == null ? color : overrideTextureR.GetPixelBilinear(coordX, coordY), channelR)),
-                            curveG.Evaluate(GetChannel(overrideTextureG == null ? color : overrideTextureG.GetPixelBilinear(coordX, coordY), channelG)),
-                            curveB.Evaluate(GetChannel(overrideTextureB == null ? color : overrideTextureB.GetPixelBilinear(coordX, coordY), channelB)),
-                            curveA.Evaluate(GetChannel(overrideTextureA == null ? color : overrideTextureA.GetPixelBilinear(coordX, coordY), channelA))
+                            curveR.Evaluate((overrideTextureR == null ? color : overrideTextureR.GetPixelBilinear(coordX, coordY)).GetChannel(channelR)),
+                            curveG.Evaluate((overrideTextureG == null ? color : overrideTextureG.GetPixelBilinear(coordX, coordY)).GetChannel(channelG)),
+                            curveB.Evaluate((overrideTextureB == null ? color : overrideTextureB.GetPixelBilinear(coordX, coordY)).GetChannel(channelB)),
+                            curveA.Evaluate((overrideTextureA == null ? color : overrideTextureA.GetPixelBilinear(coordX, coordY)).GetChannel(channelA))
                         );
                         texture.SetPixel(x, y, newColor);
                     }
@@ -64,10 +64,10 @@ namespace EZUnity
                 {
                     Color color = texture.GetPixel(x, y);
                     Color newColor = new Color(
-                        curveR.Evaluate(GetChannel(color, channelR)),
-                        curveG.Evaluate(GetChannel(color, channelG)),
-                        curveB.Evaluate(GetChannel(color, channelB)),
-                        curveA.Evaluate(GetChannel(color, channelA))
+                        curveR.Evaluate(color.GetChannel(channelR)),
+                        curveG.Evaluate(color.GetChannel(channelG)),
+                        curveB.Evaluate(color.GetChannel(channelB)),
+                        curveA.Evaluate(color.GetChannel(channelA))
                     );
                     newTexture.SetPixel(x, y, newColor);
                 }
