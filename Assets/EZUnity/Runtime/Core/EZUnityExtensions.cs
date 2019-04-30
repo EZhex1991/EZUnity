@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace EZUnity
 {
+    public enum ColorChannel { R, G, B, A }
+    public enum TextureEncoding { PNG, JPG, TGA }
+
     public static partial class EZUnityExtensions
     {
         public static bool Contains(this LayerMask mask, int layer)
@@ -214,6 +217,29 @@ namespace EZUnity
         {
             if (curve.length <= 1) return 0;
             return curve.keys[curve.length - 1].time - curve.keys[0].time;
+        }
+
+        public static float GetChannel(this Color color, ColorChannel channel)
+        {
+            switch (channel)
+            {
+                case ColorChannel.R: return color.r;
+                case ColorChannel.G: return color.g;
+                case ColorChannel.B: return color.b;
+                case ColorChannel.A: return color.a;
+            }
+            return 0;
+        }
+
+        public static byte[] Encode(this Texture2D texture, TextureEncoding encoding)
+        {
+            switch (encoding)
+            {
+                case TextureEncoding.PNG: return texture.EncodeToPNG();
+                case TextureEncoding.JPG: return texture.EncodeToJPG();
+                case TextureEncoding.TGA: return texture.EncodeToTGA();
+            }
+            return texture.EncodeToPNG();
         }
 
 #if !UNITY_2018_2_OR_NEWER
