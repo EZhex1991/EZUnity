@@ -1,0 +1,8 @@
+{
+    "name": "com.ezhex1991.ezunity",
+    "displayName": "EZUnity",
+    "version": "1.0.0",
+    "unity": "2018.3",
+    "description": "EZUnity",
+    "dependencies": {}
+}
