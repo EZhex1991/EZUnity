@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CreateAssetMenu(fileName = "EZPlayerBuilder", menuName = "EZUnity/EZPlayerBuilder", order = EZAssetMenuOrder.EZPlayerBuilder)]
+    [CreateAssetMenu(fileName = "EZPlayerBuilder", menuName = "EZUnity/EZPlayerBuilder", order = (int)EZAssetMenuOrder.EZPlayerBuilder)]
     public class EZPlayerBuilder : ScriptableObject
     {
         public const string Wildcard_Date = "<Date>";

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CreateAssetMenu(fileName = "EZTextureChannelModifier", menuName = "EZUnity/EZTextureChannelModifier", order = EZAssetMenuOrder.EZTextureChannelModifier)]
+    [CreateAssetMenu(fileName = "EZTextureChannelModifier", menuName = "EZUnity/EZTextureChannelModifier", order = (int)EZAssetMenuOrder.EZTextureChannelModifier)]
     public class EZTextureChannelModifier : EZTextureGenerator
     {
         public Texture2D referenceTexture;

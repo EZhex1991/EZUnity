@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [CreateAssetMenu(fileName = "EZScriptStatistics", menuName = "EZUnity/EZScriptStatistics", order = EZAssetMenuOrder.EZScriptStatistics)]
+    [CreateAssetMenu(fileName = "EZScriptStatistics", menuName = "EZUnity/EZScriptStatistics", order = (int)EZAssetMenuOrder.EZScriptStatistics)]
     public class EZScriptStatistics : ScriptableObject
     {
         public const string AssetName = "EZScriptStatistics";

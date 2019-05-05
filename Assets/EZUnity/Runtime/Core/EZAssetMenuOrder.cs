@@ -5,24 +5,25 @@
  */
 namespace EZUnity
 {
-    public class EZAssetMenuOrder
+    public enum EZAssetMenuOrder
     {
-        private const int BaseOrder = 1000;
+        _Section_1 = 1100,
+        EZStringAsset,
+        EZPhysicsBoneMaterial,
 
-        public const int EZStringAsset = BaseOrder + 100;
-        public const int EZPhysicsBoneMaterial = BaseOrder + 101;
+        _Section_2 = 1200,
+        EZPlaneGenerator,
+        EZTextureChannelModifier,
+        EZGradientGenerator,
 
-        #region Editor Only
-        public const int EZPlaneGenerator = BaseOrder + 200;
-        public const int EZTextureChannelModifier = BaseOrder + 201;
-        public const int EZGradientGenerator = BaseOrder + 202;
+        _Section_3 = 1300,
+        EZImageCapture,
 
-        public const int EZImageCapture = BaseOrder + 301;
+        _Section_4 = 1400,
+        EZBundleBuilder,
+        EZPlayerBuilder,
 
-        public const int EZBundleBuilder = BaseOrder + 401;
-        public const int EZPlayerBuilder = BaseOrder + 402;
-
-        public const int EZScriptStatistics = BaseOrder + 501;
-        #endregion
+        _Section_5 = 1500,
+        EZScriptStatistics,
     }
 }

@@ -13,11 +13,17 @@ namespace EZUnity.XLuaExtension
 {
     public static class EZMenuItems
     {
+        private enum Order
+        {
+            LuaToTxt = 12010,
+            ClearLuaTextFolder,
+        }
+
         private const string ROOT_NAME = "EZUnity/XLuaExtension";
         private const int PRIORITY = 12000;
 
         [EZBundleBuilder.OnPreBuild]
-        [MenuItem(ROOT_NAME + "/'.lua' To '.txt'", false, PRIORITY + 10)]
+        [MenuItem(ROOT_NAME + "/'.lua' To '.txt'", false, (int)Order.LuaToTxt)]
         public static void LuaToTxt()
         {
             foreach (string dirPath in EZApplicationSettings.Instance.luaFolders)
@@ -36,7 +42,7 @@ namespace EZUnity.XLuaExtension
             }
             AssetDatabase.Refresh();
         }
-        [MenuItem(ROOT_NAME + "/Clear Lua Text", false, PRIORITY + 11)]
+        [MenuItem(ROOT_NAME + "/Clear Lua Text", false, (int)Order.ClearLuaTextFolder)]
         public static void ClearLuaTxt()
         {
             foreach (string dirPath in EZApplicationSettings.Instance.luaFolders)
