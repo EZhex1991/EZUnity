@@ -1,31 +1,31 @@
 # VS/VSCode files
-.vs
+.vs/
 *.sln
 *.csproj
-*.luaproj
-*.luaproj.user
+*.user
 *.userprefs
 *.config
 *.code-workspace
 
 # Unity3D
-/Library
-/obj
-/Temp
-/Logs
+[Ll]ibrary/
+[Oo]bj/
+[Tt]emp/
+[Ll]ogs/
+[Bb]uild/
+[Bb]uilds/
 
 # EZUnity
-/Builds
-/EZPersistent
-/EZScreenshots
+EZPersistent/
+EZScreenshots/
 
 # XLua
-/LuaDebuggee.dll
-/Assets/.lpproj
-/Assets/ThirdParty
-/Assets/ThirdParty.meta
-/Assets/XLua/Gen
-/Assets/XLua/Gen.meta
+LuaDebuggee.dll
+Assets/.lpproj/
+Assets/ThirdParty/
+Assets/ThirdParty.meta
+Assets/XLua/Gen/
+Assets/XLua/Gen.meta
 
 # Windows image file caches
 Thumbs.db
