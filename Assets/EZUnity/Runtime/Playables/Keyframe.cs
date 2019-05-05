@@ -1,6 +1,6 @@
 /* Author:          ezhex1991@outlook.com
  * CreateTime:      2018-04-12 10:14:27
- * Organization:    SmileTech
+ * Organization:    #ORGANIZATION#
  * Description:     
  */
 using System;
