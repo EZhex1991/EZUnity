@@ -163,47 +163,47 @@ namespace EZUnity
             return CalcPerComponent(src, dst, (a, b) => Mathf.Max(a, b));
         }
 
-        // ²»Í¸Ã÷¶È
+        // ä¸é€æ˜Žåº¦
         public static Color Opacity(Color src, Color dst)
         {
             return src.a * src + (1 - src.a) * dst;
         }
-        // ±ä°µ
+        // å˜æš—
         public static Color Darken(Color src, Color dst)
         {
             return Min(src, dst);
         }
-        // ±äÁÁ
+        // å˜äº®
         public static Color Lighten(Color src, Color dst)
         {
             return Max(src, dst);
         }
-        // ÂËÉ«
+        // æ»¤è‰²
         public static Color Screen(Color src, Color dst)
         {
             return Inverse(Inverse(src) * Inverse(dst));
         }
-        // ÑÕÉ«¼ÓÉî
+        // é¢œè‰²åŠ æ·±
         public static Color ColorBurn(Color src, Color dst)
         {
             return src - Divide(Inverse(src) * Inverse(dst), dst);
         }
-        // ÑÕÉ«¼õµ­
+        // é¢œè‰²å‡æ·¡
         public static Color ColorDodge(Color src, Color dst)
         {
             return src + Divide(src * dst, Inverse(dst));
         }
-        // ÏßÐÔ¼ÓÉî
+        // çº¿æ€§åŠ æ·±
         public static Color LinearBurn(Color src, Color dst)
         {
             return src + dst - Color.white;
         }
-        // ÏßÐÔ¼õµ­
+        // çº¿æ€§å‡æ·¡
         public static Color LinearDodge(Color src, Color dst)
         {
             return src + dst;
         }
-        // µþ¼Ó
+        // å åŠ 
         public static Color Overlay(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -212,7 +212,7 @@ namespace EZUnity
                 else return 1 - (1 - a) * (1 - b) * 2;
             });
         }
-        // Ç¿¹â
+        // å¼ºå…‰
         public static Color HardLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -221,7 +221,7 @@ namespace EZUnity
                 else return 1 - (1 - a) * (1 - b) * 2;
             });
         }
-        // Èá¹â
+        // æŸ”å…‰
         public static Color SoftLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -230,7 +230,7 @@ namespace EZUnity
                 else return a * (1 - b) * 2 + Mathf.Sqrt(a * (2 * b - 1));
             });
         }
-        // ÁÁ¹â
+        // äº®å…‰
         public static Color VividLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -239,12 +239,12 @@ namespace EZUnity
                 else return a + a * (2 * b - 1) / (2 * (1 - b));
             });
         }
-        // ÏßÐÔ¹â
+        // çº¿æ€§å…‰
         public static Color LinearLight(Color src, Color dst)
         {
             return src - 2 * dst - Color.white;
         }
-        // µã¹â
+        // ç‚¹å…‰
         public static Color PinLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -253,7 +253,7 @@ namespace EZUnity
                 else return Mathf.Min(a, 2 * b - 1);
             });
         }
-        // ÊµÉ«»ìºÏ
+        // å®žè‰²æ··åˆ
         public static Color HardMix(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -261,7 +261,7 @@ namespace EZUnity
                 return a < 1 - b ? 0 : 1;
             });
         }
-        // ²îÖµ
+        // å·®å€¼
         public static Color Difference(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -269,7 +269,7 @@ namespace EZUnity
                 return Mathf.Abs(a - b);
             });
         }
-        // ÅÅ³ý
+        // æŽ’é™¤
         public static Color Exclusion(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
