@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+#if UNITY_2018_2_OR_NEWER
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -426,3 +427,4 @@ public class EZStandardShaderGUI : ShaderGUI
             m.DisableKeyword(keyword);
     }
 }
+#endif
