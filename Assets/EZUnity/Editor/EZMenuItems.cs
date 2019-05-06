@@ -110,6 +110,7 @@ namespace EZUnity
             EditorWindow.GetWindow<EZShaderKeywordManager>("Keyword Manager").Show();
         }
 
+#if UNITY_2018_3_OR_NEWER
         [SettingsProvider]
         private static SettingsProvider CreateEZScriptSettingsProvider()
         {
@@ -136,5 +137,6 @@ namespace EZUnity
             EZGraphicsSettings provider = new EZGraphicsSettings("Project/" + ROOT_NAME + "/EZGraphicsSettings", SettingsScope.Project);
             return provider;
         }
+#endif
     }
 }
