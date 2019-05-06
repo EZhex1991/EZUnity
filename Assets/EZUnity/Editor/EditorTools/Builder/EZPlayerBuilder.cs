@@ -5,8 +5,11 @@
  */
 using System;
 using UnityEditor;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
+
+#if UNITY_2018_1_OR_NEWER
+using UnityEditor.Build.Reporting;
+#endif
 
 namespace EZUnity
 {
@@ -112,6 +115,7 @@ namespace EZUnity
             }
             options.target = buildTarget;
             options.options = BuildOptions.ShowBuiltPlayer;
+#if UNITY_2018_1_OR_NEWER
             BuildReport report = BuildPipeline.BuildPlayer(options);
             var summary = report.summary;
             switch (summary.result)
@@ -123,6 +127,9 @@ namespace EZUnity
                     Debug.Log("Build Succeeded");
                     break;
             }
+#else
+            Debug.Log(BuildPipeline.BuildPlayer(options));
+#endif
         }
     }
 }

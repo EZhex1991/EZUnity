@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+#if UNITY_2018_1_OR_NEWER
 using System.IO;
 using UnityEditor;
 using UnityEditor.Presets;
@@ -93,3 +94,4 @@ namespace EZUnity
         }
     }
 }
+#endif

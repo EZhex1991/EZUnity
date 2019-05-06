@@ -64,6 +64,7 @@ namespace EZUnity
             }
         }
 
+#if UNITY_2018_1_OR_NEWER
         public static List<Shader> GetAllShaders(bool supportedOnly)
         {
             List<Shader> shaders = new List<Shader>();
@@ -76,6 +77,7 @@ namespace EZUnity
             }
             return shaders;
         }
+#endif
 
         private static List<Shader> m_BuiltinShaders;
         public static List<Shader> builtinShaders

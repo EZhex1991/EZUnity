@@ -38,8 +38,8 @@ namespace EZUnity
             }
             {
                 EditorGUILayout.BeginHorizontal();
-                srcColor = EditorGUILayout.ColorField(GUIContent.none, srcColor, true, true, useHDR);
-                dstColor = EditorGUILayout.ColorField(GUIContent.none, dstColor, true, true, useHDR);
+                srcColor = EditorGUILayout.ColorField(GUIContent.none, srcColor);
+                dstColor = EditorGUILayout.ColorField(GUIContent.none, dstColor);
                 EditorGUILayout.EndHorizontal();
             }
 
@@ -72,7 +72,11 @@ namespace EZUnity
                 string name = resultNames[i];
                 EditorGUILayout.BeginVertical();
                 EditorGUILayout.LabelField(name, GUILayout.Width(width));
+#if UNITY_2018_1_OR_NEWER
                 EditorGUILayout.ColorField(GUIContent.none, resultColors[name], false, false, useHDR, GUILayout.Width(width));
+#else
+                EditorGUILayout.ColorField(GUIContent.none, resultColors[name], false, false, useHDR, null, GUILayout.Width(width));
+#endif
                 EditorGUILayout.TextField(GUIContent.none, resultStrings[name], GUILayout.Width(width));
                 EditorGUILayout.EndVertical();
             }
