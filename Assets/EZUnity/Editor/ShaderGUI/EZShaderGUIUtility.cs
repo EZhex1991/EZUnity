@@ -77,26 +77,38 @@ namespace EZUnity
             }
         }
 
-        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, params GUILayoutOption[] options) where T : Enum
+        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, params GUILayoutOption[] options)
+#if CSHARP_7_3_OR_NEWER
+            where T : Enum
+#endif
         {
             materialEditor.EnumPopup<T>(property, (mat, selection) =>
             {
-                mat.SetKeyword((T)selection);
+                mat.SetKeyword(selection);
             }, options);
         }
-        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, params GUILayoutOption[] options) where T : Enum
+        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, params GUILayoutOption[] options)
+#if CSHARP_7_3_OR_NEWER
+            where T : Enum
+#endif
         {
             materialEditor.EnumPopup<T>(property, label, (mat, selection) =>
             {
-                mat.SetKeyword((T)selection);
+                mat.SetKeyword(selection);
             }, options);
         }
 
-        public static void EnumPopup<T>(this MaterialEditor materialEditor, MaterialProperty property, Action<Material, Enum> callback = null, params GUILayoutOption[] options) where T : Enum
+        public static void EnumPopup<T>(this MaterialEditor materialEditor, MaterialProperty property, Action<Material, Enum> callback = null, params GUILayoutOption[] options)
+#if CSHARP_7_3_OR_NEWER
+            where T : Enum
+#endif
         {
             materialEditor.EnumPopup<T>(property, property.displayName, callback, options);
         }
-        public static void EnumPopup<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, Action<Material, Enum> callback = null, params GUILayoutOption[] options) where T : Enum
+        public static void EnumPopup<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, Action<Material, Enum> callback = null, params GUILayoutOption[] options)
+#if CSHARP_7_3_OR_NEWER
+            where T : Enum
+#endif
         {
             EditorGUI.showMixedValue = property.hasMixedValue;
             float value = property.floatValue;
@@ -111,7 +123,7 @@ namespace EZUnity
                 {
                     foreach (Material mat in property.targets)
                     {
-                        callback(mat, (T)Enum.ToObject(typeof(T), (int)value));
+                        callback(mat, (Enum)Enum.ToObject(typeof(T), (int)value));
                     }
                 }
             }
@@ -143,18 +155,18 @@ namespace EZUnity
             EditorGUI.showMixedValue = false;
         }
 
-        public static void SetKeyword<T>(this MaterialEditor materialEditor, T selection) where T : Enum
+        public static void SetKeyword(this MaterialEditor materialEditor, Enum selection)
         {
-            (materialEditor.target as Material).SetKeyword<T>(selection);
+            (materialEditor.target as Material).SetKeyword(selection);
         }
         public static void SetKeyword(this MaterialEditor materialEditor, string keyword, bool value)
         {
             (materialEditor.target as Material).SetKeyword(keyword, value);
         }
 
-        public static void SetKeyword<T>(this Material mat, T selection) where T : Enum
+        public static void SetKeyword(this Material mat, Enum selection)
         {
-            foreach (T value in Enum.GetValues(typeof(T)))
+            foreach (Enum value in Enum.GetValues(selection.GetType()))
             {
                 mat.DisableKeyword(FormatKeyword(value));
             }
@@ -165,14 +177,14 @@ namespace EZUnity
             if (value) { mat.EnableKeyword(keyword); }
             else mat.DisableKeyword(keyword);
         }
-        public static bool IsKeywordEnabled<T>(this Material mat, T selection) where T : Enum
+        public static bool IsKeywordEnabled(this Material mat, Enum selection)
         {
             return mat.IsKeywordEnabled(FormatKeyword(selection));
         }
 
-        public static string FormatKeyword<T>(T value) where T : Enum
+        public static string FormatKeyword(Enum value)
         {
-            return string.Format("_{0}_{1}", typeof(T).Name, value).ToUpper();
+            return string.Format("_{0}_{1}", value.GetType().Name, value).ToUpper();
         }
     }
 }
