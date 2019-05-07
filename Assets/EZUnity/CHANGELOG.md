@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- `EZCorrespondingObjectViewer`: to view the corresponding objects of a Nested Prefab, available on Unity2018.3 or newer.
+
 ## [0.0.8] - 2019-04-18
 
 ### Changed
@@ -12,14 +18,14 @@
 ### Changed
 
 - Use Nested Prefab to create examples, that means Unity version 2018.3 or newer is required for some example scenes.
-- It it suggested to use .Net4xEquivalent on RuntimeVersion setting.
-- Shader name changed, now it's all under "EZUnity/..."
+- It it suggested to use ".Net4xEquivalent" on "RuntimeVersion" setting.
+- Shader name changed, now it's all under "EZUnity/...".
 
 ## [0.0.6] - 2019-01-26
 
 ### Added
 
-- EZPhysicsBone: An implementation of dynamic linked bones.
+- `EZPhysicsBone`: An implementation of dynamic linked bones.
 
 ### Changed
 
