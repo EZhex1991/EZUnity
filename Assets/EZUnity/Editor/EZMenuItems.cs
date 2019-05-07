@@ -28,6 +28,7 @@ namespace EZUnity
             GuidGenerator,
             AssetBundleManager,
             AssetReferenceViewer,
+            CorrespondingObjectViewer,
             FontReferenceViewer,
             PlayerPrefsEditor,
             ColorBlender,
@@ -103,7 +104,11 @@ namespace EZUnity
         {
             EditorWindow.GetWindow<EZColorBlender>("Color Blender").Show();
         }
-
+        [MenuItem(ROOT_NAME + "/Corresponding Object Viewer", false, (int)Order.CorrespondingObjectViewer)]
+        private static void CorrespondingObjectViewer()
+        {
+            EditorWindow.GetWindow<EZCorrespondingObjectViewer>("Corresponding Object Viewer").Show();
+        }
         [MenuItem(ROOT_NAME + "/Experimental/Shader Keyword Manager", false, (int)Order.ShaderKeywordManager)]
         private static void ShaderKeywordManager()
         {
