@@ -13,14 +13,14 @@ namespace EZUnity
     {
         private Object target;
 
-        private List<string> dependenciesPath = new List<string>();
         private List<Object> dependencies = new List<Object>();
-        private bool dependenciesFoldout = true;
         private bool dependenciesRecursive = true;
+        private bool dependenciesFoldout = true;
 
         private List<Object> sceneReferences = new List<Object>();
         private bool referencesFoldout = true;
-        private bool referencesRecursive = true;
+
+        private Vector2 scrollPosition;
 
         protected void OnEnable()
         {
@@ -32,7 +32,6 @@ namespace EZUnity
         }
         private void Refresh()
         {
-            dependenciesPath.Clear();
             dependencies.Clear();
             sceneReferences.Clear();
             target = Selection.activeObject;
@@ -40,7 +39,6 @@ namespace EZUnity
             string[] paths = AssetDatabase.GetDependencies(AssetDatabase.GetAssetPath(target), dependenciesRecursive);
             foreach (string path in paths)
             {
-                dependenciesPath.Add(path);
                 dependencies.Add(AssetDatabase.LoadAssetAtPath(path, typeof(Object)));
             }
 
@@ -88,35 +86,28 @@ namespace EZUnity
         {
             EZEditorGUIUtility.WindowTitle(this);
             EditorGUILayout.ObjectField("Target", target, typeof(Object), true);
-            EditorGUILayout.BeginHorizontal();
 
+            EditorGUILayout.BeginHorizontal();
             if (dependenciesRecursive != EditorGUILayout.Toggle("Show Recursive Dependencies", dependenciesRecursive))
             {
                 dependenciesRecursive = !dependenciesRecursive;
                 Refresh();
             }
-            if (referencesRecursive != EditorGUILayout.Toggle("Show Recursive References", referencesRecursive))
-            {
-                referencesRecursive = !referencesRecursive;
-                Refresh();
-            }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Space();
 
-            if (dependenciesFoldout = EditorGUILayout.Foldout(dependenciesFoldout, "Dependencies"))
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+            if (dependenciesFoldout = EditorGUILayout.Foldout(dependenciesFoldout, "Asset Dependencies"))
             {
                 EditorGUI.indentLevel++;
                 for (int i = 0; i < dependencies.Count; i++)
                 {
                     if (dependencies[i] == target) continue; // dependencies contains target itself
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.TextField(dependenciesPath[i]);
                     EditorGUILayout.ObjectField(dependencies[i], typeof(Object), true);
-                    EditorGUILayout.EndHorizontal();
                 }
                 EditorGUI.indentLevel--;
             }
-            if (referencesFoldout = EditorGUILayout.Foldout(referencesFoldout, "References"))
+            if (referencesFoldout = EditorGUILayout.Foldout(referencesFoldout, "Scene References"))
             {
                 EditorGUI.indentLevel++;
                 foreach (Object obj in sceneReferences)
@@ -125,6 +116,7 @@ namespace EZUnity
                 }
                 EditorGUI.indentLevel--;
             }
+            EditorGUILayout.EndScrollView();
         }
     }
 }
