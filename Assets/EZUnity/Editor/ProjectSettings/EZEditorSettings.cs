@@ -38,6 +38,8 @@ namespace EZUnity
             {
                 GameObject gameObject = item as GameObject;
 #if UNITY_2019_1_OR_NEWER
+                Rect activeRect = new Rect(selectionRect.x - 27, selectionRect.y, selectionRect.height, selectionRect.height);
+#elif UNITY_2019_1_0
                 Rect activeRect = new Rect(selectionRect.x - 3, selectionRect.y, selectionRect.height, selectionRect.height);
 #else
                 Rect activeRect = new Rect(selectionRect.x - 28, selectionRect.y, selectionRect.height, selectionRect.height);
