@@ -17,6 +17,12 @@
 
 ![EZTextureChannelModifier](.SamplePicture/EZTextureChannelModifier.png)
 
+## EZTextureCombiner
+
+图片合并工具。
+
+![EZTextureCombiner](.SamplePicture/EZTextureCombiner.png)
+
 ## EZPlaneGenerator
 
 用来生成自定义细分精度的Plane(Quad)。*预览界面用到的材质是"VR/SpatialMapping/Wireframe"，目前发现部分版本该材质不可用，不影响网格Mesh的生成*。
