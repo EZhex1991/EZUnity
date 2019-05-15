@@ -141,6 +141,14 @@ namespace EZUnity
         {
             return Mathf.Min(v.x, v.y);
         }
+        public static float Lerp(this Vector2 v, float t)
+        {
+            return Mathf.Lerp(v.x, v.y, t);
+        }
+        public static float InverseLerp(this Vector2 v, float value)
+        {
+            return Mathf.InverseLerp(v.x, v.y, value);
+        }
 
         public static Vector3 Abs(this Vector3 v)
         {
