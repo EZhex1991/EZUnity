@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0970a38ece81b94a98a826f4027a876, type: 3}
+  m_Name: EZTextureCombiner
+  m_EditorClassIdentifier: 
+  resolution: {x: 1024, y: 1024}
+  textureFormat: 4
+  textureEncoding: 0
+  targetTexture: {fileID: 2800000, guid: e3f66f45d2d151a4b9b5394940915909, type: 3}
+  cellSize: {x: 4, y: 4}
+  textures:
+  - {fileID: 2800000, guid: b265333c3b2169741a8bdf4bedd584c8, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: b265333c3b2169741a8bdf4bedd584c8, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: d92d0dddbc14f964494642aecbec5bfb, type: 3}
+  - {fileID: 2800000, guid: 3fb227a27302a1243bf9d8d91656722f, type: 3}
+  - {fileID: 2800000, guid: 3fb227a27302a1243bf9d8d91656722f, type: 3}
+  - {fileID: 2800000, guid: d92d0dddbc14f964494642aecbec5bfb, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 13da0421737d9f947a9e1684bcbcc7ce, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 13da0421737d9f947a9e1684bcbcc7ce, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: 067643d68a6927c48b993c41be45b90e, type: 3}
+  - {fileID: 2800000, guid: 067643d68a6927c48b993c41be45b90e, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -4,6 +4,7 @@
 
 ### Added
 
+- `EZTextureCombiner`: use to combine textures.
 - `EZCorrespondingObjectViewer`: View corresponding objects of Nested Prefab, available on Unity2018.3 or newer.
 - Shader "EZUnity/Unlit/LaserProcessed": Different color tint with different view direction.
 

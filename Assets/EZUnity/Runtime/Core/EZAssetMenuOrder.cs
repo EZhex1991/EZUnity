@@ -14,6 +14,7 @@ namespace EZUnity
         _Section_2 = 1200,
         EZPlaneGenerator,
         EZTextureChannelModifier,
+        EZTextureCombiner,
         EZGradientGenerator,
 
         _Section_3 = 1300,
