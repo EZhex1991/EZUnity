@@ -33,7 +33,7 @@ namespace EZUnity.PhysicsCompnent
             public Quaternion originalLocalRotation = Quaternion.identity;
 
             public TreeNode() { }
-            public TreeNode(Transform t, float endLength, int startDepth, int depth = 0, float localLength = 0, float parentLength = 0)
+            public TreeNode(Transform t, float endLength, int startDepth, int depth, float localLength, float parentLength)
             {
                 transform = t;
                 if (t != null)
@@ -81,33 +81,27 @@ namespace EZUnity.PhysicsCompnent
                 }
             }
 
-            public void Inflate(float baseRadius, AnimationCurve radiusCurve, bool recursive)
+            public void Inflate(float baseRadius, AnimationCurve radiusCurve)
             {
                 if (treeLength <= 0) return;
                 normalizedLength = boneLength / treeLength;
                 radius = radiusCurve.Evaluate(normalizedLength) * baseRadius;
-                if (recursive)
+                for (int i = 0; i < children.Count; i++)
                 {
-                    for (int i = 0; i < children.Count; i++)
-                    {
-                        children[i].Inflate(baseRadius, radiusCurve, recursive);
-                    }
+                    children[i].Inflate(baseRadius, radiusCurve);
                 }
             }
 
-            public void RevertTransforms(bool recursive)
+            public void RevertTransforms()
             {
                 if (transform != null)
                 {
                     transform.localPosition = originalLocalPosition;
                     transform.localRotation = originalLocalRotation;
                 }
-                if (recursive)
+                for (int i = 0; i < children.Count; i++)
                 {
-                    for (int i = 0; i < children.Count; i++)
-                    {
-                        children[i].RevertTransforms(recursive);
-                    }
+                    children[i].RevertTransforms();
                 }
             }
             public void ApplyToTransform(bool recursive)
@@ -184,6 +178,10 @@ namespace EZUnity.PhysicsCompnent
         [SerializeField]
         private float m_EndNodeLength;
         public float endNodeLength { get { return m_EndNodeLength; } }
+
+        // [SerializeField]
+        private bool m_SiblingRestrictions;
+        public bool siblingRestrictions { get { return m_SiblingRestrictions; } }
 
         [SerializeField]
         private EZPhysicsBoneMaterial m_Material;
@@ -282,8 +280,8 @@ namespace EZUnity.PhysicsCompnent
             for (int i = 0; i < rootBones.Count; i++)
             {
                 if (rootBones[i] == null) continue;
-                TreeNode tree = new TreeNode(rootBones[i], endNodeLength, startDepth);
-                tree.Inflate(radius, radiusCurve, true);
+                TreeNode tree = new TreeNode(rootBones[i], endNodeLength, startDepth, 0, 0, 0);
+                tree.Inflate(radius, radiusCurve);
                 m_PhysicsTrees.Add(tree);
             }
         }
@@ -291,7 +289,7 @@ namespace EZUnity.PhysicsCompnent
         {
             for (int i = 0; i < m_PhysicsTrees.Count; i++)
             {
-                m_PhysicsTrees[i].RevertTransforms(true);
+                m_PhysicsTrees[i].RevertTransforms();
             }
         }
         private void ResyncPhysicsTrees()
@@ -354,9 +352,10 @@ namespace EZUnity.PhysicsCompnent
                 }
 
                 // Slackness (length keeper)
+                float slackness = sharedMaterial.GetSlackness(node.normalizedLength);
                 Vector3 nodeDir = (node.position - node.parent.position).normalized;
                 Vector3 lengthKeeper = node.parent.position + nodeDir * node.nodeLength;
-                node.position = Vector3.Lerp(lengthKeeper, node.position, sharedMaterial.GetSlackness(node.normalizedLength));
+                node.position = Vector3.Lerp(lengthKeeper, node.position, slackness);
 
                 node.speed = (node.position - lastPosition) / deltaTime;
             }
