@@ -1,9 +1,9 @@
 # EZUnity
 
-## 常用组件
+## 独立功能模块（Submodules）
 
 - [EZPhysicsBone](https://github.com/EZhex1991/EZPhysicsBone): 动态骨骼，效果参考来源于AssetStore上的DynamicBone。支持所有碰撞体；独立的材质"EZPhysicsBoneMaterial"存放参数，重用度高；代码可读性强；碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展。
-- [EZAnimation](Assets/EZUnity/Demo/EZAnimation/README.md): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
+- [EZAnimation](https://github.com/EZhex1991/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
 
 ## 功能菜单（EZUnity/..）
 
