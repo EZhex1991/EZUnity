@@ -4,3 +4,4 @@
 [submodule "Assets/EZUnity/EZAnimation"]
 	path = Assets/EZUnity/EZAnimation
 	url = https://github.com/EZhex1991/EZAnimation
+	branch = master
