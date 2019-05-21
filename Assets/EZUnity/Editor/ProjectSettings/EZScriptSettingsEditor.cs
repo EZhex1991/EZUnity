@@ -26,6 +26,7 @@ namespace EZUnity
         private SerializedProperty m_ExtensionList;
         private SerializedProperty m_PatternList;
         private ReorderableList patternList;
+        private ReorderableList extensionList;
 
         public void OnEnable()
         {
@@ -38,6 +39,11 @@ namespace EZUnity
             {
                 drawHeaderCallback = DrawPatternListHeader,
                 drawElementCallback = DrawPatternListElement
+            };
+            extensionList = new ReorderableList(serializedObject, m_ExtensionList, true, true, true, true)
+            {
+                drawHeaderCallback = DrawExtensionListHeader,
+                drawElementCallback = DrawExtensionListElement
             };
             GetSelectedTemplates();
             Selection.selectionChanged += GetSelectedTemplates;
@@ -85,7 +91,19 @@ namespace EZUnity
             EditorGUILayout.LabelField("00 #SCRIPTNAME#", "System.IO.Path.GetFileNameWithoutExtension(filePath)");
             EditorGUILayout.LabelField("01 #CREATETIME#", "System.DateTime.Now.ToString()");
             patternList.DoLayoutList();
-            EditorGUILayout.PropertyField(m_ExtensionList, true);
+            extensionList.DoLayoutList();
+        }
+
+        protected void DrawExtensionListHeader(Rect rect)
+        {
+            EditorGUI.LabelField(rect, "Associations");
+        }
+        protected void DrawExtensionListElement(Rect rect, int index, bool isActive, bool isFocused)
+        {
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_ExtensionList, index);
+            rect.height = EditorGUIUtility.singleLineHeight;
+            SerializedProperty extension = extensionList.serializedProperty.GetArrayElementAtIndex(index);
+            EditorGUI.PropertyField(rect, extension, GUIContent.none);
         }
 
         protected void DrawPatternListHeader(Rect rect)
@@ -94,11 +112,12 @@ namespace EZUnity
         }
         protected void DrawPatternListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect.y += 1;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_PatternList, index);
             SerializedProperty pattern = patternList.serializedProperty.GetArrayElementAtIndex(index);
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, 20, EditorGUIUtility.singleLineHeight), index.ToString("00"));
-            EditorGUI.PropertyField(new Rect(rect.x + 25, rect.y, 140, EditorGUIUtility.singleLineHeight), pattern.FindPropertyRelative("Key"), GUIContent.none);
-            EditorGUI.PropertyField(new Rect(rect.x + 170, rect.y, rect.width - 170, EditorGUIUtility.singleLineHeight), pattern.FindPropertyRelative("Value"), GUIContent.none);
+            float width = rect.width / 2; float margin = 5;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, EditorGUIUtility.singleLineHeight), pattern.FindPropertyRelative("Key"), GUIContent.none);
+            rect.x += width;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, EditorGUIUtility.singleLineHeight), pattern.FindPropertyRelative("Value"), GUIContent.none);
         }
 
         protected void DrawAddTemplates()

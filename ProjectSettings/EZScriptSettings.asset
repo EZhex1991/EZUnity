@@ -9,7 +9,11 @@
             ".cs",
             ".lua",
             ".txt",
-            ".shader"
+            ".shader",
+            ".cginc",
+            ".uxml",
+            ".uss",
+            ".asmdef"
         ],
         "patternList": [
             {
