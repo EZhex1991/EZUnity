@@ -2,7 +2,7 @@
 
 ## 常用组件
 
-- [EZPhysicsBone](Assets/EZUnity/Demo/EZPhysicsBone/README.md): 动态骨骼，效果参考来源于AssetStore上的DynamicBone。优势: 支持所有碰撞体（包括MeshCollider，但效果一般）；独立的材质"EZPhysicsBoneMaterial"存放参数，通用性强；代码可读性高，碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展
+- [EZPhysicsBone](Assets/EZUnity/EZPhysicsBone/README.md): 动态骨骼，效果参考来源于AssetStore上的DynamicBone。优势: 支持所有碰撞体（包括MeshCollider，但效果一般）；独立的材质"EZPhysicsBoneMaterial"存放参数，通用性强；代码可读性高，碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展
 - [EZAnimation](Assets/EZUnity/Demo/EZAnimation/README.md): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）
 
 ## 功能菜单（EZUnity/..）
