@@ -11,7 +11,7 @@ namespace EZUnity
     [InitializeOnLoad]
     public class EZEditorSettings : _EZProjectSettingsSingleton<EZEditorSettings>
     {
-        public override string assetPath => "ProjectSettings/EZEditorSettings.asset";
+        public override string assetPath { get { return "ProjectSettings/EZEditorSettings.asset"; } }
 
         [Header("Editor Modifier")]
         public bool hierarchyToggleEnabled;

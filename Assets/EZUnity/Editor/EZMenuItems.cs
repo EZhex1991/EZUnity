@@ -72,7 +72,7 @@ namespace EZUnity
         [MenuItem(ROOT_NAME + "/Renamer", false, (int)Order.Renamer)]
         private static void Renamer()
         {
-            EditorWindow.GetWindow<EZRenamer>("Renamer").Show();
+            EditorWindow.GetWindow<EZRenamerWindow>("Renamer").Show();
         }
         [MenuItem(ROOT_NAME + "/Guid Generator", false, (int)Order.GuidGenerator)]
         private static void GuidGenerator()
@@ -82,7 +82,7 @@ namespace EZUnity
         [MenuItem(ROOT_NAME + "/Asset Bundle Manager", false, (int)Order.AssetBundleManager)]
         private static void BundleManager()
         {
-            EditorWindow.GetWindow<EZBundleManager>("Asset Bundle Manager").Show();
+            EditorWindow.GetWindow<Builder.EZBundleManager>("Asset Bundle Manager").Show();
         }
         [MenuItem(ROOT_NAME + "/Asset Reference Viewer", false, (int)Order.AssetReferenceViewer)]
         private static void AssetReferenceViewer()

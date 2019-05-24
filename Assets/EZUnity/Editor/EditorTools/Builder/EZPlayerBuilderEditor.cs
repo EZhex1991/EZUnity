@@ -4,9 +4,10 @@
  * Description:     
  */
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.Builder
 {
     [CustomEditor(typeof(EZPlayerBuilder)), CanEditMultipleObjects]
     public class EZPlayerBuilderEditor : Editor
@@ -27,6 +28,9 @@ namespace EZUnity
         protected SerializedProperty m_BuildNumber;
         protected SerializedProperty m_Icon;
 
+        private SerializedProperty m_CopyList;
+        private ReorderableList copyList;
+
         protected void OnEnable()
         {
             playerBuilder = target as EZPlayerBuilder;
@@ -40,6 +44,11 @@ namespace EZUnity
             m_BundleVersion = serializedObject.FindProperty("bundleVersion");
             m_BuildNumber = serializedObject.FindProperty("buildNumber");
             m_Icon = serializedObject.FindProperty("icon");
+
+            m_CopyList = serializedObject.FindProperty("copyList");
+            copyList = new ReorderableList(serializedObject, m_CopyList, true, true, true, true);
+            copyList.drawHeaderCallback = DrawCopyListHeader;
+            copyList.drawElementCallback = DrawCopyListElement;
         }
 
         public override void OnInspectorGUI()
@@ -85,6 +94,10 @@ namespace EZUnity
                 EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.PropertyField(m_Icon);
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("Copy List", EditorStyles.boldLabel);
+            copyList.DoLayoutList();
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -119,6 +132,30 @@ namespace EZUnity
                 playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
                 GUIUtility.ExitGUI();
             }
+        }
+
+        private void DrawCopyListHeader(Rect rect)
+        {
+            rect = EZEditorGUIUtility.DrawReorderableListHeaderIndex(rect);
+            rect.y += 1;
+            float width = rect.width / 2; float margin = 5;
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), "Destination");
+            rect.x += width;
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), "Source");
+        }
+        private void DrawCopyListElement(Rect rect, int index, bool isActive, bool isFocused)
+        {
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_CopyList, index);
+            rect.y += 1; rect.height = EditorGUIUtility.singleLineHeight;
+
+            SerializedProperty m_CopyInfo = m_CopyList.GetArrayElementAtIndex(index);
+            SerializedProperty m_DestDirPath = m_CopyInfo.FindPropertyRelative("dstPath");
+            SerializedProperty m_SrcDirPath = m_CopyInfo.FindPropertyRelative("srcPath");
+
+            float width = rect.width / 2; float margin = 5;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, rect.height), m_DestDirPath, GUIContent.none);
+            rect.x += width;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, rect.height), m_SrcDirPath, GUIContent.none);
         }
     }
 }

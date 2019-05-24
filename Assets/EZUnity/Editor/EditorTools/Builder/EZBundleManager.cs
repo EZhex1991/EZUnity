@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.Builder
 {
     public class EZBundleManager : EditorWindow
     {

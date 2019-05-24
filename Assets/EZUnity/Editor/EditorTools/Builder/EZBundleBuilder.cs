@@ -13,21 +13,8 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.Builder
 {
-    public enum AssetsViewOption
-    {
-        Object = 0,
-        Path = 1,
-        PathAndObject = 2,
-    }
-    public enum BundleDependenciesViewOption
-    {
-        DontShow = 0,
-        Direct = 1,
-        Recursive = 2,
-    }
-
     [CreateAssetMenu(fileName = "EZBundleBuilder", menuName = "EZUnity/EZBundleBuilder", order = (int)EZAssetMenuOrder.EZBundleBuilder)]
     public class EZBundleBuilder : ScriptableObject
     {
@@ -42,28 +29,6 @@ namespace EZUnity
             public int priority;
         }
 
-        [Serializable]
-        public class CopyInfo
-        {
-            public string destDirPath = "";
-            public string sourDirPath = "";
-        }
-        [Serializable]
-        public class BundleInfo
-        {
-            public string bundleName = "";
-            public string filePattern = "*.*";
-            public SearchOption searchOption = SearchOption.AllDirectories;
-            public string dirPath = "";
-        }
-        [Serializable]
-        public class FileInfo
-        {
-            public string fileName;
-            public string md5;
-            public int size;
-        }
-
         protected const char DELIMITER = '|';
         protected static BuildAssetBundleOptions buildOptions = BuildAssetBundleOptions.DeterministicAssetBundle;
 
@@ -72,8 +37,8 @@ namespace EZUnity
         public bool managerMode = false;
         public bool forceRebuild = false;
 
-        public List<CopyInfo> copyList = new List<CopyInfo>();
-        public List<BundleInfo> bundleList = new List<BundleInfo>();
+        public CopyInfo[] copyList;
+        public BundleInfo[] bundleList;
 
         // view options
         public bool copyListFoldout = true;
@@ -87,7 +52,7 @@ namespace EZUnity
             if (forceRebuild && Directory.Exists(outputPath)) Directory.Delete(outputPath, true);
             Directory.CreateDirectory(outputPath);
             AssetDatabase.Refresh();
-            CopyDirectories();
+            CopyFiles();
 
             AssetDatabase.Refresh();
             AssetBundleManifest manifest;
@@ -137,24 +102,46 @@ namespace EZUnity
             }
         }
 
-        protected void CopyDirectories()
+        protected void CopyFiles()
         {
-            foreach (CopyInfo copyInfo in copyList)
+            for (int i = 0; i < copyList.Length; i++)
             {
-                string sour = copyInfo.sourDirPath;
-                string dest = copyInfo.destDirPath;
-                if (string.IsNullOrEmpty(sour) || string.IsNullOrEmpty(dest)) continue;
-                if (!Directory.Exists(sour)) return;
-                Directory.CreateDirectory(dest);
-                string[] files = Directory.GetFiles(sour);
-                foreach (string filePath in files)
+                EditorUtility.DisplayProgressBar("Copying Files", "", (float)i / copyList.Length);
+                string src = copyList[i].srcPath;
+                string dst = copyList[i].dstPath;
+                if (string.IsNullOrEmpty(src) || string.IsNullOrEmpty(dst)) continue;
+                if (File.Exists(src))
                 {
-                    if (filePath.EndsWith(".meta")) continue;
-                    string newPath = dest + filePath.Replace(sour, "");
-                    Directory.CreateDirectory(Path.GetDirectoryName(newPath));
-                    File.Copy(filePath, newPath, true);
+                    try
+                    {
+                        File.Copy(src, dst, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogWarning(e.Message);
+                    }
+                }
+                else if (Directory.Exists(src))
+                {
+                    Directory.CreateDirectory(dst);
+                    string[] files = Directory.GetFiles(src);
+                    foreach (string filePath in files)
+                    {
+                        try
+                        {
+                            if (filePath.EndsWith(".meta")) continue;
+                            string newPath = dst + filePath.Substring(src.Length);
+                            Directory.CreateDirectory(Path.GetDirectoryName(newPath));
+                            File.Copy(filePath, newPath, true);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogWarning(e.Message);
+                        }
+                    }
                 }
             }
+            EditorUtility.ClearProgressBar();
         }
         protected AssetBundleBuild[] GetBuildList()
         {

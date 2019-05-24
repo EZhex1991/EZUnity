@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.Builder
 {
     [CustomEditor(typeof(EZBundleBuilder))]
     public class EZBundleBuilderEditor : Editor
@@ -28,9 +28,6 @@ namespace EZUnity
 
         private ReorderableList copyList;
         private ReorderableList bundleList;
-
-        float space = EZEditorGUIUtility.space;
-        float lineHeight = EditorGUIUtility.singleLineHeight;
 
         void OnEnable()
         {
@@ -133,45 +130,46 @@ namespace EZUnity
 
         private void DrawCopyListHeader(Rect rect)
         {
-            rect.y += 1;
             rect = EZEditorGUIUtility.DrawReorderableListHeaderIndex(rect);
-            float width = rect.width / 2;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Destination");
+            rect.y += 1;
+            float width = rect.width / 2; float margin = 5;
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), "Destination");
             rect.x += width;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - space, lineHeight), "Source");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), "Source");
         }
         private void DrawCopyListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect.y += 1;
             rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_CopyList, index);
+            rect.y += 1; rect.height = EditorGUIUtility.singleLineHeight;
 
             SerializedProperty m_CopyInfo = m_CopyList.GetArrayElementAtIndex(index);
-            SerializedProperty m_DestDirPath = m_CopyInfo.FindPropertyRelative("destDirPath");
-            SerializedProperty m_SrcDirPath = m_CopyInfo.FindPropertyRelative("sourDirPath");
+            SerializedProperty m_DestDirPath = m_CopyInfo.FindPropertyRelative("dstPath");
+            SerializedProperty m_SrcDirPath = m_CopyInfo.FindPropertyRelative("srcPath");
 
-            float width = rect.width / 2;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - space, lineHeight), m_DestDirPath, GUIContent.none);
+            float width = rect.width / 2; float margin = 5;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, rect.height), m_DestDirPath, GUIContent.none);
             rect.x += width;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - space, lineHeight), m_SrcDirPath, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, rect.height), m_SrcDirPath, GUIContent.none);
         }
 
         private void DrawBundleListHeader(Rect rect)
         {
-            rect.y += 1;
             rect = EZEditorGUIUtility.DrawReorderableListHeaderIndex(rect);
-            float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), "Bundle Name");
+            rect.y += 1;
+
+            float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10; float margin = 5;
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - margin, rect.height), "Bundle Name");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), "File Pattern");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - margin, rect.height), "File Pattern");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), "Search Option");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue - margin, rect.height), "Search Option");
             rect.x += width + residue;
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue * 7 - space, lineHeight), "Source");
+            EditorGUI.LabelField(new Rect(rect.x, rect.y, width + residue * 7 - margin, rect.height), "Source");
         }
         private void DrawBundleListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect.y += 1;
             rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_BundleList, index);
+            rect.y += 1; rect.height = EditorGUIUtility.singleLineHeight;
 
             SerializedProperty m_BundleInfo = m_BundleList.GetArrayElementAtIndex(index);
             SerializedProperty m_BundleName = m_BundleInfo.FindPropertyRelative("bundleName");
@@ -179,14 +177,14 @@ namespace EZUnity
             SerializedProperty m_SearchOption = m_BundleInfo.FindPropertyRelative("searchOption");
             SerializedProperty m_SrcDirPath = m_BundleInfo.FindPropertyRelative("dirPath");
 
-            float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_BundleName, GUIContent.none);
+            float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10; float margin = 5;
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - margin, rect.height), m_BundleName, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_FilePattern, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - margin, rect.height), m_FilePattern, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - space, lineHeight), m_SearchOption, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue - margin, rect.height), m_SearchOption, GUIContent.none);
             rect.x += width + residue;
-            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue * 7 - space, lineHeight), m_SrcDirPath, GUIContent.none);
+            EditorGUI.PropertyField(new Rect(rect.x, rect.y, width + residue * 7 - margin, rect.height), m_SrcDirPath, GUIContent.none);
         }
 
         private void DrawAssetBundleManager()

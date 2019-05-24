@@ -4,6 +4,7 @@
  * Description:     
  */
 #if XLUA
+using EZUnity.Builder;
 using EZUnity.Framework;
 using System.IO;
 using UnityEditor;

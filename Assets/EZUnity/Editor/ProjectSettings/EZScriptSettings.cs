@@ -11,7 +11,7 @@ namespace EZUnity
 {
     public class EZScriptSettings : _EZProjectSettingsSingleton<EZScriptSettings>
     {
-        public override string assetPath => "ProjectSettings/EZScriptSettings.asset";
+        public override string assetPath { get { return "ProjectSettings/EZScriptSettings.asset"; } }
 
         public string timeFormat = "yyyy-MM-dd HH:mm:ss";
         public List<string> extensionList = new List<string> { ".cs", ".lua", ".txt", ".shader", ".cginc", "uxml", "uss", "asmdef" };
