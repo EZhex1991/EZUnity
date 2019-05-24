@@ -9,7 +9,6 @@ namespace EZUnity
     {
         _Section_1 = 1100,
         EZStringAsset,
-        EZPhysicsBoneMaterial,
 
         _Section_2 = 1200,
         EZPlaneGenerator,
@@ -26,5 +25,11 @@ namespace EZUnity
 
         _Section_5 = 1500,
         EZScriptStatistics,
+
+        _Section_6 = 1600,
+        EZPhysicsBoneMaterial,
+
+        _Section_7 = 1700,
+        EZAssetListRenamer,
     }
 }

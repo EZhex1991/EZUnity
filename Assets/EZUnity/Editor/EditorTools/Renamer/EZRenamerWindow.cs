@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZRenamer : EditorWindow
+    public class EZRenamerWindow : EditorWindow
     {
         public enum CaseConversion
         {
