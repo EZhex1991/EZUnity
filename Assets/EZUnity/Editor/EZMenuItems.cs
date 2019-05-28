@@ -21,19 +21,23 @@ namespace EZUnity
             _Section_2 = 13000,
             SaveAssets,
             RefreshAssetDatabase,
+            OpenPersistentFolder,
             ClearPersistentFolder,
 
             _Section_3 = 14000,
             Renamer,
-            GuidGenerator,
             AssetBundleManager,
             AssetReferenceViewer,
             CorrespondingObjectViewer,
             FontReferenceViewer,
             PlayerPrefsEditor,
-            ColorBlender,
 
             _Section_4 = 15000,
+            GuidGenerator,
+            RegexTester,
+            ColorBlender,
+
+            _Section_5 = 16000,
             ShaderKeywordManager,
         }
 
@@ -54,6 +58,18 @@ namespace EZUnity
         private static void RefreshAssetDatabase()
         {
             AssetDatabase.Refresh();
+        }
+        [MenuItem(ROOT_NAME + "/Open Persistent Folder", false, (int)Order.OpenPersistentFolder)]
+        private static void OpenPersistentFolder()
+        {
+            try
+            {
+                Application.OpenURL("file://" + Application.persistentDataPath);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
         [MenuItem(ROOT_NAME + "/Clear Persistent Folder", false, (int)Order.ClearPersistentFolder)]
         private static void ClearPersistentFolder()
@@ -113,6 +129,11 @@ namespace EZUnity
         private static void ShaderKeywordManager()
         {
             EditorWindow.GetWindow<EZShaderKeywordManager>("Keyword Manager").Show();
+        }
+        [MenuItem(ROOT_NAME + "/Regex Tester", false, (int)Order.RegexTester)]
+        private static void RegexTester()
+        {
+            EditorWindow.GetWindow<EZRegexTester>("Regex Tester").Show();
         }
 
 #if UNITY_2018_3_OR_NEWER
