@@ -6,7 +6,6 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using System.IO;
 
 #if UNITY_2018_1_OR_NEWER
 using UnityEditor.Build.Reporting;
@@ -41,7 +40,7 @@ namespace EZUnity.Builder
         public int buildNumber;
         public Texture2D icon;
 
-        public CopyInfo[] copyList;
+        public EZCopyList copyList;
 
         public void Config(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget)
         {
@@ -128,55 +127,13 @@ namespace EZUnity.Builder
                     break;
                 case BuildResult.Succeeded:
                     Debug.Log("Build Succeeded");
-                    CopyFiles(path);
+                    copyList.CopyFiles(path);
                     break;
             }
 #else
             Debug.Log(BuildPipeline.BuildPlayer(options));
-            CopyFiles(path);
+            copyList.CopyFiles(path);
 #endif
-        }
-
-        private void CopyFiles(string path)
-        {
-            for (int i = 0; i < copyList.Length; i++)
-            {
-                EditorUtility.DisplayProgressBar("Copying Files", "", (float)i / copyList.Length);
-                string src = copyList[i].srcPath;
-                string dst = Path.Combine(path, copyList[i].dstPath);
-                if (string.IsNullOrEmpty(src) || string.IsNullOrEmpty(dst)) continue;
-                if (File.Exists(src))
-                {
-                    try
-                    {
-                        File.Copy(src, dst, true);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogWarning(e.Message);
-                    }
-                }
-                else if (Directory.Exists(src))
-                {
-                    Directory.CreateDirectory(dst);
-                    string[] files = Directory.GetFiles(src);
-                    foreach (string filePath in files)
-                    {
-                        try
-                        {
-                            if (filePath.EndsWith(".meta")) continue;
-                            string newPath = dst + filePath.Substring(src.Length);
-                            Directory.CreateDirectory(Path.GetDirectoryName(newPath));
-                            File.Copy(filePath, newPath, true);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.LogWarning(e.Message);
-                        }
-                    }
-                }
-            }
-            EditorUtility.ClearProgressBar();
         }
     }
 }

@@ -130,7 +130,7 @@ namespace EZUnity.Builder
 
         private void DrawCopyListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListHeaderIndex(rect);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect);
             rect.y += 1;
             float width = rect.width / 2; float margin = 5;
             EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), "Destination");
@@ -154,7 +154,7 @@ namespace EZUnity.Builder
 
         private void DrawBundleListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListHeaderIndex(rect);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect);
             rect.y += 1;
 
             float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10; float margin = 5;
