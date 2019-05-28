@@ -12,7 +12,7 @@ namespace EZUnity
     {
         public static float space = 5;
         public static float indexWidth = 30;
-        public static float reorderableListHeaderIndent = 15;
+        public static float dragHandleWidth = 15;
         public static float singleLineHeight = EditorGUIUtility.singleLineHeight;
 
         public static void WindowTitle(EditorWindow target)
@@ -37,14 +37,10 @@ namespace EZUnity
             GUI.enabled = true;
         }
 
-        public static Rect DrawReorderableListHeaderIndex(Rect rect, bool draggable = true)
+        public static Rect CalcReorderableListHeaderRect(Rect rect, bool draggable = true)
         {
-            return DrawReorderableListHeaderIndex(rect, draggable ? (indexWidth + reorderableListHeaderIndent) : indexWidth);
-        }
-        public static Rect DrawReorderableListHeaderIndex(Rect rect, float width)
-        {
-            EditorGUI.LabelField(new Rect(rect.x, rect.y, width, singleLineHeight), "NO.");
-            rect.x += width; rect.width -= width;
+            float indent = draggable ? (dragHandleWidth + indexWidth) : indexWidth;
+            rect.x += indent; rect.width -= indent;
             return rect;
         }
 
