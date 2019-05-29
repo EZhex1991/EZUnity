@@ -40,16 +40,16 @@ namespace EZUnity
             materialEditor.ColorProperty(property, property.displayName);
         }
 
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, string keyword)
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, string keyword, bool setupRequired = false)
         {
             EditorGUI.BeginChangeCheck();
-            materialEditor.TexturePropertySingleLine(texture, extraProperty1);
-            if (EditorGUI.EndChangeCheck())
+            materialEditor.TexturePropertySingleLine(texture);
+            if (setupRequired || EditorGUI.EndChangeCheck())
             {
                 (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
             }
         }
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, string keyword, bool setupRequired)
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, string keyword, bool setupRequired = false)
         {
             EditorGUI.BeginChangeCheck();
             materialEditor.TexturePropertySingleLine(texture, extraProperty1);
@@ -58,16 +58,7 @@ namespace EZUnity
                 (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
             }
         }
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, MaterialProperty extraProperty2, string keyword)
-        {
-            EditorGUI.BeginChangeCheck();
-            materialEditor.TexturePropertySingleLine(texture, extraProperty1, extraProperty2);
-            if (EditorGUI.EndChangeCheck())
-            {
-                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
-            }
-        }
-        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, MaterialProperty extraProperty2, string keyword, bool setupRequired)
+        public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, MaterialProperty extraProperty2, string keyword, bool setupRequired = false)
         {
             EditorGUI.BeginChangeCheck();
             materialEditor.TexturePropertySingleLine(texture, extraProperty1, extraProperty2);
@@ -153,6 +144,22 @@ namespace EZUnity
                 }
             }
             EditorGUI.showMixedValue = false;
+        }
+
+        public static void MinMaxSliderPropertyTwoLines(this MaterialEditor materialEditor, MaterialProperty property, float minValue = 0, float maxValue = 1)
+        {
+            MinMaxSliderPropertyTwoLines(materialEditor, property, property.displayName, minValue, maxValue);
+        }
+        public static void MinMaxSliderPropertyTwoLines(this MaterialEditor materialEditor, MaterialProperty property, string label, float minValue = 0, float maxValue = 1)
+        {
+            Vector2 range = property.vectorValue;
+            property.vectorValue = EditorGUILayout.Vector2Field(label, range);
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.MinMaxSlider("", ref range.x, ref range.y, minValue, maxValue);
+            if (EditorGUI.EndChangeCheck())
+            {
+                property.vectorValue = range;
+            }
         }
 
         public static void SetKeyword(this MaterialEditor materialEditor, Enum selection)
