@@ -12,7 +12,7 @@ namespace EZUnity
     public class EZRegexTester : EditorWindow
     {
         public string inputString = "This is a test";
-        public string regexString = "\\^This\\$";
+        public string regexString = "([Tt]\\w*)";
 
         private float height = EditorGUIUtility.singleLineHeight * 5;
 
