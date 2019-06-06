@@ -7,7 +7,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     public abstract class EZTextureGenerator : ScriptableObject
     {
@@ -17,17 +17,14 @@ namespace EZUnity
         [UnityEngine.Serialization.FormerlySerializedAs("textureReference")]
         public Texture2D targetTexture;
 
-        public void ApplyToTexture(Texture2D texture)
-        {
-            SetPixels(texture);
-            texture.Apply();
-        }
-        protected abstract void SetPixels(Texture2D texture);
+        // Don't forget to call texture.Apply()
+        public abstract void ApplyToTexture(Texture2D texture);
 
         public byte[] GetTextureData(Vector2Int resolution, TextureFormat textureFormat)
         {
             Texture2D texture = new Texture2D(resolution.x, resolution.y, textureFormat, false);
             ApplyToTexture(texture);
+            texture.Apply();
             byte[] bytes = texture.Encode(textureEncoding);
             DestroyImmediate(texture);
             return bytes;

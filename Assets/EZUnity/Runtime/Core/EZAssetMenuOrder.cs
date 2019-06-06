@@ -15,6 +15,8 @@ namespace EZUnity
         EZTextureChannelModifier,
         EZTextureCombiner,
         EZGradientGenerator,
+        EZNoiseGenerator,
+        EZPerlinNoiseGenerator,
 
         _Section_3 = 1300,
         EZImageCapture,

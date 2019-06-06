@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     [CustomEditor(typeof(EZTextureCombiner))]
     public class EZTextureCombinerEditor : EZTextureGeneratorEditor

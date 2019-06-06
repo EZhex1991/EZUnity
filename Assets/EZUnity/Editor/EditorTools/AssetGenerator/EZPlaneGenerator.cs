@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZPlaneGenerator", menuName = "EZUnity/EZPlaneGenerator", order = (int)EZAssetMenuOrder.EZPlaneGenerator)]
     public class EZPlaneGenerator : EZMeshGenerator

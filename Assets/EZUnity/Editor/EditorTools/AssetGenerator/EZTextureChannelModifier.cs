@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZTextureChannelModifier", menuName = "EZUnity/EZTextureChannelModifier", order = (int)EZAssetMenuOrder.EZTextureChannelModifier)]
     public class EZTextureChannelModifier : EZTextureGenerator
@@ -32,7 +32,7 @@ namespace EZUnity
         [EZCurveRange(0, 0, 1, 1)]
         public AnimationCurve curveA = AnimationCurve.Linear(0, 0, 1, 1);
 
-        protected override void SetPixels(Texture2D texture)
+        public override void ApplyToTexture(Texture2D texture)
         {
             if (referenceTexture != null)
             {

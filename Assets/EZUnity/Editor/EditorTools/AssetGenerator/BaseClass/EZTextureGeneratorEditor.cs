@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     [CustomEditor(typeof(EZTextureGenerator), true)]
     public class EZTextureGeneratorEditor : Editor
@@ -110,6 +110,7 @@ namespace EZUnity
         public void RefreshPreview()
         {
             generator.ApplyToTexture(previewTexture);
+            previewTexture.Apply();
             Repaint();
         }
     }

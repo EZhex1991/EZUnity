@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZTextureCombiner", menuName = "EZUnity/EZTextureCombiner", order = (int)EZAssetMenuOrder.EZTextureCombiner)]
     public class EZTextureCombiner : EZTextureGenerator
@@ -13,7 +13,7 @@ namespace EZUnity
         public Vector2Int cellSize = new Vector2Int(2, 2);
         public Texture2D[] textures = new Texture2D[36];
 
-        protected override void SetPixels(Texture2D texture)
+        public override void ApplyToTexture(Texture2D texture)
         {
             float subTextureWidth = (float)texture.width / cellSize.x;
             float subTextureheight = (float)texture.height / cellSize.y;

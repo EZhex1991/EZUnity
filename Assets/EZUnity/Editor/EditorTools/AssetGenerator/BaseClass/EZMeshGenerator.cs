@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     public abstract class EZMeshGenerator : ScriptableObject
     {

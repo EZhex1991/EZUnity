@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZUnity.AssetGenerator
 {
     [CustomEditor(typeof(EZMeshGenerator), true)]
     public class EZMeshGeneratorEditor : Editor
