@@ -27,6 +27,10 @@ Assets/ThirdParty.meta
 Assets/XLua/Gen/
 Assets/XLua/Gen.meta
 
+# Others
+Assets/VDProject
+Assets/VDProject.meta
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
