@@ -15,6 +15,8 @@
 
 ## 附加设置 ([Edit/ProjectSettings/EZUnity/..](Assets/EZUnity/Demo/EZProjectSettings/README.md))
 
+Unity2018.3以上版本在ProjectSettings窗口中，**低版本在Preferences窗口中**
+
 - EZEditorSettings: 开启某些选项能提高工作效率
 - EZGraphicsSettings: 提供更加方便的界面来管理AlwaysIncludedShaders，其他功能开发中
 - EZScriptSettings: 提供脚本模板的管理功能

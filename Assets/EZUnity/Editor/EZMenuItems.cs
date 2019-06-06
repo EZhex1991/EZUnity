@@ -163,6 +163,17 @@ namespace EZUnity
             EZGraphicsSettings provider = new EZGraphicsSettings("Project/" + ROOT_NAME + "/EZGraphicsSettings", SettingsScope.Project);
             return provider;
         }
+#else
+        [PreferenceItem("EZScriptSettings")]
+        private static void CreateEZScriptSettingsProvider()
+        {
+            Editor.CreateEditor(EZScriptSettings.Instance).OnInspectorGUI();
+        }
+        [PreferenceItem("EZEditorSettings")]
+        private static void CreateEZEditorSettingsProvider()
+        {
+            Editor.CreateEditor(EZEditorSettings.Instance).OnInspectorGUI();
+        }
 #endif
     }
 }
