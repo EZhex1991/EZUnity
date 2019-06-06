@@ -39,8 +39,6 @@
   - EZTextureChannelModifier: 图片通道调整工具
   - EZTextureCombiner: 图片合并工具
 
-噪点图片生成工具
-
 ## 一些比较有意思的Shader ([Materials](Assets/EZUnity/Demo/Materials/README.md))
 
 - Reflection: 反射
