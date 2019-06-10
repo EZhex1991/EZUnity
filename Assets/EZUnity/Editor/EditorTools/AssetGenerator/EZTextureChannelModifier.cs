@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZTextureChannelModifier", menuName = "EZUnity/EZTextureChannelModifier", order = (int)EZAssetMenuOrder.EZTextureChannelModifier)]
-    public class EZTextureChannelModifier : EZTextureGenerator
+    public class EZTextureChannelModifier : _EZTextureGenerator
     {
         public Texture2D referenceTexture;
 

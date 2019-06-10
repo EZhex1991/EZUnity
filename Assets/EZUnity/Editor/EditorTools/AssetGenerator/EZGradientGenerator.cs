@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZGradientGenerator", menuName = "EZUnity/EZGradientGenerator", order = (int)EZAssetMenuOrder.EZGradientGenerator)]
-    public class EZGradientGenerator : EZTextureGenerator
+    public class EZGradientGenerator : _EZTextureGenerator
     {
         public static readonly float iSqrt2 = 1 / Mathf.Sqrt(2);
 

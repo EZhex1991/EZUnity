@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EZUnity.AssetGenerator
 {
-    public abstract class EZTextureGenerator : ScriptableObject
+    public abstract class _EZTextureGenerator : ScriptableObject
     {
         public Vector2Int resolution = new Vector2Int(256, 256);
         public TextureFormat textureFormat = TextureFormat.RGBA32;

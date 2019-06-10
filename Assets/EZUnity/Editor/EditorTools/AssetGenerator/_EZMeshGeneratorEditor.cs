@@ -8,8 +8,8 @@ using UnityEngine;
 
 namespace EZUnity.AssetGenerator
 {
-    [CustomEditor(typeof(EZMeshGenerator), true)]
-    public class EZMeshGeneratorEditor : Editor
+    [CustomEditor(typeof(_EZMeshGenerator), true)]
+    public class _EZMeshGeneratorEditor : Editor
     {
         private static Material m_PreviewMaterial;
         protected static Material previewMaterial
@@ -34,12 +34,12 @@ namespace EZUnity.AssetGenerator
             }
         }
 
-        protected EZMeshGenerator generator;
+        protected _EZMeshGenerator generator;
         protected PreviewRenderUtility preview;
 
         protected virtual void OnEnable()
         {
-            generator = target as EZMeshGenerator;
+            generator = target as _EZMeshGenerator;
             preview = new PreviewRenderUtility();
         }
         protected virtual void OnDisable()
