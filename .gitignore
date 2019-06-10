@@ -14,6 +14,7 @@
 [Ll]ogs/
 [Bb]uild/
 [Bb]uilds/
+ProjectSettings/ProjectVersion.txt
 
 # EZUnity
 EZPersistent/
