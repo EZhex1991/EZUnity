@@ -8,9 +8,15 @@ Shader "EZUnity/Effects/EZReflection" {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
+		[HideInInspector]
 		_ReflectionTex ("Reflection Texture", 2D) = "black" {}
+		[HideInInspector]
+		_ReflectionStrength ("Reflection Strength", Range(0, 1)) = 0.5
+		
+		[HideInInspector]
 		_RefractionTex ("Refraction Texture", 2D) = "black" {}
-		_BlendFactor ("Blend Factor", Range(0, 1)) = 0.5
+		[HideInInspector]
+		_RefractionStrength ("Refraction Strength", Range(0, 1)) = 0.5
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -19,6 +25,8 @@ Shader "EZUnity/Effects/EZReflection" {
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma shader_feature _ _REFLECTION_ON
+			#pragma shader_feature _ _REFRACTION_ON
 
 			#include "UnityCG.cginc"
 
@@ -37,8 +45,9 @@ Shader "EZUnity/Effects/EZReflection" {
 			fixed4 _Color;
 
 			sampler2D _ReflectionTex;
+			fixed _ReflectionStrength;
 			sampler2D _RefractionTex;
-			fixed _BlendFactor;
+			fixed _RefractionStrength;
 
 			v2f vert (appdata v) {
 				v2f o;
@@ -51,9 +60,16 @@ Shader "EZUnity/Effects/EZReflection" {
 				half4 color = tex2D(_MainTex, i.mainUV) * _Color;
 
 				float4 projCoord = UNITY_PROJ_COORD(i.screenPos);
-				half4 reflection = tex2Dproj(_ReflectionTex, projCoord);
-				half4 refraction = tex2Dproj(_RefractionTex, projCoord);
-				color *= lerp(reflection, refraction, _BlendFactor);
+
+				#if _REFLECTION_ON
+					half4 reflection = tex2Dproj(_ReflectionTex, projCoord);
+					color = (color + reflection * _ReflectionStrength) / (1 + _ReflectionStrength);
+				#endif
+
+				#if _REFRACTION_ON
+					half4 refraction = tex2Dproj(_RefractionTex, projCoord);
+					color *= (color + refraction * _RefractionStrength) / (1 + _RefractionStrength);
+				#endif
 
 				return color;
 			}

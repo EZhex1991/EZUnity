@@ -9,27 +9,106 @@ using UnityEngine;
 namespace EZUnity
 {
     [ExecuteInEditMode]
+    [RequireComponent(typeof(Renderer))]
     public class EZReflection : MonoBehaviour
     {
+        public const string SHADER_NAME = "EZUnity/Effects/EZReflection";
         public const string TAG_REFLECTION = "EZReflection";
         public const string TAG_REFRACTION = "EZRefraction";
+        public const string KEYWORD_REFLECTION_ON = "_REFLECTION_ON";
+        public const string KEYWORD_REFRACTION_ON = "_REFRACTION_ON";
 
         public static bool isRendering;
 
-        public bool renderReflection = true;
-        public bool renderRefraction = false;
+        private Renderer m_Renderer;
+        private Renderer renderer
+        {
+            get
+            {
+                if (m_Renderer == null)
+                    m_Renderer = GetComponent<Renderer>();
+                return m_Renderer;
+            }
+        }
+        public Material material
+        {
+            get
+            {
+                if (renderer.sharedMaterial.shader != Shader.Find(SHADER_NAME))
+                {
+                    Debug.LogErrorFormat(renderer, "Shader {0} is required for EZReflection renderer", SHADER_NAME);
+                }
+                return renderer.sharedMaterial;
+            }
+        }
 
-        [UnityEngine.Serialization.FormerlySerializedAs("renderTexture")]
-        public RenderTexture reflectionTexture;
-        public RenderTexture refractionTexture;
-
-        public LayerMask reflectionLayers = -1;
-        public LayerMask refractionLayers = -1;
-
-        [UnityEngine.Serialization.FormerlySerializedAs("reflectionNormal")]
         public Vector3 normalDirection = Vector3.forward;
 
         public float clipPlaneOffset = 0.05f;
+
+        [Header("Reflection")]
+        [SerializeField]
+        private bool m_ReflectionOn = true;
+        public bool reflectionOn
+        {
+            get { return m_ReflectionOn; }
+            set { m_ReflectionOn = value; material.SetKeyword(KEYWORD_REFLECTION_ON, value); }
+        }
+        [SerializeField, Range(0, 1)]
+        private float m_ReflectionStrength = 0.5f;
+        public float reflectionStrength
+        {
+            get { return m_ReflectionStrength; }
+            set { m_ReflectionStrength = value; material.SetFloat("_ReflectionStrength", m_ReflectionStrength); }
+        }
+        public Vector2Int reflectionResolution = new Vector2Int(512, 512);
+        private RenderTexture m_ReflectionTexture;
+        private RenderTexture reflectionTexture
+        {
+            get
+            {
+                if (m_ReflectionTexture == null
+                    || m_ReflectionTexture.width != reflectionResolution.x
+                    || m_ReflectionTexture.height != reflectionResolution.y)
+                {
+                    m_ReflectionTexture = new RenderTexture(reflectionResolution.x, reflectionResolution.y, 0);
+                }
+                return m_ReflectionTexture;
+            }
+        }
+        public LayerMask reflectionLayers = -1;
+
+        [Header("Refraction")]
+        [SerializeField]
+        private bool m_RefractionOn = true;
+        public bool refractionOn
+        {
+            get { return m_RefractionOn; }
+            set { m_RefractionOn = value; material.SetKeyword(KEYWORD_REFRACTION_ON, value); }
+        }
+        [SerializeField, Range(0, 1)]
+        private float m_RefractionStrength = 0.5f;
+        public float refractionStrength
+        {
+            get { return m_RefractionStrength; }
+            set { m_RefractionStrength = value; material.SetFloat("_RefractionStrength", m_RefractionStrength); }
+        }
+        public Vector2Int refractionResolution = new Vector2Int(512, 512);
+        private RenderTexture m_RefractionTexture;
+        private RenderTexture refractionTexture
+        {
+            get
+            {
+                if (m_RefractionTexture == null
+                    || m_RefractionTexture.width != refractionResolution.x
+                    || m_RefractionTexture.height != refractionResolution.y)
+                {
+                    m_RefractionTexture = new RenderTexture(refractionResolution.x, refractionResolution.y, 0);
+                }
+                return m_RefractionTexture;
+            }
+        }
+        public LayerMask refractionLayers = -1;
 
         private Dictionary<Camera, Camera> m_ReflectionCameras = new Dictionary<Camera, Camera>();
         private Dictionary<Camera, Camera> m_RefractionCameras = new Dictionary<Camera, Camera>();
@@ -99,8 +178,9 @@ namespace EZUnity
             Vector3 position = transform.position;
             Vector3 normal = transform.TransformDirection(normalDirection);
 
-            if (renderRefraction && refractionTexture != null)
+            if (refractionOn && refractionTexture != null)
             {
+                material.SetTexture("_ReflectionTex", m_ReflectionTexture);
                 Camera refractionCamera = GetRenderCamera(m_RefractionCameras, targetCamera, TAG_REFRACTION);
                 SetCamera(targetCamera, refractionCamera);
                 refractionCamera.cullingMask = ~(1 << 4) & refractionLayers;
@@ -116,8 +196,9 @@ namespace EZUnity
                 refractionCamera.transform.rotation = targetCamera.transform.rotation;
                 refractionCamera.Render();
             }
-            if (renderReflection && reflectionTexture != null)
+            if (reflectionOn && reflectionTexture != null)
             {
+                material.SetTexture("_RefractionTex", m_RefractionTexture);
                 Camera reflectionCamera = GetRenderCamera(m_ReflectionCameras, targetCamera, TAG_REFLECTION);
                 SetCamera(targetCamera, reflectionCamera);
                 reflectionCamera.cullingMask = ~(1 << 4) & reflectionLayers;
@@ -156,5 +237,14 @@ namespace EZUnity
             }
             m_ReflectionCameras.Clear();
         }
+
+        private void OnValidate()
+        {
+            material.SetFloat("_ReflectionStrength", m_ReflectionStrength);
+            material.SetFloat("_RefractionStrength", m_RefractionStrength);
+            material.SetKeyword(KEYWORD_REFLECTION_ON, reflectionOn);
+            material.SetKeyword(KEYWORD_REFRACTION_ON, refractionOn);
+        }
+
     }
 }
