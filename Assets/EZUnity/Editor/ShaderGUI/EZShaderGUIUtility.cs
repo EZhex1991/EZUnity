@@ -170,28 +170,5 @@ namespace EZUnity
         {
             (materialEditor.target as Material).SetKeyword(keyword, value);
         }
-
-        public static void SetKeyword(this Material mat, Enum selection)
-        {
-            foreach (Enum value in Enum.GetValues(selection.GetType()))
-            {
-                mat.DisableKeyword(FormatKeyword(value));
-            }
-            mat.EnableKeyword(FormatKeyword(selection));
-        }
-        public static void SetKeyword(this Material mat, string keyword, bool value)
-        {
-            if (value) { mat.EnableKeyword(keyword); }
-            else mat.DisableKeyword(keyword);
-        }
-        public static bool IsKeywordEnabled(this Material mat, Enum selection)
-        {
-            return mat.IsKeywordEnabled(FormatKeyword(selection));
-        }
-
-        public static string FormatKeyword(Enum value)
-        {
-            return string.Format("_{0}_{1}", value.GetType().Name, value).ToUpper();
-        }
     }
 }
