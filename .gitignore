@@ -15,6 +15,7 @@
 [Bb]uild/
 [Bb]uilds/
 ProjectSettings/ProjectVersion.txt
+UnityPackageManager/
 
 # EZUnity
 EZPersistent/
