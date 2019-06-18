@@ -3,29 +3,23 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Effects/EZOutline" {
+Shader "Hidden/EZUnity/Effects/EZDepthOutline" {
 	Properties {
 		[HideInInspector]
 		_MainTex ("Main Tex", 2D) = "white" {}
 		
-		[HideInInspector]
-		_SampleDistance ("Sample Distance", Float) = 1
+		_SampleDistance ("Sample Distance", Float) = 0.5
 		
-		[HideInInspector]
 		_DepthSensitivity ("Depth Sensitivity", Float) = 10
-		[HideInInspector]
-		_NormalSensitivity ("Normal Sensitivity", Float) = 5
+		_NormalSensitivity ("Normal Sensitivity", Float) = 10
 		
-		[HideInInspector]
 		_CoverColor ("Cover Color", Color) = (0, 0, 0, 1)
-		[HideInInspector]
 		_CoverStrength ("Cover Strength", Range(0, 1)) = 0
 		
-		[HideInInspector]
-		_OutlineColor ("Outline Color", Color) = (1, 1, 0, 1)
-		[HideInInspector]
+		_OutlineColor ("Outline Color", Color) = (0, 0, 1, 1)
 		_OutlineStrength ("Outline Strength", Range(0, 1)) = 1
 	}
+	CustomEditor "EZDepthOutlineShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 		Cull Off
