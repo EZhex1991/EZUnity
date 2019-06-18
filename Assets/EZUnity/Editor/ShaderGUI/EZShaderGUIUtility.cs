@@ -155,7 +155,7 @@ namespace EZUnity
             Vector2 range = property.vectorValue;
             property.vectorValue = EditorGUILayout.Vector2Field(label, range);
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.MinMaxSlider("", ref range.x, ref range.y, minValue, maxValue);
+            EditorGUILayout.MinMaxSlider(" ", ref range.x, ref range.y, minValue, maxValue);
             if (EditorGUI.EndChangeCheck())
             {
                 property.vectorValue = range;
