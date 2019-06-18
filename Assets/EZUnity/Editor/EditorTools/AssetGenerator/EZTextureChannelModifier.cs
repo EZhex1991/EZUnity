@@ -14,22 +14,22 @@ namespace EZUnity.AssetGenerator
 
         public Texture2D overrideTextureR;
         public ColorChannel channelR = ColorChannel.R;
-        [EZCurveRange(0, 0, 1, 1)]
+        [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve curveR = AnimationCurve.Linear(0, 0, 1, 1);
 
         public Texture2D overrideTextureG;
         public ColorChannel channelG = ColorChannel.G;
-        [EZCurveRange(0, 0, 1, 1)]
+        [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve curveG = AnimationCurve.Linear(0, 0, 1, 1);
 
         public Texture2D overrideTextureB;
         public ColorChannel channelB = ColorChannel.B;
-        [EZCurveRange(0, 0, 1, 1)]
+        [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve curveB = AnimationCurve.Linear(0, 0, 1, 1);
 
         public Texture2D overrideTextureA;
         public ColorChannel channelA = ColorChannel.A;
-        [EZCurveRange(0, 0, 1, 1)]
+        [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve curveA = AnimationCurve.Linear(0, 0, 1, 1);
 
         public override void ApplyToTexture(Texture2D texture)

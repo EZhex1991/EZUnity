@@ -31,9 +31,9 @@ namespace EZUnity.AssetGenerator
 
         public Gradient gradient = new Gradient();
         public CoordinateMode coordinateMode = CoordinateMode.AdditiveXY;
-        [EZCurveRange(0, 0, 1, 1)]
+        [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve coordinateX = AnimationCurve.Linear(0, 0, 1, 1);
-        [EZCurveRange(0, 0, 1, 1)]
+        [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve coordinateY = AnimationCurve.Linear(0, 0, 1, 1);
         public Rotation rotation = Rotation.None;
 

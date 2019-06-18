@@ -19,7 +19,7 @@ namespace EZUnity
         private float m_BlendFactor = 1;
         public float blendFactor { get { return m_BlendFactor; } set { m_BlendFactor = Mathf.Max(0, value); } }
 
-        [SerializeField, EZCurveRange(0, 0, 1, 1)]
+        [SerializeField, EZCurveRect(0, 0, 1, 1)]
         private AnimationCurve m_BlendCurve = AnimationCurve.Linear(0, 0, 1, 1);
         public AnimationCurve blendCurve { get { return m_BlendCurve; } set { m_BlendCurve = value; } }
 

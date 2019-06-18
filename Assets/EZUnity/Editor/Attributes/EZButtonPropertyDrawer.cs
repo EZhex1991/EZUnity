@@ -1,61 +1,31 @@
 /* Author:          ezhex1991@outlook.com
- * CreateTime:      2019-03-18 13:27:52
+ * CreateTime:      2019-06-14 20:14:43
  * Organization:    #ORGANIZATION#
  * Description:     
  */
 using System;
-using UnityEngine;
-
-#if UNITY_EDITOR
-using UnityEditor;
 using System.Reflection;
-#endif
+using UnityEditor;
+using UnityEngine;
 
 namespace EZUnity
 {
-    [AttributeUsage(AttributeTargets.Field)]
-    public class EZInspectorButtonAttribute : PropertyAttribute
+    [CustomPropertyDrawer(typeof(EZButtonPropertyAttribute))]
+    public class EZButtonPropertyDrawer : PropertyDrawer
     {
-        public enum ButtonLayout
-        {
-            Above,
-            Replace,
-            Below
-        }
-        public readonly string buttonLabel;
-        public readonly string methodName;
-        public ButtonLayout layout;
-        public EZInspectorButtonAttribute(string methodName, ButtonLayout layout = ButtonLayout.Above)
-        {
-            this.buttonLabel = methodName;
-            this.methodName = methodName.Replace(" ", "");
-            this.layout = layout;
-        }
-        public EZInspectorButtonAttribute(string buttonLabel, string methodName, ButtonLayout layout = ButtonLayout.Above)
-        {
-            this.buttonLabel = buttonLabel;
-            this.methodName = methodName;
-            this.layout = layout;
-        }
-    }
-
-#if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(EZInspectorButtonAttribute))]
-    public class EZInspectorButtonPropertyDrawer : PropertyDrawer
-    {
-        private EZInspectorButtonAttribute buttonAttribute;
+        private EZButtonPropertyAttribute buttonAttribute;
         private MethodInfo methodInfo;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            if (buttonAttribute == null) buttonAttribute = attribute as EZInspectorButtonAttribute;
+            if (buttonAttribute == null) buttonAttribute = attribute as EZButtonPropertyAttribute;
             switch (buttonAttribute.layout)
             {
-                case EZInspectorButtonAttribute.ButtonLayout.Above:
+                case EZButtonPropertyAttribute.ButtonLayout.Above:
                     return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing + base.GetPropertyHeight(property, label);
-                case EZInspectorButtonAttribute.ButtonLayout.Replace:
+                case EZButtonPropertyAttribute.ButtonLayout.Replace:
                     return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                case EZInspectorButtonAttribute.ButtonLayout.Below:
+                case EZButtonPropertyAttribute.ButtonLayout.Below:
                     return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing + base.GetPropertyHeight(property, label);
                 default:
                     return base.GetPropertyHeight(property, label);
@@ -63,22 +33,22 @@ namespace EZUnity
         }
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (buttonAttribute == null) buttonAttribute = attribute as EZInspectorButtonAttribute;
+            if (buttonAttribute == null) buttonAttribute = attribute as EZButtonPropertyAttribute;
 
             EditorGUI.BeginProperty(position, label, property);
             switch (buttonAttribute.layout)
             {
-                case EZInspectorButtonAttribute.ButtonLayout.Above:
+                case EZButtonPropertyAttribute.ButtonLayout.Above:
                     position.height = EditorGUIUtility.singleLineHeight;
                     DrawButton(position, property.serializedObject.targetObject);
                     position.y += position.height + EditorGUIUtility.standardVerticalSpacing;
                     position.height = base.GetPropertyHeight(property, label);
                     EditorGUI.PropertyField(position, property);
                     break;
-                case EZInspectorButtonAttribute.ButtonLayout.Replace:
+                case EZButtonPropertyAttribute.ButtonLayout.Replace:
                     DrawButton(position, property.serializedObject.targetObject);
                     break;
-                case EZInspectorButtonAttribute.ButtonLayout.Below:
+                case EZButtonPropertyAttribute.ButtonLayout.Below:
                     position.height = base.GetPropertyHeight(property, label);
                     EditorGUI.PropertyField(position, property);
                     position.y += position.height + EditorGUIUtility.standardVerticalSpacing;
@@ -111,5 +81,4 @@ namespace EZUnity
             }
         }
     }
-#endif
 }

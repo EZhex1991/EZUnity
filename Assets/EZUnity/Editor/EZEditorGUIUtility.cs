@@ -44,15 +44,15 @@ namespace EZUnity
             return rect;
         }
 
-        public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty property, int index)
+        public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty listProperty, int index)
         {
-            return DrawReorderableListIndex(rect, property, index, indexWidth);
+            return DrawReorderableListIndex(rect, listProperty, index, indexWidth);
         }
-        public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty property, int index, float width)
+        public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty listProperty, int index, float width)
         {
             if (GUI.Button(new Rect(rect.x, rect.y, width, singleLineHeight), index.ToString("00"), EditorStyles.label))
             {
-                DrawReorderMenu(property, index).ShowAsContext();
+                DrawReorderMenu(listProperty, index).ShowAsContext();
             }
             rect.x += width; rect.width -= width;
             return rect;

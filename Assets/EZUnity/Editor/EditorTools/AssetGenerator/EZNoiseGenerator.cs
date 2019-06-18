@@ -11,7 +11,7 @@ namespace EZUnity.AssetGenerator
     public class EZNoiseGenerator : _EZTextureGenerator
     {
         public bool colored;
-        [EZCurveRange(0, 0, 1, 1)]
+        [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve outputCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
         public override void ApplyToTexture(Texture2D texture)

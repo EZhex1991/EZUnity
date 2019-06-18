@@ -1,22 +1,15 @@
 /* Author:          ezhex1991@outlook.com
- * CreateTime:      2019-03-18 17:04:00
+ * CreateTime:      2019-06-14 20:18:40
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
+using UnityEngine;
 
 namespace EZUnity
 {
-    public class EZHideInInspectorNormal : PropertyAttribute
-    {
-    }
-
-#if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(EZHideInInspectorNormal))]
-    public class EZHideInInspectorNormalDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(EZDebugPropertyAttribute))]
+    public class EZDebugPropertyDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -27,5 +20,4 @@ namespace EZUnity
 
         }
     }
-#endif
 }
