@@ -67,8 +67,6 @@ namespace EZUnity
             return null;
         }
 
-        float lineHeight = EditorGUIUtility.singleLineHeight;
-
         public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(rect, label, property);

@@ -11,9 +11,6 @@ namespace EZUnity
     [CustomEditor(typeof(EZExplosive)), CanEditMultipleObjects]
     public class EZExplosiveEditor : Editor
     {
-        private Rect uiRect = new Rect(0, 0, 80, 20);
-        private Vector2 offset = new Vector2(10, 50);
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
