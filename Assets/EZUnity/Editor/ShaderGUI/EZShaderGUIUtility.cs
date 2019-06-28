@@ -146,16 +146,26 @@ namespace EZUnity
             EditorGUI.showMixedValue = false;
         }
 
-        public static void MinMaxSliderPropertyTwoLines(this MaterialEditor materialEditor, MaterialProperty property, float minValue = 0, float maxValue = 1)
+        public static void MinMaxSlider(this MaterialEditor materialEditor, MaterialProperty property, float minValue = 0, float maxValue = 1)
         {
-            MinMaxSliderPropertyTwoLines(materialEditor, property, property.displayName, minValue, maxValue);
+            MinMaxSlider(materialEditor, property, property.displayName, minValue, maxValue);
         }
-        public static void MinMaxSliderPropertyTwoLines(this MaterialEditor materialEditor, MaterialProperty property, string label, float minValue = 0, float maxValue = 1)
+        public static void MinMaxSlider(this MaterialEditor materialEditor, MaterialProperty property, string label, float minValue = 0, float maxValue = 1)
         {
+            Rect position = EditorGUILayout.GetControlRect();
+            position = EditorGUI.PrefixLabel(position, EditorGUIUtility.GetControlID(FocusType.Passive), new GUIContent(label));
+            float fieldWidth = position.width / 5f;
+
             Vector2 range = property.vectorValue;
-            property.vectorValue = EditorGUILayout.Vector2Field(label, range);
             EditorGUI.BeginChangeCheck();
-            EditorGUILayout.MinMaxSlider(" ", ref range.x, ref range.y, minValue, maxValue);
+            position.width = fieldWidth - 5;
+            range.x = EditorGUI.FloatField(position, range.x);
+            position.x += fieldWidth;
+            position.width = fieldWidth * 3;
+            EditorGUI.MinMaxSlider(position, ref range.x, ref range.y, minValue, maxValue);
+            position.x += position.width + 5;
+            position.width = fieldWidth - 5;
+            range.y = EditorGUI.FloatField(position, range.y);
             if (EditorGUI.EndChangeCheck())
             {
                 property.vectorValue = range;

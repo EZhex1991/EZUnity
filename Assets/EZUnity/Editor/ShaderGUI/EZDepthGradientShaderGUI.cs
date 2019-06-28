@@ -23,6 +23,6 @@ public class EZDepthGradientShaderGUI : ShaderGUI
         materialEditor.ShaderProperty(_ColorNear);
         materialEditor.ShaderProperty(_ColorFar);
         materialEditor.ShaderProperty(_GradientPower);
-        materialEditor.MinMaxSliderPropertyTwoLines(_GradientSoftness);
+        materialEditor.MinMaxSlider(_GradientSoftness);
     }
 }
