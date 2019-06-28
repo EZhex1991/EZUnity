@@ -14,6 +14,7 @@ namespace EZUnity.Builder
         protected EZPlayerBuilder playerBuilder;
 
         protected SerializedProperty m_ConfigButDontBuild;
+        protected SerializedProperty m_BuildOptions;
 
         protected SerializedProperty m_BundleBuilder;
 
@@ -33,6 +34,7 @@ namespace EZUnity.Builder
         {
             playerBuilder = target as EZPlayerBuilder;
             m_ConfigButDontBuild = serializedObject.FindProperty("configButDontBuild");
+            m_BuildOptions = serializedObject.FindProperty("buildOptions");
             m_BundleBuilder = serializedObject.FindProperty("bundleBuilder");
             m_LocationPathName = serializedObject.FindProperty("locationPathName");
             m_Scenes = serializedObject.FindProperty("scenes");
@@ -55,6 +57,7 @@ namespace EZUnity.Builder
             {
                 EditorGUILayout.LabelField("Build", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(m_ConfigButDontBuild);
+                m_BuildOptions.intValue = (int)(BuildOptions)EditorGUILayout.EnumFlagsField("Build Options", (BuildOptions)m_BuildOptions.intValue);
                 DrawBuildButtons();
                 EditorGUILayout.Space();
             }

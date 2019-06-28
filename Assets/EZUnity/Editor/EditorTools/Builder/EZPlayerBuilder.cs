@@ -26,6 +26,7 @@ namespace EZUnity.Builder
         public const string Wildcard_BuildTarget = "<BuildTarget>";
 
         public bool configButDontBuild;
+        public BuildOptions buildOptions = BuildOptions.ShowBuiltPlayer;
 
         public EZBundleBuilder bundleBuilder;
 
@@ -116,7 +117,7 @@ namespace EZUnity.Builder
                     break;
             }
             options.target = buildTarget;
-            options.options = BuildOptions.ShowBuiltPlayer;
+            options.options = buildOptions;
 #if UNITY_2018_1_OR_NEWER
             BuildReport report = BuildPipeline.BuildPlayer(options);
             var summary = report.summary;
