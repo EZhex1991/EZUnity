@@ -127,12 +127,6 @@ namespace EZUnity.XLuaExtension
         {
             return UnityEngine.Physics.Raycast(ray, out hitInfo, maxDistance, layerMask);
         }
-
-        // Handheld只导出震动功能
-        public static void HandheldVibrate()
-        {
-            Handheld.Vibrate();
-        }
     }
 }
 #endif
