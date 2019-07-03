@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1616022006
+CRC: 735672023
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c8a26488d187c60f2e5db0b5bfe387fe
+    Hash: 63800ec110681d47a9fa70163057113e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: dd0e6d4ca512efd71bfb21e252e18493
+    Hash: 0b2f9ef907f1ea3b7202e82ca428abe3
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -29,6 +29,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 54
   Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
 - Class: 81
@@ -46,9 +48,15 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 3069907128af34efca9780c9aea75eb0, type: 3}
 - Class: 114
+  Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 114
   Script: {fileID: -619905303, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 - Class: 114
+  Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 114
   Script: {fileID: 1077351063, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+- Class: 114
+  Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7f7850f24249e4056b2189de03ae584c, type: 3}
 - Class: 114
@@ -67,8 +75,6 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 128
   Script: {instanceID: 0}
-- Class: 132
-  Script: {instanceID: 0}
 - Class: 135
   Script: {instanceID: 0}
 - Class: 136
@@ -78,6 +84,12 @@ ClassTypes:
 - Class: 198
   Script: {instanceID: 0}
 - Class: 199
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
   Script: {instanceID: 0}
 Assets:
 - Assets/XLuaExamples/Tutorial/02_SpaceShooter/_Complete-Lua/SpaceShooter.unity
