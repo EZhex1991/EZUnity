@@ -81,8 +81,9 @@ v2f vert (appdata v) {
 	o.diffColor = lerp(_AOColor.rgb, 1, ao * diff);
 
 	float dotTH = max(0, 1 - abs(dot(worldBitangent, worldHalf)));
-	float spec1 = pow(dotTH, _Spec1Power) * FUR_LAYER;
-	float spec2 = pow(dotTH, _Spec2Power) * FUR_LAYER;
+	float spec = dotTH * saturate(dotNL + 1);
+	float spec1 = pow(spec, _Spec1Power) * FUR_LAYER;
+	float spec2 = pow(spec, _Spec2Power) * FUR_LAYER;
 	o.spec1Color = spec1 * _Spec1Color.rgb * _Spec1Color.a;
 	o.spec2Color = spec2 * _Spec2Color.rgb * _Spec2Color.a;
 	
@@ -117,8 +118,9 @@ half4 frag (v2f i) : SV_Target {
 	half3 diffColor = lerp(_AOColor.rgb, 1, i.ao * diff);
 	
 	float dotTH = max(0, 1 - abs(dot(i.worldBitangent, i.worldHalf)));
-	float spec1 = pow(dotTH, _Spec1Power) * FUR_LAYER;
-	float spec2 = pow(dotTH, _Spec2Power) * FUR_LAYER;
+	float spec = dotTH * saturate(dotNL + 1);
+	float spec1 = pow(spec, _Spec1Power) * FUR_LAYER;
+	float spec2 = pow(spec, _Spec2Power) * FUR_LAYER;
 	half3 spec1Color = spec1 * _Spec1Color.rgb * _Spec1Color.a;
 	half3 spec2Color = spec2 * _Spec2Color.rgb * _Spec2Color.a;
 
