@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class EZFontReferenceViewer : EditorWindow
     {

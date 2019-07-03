@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZUnity.UniSDK
+namespace EZhex1991.EZUnity.UniSDK
 {
     public class UnityPurchasingBase : _EZMonoBehaviourSingleton<UnityPurchasingBase>
     {

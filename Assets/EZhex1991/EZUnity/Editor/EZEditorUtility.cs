@@ -11,7 +11,7 @@ using UnityEditor;
 using UnityEngine;
 using UObject = UnityEngine.Object;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public static partial class EZEditorUtility
     {

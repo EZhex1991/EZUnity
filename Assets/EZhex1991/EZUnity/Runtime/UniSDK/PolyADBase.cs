@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.UniSDK
+namespace EZhex1991.EZUnity.UniSDK
 {
     public class PolyADBase : _EZMonoBehaviourSingleton<PolyADBase>
     {

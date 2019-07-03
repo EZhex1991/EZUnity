@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomEditor(typeof(EZStringAsset))]
     public class EZStringAssetEditor : Editor

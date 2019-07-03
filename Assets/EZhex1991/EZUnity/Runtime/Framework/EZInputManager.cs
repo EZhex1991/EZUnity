@@ -7,7 +7,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace EZUnity.Framework
+namespace EZhex1991.EZUnity.Framework
 {
     public class EZInputManager : _EZMonoBehaviourSingleton<EZInputManager>
     {

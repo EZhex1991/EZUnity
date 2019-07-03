@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace EZUnity.Playables
+namespace EZhex1991.EZUnity.Playables
 {
     public class EZTransformTweenClip : PlayableAsset, ITimelineClipAsset
     {

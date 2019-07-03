@@ -6,7 +6,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace EZUnity.Framework
+namespace EZhex1991.EZUnity.Framework
 {
     public enum RunMode
     {

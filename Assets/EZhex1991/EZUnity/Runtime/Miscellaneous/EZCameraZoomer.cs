@@ -6,7 +6,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class EZCameraZoomer : MonoBehaviour
     {

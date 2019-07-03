@@ -6,7 +6,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [RequireComponent(typeof(PolygonCollider2D))]
     public class EZPolygonImage : Image

@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.UniSDK
+namespace EZhex1991.EZUnity.UniSDK
 {
     public class AccountBase : _EZMonoBehaviourSingleton<AccountBase>
     {

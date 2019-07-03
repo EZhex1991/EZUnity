@@ -3,7 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZUnity;
+using EZhex1991.EZUnity;
 using System;
 using UnityEditor;
 using UnityEngine;

@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public abstract class EZSwitcher<T> : MonoBehaviour
     {

@@ -6,7 +6,7 @@
 using System;
 using UnityEngine;
 
-namespace EZUnity.Playables
+namespace EZhex1991.EZUnity.Playables
 {
     public interface IKeyframe
     {

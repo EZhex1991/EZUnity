@@ -7,7 +7,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomPropertyDrawer(typeof(KeyCode))]
     public class EZKeyCodePropertyDrawer : PropertyDrawer

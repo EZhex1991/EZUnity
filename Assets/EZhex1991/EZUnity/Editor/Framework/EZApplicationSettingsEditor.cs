@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZUnity.Framework
+namespace EZhex1991.EZUnity.Framework
 {
     [CustomEditor(typeof(EZApplicationSettings))]
     public class EZApplicationSettingsEditor : Editor

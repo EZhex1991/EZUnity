@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public static partial class EZEditorGUIUtility
     {

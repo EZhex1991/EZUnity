@@ -9,7 +9,7 @@ using UnityEngine.iOS;
 #elif UNITY_ANDROID
 #endif
 
-namespace EZUnity.UniSDK
+namespace EZhex1991.EZUnity.UniSDK
 {
     public class Notification : NotificationBase
     {

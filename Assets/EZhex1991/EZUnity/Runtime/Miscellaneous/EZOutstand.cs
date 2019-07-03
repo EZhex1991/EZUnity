@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [DisallowMultipleComponent]
     [ExecuteInEditMode]

@@ -7,7 +7,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace EZUnity.Playables
+namespace EZhex1991.EZUnity.Playables
 {
     [Serializable]
     public class EZTransformTweenMixer : PlayableBehaviour

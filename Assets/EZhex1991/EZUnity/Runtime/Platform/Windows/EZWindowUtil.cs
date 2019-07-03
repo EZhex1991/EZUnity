@@ -7,7 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public static class EZWindowUtil
     {

@@ -17,7 +17,7 @@ using UnityEngine.Experimental.UIElements;
 
 using UObject = UnityEngine.Object;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class EZGraphicsSettings : SettingsProvider
     {

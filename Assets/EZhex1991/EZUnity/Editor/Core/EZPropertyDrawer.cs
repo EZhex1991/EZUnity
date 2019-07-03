@@ -10,7 +10,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomPropertyDrawer(typeof(EZProperty))]
     public class EZPropertyDrawer : PropertyDrawer
@@ -39,6 +39,7 @@ namespace EZUnity
                               from type in assembly.GetExportedTypes()
                               where IsSupportedType(type)
                               select type);
+            typeList.Add(typeof(UnityEngine.Object));
             typeList.Sort((t1, t2) => (string.Compare(t1.FullName, t2.FullName)));
         }
         public static bool IsSupportedAssembly(Assembly assembly)

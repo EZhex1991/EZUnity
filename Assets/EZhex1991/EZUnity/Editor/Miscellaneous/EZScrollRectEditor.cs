@@ -5,7 +5,7 @@
  */
 using UnityEditor;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomEditor(typeof(EZScrollRect))]
     public class EZScrollRectEditor : UnityEditor.UI.ScrollRectEditor

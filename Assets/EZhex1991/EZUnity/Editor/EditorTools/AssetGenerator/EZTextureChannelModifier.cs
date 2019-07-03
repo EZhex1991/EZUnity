@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.AssetGenerator
+namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZTextureChannelModifier", menuName = "EZUnity/EZTextureChannelModifier", order = (int)EZAssetMenuOrder.EZTextureChannelModifier)]
     public class EZTextureChannelModifier : _EZTextureGenerator

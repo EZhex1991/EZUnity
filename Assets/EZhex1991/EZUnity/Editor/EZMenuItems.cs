@@ -3,13 +3,13 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZUnity.Framework;
+using EZhex1991.EZUnity.Framework;
 using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public static class EZMenuItems
     {

@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CreateAssetMenu(fileName = "EZStringAsset", menuName = "EZUnity/EZStringAsset", order = (int)EZAssetMenuOrder.EZStringAsset)]
     public class EZStringAsset : ScriptableObject, ISerializationCallbackReceiver

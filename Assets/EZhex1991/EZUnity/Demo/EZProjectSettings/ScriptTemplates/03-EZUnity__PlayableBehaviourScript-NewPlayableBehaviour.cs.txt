@@ -6,7 +6,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class #SCRIPTNAME# : PlayableBehaviour
     {

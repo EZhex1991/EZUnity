@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CreateAssetMenu(fileName = "EZAssetListRenamer", menuName = "EZUnity/EZAssetListRenamer", order = (int)EZAssetMenuOrder.EZAssetListRenamer)]
     public class EZAssetListRenamer : ScriptableObject

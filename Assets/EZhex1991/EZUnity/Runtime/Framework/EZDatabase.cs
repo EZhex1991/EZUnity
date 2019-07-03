@@ -16,7 +16,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace EZUnity.Framework
+namespace EZhex1991.EZUnity.Framework
 {
     public class EZDatabase : _EZMonoBehaviourSingleton<EZDatabase>
     {

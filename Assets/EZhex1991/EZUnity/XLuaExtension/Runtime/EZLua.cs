@@ -4,14 +4,14 @@
  * Description:     
  */
 #if XLUA
-using EZUnity.Framework;
+using EZhex1991.EZUnity.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using XLua;
 
-namespace EZUnity.XLuaExtension
+namespace EZhex1991.EZUnity.XLuaExtension
 {
     public delegate LuaTable LuaRequire(string moduleName);
     public delegate void LuaAction();

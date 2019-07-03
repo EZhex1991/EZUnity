@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.AssetGenerator
+namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZTextureCombiner", menuName = "EZUnity/EZTextureCombiner", order = (int)EZAssetMenuOrder.EZTextureCombiner)]
     public class EZTextureCombiner : _EZTextureGenerator

@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.AssetGenerator
+namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZNoiseGenerator", menuName = "EZUnity/EZNoiseGenerator", order = (int)EZAssetMenuOrder.EZNoiseGenerator)]
     public class EZNoiseGenerator : _EZTextureGenerator

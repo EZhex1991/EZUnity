@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.Rendering
+namespace EZhex1991.EZUnity.Rendering
 {
     [CustomEditor(typeof(EZImageEffect), true)]
     public class EZImageEffectEditor : Editor

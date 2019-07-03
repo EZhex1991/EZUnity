@@ -7,7 +7,7 @@
 using UnityEngine;
 using XLua;
 
-namespace EZUnity.XLuaExtension
+namespace EZhex1991.EZUnity.XLuaExtension
 {
     public class EZLuaInjector : EZPropertyList
     {

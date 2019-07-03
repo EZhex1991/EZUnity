@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public abstract class _EZMonoBehaviourSingleton<T> : MonoBehaviour
         where T : MonoBehaviour

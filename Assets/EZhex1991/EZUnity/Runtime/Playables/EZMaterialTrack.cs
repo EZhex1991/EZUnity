@@ -6,7 +6,7 @@
 using UnityEngine;
 using UnityEngine.Timeline;
 
-namespace EZUnity.Playables
+namespace EZhex1991.EZUnity.Playables
 {
     [TrackBindingType(typeof(Material))]
     [TrackClipType(typeof(EZMaterialClip))]

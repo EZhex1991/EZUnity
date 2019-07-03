@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace EZUnity.Playables
+namespace EZhex1991.EZUnity.Playables
 {
     public abstract class KeyframeClip<T> : PlayableAsset
         where T : IKeyframe

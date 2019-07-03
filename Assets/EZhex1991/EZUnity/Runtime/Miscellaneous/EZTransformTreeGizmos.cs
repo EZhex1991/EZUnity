@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [ExecuteInEditMode]
     public class EZTransformTreeGizmos : MonoBehaviour

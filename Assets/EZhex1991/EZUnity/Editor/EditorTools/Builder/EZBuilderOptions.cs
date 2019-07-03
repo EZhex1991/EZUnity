@@ -6,7 +6,7 @@
 using System;
 using System.IO;
 
-namespace EZUnity.Builder
+namespace EZhex1991.EZUnity.Builder
 {
     public enum AssetsViewOption
     {

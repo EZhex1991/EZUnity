@@ -8,7 +8,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomEditor(typeof(EZImageCapture))]
     public class EZImageCaptureEditor : Editor

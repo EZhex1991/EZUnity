@@ -6,7 +6,7 @@
 using System;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class EZButtonPropertyAttribute : PropertyAttribute
     {

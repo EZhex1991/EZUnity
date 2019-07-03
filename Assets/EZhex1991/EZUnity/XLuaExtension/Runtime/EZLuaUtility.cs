@@ -7,7 +7,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace EZUnity.XLuaExtension
+namespace EZhex1991.EZUnity.XLuaExtension
 {
     public static class EZLuaUtility
     {

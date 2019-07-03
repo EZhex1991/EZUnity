@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomPropertyDrawer(typeof(EZMinMaxSliderAttribute))]
     public class EZMinMaxSliderDrawer : PropertyDrawer

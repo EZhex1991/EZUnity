@@ -4,12 +4,12 @@
  * Description:     为了降低Lua和框架中其他逻辑的耦合性，部分方法使用扩展方式添加
  */
 #if XLUA
-using EZUnity.Framework;
-using EZUnity.XLuaExtension;
+using EZhex1991.EZUnity.Framework;
+using EZhex1991.EZUnity.XLuaExtension;
 using UnityEngine;
 using XLua;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public static partial class EZExtensions
     {

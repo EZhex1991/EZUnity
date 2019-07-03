@@ -3,7 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-namespace EZUnity.UniSDK
+namespace EZhex1991.EZUnity.UniSDK
 {
     public delegate void OnEventCallback1(string info);
     public delegate void OnEventCallback2(string info1, string info2);

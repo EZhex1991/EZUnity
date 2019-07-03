@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEditor.Presets;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class EZAssetPostprocessor : AssetPostprocessor
     {

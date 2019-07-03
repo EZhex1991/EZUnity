@@ -5,7 +5,7 @@
  */
 using UnityEditor;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomEditor(typeof(EZDigitalClock))]
     public class EZDigitalClockEditor : Editor

@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace EZUnity.Framework
+namespace EZhex1991.EZUnity.Framework
 {
     public class EZLogHandler : _EZMonoBehaviourSingleton<EZLogHandler>, ILogHandler
     {

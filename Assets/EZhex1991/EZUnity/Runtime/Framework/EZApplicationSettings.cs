@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.Framework
+namespace EZhex1991.EZUnity.Framework
 {
     public class EZApplicationSettings : _EZScriptableObjectSingleton<EZApplicationSettings>
     {

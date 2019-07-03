@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [InitializeOnLoad]
     public class EZEditorSettings : _EZProjectSettingsSingleton<EZEditorSettings>

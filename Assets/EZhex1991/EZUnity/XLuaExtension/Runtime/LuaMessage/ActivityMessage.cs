@@ -6,7 +6,7 @@
 #if XLUA
 using UnityEngine;
 
-namespace EZUnity.XLuaExtension
+namespace EZhex1991.EZUnity.XLuaExtension
 {
     [DisallowMultipleComponent]
     public class ActivityMessage : _Message<ActivityMessage>

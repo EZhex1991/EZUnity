@@ -4,13 +4,13 @@
  * Description:     
  */
 #if XLUA
-using EZUnity.Builder;
-using EZUnity.Framework;
+using EZhex1991.EZUnity.Builder;
+using EZhex1991.EZUnity.Framework;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.XLuaExtension
+namespace EZhex1991.EZUnity.XLuaExtension
 {
     public static class EZMenuItems
     {

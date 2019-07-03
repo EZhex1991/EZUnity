@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.Playables
+namespace EZhex1991.EZUnity.Playables
 {
     public abstract class KeyframeClipEditor<T> : Editor
         where T : IKeyframe

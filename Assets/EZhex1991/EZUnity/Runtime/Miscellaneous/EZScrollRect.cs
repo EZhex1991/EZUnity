@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class EZScrollRect : ScrollRect
     {

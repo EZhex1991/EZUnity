@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomEditor(typeof(EZScriptStatistics))]
     public class EZScriptStatisticsEditor : Editor

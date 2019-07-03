@@ -5,7 +5,7 @@
  */
 using UnityEditor;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomEditor(typeof(EZMaterialSwitcher))]
     public class EZMaterialSwitcherEditor : EZSwitcherEditor

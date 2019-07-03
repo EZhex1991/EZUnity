@@ -4,7 +4,7 @@
  * Description:     
  */
 
-namespace EZUnity.Framework.Events
+namespace EZhex1991.EZUnity.Framework.Events
 {
     public delegate void EZEventHandler(object sender, object eventArgs);
 

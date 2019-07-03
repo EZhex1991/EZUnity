@@ -7,7 +7,7 @@
 using CSObjectWrapEditor;
 using UnityEngine;
 
-namespace EZUnity.Example
+namespace EZhex1991.EZUnity.Example
 {
     public static class GenConfig
     {

@@ -10,7 +10,7 @@ using UnityEngine;
 using Polymer;
 #endif
 
-namespace EZUnity.UniSDK
+namespace EZhex1991.EZUnity.UniSDK
 {
     public class PolyAD : PolyADBase
     {

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public class EZScriptSettings : _EZProjectSettingsSingleton<EZScriptSettings>
     {

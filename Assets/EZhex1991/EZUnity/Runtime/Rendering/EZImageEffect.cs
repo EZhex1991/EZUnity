@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZUnity.Rendering
+namespace EZhex1991.EZUnity.Rendering
 {
     [RequireComponent(typeof(Camera))]
     [ExecuteInEditMode]

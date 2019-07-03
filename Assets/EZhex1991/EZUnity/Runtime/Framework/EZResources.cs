@@ -18,7 +18,7 @@ using System.Linq;
 using UnityEngine.AddressableAssets;
 #endif
 
-namespace EZUnity.Framework
+namespace EZhex1991.EZUnity.Framework
 {
     [Serializable]
     public class FileInfo

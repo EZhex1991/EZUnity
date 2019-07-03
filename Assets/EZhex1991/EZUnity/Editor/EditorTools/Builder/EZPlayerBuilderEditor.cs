@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.Builder
+namespace EZhex1991.EZUnity.Builder
 {
     [CustomEditor(typeof(EZPlayerBuilder)), CanEditMultipleObjects]
     public class EZPlayerBuilderEditor : Editor

@@ -6,7 +6,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public abstract class _EZScriptableObjectSingleton<T> : ScriptableObject
         where T : _EZScriptableObjectSingleton<T>

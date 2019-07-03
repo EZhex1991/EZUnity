@@ -3,7 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     public enum EZAssetMenuOrder
     {

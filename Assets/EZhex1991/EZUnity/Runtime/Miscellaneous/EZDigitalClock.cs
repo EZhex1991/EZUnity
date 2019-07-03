@@ -7,7 +7,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [RequireComponent(typeof(Text))]
     public class EZDigitalClock : MonoBehaviour

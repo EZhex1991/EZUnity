@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-namespace EZUnity.Framework.Events
+namespace EZhex1991.EZUnity.Framework.Events
 {
     public class EZEventHub : _EZMonoBehaviourSingleton<EZEventHub>
     {

@@ -7,7 +7,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.XLuaExtension
+namespace EZhex1991.EZUnity.XLuaExtension
 {
     [CustomEditor(typeof(EZLuaBehaviour))]
     public class EZLuaBehaviourEditor : EZPropertyListEditor

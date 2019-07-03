@@ -8,7 +8,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CreateAssetMenu(fileName = "EZImageCapture", menuName = "EZUnity/EZImageCapture", order = (int)EZAssetMenuOrder.EZImageCapture)]
     public class EZImageCapture : ScriptableObject

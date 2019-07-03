@@ -13,7 +13,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity.Builder
+namespace EZhex1991.EZUnity.Builder
 {
     [CreateAssetMenu(fileName = "EZBundleBuilder", menuName = "EZUnity/EZBundleBuilder", order = (int)EZAssetMenuOrder.EZBundleBuilder)]
     public class EZBundleBuilder : ScriptableObject

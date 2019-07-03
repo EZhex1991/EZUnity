@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZUnity.Playables
+namespace EZhex1991.EZUnity.Playables
 {
     public static class KeyframeUtility
     {

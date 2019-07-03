@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEditor.Build.Reporting;
 #endif
 
-namespace EZUnity.Builder
+namespace EZhex1991.EZUnity.Builder
 {
     [CreateAssetMenu(fileName = "EZPlayerBuilder", menuName = "EZUnity/EZPlayerBuilder", order = (int)EZAssetMenuOrder.EZPlayerBuilder)]
     public class EZPlayerBuilder : ScriptableObject

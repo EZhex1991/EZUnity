@@ -12,7 +12,7 @@
 #if XLUA
 using UnityEngine;
 
-namespace EZUnity.XLuaExtension
+namespace EZhex1991.EZUnity.XLuaExtension
 {
     public abstract class _Message<T> : MonoBehaviour
         where T : _Message<T>

@@ -8,7 +8,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [CustomPropertyDrawer(typeof(EZButtonPropertyAttribute))]
     public class EZButtonPropertyDrawer : PropertyDrawer

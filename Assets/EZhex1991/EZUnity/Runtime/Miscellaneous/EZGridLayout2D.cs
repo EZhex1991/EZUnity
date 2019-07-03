@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace EZUnity
+namespace EZhex1991.EZUnity
 {
     [RequireComponent(typeof(RectTransform)), ExecuteInEditMode, DisallowMultipleComponent]
     public class EZGridLayout2D : UIBehaviour, ILayoutElement, ILayoutGroup

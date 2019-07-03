@@ -10,7 +10,7 @@ using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Security;
 #endif
 
-namespace EZUnity.UniSDK
+namespace EZhex1991.EZUnity.UniSDK
 {
     public class UnityPurchasing : UnityPurchasingBase
 #if UNITYPURCHASING
