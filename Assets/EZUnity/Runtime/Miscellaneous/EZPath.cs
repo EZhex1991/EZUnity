@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EZUnity
 {
-    [ExecuteAlways]
+    [ExecuteInEditMode]
     [DisallowMultipleComponent]
     public class EZPath : MonoBehaviour
     {
