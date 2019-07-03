@@ -13,7 +13,7 @@ local Color = CS.UnityEngine.Color
 local Random = CS.UnityEngine.Random
 local Vector3 = CS.UnityEngine.Vector3
 local Quaternion = CS.UnityEngine.Quaternion
-local LuaMessage = CS.EZUnity.Example.LuaMessage
+local LuaMessage = CS.EZhex1991.EZUnity.XLuaExample.LuaMessage
 local util = require("xlua.util")
 -- 以上类似于java的import或者C#的using，使用local避免污染全局环境（虽然有点麻烦，但5.2取消module也是这个原因，尽量遵守）
 

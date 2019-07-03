@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -14,7 +14,6 @@ MonoBehaviour:
   m_RunModeInEditor: 0
   m_RunModeInApp: 1
   m_SleepTimeout: -1
-  m_RunInBackground: 0
   m_TargetFrameRate: 30
   m_AndroidServer: D:\UnityProjects\EZUnity\Assets\StreamingAssets
   m_IOSServer: 
@@ -23,7 +22,7 @@ MonoBehaviour:
   m_IgnorePrefix: delay
   m_IgnoreSuffix: delay
   m_LuaFolders:
-  - Example/Script_Lua
+  - XLuaExamples/Tutorial/Script_Lua
   m_LuaBundles:
   - script_lua
   m_LuaBootModule: 

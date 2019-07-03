@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2284665930
+CRC: 1454654101
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 421d62a695fb8a71c98117823be20e8e
+    Hash: 5e6dfc374f354c11d4a026c2565aadd4
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -12,19 +12,19 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByContact.lua.txt
-- Assets/Example/Script_Lua_txt/LuaBehaviour__Cube.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__WeaponController.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__RandomRotator.lua.txt
-- Assets/Example/Script_Lua_txt/LuckyBall__GameController.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByTime.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__GameController.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__Mover.lua.txt
-- Assets/Example/Script_Lua_txt/Menu.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__DestroyByBoundary.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__EvasiveManeuver.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__PlayerController.lua.txt
-- Assets/Example/Script_Lua_txt/SpaceShooter__BGScroller.lua.txt
-- Assets/Example/Script_Lua_txt/LuaBehaviour__Sphere.lua.txt
-- Assets/Example/Script_Lua_txt/LuckyBall__Triggers.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__DestroyByBoundary.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__PlayerController.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__DestroyByTime.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/LuaBehaviour__Cube.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__DestroyByContact.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__GameController.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__Mover.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__BGScroller.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__WeaponController.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/LuaBehaviour__Sphere.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/LuckyBall__GameController.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__EvasiveManeuver.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/SpaceShooter__RandomRotator.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/Menu.lua.txt
+- Assets/XLuaExamples/Tutorial/Script_Lua_txt/LuckyBall__Triggers.lua.txt
 Dependencies: []

@@ -10,38 +10,38 @@ M.__index = M
 ----- begin module -----
 -- 需要用一个Monobehaviour的StartCoroutine启动
 local util = require("xlua.util")
-function Coroutine(...)
+
+function Coroutine1(...)
 	local params = {...}
-	local cor = function()
-		return util.cs_generator(
-			function()
-				print("Coroutine Test")
+	return util.cs_generator(
+		function()
+			print("Coroutine Test")
+			coroutine.yield(CS.UnityEngine.WaitForSeconds(0.5))
+			print("tencent majesty")
+			coroutine.yield(CS.UnityEngine.WaitForSeconds(0.5))
+			print(table.unpack(params))
 
-				local wwwB = CS.UnityEngine.WWW("www.baidu.com")
-				coroutine.yield(wwwB)
-				print(wwwB.text)
-				print("baidu go die")
-
-				local wwwA = CS.UnityEngine.WWW("www.alibaba.com")
-				while not wwwA.isDone do
-					coroutine.yield(CS.UnityEngine.WaitForSeconds(2))
-					print(wwwA.progress)
-				end
-				print("ali father")
-
-				local wwwT = CS.UnityEngine.WWW("www.tencent.com")
-				while not wwwT.isDone do
-					coroutine.yield(CS.UnityEngine.WaitForEndOfFrame())
-					print(wwwT.progress)
-				end
-				print("tencent majesty")
-
-				print(table.unpack(params))
+			while true do
+				coroutine.yield(CS.UnityEngine.WaitForSeconds(0.5))
+				print("...")
 			end
-		)
-	end
-	CS.EZUnity.Example.LuaManager.Instance:StartCoroutine(cor())
+		end
+	)
 end
-Coroutine("xlua", "banzai")
+
+function Coroutine2(cor)
+	return util.cs_generator(
+		function()
+			coroutine.yield(CS.UnityEngine.WaitForSeconds(3))
+			CS.EZhex1991.EZUnity.XLuaExample.LuaManager.Instance:StopCoroutine(cor)
+			print("Coroutine Stopped")
+		end
+	)
+end
+
+-- 启动一个协程并返回
+local cor = CS.EZhex1991.EZUnity.XLuaExample.LuaManager.Instance:StartCoroutine(Coroutine1("xlua", "banzai"))
+-- 启动第二个协程，由该协程来结束第一个协程
+CS.EZhex1991.EZUnity.XLuaExample.LuaManager.Instance:StartCoroutine(Coroutine2(cor))
 ----- end -----
 return M

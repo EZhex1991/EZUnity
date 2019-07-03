@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2318824344
+CRC: 1616022006
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 65547dad4f8089a136f9cddfd62098e0
+    Hash: c8a26488d187c60f2e5db0b5bfe387fe
   TypeTreeHash:
     serializedVersion: 2
-    Hash: feaa49f67bd3f1e19354fa939c32d776
+    Hash: dd0e6d4ca512efd71bfb21e252e18493
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -28,8 +28,6 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 54
-  Script: {instanceID: 0}
-- Class: 64
   Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
@@ -82,6 +80,6 @@ ClassTypes:
 - Class: 199
   Script: {instanceID: 0}
 Assets:
-- Assets/Example/02_SpaceShooter/_Complete-Lua/SpaceShooter.unity
+- Assets/XLuaExamples/Tutorial/02_SpaceShooter/_Complete-Lua/SpaceShooter.unity
 Dependencies:
-- D:/UnityProjects/EZUnity/Assets/StreamingAssets/spaceshooter_assets
+- D:/UnityProjects/EZUnity-2017.4/Assets/StreamingAssets/spaceshooter_assets

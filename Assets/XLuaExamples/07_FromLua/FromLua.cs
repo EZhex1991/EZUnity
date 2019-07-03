@@ -28,7 +28,7 @@ namespace EZhex1991.EZUnity.XLuaExample
                     return { intValue = 2, floatValue = 2.5, stringValue = 'TableFromLua' }
                 end
                 function ArrayParamTest()
-                    local ArrayTest = CS.EZUnity.Example.FromLua.ArrayTest
+                    local ArrayTest = CS.EZhex1991.EZUnity.XLuaExample.FromLua.ArrayTest
                     local Color = CS.UnityEngine.Color
                     ArrayTest({ Color.red, Color.green, Color.blue }, 0)
                     ArrayTest({ Color.red, Color.green, Color.blue }, 1)
