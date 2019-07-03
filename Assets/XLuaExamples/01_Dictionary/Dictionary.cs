@@ -6,7 +6,7 @@
 */
 using System.Collections;
 
-namespace EZhex1991.EZUnity.Example
+namespace EZhex1991.EZUnity.XLuaExample
 {
     [XLua.LuaCallCSharp]
     public class Dictionary

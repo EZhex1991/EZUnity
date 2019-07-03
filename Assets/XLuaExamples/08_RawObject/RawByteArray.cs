@@ -6,7 +6,7 @@
 using System.Text;
 using XLua;
 
-namespace EZhex1991.EZUnity.Example
+namespace EZhex1991.EZUnity.XLuaExample
 {
     public class RawByteArray : RawObject
     {

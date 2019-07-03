@@ -11,7 +11,7 @@ using System.IO;
 using UnityEngine;
 using XLua;
 
-namespace EZhex1991.EZUnity.Example
+namespace EZhex1991.EZUnity.XLuaExample
 {
     public class CustomLoader : MonoBehaviour
     {
