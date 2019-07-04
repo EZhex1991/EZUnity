@@ -3,9 +3,8 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,15 +12,20 @@ MonoBehaviour:
   m_Name: EZPlayerBuilder
   m_EditorClassIdentifier: 
   configButDontBuild: 0
+  buildOptions: 8
   bundleBuilder: {fileID: 11400000, guid: 80a219ea299caa849904e23dbf7e8e7d, type: 2}
   locationPathName: Builds/<BundleIdentifier>-<BuildTarget>-<BuildNumber>
   scenes:
-  - {fileID: 102900000, guid: 4a3778f83de77d1429b0417be26c9cc0, type: 3}
-  - {fileID: 102900000, guid: a53d9c938e2c226459642717a11f22e0, type: 3}
-  - {fileID: 102900000, guid: 7f4018c3f10876e4182e1db4ecc3c2eb, type: 3}
+  - {fileID: 102900000, guid: 2a2b20e4f6d68fa49ae096f28f8f88c4, type: 3}
   companyName: EZhex1991
   productName: EZUnity
   bundleIdentifier: com.ezhex1991.ezunitydemo
   bundleVersion: 1.0.0
   buildNumber: 0
   icon: {fileID: 2800000, guid: c205825d5b84ab849a540efdc2293779, type: 3}
+  copyList:
+    m_CopyList: []
+    m_BlackList:
+    - \.meta$
+    - \.tmp$
+    - ^~
