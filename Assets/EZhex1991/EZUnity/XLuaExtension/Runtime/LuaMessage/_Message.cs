@@ -18,11 +18,11 @@ namespace EZhex1991.EZUnity.XLuaExtension
         where T : _Message<T>
     {
         /* 用法示例：
-         * local message = CS.EZUnity.XLuaExtension.UpdateMessage.Require(gameOject)    -- 获取
+         * local message = CS.EZhex1991.EZUnity.XLuaExtension.UpdateMessage.Require(gameOject)    -- 获取
          * message.update:AddAction(func)   -- 添加
          * message.fixedUpdate:RemoveAction(func)   -- 移除
          * message.lateUpdate:Clear()   -- 清空
-         * message:Dismiss()    -- 销毁，或者CS.EZUnity.XLuaExtension.UpdateMessage.Dismiss(gameOject)
+         * message:Dismiss()    -- 销毁，或者CS.EZhex1991.EZUnity.XLuaExtension.UpdateMessage.Dismiss(gameOject)
          */
         public static T Require(GameObject obj)
         {
