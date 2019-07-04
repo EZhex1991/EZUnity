@@ -39,15 +39,15 @@
 function luaUpdate()
     print(CS.UnityEngine.Time.deltaTime)
 end
-local updateMessage = CS.EZUnity.XLuaExtension.UpdateMessage.Require(gameOject)    -- 获取
+local updateMessage = CS.EZhex1991.EZUnity.XLuaExtension.UpdateMessage.Require(gameOject)    -- 获取
 updateMessage.update:AddAction(luaUpdate)   -- 添加
 updateMessage.update:RemoveAction(luaUpdate)   -- 移除
 updateMessage.lateUpdate:Clear()   -- 清空
-updateMessage:Dismiss()    -- 销毁，或者CS.EZUnity.XLuaExtension.UpdateMessage.Dismiss(gameOject)
+updateMessage:Dismiss()    -- 销毁，或者CS.EZhex1991.EZUnity.XLuaExtension.UpdateMessage.Dismiss(gameOject)
 
 function luaOnCollisionStay(collision)
     print(collision.collider.name)
 end
-local collisionMessage = CS.EZUnity.XLuaExtension.CollisionMessage.Require(gameObject)
+local collisionMessage = CS.EZhex1991.EZUnity.XLuaExtension.CollisionMessage.Require(gameObject)
 collisionMessage.onCollisionStay:AddAction(luaOnCollisionStay)
 ```

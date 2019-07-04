@@ -8,6 +8,11 @@
 - `EZCorrespondingObjectViewer`: View corresponding objects of Nested Prefab, available on Unity2018.3 or newer.
 - Shader "EZUnity/Unlit/LaserProcessed": Different color tint with different view direction.
 
+### Changed
+
+- namespace change to EZhex1991.EZUnity
+- folder structure changed
+
 ## [0.0.8] - 2019-04-18
 
 ### Changed
