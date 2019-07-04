@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
+    [ExecuteInEditMode]
     [DisallowMultipleComponent]
     public class EZPathPoint : MonoBehaviour
     {
@@ -26,18 +27,6 @@ namespace EZhex1991.EZUnity
         public Vector3 startTangentPosition { get { return transform.TransformPoint(startTangent); } }
         public Vector3 endTangentPosition { get { return transform.TransformPoint(endTangent); } }
 
-        public EZPath parentPath { get; set; }
-
-        private void OnTransformParentChanged()
-        {
-            parentPath = transform.parent.GetComponent<EZPath>();
-            if (parentPath == null) Destroy(this);
-        }
-
-        private void Reset()
-        {
-            parentPath = transform.parent.GetComponent<EZPath>();
-        }
         private void OnValidate()
         {
             if (!m_BrokenTangent)

@@ -100,7 +100,6 @@ namespace EZhex1991.EZUnity
                 child.name = string.Format("PathPoint-{0:D2}", i);
                 EZPathPoint point = child.GetComponent<EZPathPoint>();
                 if (point == null) point = child.gameObject.AddComponent<EZPathPoint>();
-                point.parentPath = this;
                 m_PathPoints.Add(point);
             }
         }
