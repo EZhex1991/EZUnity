@@ -27,16 +27,16 @@
 1. LuaBehaviour的基本使用，无交互；
 1. 知识点：如何在lua和C#之前传递数据，LuaBehaviour之间如何相互调用；
 1. 与xLua的官方例子区别很大，先了解如何用，然后再去看如何实现；
-1. LuaBehaviour脚本位于[EZhex1991/EZUnity/XLuaEntension/LuaBehaviour](../EZhex1991/EZUnity/XLuaExtension/LuaBehaviour)目录下，LuaBehaviour继承于LuaInjector，LuaInjector中实现了变量的注入，LuaBehaviour中实现了Lua的脚本的启动；
-1. lua脚本位于[Script_Lua/LuaBehaviour](Script_Lua/LuaBehaviour)目录下；
+1. LuaBehaviour脚本位于[EZhex1991/EZUnity/XLuaEntension/Runtime/LuaBehaviour](../EZhex1991/EZUnity/XLuaExtension/Runtime/LuaBehaviour)目录下，LuaBehaviour继承于LuaInjector，LuaInjector中实现了变量的注入，LuaBehaviour中实现了Lua的脚本的启动；
+1. lua脚本位于[Tutorial/Script_Lua/LuaBehaviour](Tutorial/Script_Lua/LuaBehaviour)目录下；
 
 ### 01_LuckyBall
 
 1. 鼠标点击屏幕投球；
 1. 知识点：如何为LuaBehaviour绑定Update、OnTrigger之类的MonoBehaviour消息；
-1. MonoBehaviour消息已经进行了分类封装，详见[EZhex1991/EZUnity/XLuaExtension/LuaMessage](../EZhex1991/EZUnity/XLuaExtension/LuaMessage)；
-1. lua脚本位于[Script_Lua/LuckBall](Script_Lua/LuckyBall)目录下；
-1. 脚本外其它资源在[01_LuckyBall](01_LuckyBall)目录下；
+1. MonoBehaviour消息已经进行了分类封装，详见[EZhex1991/EZUnity/XLuaExtension/Runtime/LuaMessage](../EZhex1991/EZUnity/XLuaExtension/Runtime/LuaMessage)；
+1. lua脚本位于[Tutorial/Script_Lua/LuckBall](Tutorial/Script_Lua/LuckyBall)目录下；
+1. 脚本外其它资源在[Tutorial/01_LuckyBall](Tutorial/01_LuckyBall)目录下；
 
 ### 02_SpaceShooter
 
@@ -44,5 +44,5 @@
 
 1. 本人尽可能保证lua代码的结构与C#代码结构相似，方便初学者对比学习，甚至还保留了原示例的部分bug（比如物体没销毁啥的）；
 1. **注意，Tags和Layers只能在Editor下添加，所以在热更中使用并不方便(个人在5.x下没找到其他方式)。如果报错显示找不到Tag，请自行添加，Tag0:"Enemy", Tag1:"Bonudary"**；
-1. lua脚本位于[Script_Lua/SpaceShooter](Script_Lua/SpaceShooter)目录下；
-1. prefab和场景均使用EZLuaBehaviour代替了原本的C#脚本，放在[02_SpaceShooter/_Complete-Lua](02_SpaceShooter/_Complete-Lua)目录下；
+1. lua脚本位于[Tutorial/Script_Lua/SpaceShooter](Tutorial/Script_Lua/SpaceShooter)目录下；
+1. prefab和场景均使用EZLuaBehaviour代替了原本的C#脚本，放在[Tutorial/02_SpaceShooter/_Complete-Lua](Tutorial/02_SpaceShooter/_Complete-Lua)目录下；
