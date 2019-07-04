@@ -965,25 +965,13 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1434675782}
-  - component: {fileID: 1434675781}
   m_Layer: 0
-  m_Name: PostProcessVolume
+  m_Name: WorldCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1434675781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1434675780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1434675782
 Transform:
   m_ObjectHideFlags: 0
@@ -1008,7 +996,6 @@ GameObject:
   - component: {fileID: 1507251614}
   - component: {fileID: 1507251613}
   - component: {fileID: 1507251612}
-  - component: {fileID: 1507251615}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1072,17 +1059,6 @@ Transform:
   m_Father: {fileID: 1434675782}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1507251615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1507251611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1586022480
 Prefab:
   m_ObjectHideFlags: 0
