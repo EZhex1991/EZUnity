@@ -24,7 +24,7 @@
 
 ### 00_LuaBehaviour
 
-1. LuaBehaviour的基本使用，无交互；
+1. LuaBehaviour的基本使用；
 1. 知识点：如何在lua和C#之前传递数据，LuaBehaviour之间如何相互调用；
 1. 与xLua的官方例子区别很大，先了解如何用，然后再去看如何实现；
 1. LuaBehaviour脚本位于[EZhex1991/EZUnity/XLuaEntension/Runtime/LuaBehaviour](../EZhex1991/EZUnity/XLuaExtension/Runtime/LuaBehaviour)目录下，LuaBehaviour继承于LuaInjector，LuaInjector中实现了变量的注入，LuaBehaviour中实现了Lua的脚本的启动；
