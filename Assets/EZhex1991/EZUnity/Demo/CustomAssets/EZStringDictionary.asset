@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7cc673a445d4d4b9b2e92fa0ed8aea, type: 3}
   m_Name: EZStringDictionary
   m_EditorClassIdentifier: 
-  m_Pairs:
-  - m_Key: key1
-    m_Value: value1
-  - m_Key: key2
-    m_Value: value2
-  - m_Key: duplicateKey
-    m_Value: value3
-  - m_Key: duplicateKey
-    m_Value: value4
+  m_Keys:
+  - key1
+  - key2
+  - duplicateKey
+  - duplicateKey
+  m_Values:
+  - value1
+  - value2
+  - value4
+  - value3

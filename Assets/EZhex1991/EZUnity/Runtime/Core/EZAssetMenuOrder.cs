@@ -8,7 +8,7 @@ namespace EZhex1991.EZUnity
     public enum EZAssetMenuOrder
     {
         _Section_1 = 1100,
-        EZStringAsset,
+        EZStringCollection,
         EZStringDictionary,
 
         _Section_2 = 1200,

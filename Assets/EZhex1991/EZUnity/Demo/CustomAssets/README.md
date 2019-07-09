@@ -1,6 +1,16 @@
 # Custom Assets
 
-## EZStringAsset
+## EZStringCollectionAsset (右键菜单/Create/EZUnity/EZStringCollection)
+
+![EZStringCollectionAsset](.SamplePicture/EZStringCollectionAsset.png)
+
+用来存放多语言的长文本。key如果重复会显示在红色背景中。
+
+## EZStringDictionaryAsset (右键菜单/Create/EZUnity/EZStringDictionary)
+
+![EZStringDictionaryAsset](.SamplePicture/EZStringDictionaryAsset.png)
+
+用来存放一个string的dictionary，设计初衷是做骨骼和变形器的名称适配。key如果重复会显示在红色背景中。
 
 ## EZImageCapture
 
