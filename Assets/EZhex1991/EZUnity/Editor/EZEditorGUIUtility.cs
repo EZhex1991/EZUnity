@@ -84,5 +84,57 @@ namespace EZhex1991.EZUnity
             });
             return menu;
         }
+
+        public static Rect DrawReorderableListIndex(Rect rect, int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
+        {
+            return DrawReorderableListIndex(rect, index, indexWidth, serializedObject, listProperties);
+        }
+        public static Rect DrawReorderableListIndex(Rect rect, int index, float width, SerializedObject serializedObject, params SerializedProperty[] listProperties)
+        {
+            if (GUI.Button(new Rect(rect.x, rect.y, width, singleLineHeight), index.ToString("00"), EditorStyles.label))
+            {
+                DrawReorderMenu(index, serializedObject, listProperties).ShowAsContext();
+            }
+            rect.x += width; rect.width -= width;
+            return rect;
+        }
+        public static GenericMenu DrawReorderMenu(int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
+        {
+            GenericMenu menu = new GenericMenu();
+            menu.AddItem(new GUIContent("Insert"), false, delegate
+            {
+                for (int i = 0; i < listProperties.Length; i++)
+                {
+                    listProperties[i].InsertArrayElementAtIndex(index);
+                }
+                serializedObject.ApplyModifiedProperties();
+            });
+            menu.AddItem(new GUIContent("Delete"), false, delegate
+            {
+                for (int i = 0; i < listProperties.Length; i++)
+                {
+                    listProperties[i].DeleteArrayElementAtIndex(index);
+                }
+                serializedObject.ApplyModifiedProperties();
+            });
+            menu.AddSeparator("");
+            menu.AddItem(new GUIContent("Move to Top"), false, delegate
+            {
+                for (int i = 0; i < listProperties.Length; i++)
+                {
+                    listProperties[i].MoveArrayElement(index, 0);
+                }
+                serializedObject.ApplyModifiedProperties();
+            });
+            menu.AddItem(new GUIContent("Move to Bottom"), false, delegate
+            {
+                for (int i = 0; i < listProperties.Length; i++)
+                {
+                    listProperties[i].MoveArrayElement(index, listProperties[i].arraySize - 1);
+                }
+                serializedObject.ApplyModifiedProperties();
+            });
+            return menu;
+        }
     }
 }
