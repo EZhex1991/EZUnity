@@ -9,6 +9,7 @@ namespace EZhex1991.EZUnity
     {
         _Section_1 = 1100,
         EZStringAsset,
+        EZStringDictionary,
 
         _Section_2 = 1200,
         EZPlaneGenerator,
