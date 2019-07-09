@@ -3,7 +3,6 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using System;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -62,20 +61,22 @@ namespace EZhex1991.EZUnity
             SerializedProperty pair = m_Pairs.GetArrayElementAtIndex(index);
             SerializedProperty key = pair.FindPropertyRelative("m_Key");
             SerializedProperty value = pair.FindPropertyRelative("m_Value");
+
             rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_Pairs, index);
             float width = rect.width / 2; float margin = 5;
-            rect.width = width - margin;
             rect.height = EditorGUIUtility.singleLineHeight;
+
             Color originalBackgroundColor = GUI.backgroundColor;
             if (stringDictionary.IsKeyDuplicate(key.stringValue))
             {
                 GUI.backgroundColor = Color.red;
             }
+            rect.width = width - margin;
             EditorGUI.PropertyField(rect, key, GUIContent.none);
-            rect.x += width;
-            EditorGUI.PropertyField(rect, value, GUIContent.none);
             GUI.backgroundColor = originalBackgroundColor;
 
+            rect.x += width;
+            EditorGUI.PropertyField(rect, value, GUIContent.none);
         }
         private void OnPairListAdd(ReorderableList list)
         {
@@ -83,9 +84,8 @@ namespace EZhex1991.EZUnity
             m_Pairs.InsertArrayElementAtIndex(index);
             SerializedProperty pair = m_Pairs.GetArrayElementAtIndex(index);
             SerializedProperty key = pair.FindPropertyRelative("m_Key");
-            SerializedProperty value = pair.FindPropertyRelative("m_Value");
             key.stringValue = "";
-            value.stringValue = "";
+            list.index = index;
         }
 
         public void KeyValueSwap()

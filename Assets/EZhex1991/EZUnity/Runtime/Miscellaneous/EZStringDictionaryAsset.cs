@@ -3,29 +3,24 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
     [CreateAssetMenu(fileName = "EZStringDictionary", menuName = "EZUnity/EZStringDictionary", order = (int)EZAssetMenuOrder.EZStringDictionary)]
-    public class EZStringDictionaryAsset : ScriptableObject, ISerializationCallbackReceiver
+    public class EZStringDictionaryAsset : ScriptableObject, ISerializationCallbackReceiver, IEnumerable<KeyValuePair<string, string>>
     {
         [System.Serializable]
         public struct Pair
         {
             [SerializeField]
             private string m_Key;
-            public string key { get { return m_Key; } }
+            public string key { get { return m_Key; } set { m_Key = value; } }
             [SerializeField]
             private string m_Value;
-            public string value { get { return m_Value; } }
-
-            public Pair(string key, string value)
-            {
-                this.m_Key = key;
-                this.m_Value = value;
-            }
+            public string value { get { return m_Value; } set { m_Value = value; } }
         }
 
         [SerializeField]
@@ -46,11 +41,11 @@ namespace EZhex1991.EZUnity
         }
         public void AddKey(string key)
         {
-            m_Pairs.Add(new Pair(key, ""));
+            m_Pairs.Add(new Pair { key = key });
         }
         public void AddPair(string key, string value)
         {
-            m_Pairs.Add(new Pair(key, value));
+            m_Pairs.Add(new Pair { key = key, value = value });
         }
 
         public void OnBeforeSerialize()
@@ -62,7 +57,7 @@ namespace EZhex1991.EZUnity
             m_KeyCount.Clear();
             foreach (var pair in m_Pairs)
             {
-                if (m_Dictionary.ContainsKey(pair.key))
+                if (m_KeyCount.ContainsKey(pair.key))
                 {
                     m_KeyCount[pair.key]++;
                 }
@@ -82,13 +77,18 @@ namespace EZhex1991.EZUnity
         {
             return m_Dictionary.ContainsValue(value);
         }
-        public Dictionary<string, string>.Enumerator GetEnumerator()
-        {
-            return m_Dictionary.GetEnumerator();
-        }
         public bool TryGetValue(string key, out string value)
         {
             return m_Dictionary.TryGetValue(key, out value);
+        }
+
+        IEnumerator<KeyValuePair<string, string>> IEnumerable<KeyValuePair<string, string>>.GetEnumerator()
+        {
+            return m_Dictionary.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return m_Dictionary.GetEnumerator();
         }
     }
 }
