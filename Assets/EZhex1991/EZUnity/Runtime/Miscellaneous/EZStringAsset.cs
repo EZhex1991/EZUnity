@@ -3,13 +3,14 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
     [CreateAssetMenu(fileName = "EZStringAsset", menuName = "EZUnity/EZStringAsset", order = (int)EZAssetMenuOrder.EZStringAsset)]
-    public class EZStringAsset : ScriptableObject, ISerializationCallbackReceiver
+    public class EZStringAsset : ScriptableObject, ISerializationCallbackReceiver, IEnumerable<KeyValuePair<string, EZStringAsset.Item>>
     {
         public static Language GlobalLanguageSetting = Language.Chinese;
 
@@ -20,19 +21,33 @@ namespace EZhex1991.EZUnity
         }
 
         [System.Serializable]
-        public class Values
+        public struct Item
         {
-            public string key;
-            [TextArea]
-            public string ch;
-            [TextArea]
-            public string en;
+            [SerializeField]
+            private string m_Key;
+            public string key { get { return m_Key; } set { m_Key = value; } }
+            [SerializeField, TextArea]
+            private string m_CH;
+            public string CH { get { return m_CH; } }
+            [SerializeField, TextArea]
+            private string m_EN;
+            public string EN { get { return m_EN; } }
         }
 
         [SerializeField]
-        private Values[] m_Items;
+        private List<Item> m_Items = new List<Item>();
 
-        private Dictionary<string, Values> dict = new Dictionary<string, Values>();
+        private Dictionary<string, Item> m_Dictionary = new Dictionary<string, Item>();
+        private Dictionary<string, int> m_KeyCount = new Dictionary<string, int>();
+
+        public bool IsKeyDuplicate(string key)
+        {
+            return m_KeyCount.ContainsKey(key) && m_KeyCount[key] > 1;
+        }
+        public void AddKey(string key)
+        {
+            m_Items.Add(new Item { key = key });
+        }
 
         public void OnBeforeSerialize()
         {
@@ -40,35 +55,40 @@ namespace EZhex1991.EZUnity
         }
         public void OnAfterDeserialize()
         {
-            dict.Clear();
-            for (int i = 0; i < m_Items.Length; i++)
+            m_Dictionary.Clear();
+            m_KeyCount.Clear();
+            foreach (var item in m_Items)
             {
-                if (!dict.ContainsKey(m_Items[i].key))
+                if (m_KeyCount.ContainsKey(item.key))
                 {
-                    dict.Add(m_Items[i].key, m_Items[i]);
+                    m_KeyCount[item.key]++;
+                }
+                else
+                {
+                    m_KeyCount[item.key] = 1;
+                    m_Dictionary[item.key] = item;
                 }
             }
         }
 
-        public string this[string key]
+        public bool ContainsKey(string key)
         {
-            get
-            {
-                return GetString(key);
-            }
+            return m_Dictionary.ContainsKey(key);
         }
-        public string this[int index]
+        public bool TryGetValue(string key, out Item item)
         {
-            get
-            {
-                return GetString(index);
-            }
+            return m_Dictionary.TryGetValue(key, out item);
         }
 
-        public bool Contains(string key)
+        IEnumerator<KeyValuePair<string, Item>> IEnumerable<KeyValuePair<string, Item>>.GetEnumerator()
         {
-            return dict.ContainsKey(key);
+            return m_Dictionary.GetEnumerator();
         }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return m_Dictionary.GetEnumerator();
+        }
+
         public string GetString(string key)
         {
             return GetString(key, GlobalLanguageSetting);
@@ -81,28 +101,19 @@ namespace EZhex1991.EZUnity
         {
             switch (language)
             {
-                case Language.Chinese: return dict[key].ch;
-                case Language.English: return dict[key].en;
-                default: return dict[key].ch;
+                case Language.Chinese: return m_Dictionary[key].CH;
+                case Language.English: return m_Dictionary[key].EN;
+                default: return m_Dictionary[key].EN;
             }
         }
         public string GetString(int index, Language language)
         {
             switch (language)
             {
-                case Language.Chinese: return m_Items[index].ch;
-                case Language.English: return m_Items[index].en;
-                default: return m_Items[index].ch;
+                case Language.Chinese: return m_Items[index].CH;
+                case Language.English: return m_Items[index].EN;
+                default: return m_Items[index].EN;
             }
-        }
-
-        public Values GetStrings(string key)
-        {
-            return dict[key];
-        }
-        public Values GetStrings(int index)
-        {
-            return m_Items[index];
         }
     }
 }
