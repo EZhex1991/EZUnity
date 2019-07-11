@@ -6,19 +6,20 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZUnity.EZCollectionAsset
 {
-    [CustomEditor(typeof(EZStringDictionaryAsset))]
-    public class EZStringDictionaryAssetEditor : EZDictionaryAssetEditor
+    [CustomEditor(typeof(EZMapAsset_String_String))]
+    public class EZMapAssetEditor_String_String : EZMapAssetEditor_String_
     {
-        private EZStringDictionaryAsset stringDictionary;
+        private EZMapAsset_String_String stringMapAsset;
+
+        private Transform transform;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            stringDictionary = target as EZStringDictionaryAsset;
+            stringMapAsset = target as EZMapAsset_String_String;
         }
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -27,6 +28,16 @@ namespace EZhex1991.EZUnity
             {
                 KeyValueSwap();
             }
+            EditorGUILayout.BeginHorizontal();
+            transform = (Transform)EditorGUILayout.ObjectField("", transform, typeof(Transform), true);
+            if (GUILayout.Button("Get Transform Hierarchy"))
+            {
+                if (transform != null)
+                {
+                    stringMapAsset.GetTransformHierarchy(transform);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         public void KeyValueSwap()
@@ -40,11 +51,6 @@ namespace EZhex1991.EZUnity
                 value.stringValue = temp;
             }
             serializedObject.ApplyModifiedProperties();
-        }
-
-        protected override bool IsKeyDuplicate(SerializedProperty keyProperty)
-        {
-            return stringDictionary.IsKeyDuplicate(keyProperty.stringValue);
         }
     }
 }

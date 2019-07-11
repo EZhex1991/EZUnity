@@ -5,10 +5,10 @@
  */
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZUnity.EZCollectionAsset
 {
-    [CreateAssetMenu(fileName = "EZStringCollection", menuName = "EZUnity/EZStringCollection", order = (int)EZAssetMenuOrder.EZStringCollection)]
-    public class EZStringCollectionAsset : EZDictionaryAsset<string, EZStringCollectionAsset.StringCollection>
+    [CreateAssetMenu(fileName = "EZMapAsset String-TextCollection", menuName = "EZUnity/EZMapAsset/String-TextCollection", order = (int)EZAssetMenuOrder.EZMapAsset_String_TextCollection)]
+    public class EZMapAsset_String_TextCollection : EZMapAsset_String_<EZMapAsset_String_TextCollection.TextCollection>
     {
         public static Language GlobalLanguageSetting = Language.Chinese;
 
@@ -19,7 +19,7 @@ namespace EZhex1991.EZUnity
         }
 
         [System.Serializable]
-        public struct StringCollection
+        public struct TextCollection
         {
             [SerializeField, TextArea]
             private string m_CH;
@@ -39,7 +39,7 @@ namespace EZhex1991.EZUnity
         }
         public string GetString(string key, Language language)
         {
-            return GetString(m_Dictionary[key], language);
+            return GetString(m_KeyIndexMap[key], language);
         }
         public string GetString(int index, Language language)
         {

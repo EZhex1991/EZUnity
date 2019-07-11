@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6ff394031681c49b84fa147b8fa969, type: 3}
+  m_Name: EZMapAsset String-Object
+  m_EditorClassIdentifier: 
+  m_Keys:
+  - EZMapAsset String-Int
+  - EZMapAsset String-Object
+  - EZMapAsset String-String
+  - EZMapAsset String-String
+  m_Values:
+  - {fileID: 11400000, guid: f422fe95e3f759d4aa70a5a016cb4af6, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: a93de9e82d87b684d85ff0d419845b4e, type: 2}
+  - {fileID: 11400000, guid: a93de9e82d87b684d85ff0d419845b4e, type: 2}

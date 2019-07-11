@@ -7,10 +7,13 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZUnity.EZCollectionAsset
 {
-    public abstract class EZDictionaryAssetEditor : Editor
+    [CustomEditor(typeof(EZMapAsset_String_), true)]
+    public class EZMapAssetEditor_String_ : Editor
     {
+        protected EZMapAsset_String_ mapAsset;
+
         protected SerializedProperty m_Keys;
         protected SerializedProperty m_Values;
         protected ReorderableList itemList;
@@ -20,6 +23,7 @@ namespace EZhex1991.EZUnity
 
         protected virtual void OnEnable()
         {
+            mapAsset = target as EZMapAsset_String_;
             m_Keys = serializedObject.FindProperty("m_Keys");
             m_Values = serializedObject.FindProperty("m_Values");
             itemList = new ReorderableList(serializedObject, m_Keys, true, true, true, true)
@@ -32,7 +36,6 @@ namespace EZhex1991.EZUnity
                 onSelectCallback = OnItemListSelect,
             };
         }
-
         public override void OnInspectorGUI()
         {
             EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject);
@@ -46,7 +49,10 @@ namespace EZhex1991.EZUnity
             serializedObject.ApplyModifiedProperties();
         }
 
-        protected abstract bool IsKeyDuplicate(SerializedProperty keyProperty);
+        protected virtual bool IsKeyDuplicate(SerializedProperty keyProperty)
+        {
+            return mapAsset.IsKeyDuplicate(keyProperty.stringValue);
+        }
 
         protected virtual void SplitRect(Rect rect, out Rect keyRect, out Rect valueRect)
         {
@@ -61,7 +67,7 @@ namespace EZhex1991.EZUnity
 
         protected void DrawItemListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect);
+            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, itemList);
             Rect keyRect, valueRect;
             SplitRect(rect, out keyRect, out valueRect);
 

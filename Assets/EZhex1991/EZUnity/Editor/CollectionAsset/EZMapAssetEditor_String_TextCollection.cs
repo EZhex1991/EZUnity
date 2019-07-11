@@ -6,23 +6,15 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZUnity.EZCollectionAsset
 {
-    [CustomEditor(typeof(EZStringCollectionAsset))]
-    public class EZStringCollectionAssetEditor : EZDictionaryAssetEditor
+    [CustomEditor(typeof(EZMapAsset_String_TextCollection))]
+    public class EZMapAssetEditor_String_TextCollection : EZMapAssetEditor_String_
     {
-        private EZStringCollectionAsset stringCollection;
-
         protected override void OnEnable()
         {
             base.OnEnable();
-            stringCollection = target as EZStringCollectionAsset;
             itemList.elementHeightCallback = GetItemHeight;
-        }
-
-        protected override bool IsKeyDuplicate(SerializedProperty keyProperty)
-        {
-            return stringCollection.IsKeyDuplicate(keyProperty.stringValue);
         }
 
         private float GetItemHeight(int index)

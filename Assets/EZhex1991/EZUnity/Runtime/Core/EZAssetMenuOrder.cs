@@ -8,8 +8,12 @@ namespace EZhex1991.EZUnity
     public enum EZAssetMenuOrder
     {
         _Section_1 = 1100,
-        EZStringCollection,
-        EZStringDictionary,
+        EZListAsset_String,
+        EZListAsset_Object,
+        EZMapAsset_String_String,
+        EZMapAsset_String_Int,
+        EZMapAsset_String_Object,
+        EZMapAsset_String_TextCollection,
 
         _Section_2 = 1200,
         EZPlaneGenerator,
