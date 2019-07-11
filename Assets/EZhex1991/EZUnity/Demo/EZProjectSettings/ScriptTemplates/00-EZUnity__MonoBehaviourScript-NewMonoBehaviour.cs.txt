@@ -7,8 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
-    [CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "EZUnity/#SCRIPTNAME#")]
-    public class #SCRIPTNAME# : ScriptableObject
+    public class #SCRIPTNAME# : MonoBehaviour
     {
         
     }
