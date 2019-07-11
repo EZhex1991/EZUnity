@@ -133,7 +133,7 @@ namespace EZhex1991.EZUnity
 
         public void DrawCopyListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, true);
+            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, copyList);
             if (copyList.count == 0)
             {
                 EditorGUI.LabelField(rect, "Copy List");
@@ -163,7 +163,7 @@ namespace EZhex1991.EZUnity
 
         public void DrawBlackListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, true);
+            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, blackList);
             EditorGUI.LabelField(rect, "Black List");
         }
         public void DrawBlackListElement(Rect rect, int index, bool isActive, bool isFocused)
