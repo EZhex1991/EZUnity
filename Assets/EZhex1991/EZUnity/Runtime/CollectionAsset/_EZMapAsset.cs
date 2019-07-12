@@ -11,7 +11,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
     /// <summary>
     /// Base class for EZMapAssetEditor_String
     /// </summary>
-    public class EZMapAsset_String_ : EZListAsset<string>
+    public class EZMapAsset_String_ : EZListAsset_String
     {
     }
 
