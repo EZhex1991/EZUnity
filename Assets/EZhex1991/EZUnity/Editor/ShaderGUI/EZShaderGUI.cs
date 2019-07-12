@@ -11,12 +11,16 @@ using UnityEngine;
 public class EZShaderGUI : ShaderGUI
 {
     public const string Tag_RenderType = "RenderType";
+
     public const string Keyword_SecondOn = "_SECOND_ON";
     public const string Keyword_BumpOn = "_BUMP_ON";
     public const string Keyword_SpecOn = "_SPEC_ON";
     public const string Keyword_AddLightOn = "_ADDLIGHT_ON";
     public const string Keyword_AOOn = "_AO_ON";
+    public const string Keyword_AlphaTex_On = "_ALPHATEX_ON";
+
     public const string Property_AlphaMode = "_AlphaMode";
+    public const string Property_AlphaTex = "_AlphaTex";
     public const string Property_AlphaClipThreshold = "_AlphaClipThreshold";
     public const string Property_SrcBlendMode = "_SrcBlendMode";
     public const string Property_DstBlendMode = "_DstBlendMode";
@@ -106,6 +110,7 @@ public class EZShaderGUI : ShaderGUI
         materialEditor.TexturePropertyFeatured(_BumpTex, _Bumpiness, Keyword_BumpOn, firstCall);
     }
 
+    private MaterialProperty _AlphaTex;
     private MaterialProperty _AlphaMode;
     private MaterialProperty _AlphaClipThreshold;
     private MaterialProperty _SrcBlendMode;
@@ -117,6 +122,7 @@ public class EZShaderGUI : ShaderGUI
     public static bool RenderingModePresetsFoldout = true;
     protected void RenderingSettingsGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
+        _AlphaTex = FindProperty(Property_AlphaTex, properties);
         _AlphaMode = FindProperty(Property_AlphaMode, properties);
         _AlphaClipThreshold = FindProperty(Property_AlphaClipThreshold, properties);
         _SrcBlendMode = FindProperty(Property_SrcBlendMode, properties);
@@ -128,6 +134,7 @@ public class EZShaderGUI : ShaderGUI
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Rendering Settings", EditorStyles.boldLabel);
+        materialEditor.TexturePropertyFeatured(_AlphaTex, Keyword_AlphaTex_On, firstCall);
         if (RenderingModePresetsGUI(materialEditor))
         {
             EditorGUI.indentLevel++;

@@ -9,16 +9,17 @@ Shader "EZUnity/Unlit/Advanced" {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
 		
-		// Rendering Settings
+		[Header(Rendering Settings)]
+		[HideInInspector] _AlphaTex ("Alpha Tex (R)", 2D) = "white" {}
 		[HideInInspector][KeywordEnum(None, AlphaTest, AlphaBlend, AlphaPremultiply)] _AlphaMode ("Alpha Mode", Float) = 0
-		[HideInInspector]_AlphaClipThreshold ("Alpha Clip Threshold", Range(0, 1)) = 0.5
+		[HideInInspector] _AlphaClipThreshold ("Alpha Clip Threshold", Range(0, 1)) = 0.5
 		[HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _SrcBlendMode ("Src Blend Mode", Float) = 1
 		[HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _DstBlendMode ("Dst Blend Mode", Float) = 0
 		[HideInInspector][Toggle] _ZWriteMode ("ZWrite", Float) = 1
 		[HideInInspector][Enum(UnityEngine.Rendering.CullMode)] _CullMode ("Cull Mode", Float) = 2
-		[HideInInspector]_OffsetFactor ("Offset Factor", Float) = 0
-		[HideInInspector]_OffsetUnit ("Offset Unit", Float) = 0
-	}
+		[HideInInspector] _OffsetFactor ("Offset Factor", Float) = 0
+		[HideInInspector] _OffsetUnit ("Offset Unit", Float) = 0
+	} 
 	CustomEditor "EZRenderingSettingsShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -33,15 +34,17 @@ Shader "EZUnity/Unlit/Advanced" {
 			#pragma vertex vert
 			#pragma fragment frag
             #pragma shader_feature _ _ALPHAMODE_ALPHATEST _ALPHAMODE_ALPHABLEND _ALPHAMODE_ALPHAPREMULTIPLY
+			#pragma shader_feature _ _ALPHATEX_ON
 
 			#include "UnityCG.cginc"
+			
+			// Rendering Settings
+			sampler2D _AlphaTex;
+			fixed _AlphaClipThreshold;
 			
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			half4 _Color;
-			
-			// Rendering Settings
-			fixed _AlphaClipThreshold;
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -60,9 +63,19 @@ Shader "EZUnity/Unlit/Advanced" {
 			}
 			half4 frag (v2f i) : SV_Target {
 				half4 color = tex2D(_MainTex, i.uv_MainTex) * _Color;
-				#if _ALPHAMODE_ALPHATEST
-					clip(color.a - _AlphaClipThreshold);
+
+				// Rendering Settings
+				#if !_ALPHAMODE_NONE
+					#if _ALPHATEX_ON
+						color.a = tex2D(_AlphaTex, i.uv_MainTex).r;
+					#endif
+					#if _ALPHAMODE_ALPHATEST
+						clip(color.a - _AlphaClipThreshold);
+					#endif
+				#else
+					color.a = 1;
 				#endif
+
 				return color;
 			}
 			ENDCG
