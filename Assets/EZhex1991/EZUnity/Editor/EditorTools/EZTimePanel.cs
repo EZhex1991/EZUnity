@@ -11,42 +11,53 @@ namespace EZhex1991.EZUnity
 {
     public class EZTimePanel : EditorWindow
     {
-        public string input;
+        public string timeText;
 
         public DateTime time;
         public string format = "yyyy-MM-dd HH:mm:ss";
 
         public GUIStyle style;
 
-        private void OnEnable()
+        public void GetCurrentTime()
         {
             time = DateTime.Now;
+            timeText = time.ToString(format);
+        }
+        public void DrawLabel(string label1, string text)
+        {
+            EditorGUILayout.TextField(label1, text, EditorStyles.label);
+        }
+
+        private void OnEnable()
+        {
+            GetCurrentTime();
         }
 
         private void OnGUI()
         {
             EZEditorGUIUtility.WindowTitle(this);
 
-            DrawLabel("DateTime", time.ToString());
+            EditorGUILayout.Space();
             EditorGUILayout.LabelField("Format", format);
 
-            EditorGUILayout.Space();
-            input = EditorGUILayout.DelayedTextField("Input", input);
-            if (GUILayout.Button("Refresh"))
+            EditorGUILayout.BeginHorizontal();
+            timeText = EditorGUILayout.DelayedTextField("Date Time", timeText);
+            if (GUILayout.Button("Parse"))
             {
                 try
                 {
-                    time = DateTime.Parse(input);
+                    time = DateTime.Parse(timeText);
                 }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
                 }
             }
+            EditorGUILayout.EndHorizontal();
+
             if (GUILayout.Button("Now"))
             {
-                time = DateTime.Now;
-                input = time.ToString(format);
+                GetCurrentTime();
                 GUI.FocusControl(null);
             }
 
@@ -79,11 +90,6 @@ namespace EZhex1991.EZUnity
             DrawLabel("ToLocalTime", time.ToLocalTime().ToString());
             DrawLabel("ToOADate", time.ToOADate().ToString());
             DrawLabel("ToUniversalTime", time.ToUniversalTime().ToString());
-        }
-
-        public void DrawLabel(string label1, string text)
-        {
-            EditorGUILayout.TextField(label1, text, EditorStyles.wordWrappedLabel);
         }
     }
 }
