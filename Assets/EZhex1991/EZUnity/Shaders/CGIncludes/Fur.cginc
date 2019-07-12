@@ -40,8 +40,8 @@ struct appdata {
 
 struct v2f {
 	float4 pos : SV_POSITION;
-	float2 uv_Main : TEXCOORD0;
-	float2 uv_Fur : TEXCOORD1;
+	float2 uv_MainTex : TEXCOORD0;
+	float2 uv_FurTex : TEXCOORD1;
 #if _LIGHTINGMODE_VERTEX
 	half3 diffColor : TEXCOORD2;
 	half3 spec1Color : TEXCOORD3;
@@ -65,8 +65,8 @@ v2f vert (appdata v) {
 	o.pos = UnityObjectToClipPos(v.vertex);
 
 	v.uv0 += _FurUVOffset.xy * _FurUVOffset.zw * FUR_LAYER;
-	o.uv_Main = TRANSFORM_TEX(v.uv0, _MainTex);
-	o.uv_Fur = TRANSFORM_TEX(v.uv0, _FurTex);
+	o.uv_MainTex = TRANSFORM_TEX(v.uv0, _MainTex);
+	o.uv_FurTex = TRANSFORM_TEX(v.uv0, _FurTex);
 
 #if _LIGHTINGMODE_VERTEX
 	float3 worldNormal = UnityObjectToWorldNormal(v.normal);
@@ -103,9 +103,9 @@ v2f vert (appdata v) {
 }
 
 half4 frag (v2f i) : SV_Target {
-	half4 color = tex2D(_MainTex, i.uv_Main) * _Color;
+	half4 color = tex2D(_MainTex, i.uv_MainTex) * _Color;
 
-	half alpha = tex2D(_FurTex, i.uv_Fur).r;
+	half alpha = tex2D(_FurTex, i.uv_FurTex).r;
 	alpha = pow(saturate(alpha - FUR_LAYER), _AlphaPower);
 	
 #if _LIGHTINGMODE_VERTEX
