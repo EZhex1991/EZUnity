@@ -208,7 +208,7 @@ public class EZShaderGUI : ShaderGUI
                 break;
             case RenderingModePresets.Transparent:
                 material.SetOverrideTag(Tag_RenderType, "Transparent");
-                material.SetKeyword(AlphaMode.None);
+                material.SetKeyword(AlphaMode.AlphaPremultiply);
                 material.SetInt(Property_AlphaMode, (int)AlphaMode.AlphaPremultiply);
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
