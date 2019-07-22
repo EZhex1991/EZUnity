@@ -155,7 +155,7 @@ public class EZShaderGUI : ShaderGUI
 
         if (firstCall)
         {
-            (materialEditor.target as Material).SetKeyword((AlphaMode)_AlphaMode.floatValue);
+            (materialEditor.target as Material).SetKeyword("_AlphaMode", (AlphaMode)_AlphaMode.floatValue);
         }
     }
     protected bool RenderingModePresetsGUI(MaterialEditor materialEditor)
@@ -181,7 +181,7 @@ public class EZShaderGUI : ShaderGUI
         {
             case RenderingModePresets.Opaque:
                 material.SetOverrideTag(Tag_RenderType, "Opaque");
-                material.SetKeyword(AlphaMode.None);
+                material.SetKeyword("_AlphaMode", AlphaMode.None);
                 material.SetInt(Property_AlphaMode, (int)AlphaMode.None);
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
@@ -190,7 +190,7 @@ public class EZShaderGUI : ShaderGUI
                 break;
             case RenderingModePresets.Cutout:
                 material.SetOverrideTag(Tag_RenderType, "TransparentCutout");
-                material.SetKeyword(AlphaMode.AlphaTest);
+                material.SetKeyword("_AlphaMode", AlphaMode.AlphaTest);
                 material.SetInt(Property_AlphaMode, (int)AlphaMode.AlphaTest);
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.Zero);
@@ -199,7 +199,7 @@ public class EZShaderGUI : ShaderGUI
                 break;
             case RenderingModePresets.Fade:
                 material.SetOverrideTag(Tag_RenderType, "Transparent");
-                material.SetKeyword(AlphaMode.AlphaBlend);
+                material.SetKeyword("_AlphaMode", AlphaMode.AlphaBlend);
                 material.SetInt(Property_AlphaMode, (int)AlphaMode.AlphaBlend);
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -208,7 +208,7 @@ public class EZShaderGUI : ShaderGUI
                 break;
             case RenderingModePresets.Transparent:
                 material.SetOverrideTag(Tag_RenderType, "Transparent");
-                material.SetKeyword(AlphaMode.AlphaPremultiply);
+                material.SetKeyword("_AlphaMode", AlphaMode.AlphaPremultiply);
                 material.SetInt(Property_AlphaMode, (int)AlphaMode.AlphaPremultiply);
                 material.SetInt(Property_SrcBlendMode, (int)UnityEngine.Rendering.BlendMode.One);
                 material.SetInt(Property_DstBlendMode, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);

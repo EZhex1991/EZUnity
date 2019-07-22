@@ -75,7 +75,7 @@ namespace EZhex1991.EZUnity
         {
             materialEditor.EnumPopup<T>(property, (mat, selection) =>
             {
-                mat.SetKeyword(selection);
+                mat.SetKeyword(property.name, selection);
             }, options);
         }
         public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, params GUILayoutOption[] options)
@@ -85,7 +85,7 @@ namespace EZhex1991.EZUnity
         {
             materialEditor.EnumPopup<T>(property, label, (mat, selection) =>
             {
-                mat.SetKeyword(selection);
+                mat.SetKeyword(property.name, selection);
             }, options);
         }
 
@@ -172,9 +172,9 @@ namespace EZhex1991.EZUnity
             }
         }
 
-        public static void SetKeyword(this MaterialEditor materialEditor, Enum selection)
+        public static void SetKeyword(this MaterialEditor materialEditor, string prefix, Enum selection)
         {
-            (materialEditor.target as Material).SetKeyword(selection);
+            (materialEditor.target as Material).SetKeyword(prefix, selection);
         }
         public static void SetKeyword(this MaterialEditor materialEditor, string keyword, bool value)
         {
