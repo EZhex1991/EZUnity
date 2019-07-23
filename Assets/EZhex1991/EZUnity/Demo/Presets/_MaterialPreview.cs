@@ -10,6 +10,7 @@ namespace EZhex1991.EZUnity
     public class _MaterialPreview : MonoBehaviour
     {
         public Renderer[] renderers;
+        [EZNestedEditor]
         public Material material;
 
         private void OnValidate()
