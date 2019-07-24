@@ -14,6 +14,7 @@ namespace EZhex1991.EZUnity.Builder
         protected EZPlayerBuilder playerBuilder;
 
         protected SerializedProperty m_ConfigButDontBuild;
+        protected SerializedProperty m_BuildTarget;
         protected SerializedProperty m_BuildOptions;
 
         protected SerializedProperty m_BundleBuilder;
@@ -34,6 +35,7 @@ namespace EZhex1991.EZUnity.Builder
         {
             playerBuilder = target as EZPlayerBuilder;
             m_ConfigButDontBuild = serializedObject.FindProperty("configButDontBuild");
+            m_BuildTarget = serializedObject.FindProperty("buildTarget");
             m_BuildOptions = serializedObject.FindProperty("buildOptions");
             m_BundleBuilder = serializedObject.FindProperty("bundleBuilder");
             m_LocationPathName = serializedObject.FindProperty("locationPathName");
@@ -57,12 +59,19 @@ namespace EZhex1991.EZUnity.Builder
             {
                 EditorGUILayout.LabelField("Build", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(m_ConfigButDontBuild);
-                m_BuildOptions.intValue = (int)(BuildOptions)EditorGUILayout.EnumFlagsField("Build Options", (BuildOptions)m_BuildOptions.intValue);
-                DrawBuildButtons();
+                EditorGUILayout.PropertyField(m_BuildTarget);
+                if (GUILayout.Button("Build"))
+                {
+                    playerBuilder.Execute((BuildTarget)m_BuildTarget.intValue);
+                    GUIUtility.ExitGUI();
+                }
+                EditorGUILayout.Space();
+                DrawQuickBuildButtons();
                 EditorGUILayout.Space();
             }
 
             EditorGUILayout.LabelField("Build Options", EditorStyles.boldLabel);
+            m_BuildOptions.intValue = (int)(BuildOptions)EditorGUILayout.EnumFlagsField("Build Options", (BuildOptions)m_BuildOptions.intValue);
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(m_LocationPathName);
@@ -98,35 +107,35 @@ namespace EZhex1991.EZUnity.Builder
 
             serializedObject.ApplyModifiedProperties();
         }
-        public void DrawBuildButtons()
+        public void DrawQuickBuildButtons()
         {
             if (GUILayout.Button("Android"))
             {
-                playerBuilder.Execute(BuildTargetGroup.Android, BuildTarget.Android);
+                playerBuilder.Execute(BuildTarget.Android);
                 GUIUtility.ExitGUI();
             }
             if (GUILayout.Button("iOS"))
             {
-                playerBuilder.Execute(BuildTargetGroup.iOS, BuildTarget.iOS);
+                playerBuilder.Execute(BuildTarget.iOS);
                 GUIUtility.ExitGUI();
             }
             {
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Windows"))
                 {
-                    playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
+                    playerBuilder.Execute(BuildTarget.StandaloneWindows);
                     GUIUtility.ExitGUI();
                 }
                 if (GUILayout.Button("Windows64"))
                 {
-                    playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
+                    playerBuilder.Execute(BuildTarget.StandaloneWindows64);
                     GUIUtility.ExitGUI();
                 }
                 EditorGUILayout.EndHorizontal();
             }
             if (GUILayout.Button("OSX"))
             {
-                playerBuilder.Execute(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+                playerBuilder.Execute(BuildTarget.StandaloneOSX);
                 GUIUtility.ExitGUI();
             }
         }

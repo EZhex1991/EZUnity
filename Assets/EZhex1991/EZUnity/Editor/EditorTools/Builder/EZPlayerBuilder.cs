@@ -54,6 +54,7 @@ namespace EZhex1991.EZUnity.Builder
         public const string Wildcard_BuildTarget = "<BuildTarget>";
 
         public bool configButDontBuild;
+        public BuildTarget buildTarget = BuildTarget.NoTarget;
         public BuildOptions buildOptions = BuildOptions.ShowBuiltPlayer;
 
         public EZBundleBuilder bundleBuilder;
@@ -71,7 +72,7 @@ namespace EZhex1991.EZUnity.Builder
 
         public EZCopyList copyList;
 
-        public void Config(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget)
+        public void ConfigTargetGroup(BuildTargetGroup buildTargetGroup)
         {
             if (!string.IsNullOrEmpty(companyName)) PlayerSettings.companyName = companyName;
             if (!string.IsNullOrEmpty(productName)) PlayerSettings.productName = productName;
@@ -100,9 +101,9 @@ namespace EZhex1991.EZUnity.Builder
             }
 
         }
-        public void Execute(BuildTargetGroup buildTargetGroup, BuildTarget buildTarget)
+        public void Execute(BuildTarget buildTarget)
         {
-            Config(buildTargetGroup, buildTarget);
+            ConfigTargetGroup(GetGroup(buildTarget));
             if (configButDontBuild) return;
             if (bundleBuilder != null)
             {
