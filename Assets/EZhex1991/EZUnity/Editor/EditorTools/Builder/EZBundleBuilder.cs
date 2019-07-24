@@ -30,8 +30,9 @@ namespace EZhex1991.EZUnity.Builder
         }
 
         protected const char DELIMITER = '|';
-        protected static BuildAssetBundleOptions buildOptions = BuildAssetBundleOptions.DeterministicAssetBundle;
 
+        public BuildTarget buildTarget = BuildTarget.NoTarget;
+        public BuildAssetBundleOptions buildOptions = BuildAssetBundleOptions.DeterministicAssetBundle;
         public string outputPath = "Assets/StreamingAssets";
         public string listFileName = "files.txt";
         public bool managerMode = false;

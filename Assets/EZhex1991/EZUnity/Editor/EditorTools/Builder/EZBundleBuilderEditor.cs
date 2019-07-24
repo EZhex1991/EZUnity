@@ -14,6 +14,8 @@ namespace EZhex1991.EZUnity.Builder
     {
         private EZBundleBuilder bundleBuilder;
 
+        private SerializedProperty m_BuildTarget;
+        private SerializedProperty m_BuildOptions;
         private SerializedProperty m_OutputPath;
         private SerializedProperty m_ListFileName;
         private SerializedProperty m_ManagerMode;
@@ -32,6 +34,8 @@ namespace EZhex1991.EZUnity.Builder
         void OnEnable()
         {
             bundleBuilder = target as EZBundleBuilder;
+            m_BuildTarget = serializedObject.FindProperty("buildTarget");
+            m_BuildOptions = serializedObject.FindProperty("buildOptions");
             m_OutputPath = serializedObject.FindProperty("outputPath");
             m_ListFileName = serializedObject.FindProperty("listFileName");
             m_ManagerMode = serializedObject.FindProperty("managerMode");
@@ -58,7 +62,13 @@ namespace EZhex1991.EZUnity.Builder
             if (!serializedObject.isEditingMultipleObjects)
             {
                 EditorGUILayout.LabelField("Build", EditorStyles.boldLabel);
-                DrawBuildButtons();
+                EditorGUILayout.PropertyField(m_BuildTarget);
+                if (GUILayout.Button("Build"))
+                {
+                    EditorApplication.delayCall += delegate () { bundleBuilder.Execute((BuildTarget)m_BuildTarget.intValue); };
+                }
+                EditorGUILayout.Space();
+                DrawQuickBuildButtons();
                 EditorGUILayout.Space();
             }
 
@@ -92,7 +102,7 @@ namespace EZhex1991.EZUnity.Builder
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void DrawBuildButtons()
+        private void DrawQuickBuildButtons()
         {
             if (GUILayout.Button("Android"))
             {
@@ -122,6 +132,7 @@ namespace EZhex1991.EZUnity.Builder
 
         private void DrawBaseProperties()
         {
+            m_BuildOptions.intValue = (int)(BuildAssetBundleOptions)EditorGUILayout.EnumFlagsField("Build Options", (BuildAssetBundleOptions)m_BuildOptions.intValue);
             EditorGUILayout.PropertyField(m_OutputPath);
             EditorGUILayout.PropertyField(m_ListFileName);
             EditorGUILayout.PropertyField(m_ForceRebuild);
