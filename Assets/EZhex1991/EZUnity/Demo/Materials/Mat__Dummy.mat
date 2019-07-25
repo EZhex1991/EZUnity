@@ -4,9 +4,8 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Mat__Dummy
   m_Shader: {fileID: 4800000, guid: f7300645d9df4ed429b35224d52f4046, type: 3}
   m_ShaderKeywords: 

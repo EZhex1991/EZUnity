@@ -4,9 +4,8 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Mat_Unlit_DynamicFlame_Volume2
   m_Shader: {fileID: 4800000, guid: 15859192ab2260a4d9c163c8b307fff5, type: 3}
   m_ShaderKeywords: _FLAMEMODE_VOLUME

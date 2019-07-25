@@ -4,9 +4,8 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Mat__Debug
   m_Shader: {fileID: 4800000, guid: e12be64f21cf1b941a103fae8f16eb2a, type: 3}
   m_ShaderKeywords: _DEBUGMODE_NORMAL _WRAPMODE_CLAMP

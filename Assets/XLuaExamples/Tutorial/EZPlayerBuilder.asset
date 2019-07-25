@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: EZPlayerBuilder
   m_EditorClassIdentifier: 
   configButDontBuild: 0
+  buildTarget: -2
   buildOptions: 8
   bundleBuilder: {fileID: 11400000, guid: 1ded3e0eea5f64343952ca14d94b30dd, type: 2}
   locationPathName: Builds/<BundleIdentifier>-<BuildTarget>-<BuildNumber>

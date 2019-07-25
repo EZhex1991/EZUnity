@@ -4,9 +4,8 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Mat_Fur
   m_Shader: {fileID: 4800000, guid: 484e3a15ea4dd114c9ab51115470592e, type: 3}
   m_ShaderKeywords: _LIGHTINGMODE_PIXEL

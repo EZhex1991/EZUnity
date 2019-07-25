@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabd12fc7fdeeaa48934346a03029e5d, type: 3}
   m_Name: EZBundleBuilder
   m_EditorClassIdentifier: 
+  buildTarget: -2
+  buildOptions: 16
   outputPath: Assets/StreamingAssets
   listFileName: files.txt
   managerMode: 0
