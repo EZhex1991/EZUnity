@@ -18,8 +18,12 @@ namespace EZhex1991.EZUnity
         public static IEnumerable<Type> GetAllTypes(bool excludeGeneric = true)
         {
             List<Type> types = new List<Type>();
+#if UNITY_2018_1_OR_NEWER && NET_4_6
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where((assembly) => !assembly.IsDynamic);
+#else
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+#endif
             foreach (Assembly assembly in assemblies)
             {
                 types.AddRange((from type in assembly.GetExportedTypes()
