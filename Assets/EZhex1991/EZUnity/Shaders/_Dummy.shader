@@ -5,6 +5,8 @@
 
 Shader "EZUnity/_Dummy" {
 	Properties {
+		[EZKeywordEnumHeader(Value1, Value2)] _EZKeywordEnumHeader("EZKeywordEnumHeader", Float) = 0
+		[EZMinMaxSlider] _EZMinMaxSlider("EZMinMaxSlider", Vector) = (0, 1, 1, 1)
 	}
 	SubShader {
 		// Tags { "RenderType"="Opaque" }

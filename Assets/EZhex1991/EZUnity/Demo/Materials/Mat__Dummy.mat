@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Mat__Dummy
   m_Shader: {fileID: 4800000, guid: f7300645d9df4ed429b35224d52f4046, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _EZKEYWORDENUMHEADER_VALUE1
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -18,5 +18,7 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - _EZKeywordEnumHeader: 0
+    m_Colors:
+    - _EZMinMaxSlider: {r: 0, g: 1, b: 1, a: 1}

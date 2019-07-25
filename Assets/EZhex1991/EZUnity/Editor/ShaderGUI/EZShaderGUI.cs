@@ -132,20 +132,18 @@ public class EZShaderGUI : ShaderGUI
         _OffsetFactor = FindProperty(Property_OffsetFactor, properties);
         _OffsetUnit = FindProperty(Property_OffsetUnit, properties);
 
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Rendering Settings", EditorStyles.boldLabel);
         materialEditor.TexturePropertyFeatured(_AlphaTex, Keyword_AlphaTex_On, firstCall);
         if (RenderingModePresetsGUI(materialEditor))
         {
             EditorGUI.indentLevel++;
-            materialEditor.KeywordEnum<AlphaMode>(_AlphaMode);
-            if ((AlphaMode)(_AlphaMode.floatValue) == AlphaMode.AlphaTest)
+            materialEditor.ShaderProperty(_AlphaMode);
+            if (!_AlphaMode.hasMixedValue && (AlphaMode)(_AlphaMode.floatValue) == AlphaMode.AlphaTest)
             {
                 materialEditor.ShaderProperty(_AlphaClipThreshold);
             }
             materialEditor.ShaderProperty(_SrcBlendMode);
             materialEditor.ShaderProperty(_DstBlendMode);
-            materialEditor.Toggle(_ZWriteMode);
+            materialEditor.ShaderProperty(_ZWriteMode);
             EditorGUI.indentLevel--;
         }
 
