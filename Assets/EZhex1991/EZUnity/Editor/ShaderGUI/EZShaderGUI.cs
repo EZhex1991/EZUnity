@@ -75,7 +75,9 @@ public class EZShaderGUI : ShaderGUI
         }
         if (scaleOffset)
         {
+            EditorGUI.indentLevel++;
             materialEditor.TextureScaleOffsetProperty(_MainTex);
+            EditorGUI.indentLevel--;
         }
     }
 
