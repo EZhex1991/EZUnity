@@ -124,6 +124,9 @@ public class EZShaderGUI : ShaderGUI
     public static bool RenderingModePresetsFoldout = true;
     protected void RenderingSettingsGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Rendering Settings", EditorStyles.boldLabel);
+
         _AlphaTex = FindProperty(Property_AlphaTex, properties);
         _AlphaMode = FindProperty(Property_AlphaMode, properties);
         _AlphaClipThreshold = FindProperty(Property_AlphaClipThreshold, properties);
