@@ -180,6 +180,7 @@ public class EZShaderGUI : ShaderGUI
     }
     protected void SetupRenderingMode(Material material, RenderingModePresets renderMode)
     {
+        Undo.RecordObject(material, "Set Rendering Mode");
         switch (renderMode)
         {
             case RenderingModePresets.Opaque:
