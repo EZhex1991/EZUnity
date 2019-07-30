@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Mat_Unlit_Pattern
   m_Shader: {fileID: 4800000, guid: 80af8b7f7384f7e409ffb4acb319b08e, type: 3}
-  m_ShaderKeywords: _COORDMODE_UV _PATTERNTYPE_CHESSBOARD
+  m_ShaderKeywords: _COORDMODE_UV _DISTORTIONTYPE_SWIRL _PATTERNTYPE_CHESSBOARD
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,9 +24,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _CoordMode: 0
+    - _DistortionType: 1
     - _FillRatio: 0.5
     - _PatternType: 0
+    - _Swirl: 3.14
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DensityFactor: {r: 2, g: 2, b: 0, a: 0}
+    - _PatternCenter: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _ScaleOffset: {r: 2, g: 2, b: 0, a: 0}
     - _SecondColor: {r: 0, g: 0, b: 0, a: 1}
