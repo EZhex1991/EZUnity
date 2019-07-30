@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -48,11 +49,27 @@ namespace EZhex1991.EZUnity
                 bool active = EditorGUI.Toggle(activeRect, gameObject.activeSelf);
                 if (EditorGUI.EndChangeCheck())
                 {
-                    Undo.RecordObject(gameObject, "SetActive");
-                    gameObject.SetActive(active);
+                    SetActive(gameObject, active);
                 }
             }
         }
 
+        private static void SetActive(GameObject gameObject, bool active)
+        {
+            GameObject[] selections = Selection.GetFiltered<GameObject>(SelectionMode.Editable | SelectionMode.ExcludePrefab);
+            if (selections.Contains(gameObject))
+            {
+                Undo.RecordObjects(selections, "Set Active");
+                for (int i = 0; i < selections.Length; i++)
+                {
+                    selections[i].SetActive(active);
+                }
+            }
+            else
+            {
+                Undo.RecordObject(gameObject, "Set Active");
+                gameObject.SetActive(active);
+            }
+        }
     }
 }
