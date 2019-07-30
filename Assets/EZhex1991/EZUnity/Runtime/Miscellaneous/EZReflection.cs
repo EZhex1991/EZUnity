@@ -185,7 +185,6 @@ namespace EZhex1991.EZUnity
                 SetCamera(targetCamera, refractionCamera);
                 refractionCamera.cullingMask = ~(1 << 4) & refractionLayers;
                 refractionCamera.targetTexture = refractionTexture;
-                RenderTexture.active = refractionTexture;
 
                 refractionCamera.worldToCameraMatrix = targetCamera.worldToCameraMatrix;
                 Vector4 clipPlane = GetCameraSpacePlane(refractionCamera, position, normal, -1);
@@ -203,7 +202,6 @@ namespace EZhex1991.EZUnity
                 SetCamera(targetCamera, reflectionCamera);
                 reflectionCamera.cullingMask = ~(1 << 4) & reflectionLayers;
                 reflectionCamera.targetTexture = reflectionTexture;
-                RenderTexture.active = reflectionTexture;
 
                 float offset = -Vector3.Dot(normal, position) - clipPlaneOffset;
                 Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, offset);
@@ -226,7 +224,6 @@ namespace EZhex1991.EZUnity
                 GL.invertCulling = false;
             }
 
-            RenderTexture.active = null;
             isRendering = false;
         }
         private void OnDisable()
