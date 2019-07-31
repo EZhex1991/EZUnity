@@ -20,9 +20,11 @@ Shader "EZUnity/Unlit/Pattern" {
 		_FillRatio ("Fill Ratio", Range(0, 1)) = 0.5
 
 		[Header(Distrotion)]
-		[KeywordEnum(None, Swirl)]
+		[KeywordEnum(None, Rotate, Swirl, Shrink)]
 		_DistortionType ("Distortion Type", Float) = 0
+		_Rotation ("Rotation", float) = 3.14
 		_Swirl ("Swirl", float) = 3.14
+		_Shrink ("Shrink", float) = 1
 	}
 	CustomEditor "EZUnlitPatternShaderGUI"
 	SubShader {
@@ -34,7 +36,7 @@ Shader "EZUnity/Unlit/Pattern" {
 			#pragma fragment frag
 			#pragma shader_feature _COORDMODE_UV _COORDMODE_LOCALPOS_XY _COORDMODE_LOCALPOS_XZ _COORDMODE_LOCALPOS_YZ _COORDMODE_SCREENPOS
 			#pragma shader_feature _PATTERNTYPE_CHESSBOARD _PATTERNTYPE_DIAMOND _PATTERNTYPE_FRAME _PATTERNTYPE_SPOT _PATTERNTYPE_STRIPE _PATTERNTYPE_TRIANGLE _PATTERNTYPE_WAVE _PATTERNTYPE_DIAGONAL
-			#pragma shader_feature _ _DISTORTIONTYPE_SWIRL
+			#pragma shader_feature _ _DISTORTIONTYPE_ROTATE _DISTORTIONTYPE_SWIRL _DISTORTIONTYPE_SHRINK
 
 			#include "UnityCG.cginc"
 			
@@ -46,7 +48,10 @@ Shader "EZUnity/Unlit/Pattern" {
 			fixed4 _ScaleOffset;
 			fixed4 _PatternCenter;
 			fixed _FillRatio;
+
+			fixed _Rotation;
 			fixed _Swirl;
+			fixed _Shrink;
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -89,12 +94,20 @@ Shader "EZUnity/Unlit/Pattern" {
 					coord = frac(coord) - _PatternCenter.xy;
 				#endif
 				
-				#if _DISTORTIONTYPE_SWIRL
+				#if _DISTORTIONTYPE_ROTATE
+					float sinValue, cosValue;
+					sincos(_Rotation, sinValue, cosValue);
+					float2x2 rotationMatrix = float2x2(cosValue, -sinValue, sinValue, cosValue);
+					coord = mul(coord, rotationMatrix);
+				#elif _DISTORTIONTYPE_SWIRL
 					float distanceToCenter = length(coord);
-					float swirlSin, swirlCos;
-					sincos(distanceToCenter * _Swirl, swirlSin, swirlCos);
-					float2x2 rotateMatrix = float2x2(swirlCos, -swirlSin, swirlSin, swirlCos);
-					coord = mul(coord, rotateMatrix);
+					float sinValue, cosValue;
+					sincos(distanceToCenter * _Swirl, sinValue, cosValue);
+					float2x2 rotationMatrix = float2x2(cosValue, -sinValue, sinValue, cosValue);
+					coord = mul(coord, rotationMatrix);
+				#elif _DISTORTIONTYPE_SHRINK
+					float distanceToCenter = length(coord);
+					coord = coord * pow(distanceToCenter * 2, _Shrink);
 				#endif
 
 				#ifdef _PATTERNTYPE_CHESSBOARD

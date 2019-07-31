@@ -22,7 +22,9 @@ public class EZUnlitPatternShaderGUI : EZShaderGUI
     public enum DistortionType
     {
         None,
+        Rotate,
         Swirl,
+        Shrink,
     }
 
     private MaterialProperty _PatternType;
@@ -32,7 +34,9 @@ public class EZUnlitPatternShaderGUI : EZShaderGUI
     private MaterialProperty _PatternCenter;
     private MaterialProperty _FillRatio;
     private MaterialProperty _DistortionType;
+    private MaterialProperty _Rotation;
     private MaterialProperty _Swirl;
+    private MaterialProperty _Shrink;
 
     public override void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
@@ -45,7 +49,9 @@ public class EZUnlitPatternShaderGUI : EZShaderGUI
         _PatternCenter = FindProperty("_PatternCenter", properties);
         _FillRatio = FindProperty("_FillRatio", properties);
         _DistortionType = FindProperty("_DistortionType", properties);
+        _Rotation = FindProperty("_Rotation", properties);
         _Swirl = FindProperty("_Swirl", properties);
+        _Shrink = FindProperty("_Shrink", properties);
 
         materialEditor.ShaderProperty(_PatternType);
         materialEditor.ShaderProperty(_CoordMode);
@@ -90,11 +96,19 @@ public class EZUnlitPatternShaderGUI : EZShaderGUI
         {
             case DistortionType.None:
                 break;
+            case DistortionType.Rotate:
+                materialEditor.ShaderProperty(_Rotation);
+                break;
             case DistortionType.Swirl:
                 materialEditor.ShaderProperty(_Swirl);
                 break;
+            case DistortionType.Shrink:
+                materialEditor.ShaderProperty(_Shrink);
+                break;
             default:
+                materialEditor.ShaderProperty(_Rotation);
                 materialEditor.ShaderProperty(_Swirl);
+                materialEditor.ShaderProperty(_Shrink);
                 break;
         }
 
