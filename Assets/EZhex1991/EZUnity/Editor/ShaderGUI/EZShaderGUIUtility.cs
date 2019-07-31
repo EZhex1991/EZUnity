@@ -44,27 +44,45 @@ namespace EZhex1991.EZUnity
         {
             EditorGUI.BeginChangeCheck();
             materialEditor.TexturePropertySingleLine(texture);
-            if (setupRequired || EditorGUI.EndChangeCheck())
+            if (EditorGUI.EndChangeCheck() || setupRequired)
             {
-                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+                if (!texture.hasMixedValue)
+                {
+                    foreach (Material mat in materialEditor.targets)
+                    {
+                        mat.SetKeyword(keyword, texture.textureValue != null);
+                    }
+                }
             }
         }
         public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, string keyword, bool setupRequired = false)
         {
             EditorGUI.BeginChangeCheck();
             materialEditor.TexturePropertySingleLine(texture, extraProperty1);
-            if (setupRequired || EditorGUI.EndChangeCheck())
+            if (EditorGUI.EndChangeCheck() || setupRequired)
             {
-                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+                if (!texture.hasMixedValue)
+                {
+                    foreach (Material mat in materialEditor.targets)
+                    {
+                        mat.SetKeyword(keyword, texture.textureValue != null);
+                    }
+                }
             }
         }
         public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, MaterialProperty extraProperty1, MaterialProperty extraProperty2, string keyword, bool setupRequired = false)
         {
             EditorGUI.BeginChangeCheck();
             materialEditor.TexturePropertySingleLine(texture, extraProperty1, extraProperty2);
-            if (setupRequired || EditorGUI.EndChangeCheck())
+            if (EditorGUI.EndChangeCheck() || setupRequired)
             {
-                (materialEditor.target as Material).SetKeyword(keyword, texture.textureValue != null);
+                if (!texture.hasMixedValue)
+                {
+                    foreach (Material mat in materialEditor.targets)
+                    {
+                        mat.SetKeyword(keyword, texture.textureValue != null);
+                    }
+                }
             }
         }
 
