@@ -20,7 +20,7 @@
 
 ## Tutorial（相对完整的demo）
 
-包括lua间的交互，如何设计Injector来减少Find和GetComponent并方便策划配置，如何使用工具来简化bundle的构建lua代码的管理等。
+包括lua间的交互，如何设计Injector来减少Find和GetComponent并方便策划配置，如何使用工具来简化bundle的构建，lua代码的管理等。
 
 ### 00_LuaBehaviour
 
