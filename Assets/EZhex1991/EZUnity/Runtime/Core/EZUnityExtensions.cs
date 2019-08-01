@@ -250,7 +250,7 @@ namespace EZhex1991.EZUnity
 #if UNITY_2018_3_OR_NEWER
                     return texture.EncodeToTGA();
 #else
-                    Debug.LogError("TGA encoding is available on Unity2018.3 or newer version, PNG encoding will be used");
+                    Debug.LogError("TGA encoding is not available on Unity2018.2 or earlier version, PNG encoding will be used");
                     break;
 #endif
             }
