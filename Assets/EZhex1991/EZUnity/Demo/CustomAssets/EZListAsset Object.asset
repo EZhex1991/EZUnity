@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea13964f1fd0d447afd4698252643a9, type: 3}
   m_Name: EZListAsset Object
   m_EditorClassIdentifier: 
-  m_Keys:
+  m_Elements:
   - {fileID: 11400000}
   - {fileID: 11400000, guid: 3c831e80fe1d6f540811bd71a9724116, type: 2}
