@@ -9,7 +9,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.EZCollectionAsset
 {
     [CustomEditor(typeof(EZMapAsset_String_TextCollection))]
-    public class EZMapAssetEditor_String_TextCollection : EZMapAssetEditor_String_
+    public class EZMapAssetEditor_String_TextCollection : EZMapAssetEditor
     {
         protected override void OnEnable()
         {

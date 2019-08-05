@@ -1,5 +1,5 @@
-/* Author:          ezhex1991@outlook.com
- * CreateTime:      2019-07-09 15:25:14
+/* Author:          #AUTHORNAME#
+ * CreateTime:      2019-08-05 11:41:57
  * Organization:    #ORGANIZATION#
  * Description:     
  */
@@ -9,10 +9,10 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.EZCollectionAsset
 {
-    [CustomEditor(typeof(EZMapAsset_String_), true)]
-    public class EZMapAssetEditor_String_ : Editor
+    [CustomEditor(typeof(EZMapAsset), true)]
+    public class EZMapAssetEditor : Editor
     {
-        protected EZMapAsset_String_ mapAsset;
+        protected EZMapAsset mapAsset;
 
         protected SerializedProperty m_Keys;
         protected SerializedProperty m_Values;
@@ -23,7 +23,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
 
         protected virtual void OnEnable()
         {
-            mapAsset = target as EZMapAsset_String_;
+            mapAsset = target as EZMapAsset;
             m_Keys = serializedObject.FindProperty("m_Keys");
             m_Values = serializedObject.FindProperty("m_Values");
             itemList = new ReorderableList(serializedObject, m_Keys, true, true, true, true)
@@ -49,19 +49,16 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
             serializedObject.ApplyModifiedProperties();
         }
 
-        protected virtual bool IsKeyDuplicate(SerializedProperty keyProperty)
-        {
-            return mapAsset.IsKeyDuplicate(keyProperty.stringValue);
-        }
-
         protected virtual void SplitRect(Rect rect, out Rect keyRect, out Rect valueRect)
         {
+            float margin = 5;
+            rect.width -= margin;
             keyRect = valueRect = new Rect(rect);
-            float width = rect.width / 2; float margin = 5;
-            keyRect.width = width - margin;
+            keyRect.width *= mapAsset.keyRectWidth;
+            valueRect.width *= 1 - mapAsset.keyRectWidth;
+
             keyRect.height = EditorGUIUtility.singleLineHeight;
-            valueRect.x += width;
-            valueRect.width = width;
+            valueRect.x += keyRect.width + margin;
             valueRect.height = EditorGUIUtility.singleLineHeight;
         }
 
@@ -97,7 +94,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
             SplitRect(rect, out keyRect, out valueRect);
 
             Color originalBackgroundColor = GUI.backgroundColor;
-            if (IsKeyDuplicate(key))
+            if (mapAsset.IsKeyDuplicate(index))
             {
                 GUI.backgroundColor = Color.red;
             }

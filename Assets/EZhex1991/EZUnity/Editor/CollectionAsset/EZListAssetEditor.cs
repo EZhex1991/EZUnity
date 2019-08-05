@@ -14,19 +14,19 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
     {
         protected EZListAsset listAsset;
 
-        protected SerializedProperty m_Keys;
-        protected ReorderableList itemList;
+        protected SerializedProperty m_Elements;
+        protected ReorderableList elementList;
 
         protected Vector2 scrollPosition;
 
         protected virtual void OnEnable()
         {
             listAsset = target as EZListAsset;
-            m_Keys = serializedObject.FindProperty("m_Keys");
-            itemList = new ReorderableList(serializedObject, m_Keys, true, true, true, true)
+            m_Elements = serializedObject.FindProperty("m_Elements");
+            elementList = new ReorderableList(serializedObject, m_Elements, true, true, true, true)
             {
-                drawHeaderCallback = DrawItemListHeader,
-                drawElementCallback = DrawItemListElement,
+                drawHeaderCallback = DrawElementListHeader,
+                drawElementCallback = DrawElementListElement,
             };
         }
         public override void OnInspectorGUI()
@@ -36,22 +36,22 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
             serializedObject.Update();
 
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-            itemList.DoLayoutList();
+            elementList.DoLayoutList();
             GUILayout.EndScrollView();
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        protected void DrawItemListHeader(Rect rect)
+        protected void DrawElementListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, itemList);
+            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, elementList);
             EditorGUI.LabelField(rect, "Elements");
         }
-        protected void DrawItemListElement(Rect rect, int index, bool isActive, bool isFocused)
+        protected void DrawElementListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            SerializedProperty key = m_Keys.GetArrayElementAtIndex(index);
+            SerializedProperty key = m_Elements.GetArrayElementAtIndex(index);
 
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, serializedObject, m_Keys);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, serializedObject, m_Elements);
             rect.height = EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(rect, key, GUIContent.none);
         }

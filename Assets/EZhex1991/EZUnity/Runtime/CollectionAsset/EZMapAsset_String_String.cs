@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.EZCollectionAsset
 {
     [CreateAssetMenu(fileName = "EZMapAsset String-String", menuName = "EZUnity/EZMapAsset/String-String", order = (int)EZAssetMenuOrder.EZMapAsset_String_String)]
-    public class EZMapAsset_String_String : EZMapAsset_String_<string>
+    public class EZMapAsset_String_String : EZMapAsset<string, string>
     {
         public void GetTransformHierarchy(Transform transform, string prefix = "")
         {

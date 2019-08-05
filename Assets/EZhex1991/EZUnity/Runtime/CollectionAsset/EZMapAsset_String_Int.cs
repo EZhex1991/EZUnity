@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.EZCollectionAsset
 {
     [CreateAssetMenu(fileName = "EZMapAsset String-Int", menuName = "EZUnity/EZMapAsset/String-Int", order = (int)EZAssetMenuOrder.EZMapAsset_String_Int)]
-    public class EZMapAsset_String_Int : EZMapAsset_String_<int>
+    public class EZMapAsset_String_Int : EZMapAsset<string, int>
     {
 
     }

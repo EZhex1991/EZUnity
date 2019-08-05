@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.EZCollectionAsset
 {
     [CreateAssetMenu(fileName = "EZMapAsset String-TextCollection", menuName = "EZUnity/EZMapAsset/String-TextCollection", order = (int)EZAssetMenuOrder.EZMapAsset_String_TextCollection)]
-    public class EZMapAsset_String_TextCollection : EZMapAsset_String_<EZMapAsset_String_TextCollection.TextCollection>
+    public class EZMapAsset_String_TextCollection : EZMapAsset<string, EZMapAsset_String_TextCollection.TextCollection>
     {
         public static Language GlobalLanguageSetting = Language.Chinese;
 
