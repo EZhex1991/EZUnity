@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZPlaneGenerator", menuName = "EZUnity/EZPlaneGenerator", order = (int)EZAssetMenuOrder.EZPlaneGenerator)]
-    public class EZPlaneGenerator : _EZMeshGenerator
+    public class EZPlaneGenerator : EZMeshGenerator
     {
         [SerializeField]
         private Vector2Int m_Subdivision = new Vector2Int(2, 2);

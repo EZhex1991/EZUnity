@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.AssetGenerator
 {
-    public abstract class _EZMeshGenerator : ScriptableObject
+    public abstract class EZMeshGenerator : ScriptableObject
     {
         private Mesh m_TargetMesh;
         public Mesh targetMesh
