@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
-    public abstract class _EZMonoBehaviourSingleton<T> : MonoBehaviour
+    public abstract class EZMonoBehaviourSingleton<T> : MonoBehaviour
         where T : MonoBehaviour
     {
         private static readonly string LogTag = typeof(T).Name;

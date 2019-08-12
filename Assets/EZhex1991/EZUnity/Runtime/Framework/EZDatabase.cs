@@ -18,7 +18,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.Framework
 {
-    public class EZDatabase : _EZMonoBehaviourSingleton<EZDatabase>
+    public class EZDatabase : EZMonoBehaviourSingleton<EZDatabase>
     {
         private EZApplication ezApplication { get { return EZApplication.Instance; } }
 

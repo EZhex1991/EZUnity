@@ -33,7 +33,7 @@ namespace EZhex1991.EZUnity.Framework
         public bool isUpated;
     }
 
-    public class EZResources : _EZMonoBehaviourSingleton<EZResources>
+    public class EZResources : EZMonoBehaviourSingleton<EZResources>
     {
         private EZApplication ezApplication { get { return EZApplication.Instance; } }
         private EZApplicationSettings settings { get { return EZApplicationSettings.Instance; } }

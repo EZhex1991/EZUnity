@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.UniSDK
 {
-    public class UnityPurchasingBase : _EZMonoBehaviourSingleton<UnityPurchasingBase>
+    public class UnityPurchasingBase : EZMonoBehaviourSingleton<UnityPurchasingBase>
     {
         [TextArea(5, 10)]
         public string googlePlayPublicKey;

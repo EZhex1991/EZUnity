@@ -9,7 +9,7 @@ using System.IO;
 
 namespace EZhex1991.EZUnity
 {
-    public class EZScriptSettings : _EZProjectSettingsSingleton<EZScriptSettings>
+    public class EZScriptSettings : EZProjectSettingsSingleton<EZScriptSettings>
     {
         public override string assetPath { get { return "ProjectSettings/EZScriptSettings.asset"; } }
 

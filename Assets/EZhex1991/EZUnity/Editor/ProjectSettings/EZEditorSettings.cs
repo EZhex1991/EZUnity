@@ -10,7 +10,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity
 {
     [InitializeOnLoad]
-    public class EZEditorSettings : _EZProjectSettingsSingleton<EZEditorSettings>
+    public class EZEditorSettings : EZProjectSettingsSingleton<EZEditorSettings>
     {
         public override string assetPath { get { return "ProjectSettings/EZEditorSettings.asset"; } }
 

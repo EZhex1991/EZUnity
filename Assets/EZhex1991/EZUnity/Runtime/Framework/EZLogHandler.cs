@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.Framework
 {
-    public class EZLogHandler : _EZMonoBehaviourSingleton<EZLogHandler>, ILogHandler
+    public class EZLogHandler : EZMonoBehaviourSingleton<EZLogHandler>, ILogHandler
     {
         private EZApplication ezApplication { get { return EZApplication.Instance; } }
 

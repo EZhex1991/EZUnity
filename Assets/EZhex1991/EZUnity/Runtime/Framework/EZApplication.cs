@@ -15,7 +15,7 @@ namespace EZhex1991.EZUnity.Framework
         Update = 2
     }
 
-    public class EZApplication : _EZMonoBehaviourSingleton<EZApplication>
+    public class EZApplication : EZMonoBehaviourSingleton<EZApplication>
     {
         public EZApplicationSettings settings { get { return EZApplicationSettings.Instance; } }
         public RunMode runMode { get { return settings.runMode; } }

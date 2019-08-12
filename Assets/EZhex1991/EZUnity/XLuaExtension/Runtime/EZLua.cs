@@ -17,7 +17,7 @@ namespace EZhex1991.EZUnity.XLuaExtension
     public delegate void LuaAction();
     public delegate void LuaAction<T>(T arg);
 
-    public class EZLua : _EZMonoBehaviourSingleton<EZLua>
+    public class EZLua : EZMonoBehaviourSingleton<EZLua>
     {
         private EZApplication ezApplication { get { return EZApplication.Instance; } }
         private EZResources ezResources { get { return EZResources.Instance; } }

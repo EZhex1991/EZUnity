@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace EZhex1991.EZUnity.Framework
 {
-    public class EZInputManager : _EZMonoBehaviourSingleton<EZInputManager>
+    public class EZInputManager : EZMonoBehaviourSingleton<EZInputManager>
     {
         public bool simulateMouseWithTouches = true;
         public float moveThreshold = 5f;

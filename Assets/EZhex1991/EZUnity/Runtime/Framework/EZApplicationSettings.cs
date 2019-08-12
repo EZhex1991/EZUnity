@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.Framework
 {
-    public class EZApplicationSettings : _EZScriptableObjectSingleton<EZApplicationSettings>
+    public class EZApplicationSettings : EZScriptableObjectSingleton<EZApplicationSettings>
     {
         [SerializeField]
         private RunMode m_RunModeInEditor = RunMode.Develop;

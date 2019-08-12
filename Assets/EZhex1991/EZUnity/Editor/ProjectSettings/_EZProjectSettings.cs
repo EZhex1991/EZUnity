@@ -10,8 +10,8 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
-    public abstract class _EZProjectSettingsSingleton<T> : ScriptableObject
-        where T : _EZProjectSettingsSingleton<T>
+    public abstract class EZProjectSettingsSingleton<T> : ScriptableObject
+        where T : EZProjectSettingsSingleton<T>
     {
         public abstract string assetPath { get; }
 
@@ -30,7 +30,7 @@ namespace EZhex1991.EZUnity
             }
         }
 
-        internal _EZProjectSettingsSingleton()
+        internal EZProjectSettingsSingleton()
         {
             if (m_Instance != null)
                 Debug.LogError(typeof(T) + " already exists!");

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace EZhex1991.EZUnity.Framework.Events
 {
-    public class EZEventHub : _EZMonoBehaviourSingleton<EZEventHub>
+    public class EZEventHub : EZMonoBehaviourSingleton<EZEventHub>
     {
         public Dictionary<int, EZEvent> m_Events = new Dictionary<int, EZEvent>();
 

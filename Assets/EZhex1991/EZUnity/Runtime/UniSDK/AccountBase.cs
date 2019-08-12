@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.UniSDK
 {
-    public class AccountBase : _EZMonoBehaviourSingleton<AccountBase>
+    public class AccountBase : EZMonoBehaviourSingleton<AccountBase>
     {
         public bool positiveEvent;
 

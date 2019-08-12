@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.UniSDK
 {
-    public class PolyADBase : _EZMonoBehaviourSingleton<PolyADBase>
+    public class PolyADBase : EZMonoBehaviourSingleton<PolyADBase>
     {
         public bool positiveEvent = true;
         // init

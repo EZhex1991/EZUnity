@@ -8,8 +8,8 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
-    public abstract class _EZScriptableObjectSingleton<T> : ScriptableObject
-        where T : _EZScriptableObjectSingleton<T>
+    public abstract class EZScriptableObjectSingleton<T> : ScriptableObject
+        where T : EZScriptableObjectSingleton<T>
     {
         public const string AssetFolderPath = "Assets/Resources";
 
