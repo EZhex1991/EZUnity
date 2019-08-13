@@ -10,16 +10,19 @@ namespace EZhex1991.EZUnity.MaterialAttribute
 {
     public class EZMinMaxSliderDrawer : MaterialPropertyDrawer
     {
+        public readonly bool fixedLimit;
         public float minLimit;
         public float maxLimit;
 
         public EZMinMaxSliderDrawer()
         {
-            minLimit = 0;
-            maxLimit = 1;
+            // limit will be retrived from zw component of the vector
+            // you can change limit on Debug(Inspector) Window
+            fixedLimit = false;
         }
         public EZMinMaxSliderDrawer(float min, float max)
         {
+            fixedLimit = true;
             minLimit = min;
             maxLimit = max;
         }
@@ -52,6 +55,19 @@ namespace EZhex1991.EZUnity.MaterialAttribute
 
             float unitWidth = position.width / 5; float margin = 5;
             Vector4 value = prop.vectorValue;
+            if (!fixedLimit)
+            {
+                if (value.z >= value.w)
+                {
+                    minLimit = 0;
+                    maxLimit = 1;
+                }
+                else
+                {
+                    minLimit = value.z;
+                    maxLimit = value.w;
+                }
+            }
             EditorGUI.showMixedValue = prop.hasMixedValue;
             EditorGUI.BeginChangeCheck();
 
