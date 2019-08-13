@@ -13,6 +13,7 @@ namespace EZhex1991.EZUnity.Playables
     {
         public ExposedReference<Transform> startPoint;
         public ExposedReference<Transform> endPoint;
+        [EZLockedFoldout]
         public EZTransformTweenBehaviour templateBehaviour = new EZTransformTweenBehaviour();
 
         public ClipCaps clipCaps { get { return ClipCaps.Blending | ClipCaps.Looping; } }

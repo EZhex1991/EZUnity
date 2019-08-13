@@ -10,6 +10,7 @@ namespace EZhex1991.EZUnity.Playables
 {
     public class EZMaterialPropertyClip : PlayableAsset
     {
+        [EZLockedFoldout]
         public EZMaterialPropertyBehaviour template = new EZMaterialPropertyBehaviour();
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject go)

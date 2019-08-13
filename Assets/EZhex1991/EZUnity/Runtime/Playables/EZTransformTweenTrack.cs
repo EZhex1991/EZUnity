@@ -13,6 +13,7 @@ namespace EZhex1991.EZUnity.Playables
     [TrackClipType(typeof(EZTransformTweenClip))]
     public class EZTransformTweenTrack : TrackAsset
     {
+        [EZLockedFoldout]
         public EZTransformTweenMixer mixerTemplate;
 
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
@@ -22,17 +23,9 @@ namespace EZhex1991.EZUnity.Playables
 
         public override void GatherProperties(PlayableDirector director, IPropertyCollector driver)
         {
-#if UNITY_EDITOR
             var binding = director.GetGenericBinding(this) as Transform;
             if (binding == null) return;
-            var so = new UnityEditor.SerializedObject(binding);
-            var iter = so.GetIterator();
-            while (iter.NextVisible(true))
-            {
-                if (iter.hasVisibleChildren) continue;
-                driver.AddFromName<Transform>(binding.gameObject, iter.propertyPath);
-            }
-#endif
+            driver.AddFromComponent(binding.gameObject, binding);
             base.GatherProperties(director, driver);
         }
     }
