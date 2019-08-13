@@ -51,15 +51,16 @@ namespace EZhex1991.EZUnity.AssetGenerator
             EditorGUILayout.LabelField("File Settings", EditorStyles.boldLabel);
             DrawFileSettings();
 
+            EditorGUI.BeginChangeCheck();
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Texture Settings", EditorStyles.boldLabel);
             DrawTextureSettings();
+            if (generator.previewAutoUpdate && EditorGUI.EndChangeCheck()) RefreshPreview();
 
             EditorGUILayout.Space();
             DrawGenerateButton();
 
             serializedObject.ApplyModifiedProperties();
-            if (generator.previewAutoUpdate && GUI.changed) RefreshPreview();
         }
         protected virtual void DrawFileSettings()
         {
