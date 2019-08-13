@@ -28,13 +28,13 @@ namespace EZhex1991.EZUnity.AssetGenerator
             {
                 for (int x = 0; x < texture.width; x++)
                 {
-                    float u1 = (x - 0.5f) / maxX;
-                    float u2 = (x + 0.5f) / maxX;
+                    float u1 = (x - 0.25f) / maxX;
+                    float u2 = (x + 0.25f) / maxX;
                     for (int y = 0; y < texture.height; y++)
                     {
                         int s1 = 0, s2 = 0;
-                        float v1 = (y - 0.5f) / maxY;
-                        float v2 = (y + 0.5f) / maxY;
+                        float v1 = (y - 0.25f) / maxY;
+                        float v2 = (y + 0.25f) / maxY;
                         if (waveShape.Evaluate(u1) > v1)
                         {
                             s1 = 1;
@@ -53,13 +53,13 @@ namespace EZhex1991.EZUnity.AssetGenerator
             {
                 for (int x = 0; x < texture.width; x++)
                 {
-                    float u1 = (x - 0.33f) / maxX;
-                    float u2 = (x + 0.33f) / maxX;
+                    float u1 = (x - 0.25f) / maxX;
+                    float u2 = (x + 0.25f) / maxX;
                     for (int y = 0; y < texture.height; y++)
                     {
                         int s1 = 0, s2 = 0, s3 = 0, s4 = 0;
-                        float v1 = (y - 0.33f) / maxY;
-                        float v2 = (y + 0.33f) / maxY;
+                        float v1 = (y - 0.25f) / maxY;
+                        float v2 = (y + 0.25f) / maxY;
                         if (waveShape.Evaluate(u1) > v1)
                         {
                             s1 = 1;
