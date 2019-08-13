@@ -55,12 +55,13 @@ namespace EZhex1991.EZUnity.AssetGenerator
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Texture Settings", EditorStyles.boldLabel);
             DrawTextureSettings();
-            if (generator.previewAutoUpdate && EditorGUI.EndChangeCheck()) RefreshPreview();
+            bool refreshPreview = EditorGUI.EndChangeCheck();
 
             EditorGUILayout.Space();
             DrawGenerateButton();
 
             serializedObject.ApplyModifiedProperties();
+            if (generator.previewAutoUpdate && refreshPreview) RefreshPreview();
         }
         protected virtual void DrawFileSettings()
         {
