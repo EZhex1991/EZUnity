@@ -67,7 +67,6 @@ namespace EZhex1991.EZUnity.AssetGenerator
         }
         protected virtual void OnTextureCreated(TextureImporter importer)
         {
-            importer.mipmapEnabled = false;
             importer.isReadable = true;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
         }
