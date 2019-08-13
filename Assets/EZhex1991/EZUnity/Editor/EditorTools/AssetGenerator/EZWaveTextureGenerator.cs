@@ -91,7 +91,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
                     for (int y = 0; y < texture.height; y++)
                     {
                         float v = (float)y / maxY;
-                        texture.SetPixel(x, y, v > value ? colorUp : colorDown);
+                        texture.SetPixel(x, y, v >= value ? colorUp : colorDown);
                     }
                 }
             }
