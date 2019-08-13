@@ -9,7 +9,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CustomEditor(typeof(EZTextureCombiner))]
-    public class EZTextureCombinerEditor : _EZTextureGeneratorEditor
+    public class EZTextureCombinerEditor : EZTextureGeneratorEditor
     {
         private SerializedProperty m_CellSize;
         private SerializedProperty m_Textures;

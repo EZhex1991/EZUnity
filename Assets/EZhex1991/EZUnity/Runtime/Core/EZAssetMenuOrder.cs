@@ -31,6 +31,7 @@ namespace EZhex1991.EZUnity
         EZTextureChannelModifier,
         EZTextureCombiner,
         EZGradientGenerator,
+        EZWaveTextureGenerator,
         EZNoiseGenerator,
         EZPerlinNoiseGenerator,
 

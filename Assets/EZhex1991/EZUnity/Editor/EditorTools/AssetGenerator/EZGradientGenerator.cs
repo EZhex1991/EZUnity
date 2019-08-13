@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZGradientGenerator", menuName = "EZUnity/EZGradientGenerator", order = (int)EZAssetMenuOrder.EZGradientGenerator)]
-    public class EZGradientGenerator : _EZTextureGenerator
+    public class EZGradientGenerator : EZTextureGenerator
     {
         public static readonly float iSqrt2 = 1 / Mathf.Sqrt(2);
 
@@ -30,6 +30,9 @@ namespace EZhex1991.EZUnity.AssetGenerator
         public delegate float Sampler(float x, float y);
 
         public Gradient gradient = new Gradient();
+        [EZCurveRect(0, 0, 1, 1)]
+        public AnimationCurve gradientCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
         public CoordinateMode coordinateMode = CoordinateMode.AdditiveXY;
         [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve coordinateX = AnimationCurve.Linear(0, 0, 1, 1);
@@ -83,7 +86,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
                             time = sampler(1 - coordY, coordX);
                             break;
                     }
-                    texture.SetPixel(x, y, gradient.Evaluate(time));
+                    texture.SetPixel(x, y, gradient.Evaluate(gradientCurve.Evaluate(time)));
                 }
             }
         }

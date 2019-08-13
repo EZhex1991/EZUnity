@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZPerlinNoiseGenerator", menuName = "EZUnity/EZPerlinNoiseGenerator", order = (int)EZAssetMenuOrder.EZPerlinNoiseGenerator)]
-    public class EZPerlinNoiseGenerator : _EZTextureGenerator
+    public class EZPerlinNoiseGenerator : EZTextureGenerator
     {
         [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve outputCurve = AnimationCurve.Linear(0, 0, 1, 1);

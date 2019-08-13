@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZTextureCombiner", menuName = "EZUnity/EZTextureCombiner", order = (int)EZAssetMenuOrder.EZTextureCombiner)]
-    public class EZTextureCombiner : _EZTextureGenerator
+    public class EZTextureCombiner : EZTextureGenerator
     {
         public Vector2Int cellSize = new Vector2Int(2, 2);
         public Texture2D[] textures = new Texture2D[36];

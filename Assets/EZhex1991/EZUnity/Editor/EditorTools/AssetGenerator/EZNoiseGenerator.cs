@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EZhex1991.EZUnity.AssetGenerator
 {
     [CreateAssetMenu(fileName = "EZNoiseGenerator", menuName = "EZUnity/EZNoiseGenerator", order = (int)EZAssetMenuOrder.EZNoiseGenerator)]
-    public class EZNoiseGenerator : _EZTextureGenerator
+    public class EZNoiseGenerator : EZTextureGenerator
     {
         public bool colored;
         [EZCurveRect(0, 0, 1, 1)]

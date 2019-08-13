@@ -8,38 +8,31 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.AssetGenerator
 {
-    [CustomEditor(typeof(_EZTextureGenerator), true)]
-    public class _EZTextureGeneratorEditor : Editor
+    [CustomEditor(typeof(EZTextureGenerator), true)]
+    public class EZTextureGeneratorEditor : Editor
     {
-        protected _EZTextureGenerator generator;
+        protected EZTextureGenerator generator;
+        protected Texture2D previewTexture;
 
         protected SerializedProperty resolution;
         protected SerializedProperty textureFormat;
         protected SerializedProperty textureEncoding;
         protected SerializedProperty targetTexture;
 
-        protected virtual Vector2Int previewResolution { get { return new Vector2Int(128, 128); } }
-        private Texture2D m_PreviewTexture;
-        protected Texture2D previewTexture
-        {
-            get
-            {
-                if (m_PreviewTexture == null)
-                    m_PreviewTexture = new Texture2D(previewResolution.x, previewResolution.y, TextureFormat.RGBA32, false);
-                return m_PreviewTexture;
-            }
-        }
-
         protected void OnEnable()
         {
-            generator = target as _EZTextureGenerator;
+            generator = target as EZTextureGenerator;
+            previewTexture = new Texture2D(generator.previewResolution.x, generator.previewResolution.y, TextureFormat.RGBA32, false);
             resolution = serializedObject.FindProperty("resolution");
             textureFormat = serializedObject.FindProperty("textureFormat");
             textureEncoding = serializedObject.FindProperty("textureEncoding");
             targetTexture = serializedObject.FindProperty("targetTexture");
             GetProperties();
-            RefreshPreview();
-            Undo.undoRedoPerformed += RefreshPreview;
+            if (generator.previewAutoUpdate)
+            {
+                RefreshPreview();
+                Undo.undoRedoPerformed += RefreshPreview;
+            }
         }
         protected virtual void GetProperties()
         {
@@ -66,7 +59,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
             DrawGenerateButton();
 
             serializedObject.ApplyModifiedProperties();
-            if (GUI.changed) RefreshPreview();
+            if (generator.previewAutoUpdate && GUI.changed) RefreshPreview();
         }
         protected virtual void DrawFileSettings()
         {
@@ -91,8 +84,16 @@ namespace EZhex1991.EZUnity.AssetGenerator
                 EditorGUILayout.PropertyField(iterator);
             }
         }
+
         protected virtual void DrawGenerateButton()
         {
+            if (!generator.previewAutoUpdate)
+            {
+                if (GUILayout.Button("Refresh Preview"))
+                {
+                    RefreshPreview();
+                }
+            }
             if (GUILayout.Button("Generate"))
             {
                 generator.GenerateTexture();

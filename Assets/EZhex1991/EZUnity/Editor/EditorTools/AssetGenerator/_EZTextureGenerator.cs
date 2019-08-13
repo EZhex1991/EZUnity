@@ -9,13 +9,16 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.AssetGenerator
 {
-    public abstract class _EZTextureGenerator : ScriptableObject
+    public abstract class EZTextureGenerator : ScriptableObject
     {
         public Vector2Int resolution = new Vector2Int(256, 256);
         public TextureFormat textureFormat = TextureFormat.RGBA32;
         public TextureEncoding textureEncoding = TextureEncoding.PNG;
         [UnityEngine.Serialization.FormerlySerializedAs("textureReference")]
         public Texture2D targetTexture;
+
+        public virtual bool previewAutoUpdate { get { return true; } }
+        public virtual Vector2Int previewResolution { get { return new Vector2Int(256, 256); } }
 
         // Don't forget to call texture.Apply()
         public abstract void ApplyToTexture(Texture2D texture);
