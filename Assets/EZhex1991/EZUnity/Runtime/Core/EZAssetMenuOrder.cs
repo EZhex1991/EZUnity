@@ -30,10 +30,10 @@ namespace EZhex1991.EZUnity
         EZPlaneGenerator,
         EZTextureChannelModifier,
         EZTextureCombiner,
-        EZGradientGenerator,
+        EZGradientTextureGenerator,
         EZWaveTextureGenerator,
-        EZNoiseGenerator,
-        EZPerlinNoiseGenerator,
+        EZNoiseTextureGenerator,
+        EZPerlinNoiseTextureGenerator,
 
         /// <summary>
         /// Tools
