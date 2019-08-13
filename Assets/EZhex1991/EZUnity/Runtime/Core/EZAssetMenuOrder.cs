@@ -28,12 +28,14 @@ namespace EZhex1991.EZUnity
         /// </summary>
         _Section_2 = _Section_0 + 200,
         EZPlaneGenerator,
-        EZTextureChannelModifier,
-        EZTextureCombiner,
         EZGradientTextureGenerator,
         EZWaveTextureGenerator,
+        EZColorLerpTextureGenerator,
         EZNoiseTextureGenerator,
         EZPerlinNoiseTextureGenerator,
+        EZTextureChannelModifier,
+        EZTextureCombiner,
+        EZTextureAntialiasing,
 
         /// <summary>
         /// Tools
