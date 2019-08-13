@@ -110,7 +110,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
         }
         public void RefreshPreview()
         {
-            generator.ApplyToTexture(previewTexture);
+            generator.SetTexturePixels(previewTexture);
             previewTexture.Apply();
             Repaint();
         }

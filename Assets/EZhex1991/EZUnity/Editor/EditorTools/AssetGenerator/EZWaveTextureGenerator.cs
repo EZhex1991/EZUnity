@@ -20,7 +20,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
 
         public Antialiasing antialiasing = Antialiasing.None;
 
-        public override void ApplyToTexture(Texture2D texture)
+        public override void SetTexturePixels(Texture2D texture)
         {
             int maxX = texture.width - 1;
             int maxY = texture.height - 1;
@@ -95,8 +95,6 @@ namespace EZhex1991.EZUnity.AssetGenerator
                     }
                 }
             }
-
-            texture.Apply();
         }
     }
 }

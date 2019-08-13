@@ -14,7 +14,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
         [EZCurveRect(0, 0, 1, 1)]
         public AnimationCurve outputCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        public override void ApplyToTexture(Texture2D texture)
+        public override void SetTexturePixels(Texture2D texture)
         {
             for (int x = 0; x < texture.width; x++)
             {

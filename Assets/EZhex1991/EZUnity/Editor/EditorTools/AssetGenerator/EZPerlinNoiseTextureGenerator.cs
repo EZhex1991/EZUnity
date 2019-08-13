@@ -15,7 +15,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
 
         public Vector2 density = new Vector2(5, 5);
 
-        public override void ApplyToTexture(Texture2D texture)
+        public override void SetTexturePixels(Texture2D texture)
         {
             for (int x = 0; x < texture.width; x++)
             {

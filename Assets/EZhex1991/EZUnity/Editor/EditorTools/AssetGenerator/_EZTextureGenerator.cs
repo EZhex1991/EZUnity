@@ -21,12 +21,12 @@ namespace EZhex1991.EZUnity.AssetGenerator
         public virtual Vector2Int previewResolution { get { return new Vector2Int(256, 256); } }
 
         // Don't forget to call texture.Apply()
-        public abstract void ApplyToTexture(Texture2D texture);
+        public abstract void SetTexturePixels(Texture2D texture);
 
         public byte[] GetTextureData(Vector2Int resolution, TextureFormat textureFormat)
         {
             Texture2D texture = new Texture2D(resolution.x, resolution.y, textureFormat, false);
-            ApplyToTexture(texture);
+            SetTexturePixels(texture);
             texture.Apply();
             byte[] bytes = texture.Encode(textureEncoding);
             DestroyImmediate(texture);

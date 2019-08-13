@@ -40,7 +40,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
         public AnimationCurve coordinateY = AnimationCurve.Linear(0, 0, 1, 1);
         public Rotation rotation = Rotation.None;
 
-        public override void ApplyToTexture(Texture2D texture)
+        public override void SetTexturePixels(Texture2D texture)
         {
             switch (coordinateMode)
             {

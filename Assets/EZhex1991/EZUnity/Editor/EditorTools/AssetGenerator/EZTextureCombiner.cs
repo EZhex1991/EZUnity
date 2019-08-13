@@ -13,7 +13,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
         public Vector2Int cellSize = new Vector2Int(2, 2);
         public Texture2D[] textures = new Texture2D[36];
 
-        public override void ApplyToTexture(Texture2D texture)
+        public override void SetTexturePixels(Texture2D texture)
         {
             float subTextureWidth = (float)texture.width / cellSize.x;
             float subTextureheight = (float)texture.height / cellSize.y;
