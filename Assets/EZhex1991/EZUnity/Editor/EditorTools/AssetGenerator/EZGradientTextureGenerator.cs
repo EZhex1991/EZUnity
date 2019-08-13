@@ -92,7 +92,7 @@ namespace EZhex1991.EZUnity.AssetGenerator
         }
         private float SamplerAdditiveXY(float x, float y)
         {
-            return (x + y) * 0.5f;
+            return x + y;
         }
         private float SamplerMultiplyXY(float x, float y)
         {
