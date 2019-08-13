@@ -8,13 +8,13 @@ using UnityEngine.Playables;
 
 namespace EZhex1991.EZUnity.Playables
 {
-    public class EZMaterialClip : PlayableAsset
+    public class EZMaterialPropertyClip : PlayableAsset
     {
-        public EZMaterialBehaviour template = new EZMaterialBehaviour();
+        public EZMaterialPropertyBehaviour template = new EZMaterialPropertyBehaviour();
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
         {
-            return ScriptPlayable<EZMaterialBehaviour>.Create(graph, template);
+            return ScriptPlayable<EZMaterialPropertyBehaviour>.Create(graph, template);
         }
     }
 }
