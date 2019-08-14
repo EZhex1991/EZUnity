@@ -12,9 +12,9 @@ namespace EZhex1991.EZUnity
     {
         public enum CheckResult
         {
-            Unknow = 0,
-            Template = 1,
-            Script = 2,
+            Unknown,
+            Template,
+            Script,
         }
 
         private static EZScriptSettings ezScriptTemplate { get { return EZScriptSettings.Instance; } }
@@ -44,7 +44,7 @@ namespace EZhex1991.EZUnity
         {
             string fileName = Path.GetFileName(filePath.ToLower());
             string[] info = fileName.Split('-');
-            if (info.Length == 3 && Regex.IsMatch(info[0], @"^[0-9]{1,2}$"))
+            if (info.Length == 3 && Regex.IsMatch(info[0], @"^[0-9]+$"))
             {
                 foreach (string ext in ezScriptTemplate.extensionList)
                 {
@@ -55,7 +55,7 @@ namespace EZhex1991.EZUnity
             {
                 if (fileName.EndsWith(ext)) return CheckResult.Script;
             }
-            return CheckResult.Unknow;
+            return CheckResult.Unknown;
         }
     }
 }

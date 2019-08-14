@@ -156,6 +156,17 @@ namespace EZhex1991.EZUnity
                     }
                 }
             }
+            if (GUILayout.Button("Open Template Folder"))
+            {
+                try
+                {
+                    Application.OpenURL(UnityScriptTemplatesDirPath);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
         }
         protected void DrawDeleteTemplateButton(string tplName)
         {
@@ -184,8 +195,10 @@ namespace EZhex1991.EZUnity
         private void GetUnityTemplates()
         {
             allTemplates = (from template in Directory.GetFiles(UnityScriptTemplatesDirPath, "*.txt", SearchOption.TopDirectoryOnly)
-                            where true
-                            select Path.GetFileName(template)).ToArray();
+                            where EZScriptProcessor.CheckTemplate(template) == EZScriptProcessor.CheckResult.Template
+                            select Path.GetFileName(template))
+                            .OrderBy(fileName => int.Parse(fileName.Split('-')[0]))
+                            .ToArray();
         }
     }
 }
