@@ -70,16 +70,8 @@ namespace EZhex1991.EZUnity.MaterialAttribute
                 Vector4 value = prop.vectorValue;
                 if (!fixedLimit)
                 {
-                    if (value.z >= value.w)
-                    {
-                        minLimit = 0;
-                        maxLimit = 1;
-                    }
-                    else
-                    {
-                        minLimit = value.z;
-                        maxLimit = value.w;
-                    }
+                    minLimit = value.z;
+                    maxLimit = value.w;
                 }
                 EditorGUI.showMixedValue = prop.hasMixedValue;
                 EditorGUI.BeginChangeCheck();
