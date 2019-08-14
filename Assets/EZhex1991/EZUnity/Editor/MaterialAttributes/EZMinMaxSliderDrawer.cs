@@ -11,6 +11,7 @@ namespace EZhex1991.EZUnity.MaterialAttribute
     public class EZMinMaxSliderDrawer : MaterialPropertyDrawer
     {
         public readonly bool fixedLimit;
+        public bool showAsVectorValue;
         public float minLimit;
         public float maxLimit;
 
@@ -48,44 +49,57 @@ namespace EZhex1991.EZUnity.MaterialAttribute
                 return;
             }
 
+
             float oldLabelWidth = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 0;
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), new GUIContent(label));
             EditorGUIUtility.labelWidth = oldLabelWidth;
 
-            float unitWidth = position.width / 5; float margin = 5;
-            Vector4 value = prop.vectorValue;
             if (!fixedLimit)
             {
-                if (value.z >= value.w)
-                {
-                    minLimit = 0;
-                    maxLimit = 1;
-                }
-                else
-                {
-                    minLimit = value.z;
-                    maxLimit = value.w;
-                }
+                showAsVectorValue = EditorGUI.Foldout(new Rect(position) { width = 0 }, showAsVectorValue, GUIContent.none, false);
             }
-            EditorGUI.showMixedValue = prop.hasMixedValue;
-            EditorGUI.BeginChangeCheck();
 
-            position.width = unitWidth - margin;
-            value.x = EditorGUI.FloatField(position, value.x);
-
-            position.x += position.width + margin;
-            position.width = unitWidth * 3;
-            EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, minLimit, maxLimit);
-
-            position.x += position.width + margin;
-            position.width = unitWidth - margin;
-            value.y = EditorGUI.FloatField(position, value.y);
-
-            EditorGUI.showMixedValue = false;
-            if (EditorGUI.EndChangeCheck())
+            if (showAsVectorValue)
             {
-                prop.vectorValue = value;
+                editor.VectorProperty(position, prop, "");
+            }
+            else
+            {
+                float unitWidth = position.width / 5; float margin = 5;
+                Vector4 value = prop.vectorValue;
+                if (!fixedLimit)
+                {
+                    if (value.z >= value.w)
+                    {
+                        minLimit = 0;
+                        maxLimit = 1;
+                    }
+                    else
+                    {
+                        minLimit = value.z;
+                        maxLimit = value.w;
+                    }
+                }
+                EditorGUI.showMixedValue = prop.hasMixedValue;
+                EditorGUI.BeginChangeCheck();
+
+                position.width = unitWidth - margin;
+                value.x = EditorGUI.FloatField(position, value.x);
+
+                position.x += position.width + margin;
+                position.width = unitWidth * 3;
+                EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, minLimit, maxLimit);
+
+                position.x += position.width + margin;
+                position.width = unitWidth - margin;
+                value.y = EditorGUI.FloatField(position, value.y);
+
+                EditorGUI.showMixedValue = false;
+                if (EditorGUI.EndChangeCheck())
+                {
+                    prop.vectorValue = value;
+                }
             }
         }
     }
