@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity.MaterialAttribute
+namespace EZhex1991.EZUnity.ShaderAttributes
 {
     public class EZMinMaxSliderDrawer : MaterialPropertyDrawer
     {
