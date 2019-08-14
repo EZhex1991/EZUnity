@@ -8,14 +8,9 @@ namespace EZhex1991.EZUnity
     public enum EZMenuItemOrder
     {
         /// <summary>
-        /// Default MenuItem Order
-        /// </summary>
-        _Section_0 = 10000,
-
-        /// <summary>
         /// Application
         /// </summary>
-        _Section_1 = _Section_0 + 100,
+        _Section_0 = 10000,
         ApplicationSettings,
         OpenPersistentFolder,
         ClearPersistentFolder,
@@ -24,7 +19,7 @@ namespace EZhex1991.EZUnity
         /// <summary>
         /// Asset Manager
         /// </summary>
-        _Section_2 = _Section_0 + 200,
+        _Section_1 = _Section_0 + 100,
         SaveAssets,
         RefreshAssetDatabase,
         Renamer,
@@ -32,7 +27,7 @@ namespace EZhex1991.EZUnity
         /// <summary>
         /// Viewer
         /// </summary>
-        _Section_3 = _Section_0 + 300,
+        _Section_2 = _Section_0 + 200,
         AssetBundleManager,
         AssetReferenceViewer,
         CorrespondingObjectViewer,
@@ -41,11 +36,13 @@ namespace EZhex1991.EZUnity
         /// <summary>
         /// Helper
         /// </summary>
-        _Section_4 = _Section_0 + 400,
+        _Section_3 = _Section_0 + 300,
         GuidGenerator,
         RegexTester,
         ColorBlender,
         TimePanel,
+
+        _Section_4 = _Section_0 + 400,
 
         _Section_5 = _Section_0 + 500,
 
