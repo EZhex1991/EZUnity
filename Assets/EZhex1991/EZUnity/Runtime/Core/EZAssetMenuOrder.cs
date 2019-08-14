@@ -7,9 +7,6 @@ namespace EZhex1991.EZUnity
 {
     public enum EZAssetMenuOrder
     {
-        /// <summary>
-        /// Collection Asset
-        /// </summary>
         _Section_0 = 0,
         EZListAsset_String,
         EZListAsset_Object,
@@ -18,9 +15,6 @@ namespace EZhex1991.EZUnity
         EZMapAsset_String_Object,
         EZMapAsset_String_TextCollection,
 
-        /// <summary>
-        /// Asset Generator
-        /// </summary>
         _Section_1 = _Section_0 + 100,
         EZPlaneGenerator,
         EZGradientTextureGenerator,
@@ -32,23 +26,14 @@ namespace EZhex1991.EZUnity
         EZTextureCombiner,
         EZTextureAntialiasing,
 
-        /// <summary>
-        /// Tools
-        /// </summary>
         _Section_2 = _Section_0 + 200,
         EZImageCapture,
         EZScriptStatistics,
 
-        /// <summary>
-        /// Builder
-        /// </summary>
         _Section_3 = _Section_0 + 300,
         EZBundleBuilder,
         EZPlayerBuilder,
 
-        /// <summary>
-        /// Asset Manager
-        /// </summary>
         _Section_4 = _Section_0 + 400,
         EZAssetListRenamer,
 
