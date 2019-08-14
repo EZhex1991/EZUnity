@@ -7,7 +7,7 @@ namespace EZhex1991.EZUnity
 {
     public enum EZAssetMenuOrder
     {
-        _Section_0 = 0,
+        _Section_0 = 10000,
         EZListAsset_String,
         EZListAsset_Object,
         EZMapAsset_String_String,
