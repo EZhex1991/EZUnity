@@ -8,12 +8,8 @@ namespace EZhex1991.EZUnity
     public enum EZAssetMenuOrder
     {
         _Section_0 = 10000,
-        EZListAsset_String,
-        EZListAsset_Object,
-        EZMapAsset_String_String,
-        EZMapAsset_String_Int,
-        EZMapAsset_String_Object,
-        EZMapAsset_String_TextCollection,
+        EZBundleBuilder,
+        EZPlayerBuilder,
 
         _Section_1 = _Section_0 + 100,
         EZPlaneGenerator,
@@ -31,8 +27,12 @@ namespace EZhex1991.EZUnity
         EZScriptStatistics,
 
         _Section_3 = _Section_0 + 300,
-        EZBundleBuilder,
-        EZPlayerBuilder,
+        EZListAsset_String,
+        EZListAsset_Object,
+        EZMapAsset_String_String,
+        EZMapAsset_String_Int,
+        EZMapAsset_String_Object,
+        EZMapAsset_String_TextCollection,
 
         _Section_4 = _Section_0 + 400,
         EZAssetListRenamer,
