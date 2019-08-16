@@ -12,7 +12,7 @@ Shader "Hidden/EZUnity/Effects/EZDepthGradient" {
 		[HDR] _ColorFar ("Color Far", Color) = (0.9, 1, 1, 1)
 
 		[PowerSlider(8)] _GradientPower ("Gradient Power", Range(0.1, 128)) = 1
-		_GradientSoftness ("Gradient Softness", Vector) = (0, 1, 1, 1)
+		[EZMinMaxSlider(0, 1)] _GradientSoftness ("Gradient Softness", Vector) = (0, 1, 0, 1)
 	}
 	CustomEditor "EZDepthGradientShaderGUI"
 	SubShader {
