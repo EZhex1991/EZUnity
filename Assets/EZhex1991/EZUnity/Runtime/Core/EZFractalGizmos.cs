@@ -11,13 +11,13 @@ namespace EZhex1991.EZUnity
     {
         public enum Shape { KochSnowFlake, FlowSnake, SierpinskiTriangle, FractalTree, FractalTree2, FractalRect, FractalTriangle }
 
-        private static float sqrt3 = Mathf.Sqrt(3f);
-        private static float sqrt5 = Mathf.Sqrt(5f);
-        private static float sqrt7 = Mathf.Sqrt(7f);
+        private static readonly float sqrt3 = Mathf.Sqrt(3f);
+        private static readonly float sqrt5 = Mathf.Sqrt(5f);
+        private static readonly float sqrt7 = Mathf.Sqrt(7f);
 
-        private static float d3 = 1 / 3f;
-        private static float d7 = 1 / 7f;
-        private static float d9 = 1 / 9f;
+        private static readonly float d3 = 1 / 3f;
+        private static readonly float d7 = 1 / 7f;
+        private static readonly float d9 = 1 / 9f;
 
         private static Matrix4x4 scaleMatrix_d3 = Matrix4x4.Scale(Vector3.one * d3);
         private static Matrix4x4 scaleMatrix_d2 = Matrix4x4.Scale(Vector3.one * 0.5f);
