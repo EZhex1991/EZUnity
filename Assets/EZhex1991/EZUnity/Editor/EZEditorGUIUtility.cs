@@ -143,14 +143,5 @@ namespace EZhex1991.EZUnity
             });
             return menu;
         }
-
-
-        [System.Obsolete]
-        public static Rect CalcReorderableListHeaderRect(Rect rect, bool draggable = true)
-        {
-            float indentWidth = draggable ? (dragHandleWidth + reorderableListPrefixWidth) : reorderableListPrefixWidth;
-            rect.x += indentWidth; rect.width -= indentWidth;
-            return rect;
-        }
     }
 }
