@@ -10,8 +10,8 @@ using UnityEngine.Timeline;
 namespace EZhex1991.EZUnity.Playables
 {
     [TrackBindingType(typeof(Renderer))]
-    [TrackClipType(typeof(EZMaterialPropertyClip))]
-    public class EZMaterialPropertyTrack : TrackAsset
+    [TrackClipType(typeof(EZMaterialPropertyBlockClip))]
+    public class EZMaterialPropertyBlockTrack : TrackAsset
     {
         public override void GatherProperties(PlayableDirector director, IPropertyCollector driver)
         {

@@ -10,11 +10,11 @@ using UnityEngine.Playables;
 namespace EZhex1991.EZUnity.Playables
 {
     [Serializable]
-    public class EZMaterialPropertyBehaviour : PlayableBehaviour
+    public class EZMaterialPropertyBlockBehaviour : PlayableBehaviour
     {
-        public EZMaterialFloatClipInfo[] floatClips;
-        public EZMaterialColorClipInfo[] colorClips;
-        public EZMaterialVectorClipInfo[] vectorClips;
+        public EZMaterialFloatRange[] floatRanges;
+        public EZMaterialColorRange[] colorRanges;
+        public EZMaterialVectorRange[] vectorRanges;
         public AnimationCurve curve = AnimationCurve.Linear(0, 0, 1, 1);
 
         public float process { get; set; }
@@ -41,17 +41,18 @@ namespace EZhex1991.EZUnity.Playables
             Renderer renderer = playerData as Renderer;
             if (renderer == null) return;
 
-            for (int i = 0; i < floatClips.Length; i++)
+            renderer.GetPropertyBlock(propertyBlock);
+            for (int i = 0; i < floatRanges.Length; i++)
             {
-                floatClips[i].SetBlockValue(propertyBlock, process);
+                floatRanges[i].SetBlockValue(propertyBlock, process);
             }
-            for (int i = 0; i < colorClips.Length; i++)
+            for (int i = 0; i < colorRanges.Length; i++)
             {
-                colorClips[i].SetBlockValue(propertyBlock, process);
+                colorRanges[i].SetBlockValue(propertyBlock, process);
             }
-            for (int i = 0; i < vectorClips.Length; i++)
+            for (int i = 0; i < vectorRanges.Length; i++)
             {
-                vectorClips[i].SetBlockValue(propertyBlock, process);
+                vectorRanges[i].SetBlockValue(propertyBlock, process);
             }
             renderer.SetPropertyBlock(propertyBlock);
         }

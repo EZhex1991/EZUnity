@@ -8,14 +8,14 @@ using UnityEngine.Playables;
 
 namespace EZhex1991.EZUnity.Playables
 {
-    public class EZMaterialPropertyClip : PlayableAsset
+    public class EZMaterialPropertyBlockClip : PlayableAsset
     {
         [EZLockedFoldout]
-        public EZMaterialPropertyBehaviour template = new EZMaterialPropertyBehaviour();
+        public EZMaterialPropertyBlockBehaviour template = new EZMaterialPropertyBlockBehaviour();
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
         {
-            return ScriptPlayable<EZMaterialPropertyBehaviour>.Create(graph, template);
+            return ScriptPlayable<EZMaterialPropertyBlockBehaviour>.Create(graph, template);
         }
     }
 }
