@@ -37,7 +37,9 @@ namespace EZhex1991.EZUnity.Playables
     [Serializable]
     public class EZMaterialVectorRange : EZMaterialPropertyRange<Vector4>
     {
+        [EZSingleLineVector4]
         public Vector4 startValue;
+        [EZSingleLineVector4]
         public Vector4 endValue;
 
         public override Vector4 GetValue(float time)
