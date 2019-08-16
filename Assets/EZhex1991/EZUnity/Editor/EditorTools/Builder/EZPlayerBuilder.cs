@@ -31,13 +31,8 @@ namespace EZhex1991.EZUnity.Builder
                 case BuildTarget.Android: return BuildTargetGroup.Android;
                 case BuildTarget.WebGL: return BuildTargetGroup.WebGL;
                 case BuildTarget.WSAPlayer: return BuildTargetGroup.WSA;
-                case BuildTarget.Tizen: return BuildTargetGroup.Tizen;
-                case BuildTarget.PSP2: return BuildTargetGroup.PSP2;
                 case BuildTarget.PS4: return BuildTargetGroup.PS4;
-                case BuildTarget.PSM: return BuildTargetGroup.PSM;
                 case BuildTarget.XboxOne: return BuildTargetGroup.XboxOne;
-                case BuildTarget.N3DS: return BuildTargetGroup.N3DS;
-                case BuildTarget.WiiU: return BuildTargetGroup.WiiU;
                 case BuildTarget.tvOS: return BuildTargetGroup.tvOS;
                 case BuildTarget.Switch: return BuildTargetGroup.Switch;
                 default: return BuildTargetGroup.Unknown;
