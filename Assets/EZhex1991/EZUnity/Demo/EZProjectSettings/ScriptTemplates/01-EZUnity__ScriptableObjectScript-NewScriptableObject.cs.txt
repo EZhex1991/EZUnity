@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace #NAMESPACE#
 {
     [CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "EZUnity/#SCRIPTNAME#", order = (int)EZAssetMenuOrder._Section_0)]
     public class #SCRIPTNAME# : ScriptableObject

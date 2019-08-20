@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace #NAMESPACE#
 {
     public class #SCRIPTNAME# : MonoBehaviour
     {
