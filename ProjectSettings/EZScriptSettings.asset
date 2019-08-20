@@ -23,6 +23,10 @@
             {
                 "Key": "#AUTHORNAME#",
                 "Value": "ezhex1991@outlook.com"
+            },
+            {
+                "Key": "#NAMESPACE#",
+                "Value": "EZhex1991"
             }
         ]
     }
