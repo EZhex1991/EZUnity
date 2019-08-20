@@ -4,6 +4,7 @@
 
 - [EZPhysicsBone](https://github.com/EZhex1991/EZPhysicsBone): 动态骨骼。支持所有碰撞体；独立的材质"EZPhysicsBoneMaterial"存放参数，重用度高；代码可读性强；碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展。
 - [EZAnimation](https://github.com/EZhex1991/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
+- EZTextureProcessor: 参数化图片生成工具，暂不单独建立repo。
 
 ## 功能菜单（EZUnity/..）
 
@@ -29,17 +30,6 @@ Unity2018.3以上版本在ProjectSettings窗口中，**低版本在Preferences�
   - EZMode: 偏向目录结构管理，设置bundle名称、路径和文件搜索条件去进行build。
   - Manager Mode: 偏向单个资源设置，会读取当前项目中Inspector中对单个资源的bundle设置。
 - EZScriptStatistics: 用来统计代码量的工具，可以通过正则式来对代码文件进行分类统计，需要预先对代码模板进行设置。通过指定IncludePaths、ExcludePaths和正则式匹配来统计代码
-
-## 资源生成器 ([Asset/Create/EZUnity/EZAssetGenerator/...](Assets/EZhex1991/EZUnity/Demo/EZAssetGenerator/README.md))
-
-- EZMeshGenerator:
-  - EZPlaneGenerator: 用来生成自定义平面网格的工具
-- EZTextureGenerator:
-  - EZGradientGenerator: 利用渐变来生成图片的工具，配合XY轴的曲线可以生成很多复杂图案
-  - EZNoiseGenerator: 噪点图片生成工具
-  - EZPerlinNoiseGenerator: 柏林噪声图片生成工具
-  - EZTextureChannelModifier: 图片通道调整工具
-  - EZTextureCombiner: 图片合并工具
 
 ## 一些比较有意思的Shader ([Materials](Assets/EZhex1991/EZUnity/Demo/Materials/README.md))
 
