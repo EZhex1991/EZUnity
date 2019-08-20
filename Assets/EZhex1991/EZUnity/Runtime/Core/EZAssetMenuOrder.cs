@@ -12,21 +12,10 @@ namespace EZhex1991.EZUnity
         EZPlayerBuilder,
 
         _Section_1 = _Section_0 + 100,
-        EZPlaneGenerator,
-        EZGradientTextureGenerator,
-        EZWaveTextureGenerator,
-        EZColorLerpTextureGenerator,
-        EZNoiseTextureGenerator,
-        EZPerlinNoiseTextureGenerator,
-        EZTextureChannelModifier,
-        EZTextureCombiner,
-        EZTextureAntialiasing,
-
-        _Section_2 = _Section_0 + 200,
         EZImageCapture,
         EZScriptStatistics,
 
-        _Section_3 = _Section_0 + 300,
+        _Section_2 = _Section_0 + 200,
         EZListAsset_String,
         EZListAsset_Object,
         EZMapAsset_String_String,
@@ -34,8 +23,10 @@ namespace EZhex1991.EZUnity
         EZMapAsset_String_Object,
         EZMapAsset_String_TextCollection,
 
-        _Section_4 = _Section_0 + 400,
+        _Section_3 = _Section_0 + 300,
         EZAssetListRenamer,
+
+        _Section_4 = _Section_0 + 400,
 
         _Section_5 = _Section_0 + 500,
 
