@@ -1,9 +1,8 @@
-/*
- * Author:      ezhex1991@outlook.com
- * CreateTime:  4/5/2017 12:57:17 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-04-05 12:57:17
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using UnityEngine;
 using XLua;
 

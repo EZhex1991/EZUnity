@@ -1,13 +1,10 @@
-/*
- * Author:      ezhex1991@outlook.com
- * CreateTime:  5/23/2017 6:20:26 PM
- * Description:
- * 
-*/
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-05-23 18:20:26
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using System;
 using System.Collections;
-using System.IO;
-using UnityEngine;
 using XLua;
 
 namespace EZhex1991.EZUnity.XLuaExample

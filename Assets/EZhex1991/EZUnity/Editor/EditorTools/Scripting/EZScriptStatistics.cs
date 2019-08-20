@@ -25,6 +25,8 @@ namespace EZhex1991.EZUnity
 
         public string resultTime;
         public List<Contributor> result = new List<Contributor>();
+
+        public bool showAsset;
     }
     [Serializable]
     public class ScriptInfo

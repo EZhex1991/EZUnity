@@ -1,9 +1,8 @@
-﻿/*
- * Author:      #AUTHORNAME#
- * CreateTime:  #CREATETIME#
- * Description:
- * 
-*/
+﻿/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2018-10-11 13:14:44
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
 using System.Collections;
 
 namespace EZhex1991.EZUnity.XLuaExample

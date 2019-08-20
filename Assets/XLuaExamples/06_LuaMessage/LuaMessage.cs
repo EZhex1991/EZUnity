@@ -1,10 +1,11 @@
-/*
- * Author:      ezhex1991@outlook.com
- * CreateTime:  9/26/2017 5:19:35 PM
- * Description:
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2017-09-26 17:19:35
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ * 
  * xlua原LuaBehaviour只是样例，这个LuaMessage为了防止重名，但仍然是！示例！
  * 全部以event方式由Unity的Message驱动，不会用delegate和event的见上一个例子
-*/
+ */
 using UnityEngine;
 
 namespace EZhex1991.EZUnity.XLuaExample

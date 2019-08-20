@@ -17,8 +17,6 @@ namespace EZhex1991.EZUnity
     [CustomEditor(typeof(EZScriptStatistics))]
     public class EZScriptStatisticsEditor : Editor
     {
-        private static bool showAsAsset;
-
         SerializedProperty m_FilePatterns;
         SerializedProperty m_IncludePaths;
         SerializedProperty m_ExcludePaths;
@@ -26,6 +24,7 @@ namespace EZhex1991.EZUnity
         SerializedProperty m_AuthorRegex;
         SerializedProperty m_CreateTimeRegex;
         SerializedProperty m_ValidLineRegex;
+        SerializedProperty m_ShowAsset;
 
         EZScriptStatistics targetObject;
         private Vector2 scrollPosition;
@@ -39,6 +38,7 @@ namespace EZhex1991.EZUnity
             m_AuthorRegex = serializedObject.FindProperty("authorRegex");
             m_CreateTimeRegex = serializedObject.FindProperty("createTimeRegex");
             m_ValidLineRegex = serializedObject.FindProperty("validLineRegex");
+            m_ShowAsset = serializedObject.FindProperty("showAsset");
             targetObject = target as EZScriptStatistics;
         }
 
@@ -74,7 +74,7 @@ namespace EZhex1991.EZUnity
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Result: " + targetObject.resultTime, EditorStyles.boldLabel);
-            showAsAsset = EditorGUILayout.Toggle("Show Script As TextAsset", showAsAsset);
+            EditorGUILayout.PropertyField(m_ShowAsset);
             EditorGUILayout.EndHorizontal();
             EditorGUI.indentLevel++;
             DrawResult(targetObject);
@@ -211,7 +211,7 @@ namespace EZhex1991.EZUnity
                     {
                         EditorGUILayout.BeginHorizontal();
                         EditorGUI.indentLevel++;
-                        if (showAsAsset) EditorGUILayout.ObjectField(script.fileObject, typeof(UnityEngine.Object), true);
+                        if (m_ShowAsset.boolValue) EditorGUILayout.ObjectField(script.fileObject, typeof(UnityEngine.Object), true);
                         else EditorGUILayout.TextField(script.filePath);
                         EditorGUI.indentLevel--;
                         EditorGUILayout.TextField(script.createTime, new GUILayoutOption[] { GUILayout.Width(unitWidth * 3) });
