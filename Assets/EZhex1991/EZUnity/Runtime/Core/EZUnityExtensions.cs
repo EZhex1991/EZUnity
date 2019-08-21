@@ -273,14 +273,9 @@ namespace EZhex1991.EZUnity
         }
 #endif
 
-        [Obsolete("Use SetKeyword(string prefix, Enum selection) instead", true)]
-        public static void SetKeyword(this Material mat, Enum selection)
+        public static string FormatKeyword(string prefix, Enum selection)
         {
-            foreach (Enum value in Enum.GetValues(selection.GetType()))
-            {
-                mat.DisableKeyword(FormatKeyword(value));
-            }
-            mat.EnableKeyword(FormatKeyword(selection));
+            return string.Format("{0}_{1}", prefix, selection).ToUpper();
         }
         public static void SetKeyword(this Material mat, string prefix, Enum selection)
         {
@@ -290,31 +285,14 @@ namespace EZhex1991.EZUnity
             }
             mat.EnableKeyword(FormatKeyword(prefix, selection));
         }
-
         public static void SetKeyword(this Material mat, string keyword, bool value)
         {
             if (value) { mat.EnableKeyword(keyword); }
             else mat.DisableKeyword(keyword);
         }
-
-        [Obsolete("Use IsKeywordEnabled(string prefix, Enum selection) instead", true)]
-        public static bool IsKeywordEnabled(this Material mat, Enum selection)
-        {
-            return mat.IsKeywordEnabled(FormatKeyword(selection));
-        }
         public static bool IsKeywordEnabled(this Material mat, string prefix, Enum selection)
         {
             return mat.IsKeywordEnabled(FormatKeyword(prefix, selection));
-        }
-
-        [Obsolete("Use FormatKeyword(string prefix, Enum value) instead", true)]
-        public static string FormatKeyword(Enum value)
-        {
-            return string.Format("_{0}_{1}", value.GetType().Name, value).ToUpper();
-        }
-        public static string FormatKeyword(string prefix, Enum selection)
-        {
-            return string.Format("{0}_{1}", prefix, selection).ToUpper();
         }
     }
 }

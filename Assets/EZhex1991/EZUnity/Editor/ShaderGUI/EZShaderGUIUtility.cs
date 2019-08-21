@@ -3,7 +3,6 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -84,127 +83,6 @@ namespace EZhex1991.EZUnity
                     }
                 }
             }
-        }
-
-        [System.Obsolete("Use [KeywordEnum] on shader instead")]
-        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, params GUILayoutOption[] options)
-#if CSHARP_7_3_OR_NEWER
-            where T : Enum
-#endif
-        {
-            materialEditor.EnumPopup<T>(property, (mat, selection) =>
-            {
-                mat.SetKeyword(property.name, selection);
-            }, options);
-        }
-        [System.Obsolete("Use [KeywordEnum] on shader instead")]
-        public static void KeywordEnum<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, params GUILayoutOption[] options)
-#if CSHARP_7_3_OR_NEWER
-            where T : Enum
-#endif
-        {
-            materialEditor.EnumPopup<T>(property, label, (mat, selection) =>
-            {
-                mat.SetKeyword(property.name, selection);
-            }, options);
-        }
-
-        [System.Obsolete("Use [Enum] on shader instead")]
-        public static void EnumPopup<T>(this MaterialEditor materialEditor, MaterialProperty property, Action<Material, Enum> callback = null, params GUILayoutOption[] options)
-#if CSHARP_7_3_OR_NEWER
-            where T : Enum
-#endif
-        {
-            materialEditor.EnumPopup<T>(property, property.displayName, callback, options);
-        }
-        [System.Obsolete("Use [Enum] on shader instead")]
-        public static void EnumPopup<T>(this MaterialEditor materialEditor, MaterialProperty property, string label, Action<Material, Enum> callback = null, params GUILayoutOption[] options)
-#if CSHARP_7_3_OR_NEWER
-            where T : Enum
-#endif
-        {
-            EditorGUI.showMixedValue = property.hasMixedValue;
-            float value = property.floatValue;
-
-            EditorGUI.BeginChangeCheck();
-            value = EditorGUILayout.Popup(label, (int)value, Enum.GetNames(typeof(T)), options);
-            if (EditorGUI.EndChangeCheck())
-            {
-                materialEditor.RegisterPropertyChangeUndo(label);
-                property.floatValue = value;
-                if (callback != null)
-                {
-                    foreach (Material mat in property.targets)
-                    {
-                        callback(mat, (Enum)Enum.ToObject(typeof(T), (int)value));
-                    }
-                }
-            }
-            EditorGUI.showMixedValue = false;
-        }
-
-        [System.Obsolete("Use [Toggle] on shader instead")]
-        public static void Toggle(this MaterialEditor materialEditor, MaterialProperty property, Action<Material, bool> callback = null, params GUILayoutOption[] options)
-        {
-            materialEditor.Toggle(property, property.displayName, callback, options);
-        }
-        [System.Obsolete("Use [Toggle] on shader instead")]
-        public static void Toggle(this MaterialEditor materialEditor, MaterialProperty property, string label, Action<Material, bool> callback = null, params GUILayoutOption[] options)
-        {
-            EditorGUI.showMixedValue = property.hasMixedValue;
-            bool value = property.floatValue == 1;
-            EditorGUI.BeginChangeCheck();
-            value = EditorGUILayout.Toggle(label, value, options);
-            if (EditorGUI.EndChangeCheck())
-            {
-                materialEditor.RegisterPropertyChangeUndo(label);
-                property.floatValue = value ? 1 : 0;
-                if (callback != null)
-                {
-                    foreach (Material mat in property.targets)
-                    {
-                        callback(mat, value);
-                    }
-                }
-            }
-            EditorGUI.showMixedValue = false;
-        }
-
-        [System.Obsolete("Use [EZMinMaxSlider] on shader instead")]
-        public static void MinMaxSlider(this MaterialEditor materialEditor, MaterialProperty property, float minValue = 0, float maxValue = 1)
-        {
-            MinMaxSlider(materialEditor, property, property.displayName, minValue, maxValue);
-        }
-        [System.Obsolete("Use [EZMinMaxSlider] on shader instead")]
-        public static void MinMaxSlider(this MaterialEditor materialEditor, MaterialProperty property, string label, float minValue = 0, float maxValue = 1)
-        {
-            Rect position = EditorGUILayout.GetControlRect();
-            position = EditorGUI.PrefixLabel(position, EditorGUIUtility.GetControlID(FocusType.Passive), new GUIContent(label));
-            float fieldWidth = position.width / 5f;
-
-            Vector2 range = property.vectorValue;
-            EditorGUI.BeginChangeCheck();
-            position.width = fieldWidth - 5;
-            range.x = EditorGUI.FloatField(position, range.x);
-            position.x += fieldWidth;
-            position.width = fieldWidth * 3;
-            EditorGUI.MinMaxSlider(position, ref range.x, ref range.y, minValue, maxValue);
-            position.x += position.width + 5;
-            position.width = fieldWidth - 5;
-            range.y = EditorGUI.FloatField(position, range.y);
-            if (EditorGUI.EndChangeCheck())
-            {
-                property.vectorValue = range;
-            }
-        }
-
-        public static void SetKeyword(this MaterialEditor materialEditor, string prefix, Enum selection)
-        {
-            (materialEditor.target as Material).SetKeyword(prefix, selection);
-        }
-        public static void SetKeyword(this MaterialEditor materialEditor, string keyword, bool value)
-        {
-            (materialEditor.target as Material).SetKeyword(keyword, value);
         }
     }
 }

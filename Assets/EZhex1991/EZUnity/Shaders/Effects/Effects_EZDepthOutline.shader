@@ -19,7 +19,6 @@ Shader "Hidden/EZUnity/Effects/EZDepthOutline" {
 		_OutlineColor ("Outline Color", Color) = (0, 0, 1, 1)
 		_OutlineStrength ("Outline Strength", Range(0, 1)) = 1
 	}
-	CustomEditor "EZDepthOutlineShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 		Cull Off
