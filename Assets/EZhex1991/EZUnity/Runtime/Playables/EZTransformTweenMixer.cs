@@ -40,7 +40,6 @@ namespace EZhex1991.EZUnity.Playables
             {
                 ScriptPlayable<EZTransformTweenBehaviour> inputPlayable = (ScriptPlayable<EZTransformTweenBehaviour>)playable.GetInput(i);
                 EZTransformTweenBehaviour inputBehaviour = inputPlayable.GetBehaviour();
-                if (inputBehaviour.endPoint == null) continue;
 
                 float inputWeight = playable.GetInputWeight(i);
                 if (!started && !inputBehaviour.startPoint)
@@ -52,29 +51,36 @@ namespace EZhex1991.EZUnity.Playables
                 float normalizedTime = (float)(inputPlayable.GetTime() / inputPlayable.GetDuration());
                 float process = inputBehaviour.curve.Evaluate(normalizedTime);
 
-                if (inputBehaviour.tweenPosition)
+                if (inputBehaviour.tweenPosition && inputBehaviour.endPoint != null)
                 {
                     positionWeight += inputWeight;
                     outputPosition += Vector3.Lerp(inputBehaviour.startPosition, inputBehaviour.endPoint.position, process) * inputWeight;
                 }
                 if (inputBehaviour.tweenRotation)
                 {
-                    rotationWeight += inputWeight;
-                    Quaternion targetRotation = Quaternion.Lerp(inputBehaviour.startRotation, inputBehaviour.endPoint.rotation, process);
-#if UNITY_2018_1
-                    targetRotation = targetRotation.Normalize();
-#else
-                    targetRotation.Normalize();
-#endif
-                    if (Quaternion.Dot(outputRotation, targetRotation) < 0f)
+                    if (eulerRotation)
                     {
-                        targetRotation = targetRotation.Scale(-1f);
+                        rotationWeight += inputWeight;
+                        outputEulerAngles += Vector3.Lerp(inputBehaviour.startEulerAngles, inputBehaviour.endEulerAngles, process) * inputWeight;
                     }
-                    targetRotation = targetRotation.Scale(inputWeight);
-                    outputRotation = outputRotation.Add(targetRotation);
-                    outputEulerAngles += Vector3.Lerp(inputBehaviour.startEulerAngles, inputBehaviour.endEulerAngles, process) * inputWeight;
+                    else if (inputBehaviour.endPoint != null)
+                    {
+                        rotationWeight += inputWeight;
+                        Quaternion targetRotation = Quaternion.Lerp(inputBehaviour.startRotation, inputBehaviour.endPoint.rotation, process);
+#if UNITY_2018_1
+                        targetRotation = targetRotation.Normalize();
+#else
+                        targetRotation.Normalize();
+#endif
+                        if (Quaternion.Dot(outputRotation, targetRotation) < 0f)
+                        {
+                            targetRotation = targetRotation.Scale(-1f);
+                        }
+                        targetRotation = targetRotation.Scale(inputWeight);
+                        outputRotation = outputRotation.Add(targetRotation);
+                    }
                 }
-                if (inputBehaviour.tweenScale)
+                if (inputBehaviour.tweenScale && inputBehaviour.endPoint != null)
                 {
                     scaleWeight += inputWeight;
                     outputScale += Vector3.Lerp(inputBehaviour.startScale, inputBehaviour.endPoint.localScale, process) * inputWeight;
