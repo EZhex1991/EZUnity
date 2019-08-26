@@ -22,7 +22,7 @@ namespace EZhex1991.EZUnity
             }
             else
             {
-                EditorGUI.HelpBox(position, typeof(EZCurveRectAttribute).Name + " used on a non-AnimationCurve property", MessageType.Warning);
+                EditorGUI.HelpBox(position, typeof(EZCurveRectAttribute).Name + " used on a non-AnimationCurve field", MessageType.Warning);
             }
             EditorGUI.EndProperty();
         }
