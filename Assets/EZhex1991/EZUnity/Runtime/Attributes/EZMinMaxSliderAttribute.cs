@@ -9,13 +9,22 @@ namespace EZhex1991.EZUnity
 {
     public class EZMinMaxSliderAttribute : PropertyAttribute
     {
-        public float min;
-        public float max;
+        public readonly bool fixedLimit;
+        public bool showAsVectorValue;
+        public float limitMin;
+        public float limitMax;
 
+        public EZMinMaxSliderAttribute()
+        {
+            // limit will be retrived from zw component of the vector
+            // you can change limit on Debug(Inspector) Window
+            fixedLimit = false;
+        }
         public EZMinMaxSliderAttribute(float min, float max)
         {
-            this.min = min;
-            this.max = max;
+            fixedLimit = true;
+            this.limitMin = min;
+            this.limitMax = max;
         }
     }
 }

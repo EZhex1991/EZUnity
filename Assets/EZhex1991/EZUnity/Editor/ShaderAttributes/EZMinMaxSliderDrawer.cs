@@ -12,8 +12,8 @@ namespace EZhex1991.EZUnity.ShaderAttributes
     {
         public readonly bool fixedLimit;
         public bool showAsVectorValue;
-        public float minLimit;
-        public float maxLimit;
+        public float limitMin;
+        public float limitMax;
 
         public EZMinMaxSliderDrawer()
         {
@@ -24,8 +24,8 @@ namespace EZhex1991.EZUnity.ShaderAttributes
         public EZMinMaxSliderDrawer(float min, float max)
         {
             fixedLimit = true;
-            minLimit = min;
-            maxLimit = max;
+            limitMin = min;
+            limitMax = max;
         }
 
         private static bool IsPropertyTypeSuitable(MaterialProperty property)
@@ -66,25 +66,28 @@ namespace EZhex1991.EZUnity.ShaderAttributes
             }
             else
             {
-                float unitWidth = position.width / 5; float margin = 5;
+                float valueRectWidth = 50f;
+                float margin = 5;
+                float sliderRectWidth = position.width - (valueRectWidth + margin) * 2f;
+
                 Vector4 value = prop.vectorValue;
                 if (!fixedLimit)
                 {
-                    minLimit = value.z;
-                    maxLimit = value.w;
+                    limitMin = value.z;
+                    limitMax = value.w;
                 }
                 EditorGUI.showMixedValue = prop.hasMixedValue;
                 EditorGUI.BeginChangeCheck();
 
-                position.width = unitWidth - margin;
+                position.width = valueRectWidth;
                 value.x = EditorGUI.FloatField(position, value.x);
 
-                position.x += position.width + margin;
-                position.width = unitWidth * 3;
-                EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, minLimit, maxLimit);
+                position.x += valueRectWidth + margin;
+                position.width = sliderRectWidth;
+                EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, limitMin, limitMax);
 
-                position.x += position.width + margin;
-                position.width = unitWidth - margin;
+                position.x += sliderRectWidth + margin;
+                position.width = valueRectWidth;
                 value.y = EditorGUI.FloatField(position, value.y);
 
                 EditorGUI.showMixedValue = false;

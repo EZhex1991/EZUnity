@@ -13,26 +13,75 @@ namespace EZhex1991.EZUnity
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EZMinMaxSliderAttribute range = attribute as EZMinMaxSliderAttribute;
+            EZMinMaxSliderAttribute minMaxSliderAttribute = attribute as EZMinMaxSliderAttribute;
 
             EditorGUI.BeginProperty(position, label, property);
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
-            Vector2 value = property.vector2Value;
 
-            float width = position.width / 4;
-            position.width = width - 5f;
+            if (property.propertyType == SerializedPropertyType.Vector2)
+            {
+                property.vector2Value = MinMaxSliderV2(position, property.vector2Value, minMaxSliderAttribute.limitMin, minMaxSliderAttribute.limitMax);
+            }
+            else if (property.propertyType == SerializedPropertyType.Vector4)
+            {
+                if (minMaxSliderAttribute.fixedLimit)
+                {
+                    property.vector4Value = MinMaxSliderV4(position, property.vector4Value, minMaxSliderAttribute.limitMin, minMaxSliderAttribute.limitMax);
+                }
+                else
+                {
+                    property.isExpanded = EditorGUI.Foldout(new Rect(position) { width = 0 }, property.isExpanded, GUIContent.none, false);
+                    if (property.isExpanded)
+                    {
+                        property.vector4Value = EditorGUI.Vector4Field(position, "", property.vector4Value);
+                    }
+                    else
+                    {
+                        property.vector4Value = MinMaxSliderV4(position, property.vector4Value);
+                    }
+                }
+            }
+            else
+            {
+                EditorGUI.HelpBox(position, "EZMinMaxSlider used on a non-vector2/vector4 property: " + property.name, MessageType.Warning);
+            }
+
+            EditorGUI.EndProperty();
+        }
+        private Vector2 MinMaxSliderV2(Rect position, Vector2 value, float min, float max)
+        {
+            float valueRectWidth = 50f;
+            float margin = 5f;
+            float sliderRectWidth = position.width - (valueRectWidth + margin) * 2f;
+
+            position.width = valueRectWidth;
             value.x = EditorGUI.FloatField(position, value.x);
-            position.x += width;
-            position.width = width * 2;
-            EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, range.min, range.max);
-            position.x += position.width + 5f;
-            position.width = width;
+
+            position.x += valueRectWidth + margin;
+            position.width = sliderRectWidth;
+            EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, min, max);
+
+            position.x += sliderRectWidth + margin;
+            position.width = valueRectWidth;
             value.y = EditorGUI.FloatField(position, value.y);
 
-            value.x = Mathf.Clamp(value.x, range.min, range.max);
-            value.y = Mathf.Clamp(value.y, value.x, range.max);
-            property.vector2Value = value;
-            EditorGUI.EndProperty();
+            value.x = Mathf.Clamp(value.x, min, max);
+            value.y = Mathf.Clamp(value.y, value.x, max);
+            return value;
+        }
+        private Vector4 MinMaxSliderV4(Rect position, Vector4 value)
+        {
+            Vector2 valueXY = MinMaxSliderV2(position, value, value.z, value.w);
+            value.x = valueXY.x;
+            value.y = valueXY.y;
+            return value;
+        }
+        private Vector4 MinMaxSliderV4(Rect position, Vector4 value, float min, float max)
+        {
+            Vector2 valueXY = MinMaxSliderV2(position, value, min, max);
+            value.x = valueXY.x;
+            value.y = valueXY.y;
+            return value;
         }
     }
 }
