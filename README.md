@@ -4,7 +4,6 @@
 
 - [EZPhysicsBone](https://github.com/EZhex1991/EZPhysicsBone): 动态骨骼。支持所有碰撞体；独立的材质"EZPhysicsBoneMaterial"存放参数，重用度高；代码可读性强；碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展。
 - [EZAnimation](https://github.com/EZhex1991/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
-- EZTextureProcessor: 参数化图片生成工具，暂不单独建立repo。
 
 ## 功能菜单（EZUnity/..）
 
@@ -21,6 +20,18 @@ Unity2018.3以上版本在ProjectSettings窗口中，**低版本在Preferences�
 - EZEditorSettings: 开启某些选项能提高工作效率
 - EZGraphicsSettings: 提供更加方便的界面来管理AlwaysIncludedShaders，其他功能开发中
 - EZScriptSettings: 提供脚本模板的管理功能
+
+## 图片处理工具([Asset/Create/EZUnity/...](Assets/EZhex1991/EZTextureProcessor/README.md))
+
+- EZGaussianLutGenerator: 高斯查找表
+- EZGradient1DTextureGenerator: 渐变生成图片
+- EZGradient2DTextureGenerator: 坐标运算+渐变
+- EZPerlinNoiseTextureGenerator: 柏林噪声
+- EZRandomNoiseTextureGenerator: 随机噪声
+- EZWaveTextureGenerator: 波浪图形
+- EZTextureBlurProcessor: 模糊处理（配合高斯查找表做高斯模糊）
+- EZTextureChannelModifier: 图片通道调整（交换通道、提取单通道、调整特定通道曲线）
+- EZTextureCombiner: 图片拼合
 
 ## 附加资源 ([Asset/Create/EZUnity/...](Assets/EZhex1991/EZUnity/Demo/CustomAssets/README.md))
 
