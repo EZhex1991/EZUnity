@@ -39,7 +39,7 @@ Shader "EZUnity/Unlit/GuassianBlur" {
 				o.uv = v.uv0;
 				return o;
 			}
-			float GuassWeight (float x, float y, float sigma) {
+			float GaussWeight (float x, float y, float sigma) {
 				float sigma2 = sigma * sigma;
 				float left = 1 / (2 * sigma2 * 3.1415926);
 				float right = exp(-(x * x + y * y) / (2 * sigma2));
@@ -51,7 +51,7 @@ Shader "EZUnity/Unlit/GuassianBlur" {
 				for (int x = -_BlurRadius; x <= _BlurRadius; x++){
 					for (int y = -_BlurRadius; y <= _BlurRadius; y++){
 						float2 uv = i.uv + float2(x, y) * _MainTex_TexelSize;
-						color += tex2D(_MainTex, uv) * GuassWeight(x, y, sigma);
+						color += tex2D(_MainTex, uv) * GaussWeight(x, y, sigma);
 					}
 				}
 				return color;
