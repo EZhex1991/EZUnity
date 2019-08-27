@@ -11,7 +11,24 @@ namespace EZhex1991.EZUnity.Rendering
     [ExecuteInEditMode]
     public abstract class EZImageEffect : MonoBehaviour
     {
-        private Camera m_Camera;
+        [SerializeField, HideInInspector]
+        protected Shader m_Shader;
+        public Shader shader { get { return m_Shader; } }
+
+        protected Material m_Material;
+        public Material material
+        {
+            get
+            {
+                if (m_Material == null && shader != null)
+                {
+                    m_Material = new Material(shader);
+                }
+                return m_Material;
+            }
+        }
+
+        protected Camera m_Camera;
         public Camera camera
         {
             get
@@ -22,10 +39,8 @@ namespace EZhex1991.EZUnity.Rendering
             }
         }
 
-        public abstract Material material { get; }
-
         [ImageEffectOpaque]
-        public void OnRenderImage(RenderTexture source, RenderTexture destination)
+        public virtual void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
             if (!enabled || material == null)
             {
@@ -33,8 +48,10 @@ namespace EZhex1991.EZUnity.Rendering
             }
             else
             {
+                SetMaterial();
                 Graphics.Blit(source, destination, material);
             }
         }
+        protected abstract void SetMaterial();
     }
 }

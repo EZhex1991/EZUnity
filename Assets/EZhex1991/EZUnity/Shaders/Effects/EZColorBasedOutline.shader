@@ -3,7 +3,7 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Unlit/ColorBasedOutline" {
+Shader "Hidden/EZUnity/Effects/EZColorBasedOutline" {
 	Properties {
 		[Header(Main)]
 		_MainTex ("Main Texture", 2D) = "white" {}
@@ -55,7 +55,7 @@ Shader "EZUnity/Unlit/ColorBasedOutline" {
 						isBorder += step(_OutlineTolerance, Difference(color, tex2D(_MainTex, uv)));
 					}
 				}
-				color = lerp(color, _OutlineColor, saturate(isBorder));
+				color.rgb = lerp(color.rgb, _OutlineColor.rgb, saturate(isBorder) * _OutlineColor.a);
 				return color;
 			}
 			ENDCG

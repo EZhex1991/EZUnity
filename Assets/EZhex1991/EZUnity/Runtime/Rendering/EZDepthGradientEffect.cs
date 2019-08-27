@@ -10,25 +10,31 @@ namespace EZhex1991.EZUnity.Rendering
     [DisallowMultipleComponent]
     public class EZDepthGradientEffect : EZImageEffect
     {
-        public static readonly string ShaderName = "Hidden/EZUnity/Effects/EZDepthGradient";
+        private const string PropertyName_ColorNear = "_ColorNear";
+        private const string PropertyName_ColorFar = "_ColorFar";
+        private const string PropertyName_GradientPower = "_GradientPower";
+        private const string PropertyName_GradientSoftness = "_GradientSoftness";
 
-        private Material m_Material;
-        public override Material material
+        [ColorUsage(true, true)]
+        public Color colorNear = Color.white;
+        [ColorUsage(true, true)]
+        public Color colorFar = new Color(0.9f, 1, 1, 1);
+        [Range(0.1f, 128)]
+        public float gradientPower = 1f;
+        [EZMinMaxSlider]
+        public Vector4 gradientSoftness = new Vector4(0, 1, 0, 1);
+
+        protected override void SetMaterial()
         {
-            get
-            {
-                if (m_Material == null)
-                {
-                    m_Material = new Material(Shader.Find(ShaderName));
-                }
-                return m_Material;
-            }
+            material.SetColor(PropertyName_ColorNear, colorNear);
+            material.SetColor(PropertyName_ColorFar, colorFar);
+            material.SetFloat(PropertyName_GradientPower, gradientPower);
+            material.SetVector(PropertyName_GradientSoftness, gradientSoftness);
         }
 
         private void Reset()
         {
             camera.depthTextureMode |= DepthTextureMode.Depth;
-            material.CopyPropertiesFromMaterial(new Material(Shader.Find(ShaderName)));
         }
     }
 }

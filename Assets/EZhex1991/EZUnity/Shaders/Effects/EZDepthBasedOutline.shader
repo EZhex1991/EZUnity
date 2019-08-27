@@ -3,7 +3,7 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "Hidden/EZUnity/Effects/EZDepthOutline" {
+Shader "Hidden/EZUnity/Effects/EZDepthBasedOutline" {
 	Properties {
 		[HideInInspector]
 		_MainTex ("Main Tex", 2D) = "white" {}
