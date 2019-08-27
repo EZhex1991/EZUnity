@@ -24,9 +24,19 @@ namespace EZhex1991.EZUnity
         EZMapAsset_String_TextCollection,
 
         _Section_3 = _Section_0 + 300,
-        EZAssetListRenamer,
+        EZGaussianLutGenerator,
+        EZGradient1DTextureGenerator,
+        EZGradient2DTextureGenerator,
+        EZPerlinNoiseTextureGenerator,
+        EZRandomNoiseTextureGenerator,
+        EZWaveTextureGenerator,
+        EZTextureBlurProcessor,
+        EZTextureChannelModifier,
+        EZTextureCombiner,
+        EZTexturePipeline,
 
         _Section_4 = _Section_0 + 400,
+        EZAssetListRenamer,
 
         _Section_5 = _Section_0 + 500,
 

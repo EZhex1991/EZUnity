@@ -1,0 +1,119 @@
+/* Author:          ezhex1991@outlook.com
+ * CreateTime:      2019-03-18 10:38:24
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+using UnityEngine;
+using System.IO;
+using System.Collections.Generic;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+namespace EZhex1991.EZTextureProcessor
+{
+    public abstract class EZTextureGenerator : ScriptableObject
+    {
+        [SerializeField]
+        protected Vector2Int m_OutputResolution;
+        public Vector2Int outputResolution { get { return m_OutputResolution; } }
+        [SerializeField]
+        protected TextureFormat m_OutputFormat = TextureFormat.RGBA32;
+        public TextureFormat outputFormat { get { return m_OutputFormat; } }
+        [SerializeField]
+        protected TextureEncoding m_OutputEncoding = TextureEncoding.PNG;
+        public TextureEncoding outputEncoding { get { return m_OutputEncoding; } }
+        [SerializeField]
+        protected Texture2D m_OutputTexture;
+        public Texture2D outputTexture { get { return m_OutputTexture; } set { m_OutputTexture = value; } }
+
+        [SerializeField]
+        protected EZTextureGenerator m_CorrespondingGenerator;
+        public EZTextureGenerator correspondingGenerator { get { return m_CorrespondingGenerator; } }
+
+        public virtual bool previewAutoUpdate { get { return true; } }
+        public virtual Vector2Int previewResolution { get { return new Vector2Int(128, 128); } }
+        public virtual Vector2Int defaultOutputResolution { get { return new Vector2Int(256, 256); } }
+        public virtual TextureWrapMode defaultWrapMode { get { return TextureWrapMode.Repeat; } }
+        public virtual bool defaultMipmapSetting { get { return false; } }
+
+        // Don't forget to call texture.Apply()
+        public abstract void SetTexturePixels(Texture2D texture);
+        public virtual void SetPreviewTexture(Texture2D previewTexture, RenderTexture renderTexture)
+        {
+            SetTexturePixels(previewTexture);
+            Graphics.Blit(previewTexture, renderTexture);
+        }
+
+        public byte[] GetTextureData()
+        {
+            return GetTextureData(outputResolution, outputFormat);
+        }
+        public byte[] GetTextureData(Vector2Int resolution, TextureFormat textureFormat)
+        {
+            Texture2D texture = new Texture2D(resolution.x, resolution.y, textureFormat, false);
+            SetTexturePixels(texture);
+            texture.Apply();
+            byte[] bytes = texture.Encode(outputEncoding);
+            DestroyImmediate(texture);
+            return bytes;
+        }
+
+        protected virtual void Reset()
+        {
+            m_OutputResolution = defaultOutputResolution;
+        }
+
+#if UNITY_EDITOR
+        public void GenerateTexture(HashSet<EZTextureGenerator> generators)
+        {
+            GenerateTexture();
+            if (generators != null && correspondingGenerator != null)
+            {
+                generators.Add(this);
+                if (!generators.Add(correspondingGenerator))
+                {
+                    Debug.LogErrorFormat(this, "Loop corresponding detected on {0}", correspondingGenerator.name);
+                    return;
+                }
+                correspondingGenerator.GenerateTexture(generators);
+            }
+        }
+        public void GenerateTexture()
+        {
+            if (outputTexture == null)
+            {
+                string generatorPath = AssetDatabase.GetAssetPath(this);
+                string fileExtension = outputEncoding.ToString().ToLowerInvariant();
+                string texturePath = Path.ChangeExtension(generatorPath, fileExtension);
+                texturePath = AssetDatabase.GenerateUniqueAssetPath(texturePath);
+                File.WriteAllBytes(texturePath, GetTextureData());
+                AssetDatabase.Refresh();
+                TextureImporter importer = AssetImporter.GetAtPath(texturePath) as TextureImporter;
+                OnTextureCreated(importer);
+                importer.SaveAndReimport();
+                outputTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+            }
+            else
+            {
+                string texturePath = AssetDatabase.GetAssetPath(outputTexture);
+                File.WriteAllBytes(texturePath, GetTextureData());
+                string fileExtension = outputEncoding.ToString().ToLowerInvariant();
+                if (Path.GetExtension(texturePath) != fileExtension)
+                {
+                    string newPath = Path.ChangeExtension(texturePath, fileExtension);
+                    AssetDatabase.MoveAsset(texturePath, newPath);
+                }
+                AssetDatabase.Refresh();
+            }
+        }
+        protected virtual void OnTextureCreated(TextureImporter importer)
+        {
+            importer.isReadable = true;
+            importer.wrapMode = defaultWrapMode;
+            importer.mipmapEnabled = defaultMipmapSetting;
+        }
+#endif
+    }
+}
