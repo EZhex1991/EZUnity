@@ -15,9 +15,9 @@ namespace EZhex1991.EZUnity.Rendering
         private const string PropertyName_GradientPower = "_GradientPower";
         private const string PropertyName_GradientSoftness = "_GradientSoftness";
 
-        [ColorUsage(true, true)]
+        [ColorUsage(true)]
         public Color colorNear = Color.white;
-        [ColorUsage(true, true)]
+        [ColorUsage(true)]
         public Color colorFar = new Color(0.9f, 1, 1, 1);
         [Range(0.1f, 128)]
         public float gradientPower = 1f;
