@@ -90,6 +90,9 @@ namespace EZhex1991.EZUnity.ShaderAttributes
                 position.width = valueRectWidth;
                 value.y = EditorGUI.FloatField(position, value.y);
 
+                value.x = Mathf.Clamp(value.x, limitMin, limitMax);
+                value.y = Mathf.Clamp(value.y, value.x, limitMax);
+
                 EditorGUI.showMixedValue = false;
                 if (EditorGUI.EndChangeCheck())
                 {
