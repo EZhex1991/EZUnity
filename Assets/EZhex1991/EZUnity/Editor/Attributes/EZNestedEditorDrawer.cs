@@ -19,7 +19,7 @@ namespace EZhex1991.EZUnity
             EditorGUI.PropertyField(position, property, label, true);
             if (property.objectReferenceValue != null)
             {
-                property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, GUIContent.none);
+                property.isExpanded = EditorGUI.Foldout(new Rect(position) { width = 0 }, property.isExpanded, GUIContent.none);
                 if (property.isExpanded)
                 {
                     EditorGUI.indentLevel++;
