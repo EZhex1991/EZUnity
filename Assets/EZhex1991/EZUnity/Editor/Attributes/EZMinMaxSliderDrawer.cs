@@ -48,7 +48,7 @@ namespace EZhex1991.EZUnity
 
             EditorGUI.EndProperty();
         }
-        private Vector2 MinMaxSliderV2(Rect position, Vector2 value, float min, float max)
+        private Vector2 MinMaxSliderV2(Rect position, Vector2 value, float limitMin, float limitMax)
         {
             float valueRectWidth = 50f;
             float margin = 5f;
@@ -59,14 +59,14 @@ namespace EZhex1991.EZUnity
 
             position.x += valueRectWidth + margin;
             position.width = sliderRectWidth;
-            EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, min, max);
+            EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, limitMin, limitMax);
 
             position.x += sliderRectWidth + margin;
             position.width = valueRectWidth;
             value.y = EditorGUI.FloatField(position, value.y);
 
-            value.x = Mathf.Clamp(value.x, min, max);
-            value.y = Mathf.Clamp(value.y, value.x, max);
+            value.x = Mathf.Clamp(value.x, limitMin, limitMax);
+            value.y = Mathf.Clamp(value.y, value.x, limitMax);
             return value;
         }
         private Vector4 MinMaxSliderV4(Rect position, Vector4 value)
@@ -76,9 +76,9 @@ namespace EZhex1991.EZUnity
             value.y = valueXY.y;
             return value;
         }
-        private Vector4 MinMaxSliderV4(Rect position, Vector4 value, float min, float max)
+        private Vector4 MinMaxSliderV4(Rect position, Vector4 value, float limitMin, float limitMax)
         {
-            Vector2 valueXY = MinMaxSliderV2(position, value, min, max);
+            Vector2 valueXY = MinMaxSliderV2(position, value, limitMin, limitMax);
             value.x = valueXY.x;
             value.y = valueXY.y;
             return value;
