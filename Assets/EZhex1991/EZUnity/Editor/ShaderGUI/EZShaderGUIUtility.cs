@@ -14,6 +14,19 @@ namespace EZhex1991.EZUnity
         {
             materialEditor.ShaderProperty(property, property.displayName);
         }
+        public static void ShaderProperty(this MaterialEditor materialEditor, MaterialProperty property1, MaterialProperty property2)
+        {
+            Rect rect = EditorGUILayout.GetControlRect(true);
+
+            EditorGUI.PrefixLabel(rect, new GUIContent(property1.displayName));
+            materialEditor.ShaderProperty(MaterialEditor.GetLeftAlignedFieldRect(rect), property1, GUIContent.none);
+
+            int oldIndentLevel = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
+            materialEditor.ShaderProperty(MaterialEditor.GetFlexibleRectBetweenFieldAndRightEdge(rect), property2, GUIContent.none);
+            EditorGUI.indentLevel = oldIndentLevel;
+        }
+
         public static void TextureProperty(this MaterialEditor materialEditor, MaterialProperty property)
         {
             materialEditor.TextureProperty(property, property.displayName);
@@ -33,10 +46,6 @@ namespace EZhex1991.EZUnity
         public static void TexturePropertyTwoLines(this MaterialEditor materialEditor, MaterialProperty property, MaterialProperty extraProperty1, MaterialProperty extraProperty2)
         {
             materialEditor.TexturePropertyTwoLines(new GUIContent(property.displayName), property, extraProperty1, new GUIContent(extraProperty2.displayName), extraProperty2);
-        }
-        public static void ColorProperty(this MaterialEditor materialEditor, MaterialProperty property)
-        {
-            materialEditor.ColorProperty(property, property.displayName);
         }
 
         public static void TexturePropertyFeatured(this MaterialEditor materialEditor, MaterialProperty texture, string keyword, bool setupRequired = false)
