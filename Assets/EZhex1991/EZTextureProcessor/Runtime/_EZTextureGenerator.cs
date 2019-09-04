@@ -19,10 +19,10 @@ namespace EZhex1991.EZTextureProcessor
         protected Vector2Int m_OutputResolution;
         public Vector2Int outputResolution { get { return m_OutputResolution; } }
         [SerializeField]
-        protected TextureFormat m_OutputFormat = TextureFormat.RGBA32;
+        protected TextureFormat m_OutputFormat = TextureFormat.RGB24;
         public TextureFormat outputFormat { get { return m_OutputFormat; } }
         [SerializeField]
-        protected TextureEncoding m_OutputEncoding = TextureEncoding.PNG;
+        protected TextureEncoding m_OutputEncoding = TextureEncoding.JPG;
         public TextureEncoding outputEncoding { get { return m_OutputEncoding; } }
         [SerializeField]
         protected Texture2D m_OutputTexture;
@@ -35,6 +35,8 @@ namespace EZhex1991.EZTextureProcessor
         public virtual bool previewAutoUpdate { get { return true; } }
         public virtual Vector2Int previewResolution { get { return new Vector2Int(128, 128); } }
         public virtual Vector2Int defaultOutputResolution { get { return new Vector2Int(256, 256); } }
+        public virtual TextureFormat defaultOutputFormat { get { return TextureFormat.RGB24; } }
+        public virtual TextureEncoding defaultOutputEncoding { get { return TextureEncoding.JPG; } }
         public virtual TextureWrapMode defaultWrapMode { get { return TextureWrapMode.Repeat; } }
         public virtual bool defaultMipmapSetting { get { return false; } }
 
@@ -63,6 +65,8 @@ namespace EZhex1991.EZTextureProcessor
         protected virtual void Reset()
         {
             m_OutputResolution = defaultOutputResolution;
+            m_OutputFormat = defaultOutputFormat;
+            m_OutputEncoding = defaultOutputEncoding;
         }
 
 #if UNITY_EDITOR
