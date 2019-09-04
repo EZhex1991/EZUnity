@@ -3,7 +3,7 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Effects/EZReflection" {
+Shader "Hidden/EZUnity/Effects/EZReflection" {
 	Properties {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
