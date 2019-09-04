@@ -3,18 +3,19 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/EZTextureProcessor/EZTextureBlurProcessor" {
+Shader "Hidden/EZTextureProcessor/MotionBlur" {
 	Properties {
 		[Header(Main)]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
+		[Header(Blur)]
 		_BlurWeightTex ("Blur Weight Texture", 2D) = "white" {}
 		_BlurRadius ("Blur Radius", Float) = 5
 		_BlurDirection ("Blur Direction", Vector) = (1, 0, 0, 0)
 	}
 	SubShader {
-		Tags { "RenderType" = "Opaque" }
+		Tags { "RenderType" = "Opaque" "PreviewType" = "Plane" }
 
 		Pass {
 			CGPROGRAM
@@ -29,7 +30,7 @@ Shader "EZUnity/EZTextureProcessor/EZTextureBlurProcessor" {
 			
 			sampler1D _BlurWeightTex;
 			int _BlurRadius;
-			int2 _BlurDirection;
+			float2 _BlurDirection;
 
 			struct appdata {
 				float4 vertex : POSITION;
