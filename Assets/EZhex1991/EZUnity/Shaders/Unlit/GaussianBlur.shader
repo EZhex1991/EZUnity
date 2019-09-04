@@ -3,7 +3,7 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/Unlit/GuassianBlur" {
+Shader "EZUnity/Unlit/GaussianBlur" {
 	Properties {
 		[Header(Main)]
 		_MainTex ("Main Texture", 2D) = "white" {}
