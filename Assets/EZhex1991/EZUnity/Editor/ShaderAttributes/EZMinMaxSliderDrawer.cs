@@ -20,6 +20,8 @@ namespace EZhex1991.EZUnity.ShaderAttributes
             // limit will be retrived from zw component of the vector
             // you can change limit on Debug(Inspector) Window
             fixedLimit = false;
+            limitMin = 0;
+            limitMax = 1;
         }
         public EZMinMaxSliderDrawer(float min, float max)
         {
