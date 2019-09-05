@@ -19,9 +19,9 @@ namespace EZhex1991.EZTextureProcessor
 
         public enum FillType { Gradient, Random }
 
-        public FillType fillType = FillType.Gradient;
-        public float angleOffset = 2;
-        public Vector2 voronoiDensity = new Vector2(10, 10);
+        public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/Noise_Voronoi"; } }
+
+        public override Texture inputTexture { get { return null; } }
 
         protected Material m_Material;
         public override Material material
@@ -35,6 +35,10 @@ namespace EZhex1991.EZTextureProcessor
                 return m_Material;
             }
         }
+
+        public FillType fillType = FillType.Gradient;
+        public float angleOffset = 2;
+        public Vector2 voronoiDensity = new Vector2(10, 10);
 
         protected override void SetupMaterial(Material material)
         {

@@ -18,7 +18,7 @@ namespace EZhex1991.EZTextureProcessor
         [EZCurveRect]
         public AnimationCurve gradientCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        public override Vector2Int previewResolution { get { return new Vector2Int(256, 4); } }
+        public override ScaleMode previewScaleMode { get { return ScaleMode.StretchToFill; } }
         public override TextureWrapMode defaultWrapMode { get { return TextureWrapMode.Clamp; } }
 
         private void Reset()

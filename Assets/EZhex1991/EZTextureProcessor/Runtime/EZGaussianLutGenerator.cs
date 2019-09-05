@@ -21,11 +21,9 @@ namespace EZhex1991.EZTextureProcessor
 
         public enum TextureType { Wave, Lut1D, Lut2D }
 
-        public TextureType textureType = TextureType.Wave;
-        public Vector2 rangeX = new Vector2(-3f, 3f);
-        public float sigmaX = 1f;
-        public Vector2 rangeY = new Vector2(-3f, 3f);
-        public float sigmaY = 1f;
+        public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/GaussianDistribution"; } }
+
+        public override Texture inputTexture { get { return null; } }
 
         protected Material m_Material;
         public override Material material
@@ -39,6 +37,12 @@ namespace EZhex1991.EZTextureProcessor
                 return m_Material;
             }
         }
+
+        public TextureType textureType = TextureType.Wave;
+        public Vector2 rangeX = new Vector2(-3f, 3f);
+        public float sigmaX = 1f;
+        public Vector2 rangeY = new Vector2(-3f, 3f);
+        public float sigmaY = 1f;
 
         public override TextureWrapMode defaultWrapMode { get { return TextureWrapMode.Clamp; } }
 

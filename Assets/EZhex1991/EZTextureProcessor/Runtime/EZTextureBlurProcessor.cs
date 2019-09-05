@@ -17,6 +17,8 @@ namespace EZhex1991.EZTextureProcessor
         private const string PropertyName_BlurRadius = "_BlurRadius";
         private const string PropertyName_BlurDirection = "_BlurDirection";
 
+        public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/MotionBlur"; } }
+
         [SerializeField]
         protected Texture m_InputTexture;
         public override Texture inputTexture { get { return m_InputTexture; } }
@@ -39,13 +41,12 @@ namespace EZhex1991.EZTextureProcessor
 
         protected override void SetupMaterial(Material material)
         {
-
+            material.SetTexture(PropertyName_BlurWeightTex, blurWeightTexture);
         }
         public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
             if (sourceTexture != null && material != null)
             {
-                material.SetTexture(PropertyName_BlurWeightTex, blurWeightTexture);
                 RenderTexture tempTexture = RenderTexture.GetTemporary(sourceTexture.width, sourceTexture.height);
 
                 material.SetInt(PropertyName_BlurRadius, blurRadius.y);
@@ -66,8 +67,8 @@ namespace EZhex1991.EZTextureProcessor
 
         private void OnValidate()
         {
-            blurRadius.x = Mathf.Max(1, blurRadius.x);
-            blurRadius.y = Mathf.Max(1, blurRadius.y);
+            blurRadius.x = Mathf.Max(0, blurRadius.x);
+            blurRadius.y = Mathf.Max(0, blurRadius.y);
         }
     }
 }

@@ -16,7 +16,9 @@ namespace EZhex1991.EZTextureProcessor
     {
         private const string PropertyName_NoiseDensity = "_NoiseDensity";
 
-        public Vector2 noiseDensity = new Vector2(10, 10);
+        public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/Noise_Perlin"; } }
+
+        public override Texture inputTexture { get { return null; } }
 
         protected Material m_Material;
         public override Material material
@@ -30,6 +32,8 @@ namespace EZhex1991.EZTextureProcessor
                 return m_Material;
             }
         }
+
+        public Vector2 noiseDensity = new Vector2(10, 10);
 
         protected override void SetupMaterial(Material material)
         {

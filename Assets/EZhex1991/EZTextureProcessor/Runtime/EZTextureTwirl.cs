@@ -16,6 +16,8 @@ namespace EZhex1991.EZTextureProcessor
         private const string PropertyName_TwirlCenter = "_TwirlCenter";
         private const string PropertyName_TwirlStrength = "_TwirlStrength";
 
+        public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/Distort_Twirl"; } }
+
         [SerializeField]
         protected Texture m_InputTexture;
         public override Texture inputTexture { get { return m_InputTexture; } }

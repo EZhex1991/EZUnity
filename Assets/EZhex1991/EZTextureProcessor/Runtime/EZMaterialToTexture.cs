@@ -14,6 +14,8 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZMaterialToTexture)]
     public class EZMaterialToTexture : EZTextureProcessor
     {
+        public override string defaultShaderName { get { return ""; } }
+
         [SerializeField]
         private Texture m_InputTexture;
         public override Texture inputTexture { get { return m_InputTexture; } }

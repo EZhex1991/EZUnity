@@ -17,6 +17,8 @@ namespace EZhex1991.EZTextureProcessor
         private const string PropertyName_SpherizeCenter = "_SpherizeCenter";
         private const string PropertyName_SpherizeStrength = "_SpherizeStrength";
 
+        public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/Distort_Spherize"; } }
+
         [SerializeField]
         protected Texture m_InputTexture;
         public override Texture inputTexture { get { return m_InputTexture; } }

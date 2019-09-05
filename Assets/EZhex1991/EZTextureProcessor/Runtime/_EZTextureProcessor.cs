@@ -11,10 +11,21 @@ namespace EZhex1991.EZTextureProcessor
     {
         [SerializeField]
         protected Shader m_Shader;
-        public Shader shader { get { return m_Shader; } }
+        public Shader shader
+        {
+            get
+            {
+                if (m_Shader == null && !string.IsNullOrEmpty(defaultShaderName))
+                {
+                    m_Shader = Shader.Find(defaultShaderName);
+                }
+                return m_Shader;
+            }
+        }
 
-        public virtual Texture inputTexture { get; }
-        public virtual Material material { get; }
+        public abstract string defaultShaderName { get; }
+        public abstract Texture inputTexture { get; }
+        public abstract Material material { get; }
 
         protected abstract void SetupMaterial(Material material);
         public virtual void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
