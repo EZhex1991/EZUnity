@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,8 +13,8 @@ MonoBehaviour:
   m_Name: EZTextureBlurProcessor
   m_EditorClassIdentifier: 
   m_OutputResolution: {x: 512, y: 512}
-  m_OutputFormat: 4
-  m_OutputEncoding: 0
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
   m_OutputTexture: {fileID: 2800000, guid: bdf9833f6f1c6454ea75e9d49c5253a7, type: 3}
   m_CorrespondingGenerator: {fileID: 0}
   m_Shader: {fileID: 4800000, guid: c34342432ca9bea40b3ab76846ea7251, type: 3}

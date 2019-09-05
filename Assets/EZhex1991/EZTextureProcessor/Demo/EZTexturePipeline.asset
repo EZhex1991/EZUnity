@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,9 +13,10 @@ MonoBehaviour:
   m_Name: EZTexturePipeline
   m_EditorClassIdentifier: 
   m_OutputResolution: {x: 256, y: 256}
-  m_OutputFormat: 4
-  m_OutputEncoding: 0
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
   m_OutputTexture: {fileID: 2800000, guid: 5bb504608ca5a54408a03f16f5c883b6, type: 3}
+  m_CorrespondingGenerator: {fileID: 0}
   textureProcessors:
   - {fileID: 11400000, guid: 56d310f7136c87443b680a73c835a997, type: 2}
   - {fileID: 11400000, guid: c7dcfec17587a5c4cab7cfd244fe5bf9, type: 2}

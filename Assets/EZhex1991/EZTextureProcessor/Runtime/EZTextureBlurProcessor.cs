@@ -17,12 +17,33 @@ namespace EZhex1991.EZTextureProcessor
         private const string PropertyName_BlurRadius = "_BlurRadius";
         private const string PropertyName_BlurDirection = "_BlurDirection";
 
+        [SerializeField]
+        protected Texture m_InputTexture;
+        public override Texture inputTexture { get { return m_InputTexture; } }
+
+        protected Material m_Material;
+        public override Material material
+        {
+            get
+            {
+                if (m_Material == null && shader != null)
+                {
+                    m_Material = new Material(shader);
+                }
+                return m_Material;
+            }
+        }
+
         public Texture2D blurWeightTexture;
         public Vector2Int blurRadius = new Vector2Int(5, 5);
 
-        public void BlurTexture(Texture sourceTexture, RenderTexture destinationTexture)
+        protected override void SetupMaterial(Material material)
         {
-            if (material != null)
+
+        }
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
+        {
+            if (sourceTexture != null && material != null)
             {
                 material.SetTexture(PropertyName_BlurWeightTex, blurWeightTexture);
                 RenderTexture tempTexture = RenderTexture.GetTemporary(sourceTexture.width, sourceTexture.height);
@@ -41,20 +62,6 @@ namespace EZhex1991.EZTextureProcessor
             {
                 Graphics.Blit(sourceTexture, destinationTexture);
             }
-        }
-
-        public override void SetTexturePixels(Texture2D texture)
-        {
-            RenderTexture renderTexture = RenderTexture.GetTemporary(texture.width, texture.height);
-            BlurTexture(inputTexture, renderTexture);
-            RenderTexture.active = renderTexture;
-            texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-            RenderTexture.active = null;
-            RenderTexture.ReleaseTemporary(renderTexture);
-        }
-        public override void SetPreviewTexture(Texture2D previewTexture, RenderTexture renderTexture)
-        {
-            BlurTexture(inputTexture, renderTexture);
         }
 
         private void OnValidate()

@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,26 +13,9 @@ MonoBehaviour:
   m_Name: EZPerlinNoiseTextureGenerator
   m_EditorClassIdentifier: 
   m_OutputResolution: {x: 256, y: 256}
-  m_OutputFormat: 4
-  m_OutputEncoding: 0
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
   m_OutputTexture: {fileID: 2800000, guid: 56e55da2e3ace984293e08a3cb8625ee, type: 3}
   m_CorrespondingGenerator: {fileID: 0}
-  outputCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  density: {x: 50, y: 2}
+  m_Shader: {fileID: 4800000, guid: 77fd8fe7a33ddec4baddc4df8e8332a3, type: 3}
+  noiseDensity: {x: 50, y: 2}

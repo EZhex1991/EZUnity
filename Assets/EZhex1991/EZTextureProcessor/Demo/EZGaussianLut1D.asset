@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,14 +13,13 @@ MonoBehaviour:
   m_Name: EZGaussianLut1D
   m_EditorClassIdentifier: 
   m_OutputResolution: {x: 256, y: 256}
-  m_OutputFormat: 4
-  m_OutputEncoding: 0
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
   m_OutputTexture: {fileID: 2800000, guid: a29ab7d357b12d3488212867cab63f06, type: 3}
   m_CorrespondingGenerator: {fileID: 0}
-  textureType: 1
+  m_Shader: {fileID: 4800000, guid: 52cd461fa7222644dbaa048515bde189, type: 3}
+  textureType: 0
   rangeX: {x: -3, y: 3}
   sigmaX: 1
   rangeY: {x: -3, y: 3}
   sigmaY: 1
-  color0: {r: 0, g: 0, b: 0, a: 1}
-  color1: {r: 1, g: 1, b: 1, a: 1}

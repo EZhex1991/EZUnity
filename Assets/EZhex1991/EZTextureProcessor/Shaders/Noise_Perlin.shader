@@ -3,12 +3,8 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "Hidden/EZTextureProcessor/Noise_Gradient" {
+Shader "Hidden/EZTextureProcessor/Noise_Perlin" {
 	Properties {
-		[Header(Main)]
-		_MainTex ("Main Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1, 1, 1, 1)
-
 		[Header(Noise)]
 		_NoiseDensity ("Noise Density", Vector) = (10, 10, 0, 0)
 	}
@@ -21,10 +17,6 @@ Shader "Hidden/EZTextureProcessor/Noise_Gradient" {
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
-
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
-			half4 _Color;
 
 			float2 _NoiseDensity;
 
@@ -63,7 +55,7 @@ Shader "Hidden/EZTextureProcessor/Noise_Gradient" {
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.uv_MainTex = TRANSFORM_TEX(v.uv0, _MainTex);
+				o.uv_MainTex = v.uv0;
 				return o;
 			}
 			half4 frag (v2f i) : SV_Target {
@@ -73,5 +65,4 @@ Shader "Hidden/EZTextureProcessor/Noise_Gradient" {
 			ENDCG
 		}
 	}
-	FallBack "Unlit/Texture"
 }

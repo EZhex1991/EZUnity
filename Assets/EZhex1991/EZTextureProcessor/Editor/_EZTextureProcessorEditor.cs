@@ -15,22 +15,19 @@ namespace EZhex1991.EZTextureProcessor
         protected RenderTexture previewRenderTexture;
 
         protected SerializedProperty m_Shader;
-        protected SerializedProperty m_InputTexture;
 
         protected override void GetInputProperties()
         {
             processor = target as EZTextureProcessor;
             previewRenderTexture = RenderTexture.GetTemporary(processor.previewResolution.x, processor.previewResolution.y);
             m_Shader = serializedObject.FindProperty("m_Shader");
-            m_InputTexture = serializedObject.FindProperty("m_InputTexture");
         }
         protected override void DrawInputSettings()
         {
             GUI.enabled = false;
             EditorGUILayout.PropertyField(m_Shader);
             GUI.enabled = true;
-            EditorGUILayout.PropertyField(m_InputTexture);
-            SerializedProperty iterator = m_InputTexture.Copy();
+            SerializedProperty iterator = m_Shader.Copy();
             while (iterator.Next(false))
             {
                 EditorGUILayout.PropertyField(iterator, iterator.isExpanded);
@@ -39,7 +36,7 @@ namespace EZhex1991.EZTextureProcessor
 
         public override void DrawPreview(Rect previewArea)
         {
-            EditorGUI.DrawPreviewTexture(previewArea, previewRenderTexture);
+            EditorGUI.DrawPreviewTexture(previewArea, previewRenderTexture, null, processor.previewScaleMode);
         }
         protected override void RefreshPreview(bool checkResolution)
         {
@@ -56,7 +53,7 @@ namespace EZhex1991.EZTextureProcessor
         protected override void RefreshPreview()
         {
             base.RefreshPreview();
-            processor.SetPreviewTexture(previewTexture, previewRenderTexture);
+            processor.ProcessTexture(processor.inputTexture, previewRenderTexture);
         }
     }
 }

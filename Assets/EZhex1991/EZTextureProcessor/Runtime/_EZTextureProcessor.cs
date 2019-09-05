@@ -10,24 +10,34 @@ namespace EZhex1991.EZTextureProcessor
     public abstract class EZTextureProcessor : EZTextureGenerator
     {
         [SerializeField]
-        private Shader m_Shader;
+        protected Shader m_Shader;
         public Shader shader { get { return m_Shader; } }
 
-        [SerializeField]
-        private Texture m_InputTexture;
-        public Texture inputTexture { get { return m_InputTexture; } set { m_InputTexture = value; } }
+        public virtual Texture inputTexture { get; }
+        public virtual Material material { get; }
 
-        protected Material m_Material;
-        protected Material material
+        protected abstract void SetupMaterial(Material material);
+        public virtual void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-            get
+            if (material != null)
             {
-                if (m_Material == null && shader != null)
-                {
-                    m_Material = new Material(shader);
-                }
-                return m_Material;
+                SetupMaterial(material);
+                Graphics.Blit(sourceTexture, destinationTexture, material);
             }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
+            }
+        }
+
+        public sealed override void SetTexturePixels(Texture2D texture)
+        {
+            RenderTexture renderTexture = RenderTexture.GetTemporary(texture.width, texture.height);
+            ProcessTexture(inputTexture, renderTexture);
+            RenderTexture.active = renderTexture;
+            texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+            RenderTexture.active = null;
+            RenderTexture.ReleaseTemporary(renderTexture);
         }
     }
 }

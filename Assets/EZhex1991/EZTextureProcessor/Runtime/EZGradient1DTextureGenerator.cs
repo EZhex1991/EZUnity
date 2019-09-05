@@ -19,8 +19,12 @@ namespace EZhex1991.EZTextureProcessor
         public AnimationCurve gradientCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
         public override Vector2Int previewResolution { get { return new Vector2Int(256, 4); } }
-        public override Vector2Int defaultOutputResolution { get { return new Vector2Int(256, 4); } }
         public override TextureWrapMode defaultWrapMode { get { return TextureWrapMode.Clamp; } }
+
+        private void Reset()
+        {
+            m_OutputResolution = new Vector2Int(256, 4);
+        }
 
         public override void SetTexturePixels(Texture2D texture)
         {

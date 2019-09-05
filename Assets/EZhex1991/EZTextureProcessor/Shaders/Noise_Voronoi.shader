@@ -5,10 +5,6 @@
 
 Shader "Hidden/EZTextureProcessor/Noise_Voronoi" {
 	Properties {
-		[Header(Main)]
-		_MainTex ("Main Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1, 1, 1, 1)
-
 		[Header(Voronoi)]
 		_VoronoiDensity ("Voronoi Density", Vector) = (10, 10, 0, 0)
 		_VoronoiAngleOffset ("Voronoi Angle Offset", Float) = 2
@@ -20,12 +16,9 @@ Shader "Hidden/EZTextureProcessor/Noise_Voronoi" {
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma shader_feature _FILLTYPE_GRADIENT _FILLTYPE_RANDOM
 
 			#include "UnityCG.cginc"
-
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
-			half4 _Color;
 
 			float2 _VoronoiDensity;
 			float _VoronoiAngleOffset;
@@ -38,7 +31,10 @@ Shader "Hidden/EZTextureProcessor/Noise_Voronoi" {
 				float4 pos : SV_POSITION;
 				float2 uv_MainTex : TEXCOORD0;
 			};
-
+			
+			float RandomValue (float2 uv) {
+				return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
+			}
 			float2 RandomVector (float2 uv, float offset) {
 				float2x2 m = float2x2(15.27, 47.63, 99.41, 89.98);
 				uv = frac(sin(mul(uv, m)) * 46839.32);
@@ -48,7 +44,9 @@ Shader "Hidden/EZTextureProcessor/Noise_Voronoi" {
 				uv *= cellDensity;
 				float2 grid = floor(uv);
 				float2 uvInGrid = frac(uv);
+
 				float minDistance = 8.0;
+				float2 voronoiPoint = float2(0, 0);
 
 				for (int x = -1; x <= 1; x++) {
 					for (int y = -1; y <= 1; y++) {
@@ -58,16 +56,22 @@ Shader "Hidden/EZTextureProcessor/Noise_Voronoi" {
 
 						if (dist < minDistance) {
 							minDistance = dist;
+							voronoiPoint = grid + lattice;
 						}
 					}
 				}
-				return minDistance;
+
+				#if _FILLTYPE_RANDOM
+					return RandomValue(voronoiPoint);
+				#elif _FILLTYPE_GRADIENT
+					return minDistance;
+				#endif
 			}
 
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.uv_MainTex = TRANSFORM_TEX(v.uv0, _MainTex);
+				o.uv_MainTex = v.uv0;
 				return o;
 			}
 			half4 frag (v2f i) : SV_Target {

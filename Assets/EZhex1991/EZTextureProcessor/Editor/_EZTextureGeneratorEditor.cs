@@ -123,7 +123,7 @@ namespace EZhex1991.EZTextureProcessor
         }
         public override void DrawPreview(Rect previewArea)
         {
-            EditorGUI.DrawPreviewTexture(previewArea, previewTexture);
+            EditorGUI.DrawPreviewTexture(previewArea, previewTexture, null, generator.previewScaleMode);
         }
 
         protected virtual void RefreshPreview(bool checkResolution)

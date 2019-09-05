@@ -28,19 +28,17 @@
 U方向，做Gradient的映射
 
 - Gradient: 渐变
-- Coordinate Curve: 取值与渐变的映射关系
+- Gradient Curve: 渐变曲线
 
 ![EZGradient1DTextureGenerator](.SamplePicture/EZGradient1DTextureGenerator.png)
 
 ## EZGradient2DTextureGenerator
 
-渐变生成图片，配合XY轴的曲线可以生成很多复杂图案
-
-UV方向的取值到Gradient的映射
+UV方向的取值到Gradient的映射，配合UV曲线可以生成很多复杂图案
 
 - Gradient: 渐变
-- Gradient Curve: 取值与渐变的映射关系
-- Coordinate Mode: UV坐标的取值方式
+- Gradient Curve: 渐变曲线
+- Coordinate Mode: 取值方式
   - X: U
   - Y: V
   - AdditiveXY: (U + V) / 2
@@ -57,19 +55,39 @@ UV方向的取值到Gradient的映射
 
 柏林噪声图片生成
 
-- Output Curve: 柏林函数的输出与颜色输出的对应曲线
-- Density: 柏林噪声的密度
+- Noise Density: 噪声密度
 
 ![EZPerlinNoiseTextureGenerator](.SamplePicture/EZPerlinNoiseTextureGenerator.png)
 
-## EZRandomNoiseTextureGenerator
+## EZPixelNoiseTextureGenerator
 
-随机噪点生成图片
+噪点图片生成
 
+- Random Seed: 随机数种子
 - Colored: 带色噪点
-- Output Curve: 随机数输出与颜色输出的对应曲线
+- Output Curve: 输出曲线（可用来控制噪点密度）
 
-![EZRandomNoiseTextureGenerator](.SamplePicture/EZRandomNoiseTextureGenerator.png)
+![EZPixelNoiseTextureGenerator](.SamplePicture/EZPixelNoiseTextureGenerator.png)
+
+## EZSimpleNoiseTextureGenerator
+
+随机噪声图片生成
+
+- Noise Density: 噪声密度
+
+![EZSimpleNoiseTextureGenerator](.SamplePicture/EZSimpleNoiseTextureGenerator.png)
+
+## EZVoronoiTextureGenerator
+
+泰森多边形图片生成
+
+- Fill Type: 填充方式
+  - Gradient: 中心到界限的渐变
+  - Random: 随机色块填充
+- Angle Offset: 随机向量的生成种子
+- Voronoi Density: 噪声密度
+
+![EZVoronoiTextureGenerator](.SamplePicture/EZVoronoiTextureGenerator.png)
 
 ## EZWaveTextureGenerator
 
@@ -82,21 +100,41 @@ UV方向的取值到Gradient的映射
 
 ## EZTextureBlurProcessor
 
-对图片进行模糊处理
+模糊处理工具
 
-- Shader: 使用的模糊Shader
 - Input Texture: 需要模糊的图片
 - Blur Weight Texture: 模糊使用的权重查找表
 - Blur Radius: 模糊范围
 
 ![EZTextureBlurProcessor](.SamplePicture/EZTextureBlurProcessor.png)
 
+## EZTextureSpherize
+
+球面化处理工具
+
+- Input Texture: 输入图片
+- Spherize Power: 球面化强度
+- Spherize Center: 球面化中心
+- Spherize Strength: 球面化范围
+
+![EZTextureSpherize](.SamplePicture/EZTextureSpherize.png)
+
+## EZTextureTwirl
+
+漩涡扭曲处理工具
+
+- Input Texture: 输入图片
+- Twirl Center: 扭曲中心
+- Twirl Strength: 扭曲强度
+
+![EZTextureTwirl](.SamplePicture/EZTextureTwirl.png)
+
 ## EZTextureChannelModifier
 
 图片通道调整（交换通道、提取单通道、调整特定通道曲线）
 
 - Input Texture: 基础图片，默认输出白色
-- Value Curve: 基础图片的调整曲线
+- Output Curve: 基础图片的调整曲线
 - Overrides: 各通道单独指定输入输出
   - Texture: 该通道的输入图片
   - Channel: 输入图片的输入通道
@@ -111,3 +149,11 @@ UV方向的取值到Gradient的映射
 整合图片，小图的尺寸需要相同
 
 ![EZTextureCombiner](.SamplePicture/EZTextureCombiner.png)
+
+## EZMaterialToTexture
+
+材质直接输出图片（不要使用依赖光照的Shader！！！）
+
+## EZTexturePipeline
+
+图片处理管线，多个图片处理会按顺序执行（与CorrespondingGenerator不同，管线不会生成中间图片）

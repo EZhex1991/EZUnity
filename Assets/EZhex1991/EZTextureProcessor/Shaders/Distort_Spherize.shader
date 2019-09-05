@@ -7,7 +7,6 @@ Shader "Hidden/EZTextureProcessor/Distort_Spherize" {
 	Properties {
 		[Header(Main)]
 		_MainTex ("Main Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(Spherize)]
 		_SpherizePower ("Spherize Power", Float) = 4
@@ -25,8 +24,6 @@ Shader "Hidden/EZTextureProcessor/Distort_Spherize" {
 			#include "UnityCG.cginc"
 
 			sampler2D _MainTex;
-			float4 _MainTex_ST;
-			half4 _Color;
 
 			float _SpherizePower;
 			float2 _SpherizeCenter;
@@ -51,7 +48,7 @@ Shader "Hidden/EZTextureProcessor/Distort_Spherize" {
 				float2 uv = i.uv_MainTex - _SpherizeCenter;
 				float delta = pow(length(uv), _SpherizePower);
 				uv = i.uv_MainTex + uv * _SpherizeStrength * delta;
-				half4 color = tex2D(_MainTex, uv) * _Color;
+				half4 color = tex2D(_MainTex, uv);
 				return color;
 			}
 			ENDCG

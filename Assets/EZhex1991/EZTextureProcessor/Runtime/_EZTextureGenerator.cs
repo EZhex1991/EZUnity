@@ -16,7 +16,7 @@ namespace EZhex1991.EZTextureProcessor
     public abstract class EZTextureGenerator : ScriptableObject
     {
         [SerializeField]
-        protected Vector2Int m_OutputResolution;
+        protected Vector2Int m_OutputResolution = new Vector2Int(256, 256);
         public Vector2Int outputResolution { get { return m_OutputResolution; } }
         [SerializeField]
         protected TextureFormat m_OutputFormat = TextureFormat.RGB24;
@@ -34,19 +34,12 @@ namespace EZhex1991.EZTextureProcessor
 
         public virtual bool previewAutoUpdate { get { return true; } }
         public virtual Vector2Int previewResolution { get { return new Vector2Int(128, 128); } }
-        public virtual Vector2Int defaultOutputResolution { get { return new Vector2Int(256, 256); } }
-        public virtual TextureFormat defaultOutputFormat { get { return TextureFormat.RGB24; } }
-        public virtual TextureEncoding defaultOutputEncoding { get { return TextureEncoding.JPG; } }
+        public virtual ScaleMode previewScaleMode { get { return ScaleMode.ScaleToFit; } }
         public virtual TextureWrapMode defaultWrapMode { get { return TextureWrapMode.Repeat; } }
         public virtual bool defaultMipmapSetting { get { return false; } }
 
         // Don't forget to call texture.Apply()
         public abstract void SetTexturePixels(Texture2D texture);
-        public virtual void SetPreviewTexture(Texture2D previewTexture, RenderTexture renderTexture)
-        {
-            SetTexturePixels(previewTexture);
-            Graphics.Blit(previewTexture, renderTexture);
-        }
 
         public byte[] GetTextureData()
         {
@@ -60,13 +53,6 @@ namespace EZhex1991.EZTextureProcessor
             byte[] bytes = texture.Encode(outputEncoding);
             DestroyImmediate(texture);
             return bytes;
-        }
-
-        protected virtual void Reset()
-        {
-            m_OutputResolution = defaultOutputResolution;
-            m_OutputFormat = defaultOutputFormat;
-            m_OutputEncoding = defaultOutputEncoding;
         }
 
 #if UNITY_EDITOR

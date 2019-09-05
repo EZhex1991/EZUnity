@@ -7,7 +7,6 @@ Shader "Hidden/EZTextureProcessor/MotionBlur" {
 	Properties {
 		[Header(Main)]
 		_MainTex ("Main Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(Blur)]
 		_BlurWeightTex ("Blur Weight Texture", 2D) = "white" {}
@@ -26,7 +25,6 @@ Shader "Hidden/EZTextureProcessor/MotionBlur" {
 
 			sampler2D _MainTex;
 			float4 _MainTex_TexelSize;
-			half4 _Color;
 			
 			sampler1D _BlurWeightTex;
 			int _BlurRadius;
@@ -56,7 +54,7 @@ Shader "Hidden/EZTextureProcessor/MotionBlur" {
 					color += tex2D(_MainTex, uv) * weight;
 					totalWeight += weight;
 				}
-				return color / totalWeight * _Color;
+				return color / totalWeight;
 			}
 			ENDCG
 		}

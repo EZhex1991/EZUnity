@@ -12,28 +12,28 @@ namespace EZhex1991.EZTextureProcessor
         fileName = "EZPerlinNoiseTextureGenerator",
         menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZPerlinNoiseTextureGenerator",
         order = (int)EZAssetMenuOrder.EZPerlinNoiseTextureGenerator)]
-    public class EZPerlinNoiseTextureGenerator : EZTextureGenerator
+    public class EZPerlinNoiseTextureGenerator : EZTextureProcessor
     {
-        [EZCurveRect(0, 0, 1, 1)]
-        public AnimationCurve outputCurve = AnimationCurve.Linear(0, 0, 1, 1);
-        public Vector2 density = new Vector2(5, 5);
+        private const string PropertyName_NoiseDensity = "_NoiseDensity";
 
-        public override void SetTexturePixels(Texture2D texture)
+        public Vector2 noiseDensity = new Vector2(10, 10);
+
+        protected Material m_Material;
+        public override Material material
         {
-            float maxX = texture.width - 1;
-            float maxY = texture.height - 1;
-            for (int x = 0; x < texture.width; x++)
+            get
             {
-                for (int y = 0; y < texture.height; y++)
+                if (m_Material == null && shader != null)
                 {
-                    float u = x / maxX;
-                    float v = y / maxY;
-                    u *= density.x;
-                    v *= density.y;
-                    Color color = Color.white * outputCurve.Evaluate(Mathf.PerlinNoise(u, v));
-                    texture.SetPixel(x, y, color);
+                    m_Material = new Material(shader);
                 }
+                return m_Material;
             }
+        }
+
+        protected override void SetupMaterial(Material material)
+        {
+            material.SetVector(PropertyName_NoiseDensity, noiseDensity);
         }
     }
 }
