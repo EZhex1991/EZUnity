@@ -39,14 +39,11 @@ namespace EZhex1991.EZTextureProcessor
         public Texture2D blurWeightTexture;
         public Vector2Int blurRadius = new Vector2Int(5, 5);
 
-        protected override void SetupMaterial(Material material)
-        {
-            material.SetTexture(PropertyName_BlurWeightTex, blurWeightTexture);
-        }
         public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
             if (sourceTexture != null && material != null)
             {
+                material.SetTexture(PropertyName_BlurWeightTex, blurWeightTexture);
                 RenderTexture tempTexture = RenderTexture.GetTemporary(sourceTexture.width, sourceTexture.height);
 
                 material.SetInt(PropertyName_BlurRadius, blurRadius.y);

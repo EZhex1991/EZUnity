@@ -40,11 +40,19 @@ namespace EZhex1991.EZTextureProcessor
         public float angleOffset = 2;
         public Vector2 voronoiDensity = new Vector2(10, 10);
 
-        protected override void SetupMaterial(Material material)
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-            material.SetKeyword(Keyword_FillType, fillType);
-            material.SetFloat(PropertyName_VoronoiAngleOffset, angleOffset);
-            material.SetVector(PropertyName_VoronoiDensity, voronoiDensity);
+            if (material != null)
+            {
+                material.SetKeyword(Keyword_FillType, fillType);
+                material.SetFloat(PropertyName_VoronoiAngleOffset, angleOffset);
+                material.SetVector(PropertyName_VoronoiDensity, voronoiDensity);
+                Graphics.Blit(sourceTexture, destinationTexture, material);
+            }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
+            }
         }
     }
 }

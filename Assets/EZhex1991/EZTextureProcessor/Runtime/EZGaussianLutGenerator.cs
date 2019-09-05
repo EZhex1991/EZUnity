@@ -46,13 +46,21 @@ namespace EZhex1991.EZTextureProcessor
 
         public override TextureWrapMode defaultWrapMode { get { return TextureWrapMode.Clamp; } }
 
-        protected override void SetupMaterial(Material material)
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-            material.SetKeyword(Keyword_GaussianTextureType, textureType);
-            material.SetVector(PropertyName_GaussianRangeX, rangeX);
-            material.SetFloat(PropertyName_GaussianSigmaX, sigmaX);
-            material.SetVector(PropertyName_GaussianRangeY, rangeY);
-            material.SetFloat(PropertyName_GaussianSigmaY, sigmaY);
+            if (material != null)
+            {
+                material.SetKeyword(Keyword_GaussianTextureType, textureType);
+                material.SetVector(PropertyName_GaussianRangeX, rangeX);
+                material.SetFloat(PropertyName_GaussianSigmaX, sigmaX);
+                material.SetVector(PropertyName_GaussianRangeY, rangeY);
+                material.SetFloat(PropertyName_GaussianSigmaY, sigmaY);
+                Graphics.Blit(sourceTexture, destinationTexture, material);
+            }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
+            }
         }
 
         public static float Gaussian1DWeight(float x, float sigma)

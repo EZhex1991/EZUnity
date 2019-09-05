@@ -6,6 +6,7 @@
 Shader "Hidden/EZTextureProcessor/Noise_Voronoi" {
 	Properties {
 		[Header(Voronoi)]
+		[KeywordEnum(Gradient, Random)] _FillType ("Fill Type", Float) = 0
 		_VoronoiDensity ("Voronoi Density", Vector) = (10, 10, 0, 0)
 		_VoronoiAngleOffset ("Voronoi Angle Offset", Float) = 2
 	}

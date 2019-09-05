@@ -38,10 +38,18 @@ namespace EZhex1991.EZTextureProcessor
         public Vector2 twirlCenter = new Vector2(0.5f, 0.5f);
         public float twirlStrength = 10f;
 
-        protected override void SetupMaterial(Material material)
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-            material.SetVector(PropertyName_TwirlCenter, twirlCenter);
-            material.SetFloat(PropertyName_TwirlStrength, twirlStrength);
+            if (material != null)
+            {
+                material.SetVector(PropertyName_TwirlCenter, twirlCenter);
+                material.SetFloat(PropertyName_TwirlStrength, twirlStrength);
+                Graphics.Blit(sourceTexture, destinationTexture, material);
+            }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
+            }
         }
     }
 }

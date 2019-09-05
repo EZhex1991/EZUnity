@@ -35,9 +35,17 @@ namespace EZhex1991.EZTextureProcessor
 
         public Vector2 noiseDensity = new Vector2(10, 10);
 
-        protected override void SetupMaterial(Material material)
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-            material.SetVector(PropertyName_NoiseDensity, noiseDensity);
+            if (material != null)
+            {
+                material.SetVector(PropertyName_NoiseDensity, noiseDensity);
+                Graphics.Blit(sourceTexture, destinationTexture, material);
+            }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
+            }
         }
     }
 }

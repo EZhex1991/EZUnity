@@ -24,9 +24,16 @@ namespace EZhex1991.EZTextureProcessor
         private Material m_Material;
         public override Material material { get { return m_Material; } }
 
-        protected override void SetupMaterial(Material material)
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-
+            if (material != null)
+            {
+                Graphics.Blit(sourceTexture, destinationTexture, material);
+            }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
+            }
         }
     }
 }

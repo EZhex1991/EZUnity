@@ -27,19 +27,7 @@ namespace EZhex1991.EZTextureProcessor
         public abstract Texture inputTexture { get; }
         public abstract Material material { get; }
 
-        protected abstract void SetupMaterial(Material material);
-        public virtual void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
-        {
-            if (material != null)
-            {
-                SetupMaterial(material);
-                Graphics.Blit(sourceTexture, destinationTexture, material);
-            }
-            else
-            {
-                Graphics.Blit(sourceTexture, destinationTexture);
-            }
-        }
+        public abstract void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture);
 
         public sealed override void SetTexturePixels(Texture2D texture)
         {

@@ -40,11 +40,19 @@ namespace EZhex1991.EZTextureProcessor
         public Vector2 spherizeCenter = new Vector2(0.5f, 0.5f);
         public Vector2 spherizeStrength = new Vector2(10, 10);
 
-        protected override void SetupMaterial(Material material)
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-            material.SetFloat(PropertyName_SpherizePower, spherizePower);
-            material.SetVector(PropertyName_SpherizeCenter, spherizeCenter);
-            material.SetVector(PropertyName_SpherizeStrength, spherizeStrength);
+            if (material != null)
+            {
+                material.SetFloat(PropertyName_SpherizePower, spherizePower);
+                material.SetVector(PropertyName_SpherizeCenter, spherizeCenter);
+                material.SetVector(PropertyName_SpherizeStrength, spherizeStrength);
+                Graphics.Blit(sourceTexture, destinationTexture, material);
+            }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
+            }
         }
     }
 }
