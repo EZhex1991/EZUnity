@@ -21,17 +21,25 @@ Unity2018.3以上版本在ProjectSettings窗口中，**低版本在Preferences�
 - EZGraphicsSettings: 提供更加方便的界面来管理AlwaysIncludedShaders，其他功能开发中
 - EZScriptSettings: 提供脚本模板的管理功能
 
-## 图片处理工具([Asset/Create/EZUnity/...](Assets/EZhex1991/EZTextureProcessor/README.md))
+## 图片处理工具([Asset/Create/EZUnity/EZTextureProcessor/...](Assets/EZhex1991/EZTextureProcessor/README.md))
 
 - EZGaussianLutGenerator: 高斯查找表
 - EZGradient1DTextureGenerator: 渐变生成图片
 - EZGradient2DTextureGenerator: 坐标运算+渐变
-- EZPerlinNoiseTextureGenerator: 柏林噪声
-- EZRandomNoiseTextureGenerator: 随机噪声
 - EZWaveTextureGenerator: 波浪图形
+- EZPerlinNoiseTextureGenerator: 柏林噪声
+- EZPixelNoiseTextureGenerator: 随机噪点
+- EZSimpleNoiseTextureGenerator: 普通噪声
+- EZVoronoiTextureGenerator: 泰森多边形
+
 - EZTextureBlurProcessor: 模糊处理（配合高斯查找表做高斯模糊）
+- EZTextureSpherize: 球面化处理
+- EZTextureTwirl: 漩涡扭曲处理
 - EZTextureChannelModifier: 图片通道调整（交换通道、提取单通道、调整特定通道曲线）
 - EZTextureCombiner: 图片拼合
+
+- EZMaterialToTexture: 材质直接输出图片（不要使用依赖光照的Shader！！！）
+- EZTexturePipeline: 图片处理管线，多个图片处理会按顺序执行
 
 ## 附加资源 ([Asset/Create/EZUnity/...](Assets/EZhex1991/EZUnity/Demo/CustomAssets/README.md))
 
