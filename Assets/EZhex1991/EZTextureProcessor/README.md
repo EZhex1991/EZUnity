@@ -108,6 +108,18 @@ UV方向的取值到Gradient的映射，配合UV曲线可以生成很多复杂�
 
 ![EZTextureBlurProcessor](.SamplePicture/EZTextureBlurProcessor.png)
 
+## EZColorBasedOutline
+
+基于色彩容差的描边
+
+- Input Texture: 需要描边的图片
+- Gray Weight: 描边前会对图片转灰度图，权重控制灰度比例
+- Tolerance: 容差
+- Outline Color: 描边颜色
+- Outline Thickness: 边缘检查的范围（描边粗细）
+
+![EZColorBasedOutline](.SamplePicture/EZColorBasedOutline.png)
+
 ## EZTextureSpherize
 
 球面化处理工具

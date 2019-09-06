@@ -33,6 +33,7 @@ namespace EZhex1991.EZUnity
         EZVoronoiTextureGenerator,
         EZWaveTextureGenerator,
         EZTextureBlurProcessor,
+        EZColorBasedOutline,
         EZTextureSpherize,
         EZTextureTwirl,
         EZTextureChannelModifier,

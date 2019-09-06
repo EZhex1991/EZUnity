@@ -10,24 +10,27 @@ namespace EZhex1991.EZUnity.Rendering
     [DisallowMultipleComponent]
     public class EZColorBasedOutlineEffect : EZImageEffect
     {
-        private const string PropertyName_OutlineTolerance = "_OutlineTolerance";
+        private const string PropertyName_GrayWeight = "_GrayWeight";
+        private const string PropertyName_Tolerance = "_Tolerance";
         private const string PropertyName_OutlineColor = "_OutlineColor";
         private const string PropertyName_OutlineThickness = "_OutlineThickness";
 
-        public float outlineTolerance = 50f;
-        public Color outlineColor = new Color(0, 0, 0, 1);
+        public Color grayWeight = new Color(0.299f, 0.587f, 0.114f);
+        [Range(0, 255)]
+        public float tolerance = 50f;
+        public Color outlineColor = new Color(0, 0, 0, 0.5f);
         public int outlineThickness = 1;
 
         protected override void SetMaterial()
         {
-            material.SetFloat(PropertyName_OutlineTolerance, outlineTolerance);
+            material.SetVector(PropertyName_GrayWeight, grayWeight);
+            material.SetFloat(PropertyName_Tolerance, tolerance);
             material.SetColor(PropertyName_OutlineColor, outlineColor);
             material.SetInt(PropertyName_OutlineThickness, outlineThickness);
         }
 
         private void OnValidate()
         {
-            outlineTolerance = Mathf.Max(0, outlineTolerance);
             outlineThickness = Mathf.Max(0, outlineThickness);
         }
     }

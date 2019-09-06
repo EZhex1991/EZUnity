@@ -1,9 +1,9 @@
 // Author:			ezhex1991@outlook.com
-// CreateTime:		2019-08-23 15:27:28
+// CreateTime:		2019-09-06 10:11:52
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "Hidden/EZUnity/Effects/EZColorBasedOutline" {
+Shader "Hidden/EZTextureProcessor/ColorBasedOutline" {
 	Properties {
 		[Header(Main)]
 		_MainTex ("Main Texture", 2D) = "white" {}
