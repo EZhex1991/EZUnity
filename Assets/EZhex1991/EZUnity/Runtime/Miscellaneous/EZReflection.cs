@@ -12,13 +12,27 @@ namespace EZhex1991.EZUnity
     [RequireComponent(typeof(Renderer))]
     public class EZReflection : MonoBehaviour
     {
-        public const string SHADER_NAME = "EZUnity/Effects/EZReflection";
+        public const string SHADER_NAME = "Hidden/EZUnity/Effects/EZReflection";
         public const string TAG_REFLECTION = "EZReflection";
         public const string TAG_REFRACTION = "EZRefraction";
         public const string KEYWORD_REFLECTION_ON = "_REFLECTION_ON";
         public const string KEYWORD_REFRACTION_ON = "_REFRACTION_ON";
 
         public static bool isRendering;
+
+        [SerializeField, HideInInspector]
+        private Shader m_Shader;
+        public Shader shader
+        {
+            get
+            {
+                if (m_Shader == null)
+                {
+                    m_Shader = Shader.Find(SHADER_NAME);
+                }
+                return m_Shader;
+            }
+        }
 
         private Renderer m_Renderer;
         private Renderer renderer
@@ -34,9 +48,9 @@ namespace EZhex1991.EZUnity
         {
             get
             {
-                if (renderer.sharedMaterial.shader != Shader.Find(SHADER_NAME))
+                if (shader != null && renderer.sharedMaterial.shader != shader)
                 {
-                    Debug.LogErrorFormat(renderer, "Shader {0} is required for EZReflection renderer", SHADER_NAME);
+                    Debug.LogErrorFormat(renderer, "Shader {0} is required for EZReflection renderer", shader.name);
                 }
                 return renderer.sharedMaterial;
             }

@@ -11,16 +11,16 @@ Shader "EZUnity/Unlit/DynamicFluid" {
 
 		[Header(Trasparency)]
 		[PowerSlider(8)]_AlphaPower ("Alpha Power", Range(0.1, 128)) = 4
-		_Refrection ("Refrection", Vector) = (1.1, 1.2, 1.3, 1)
+		[EZVectorSingleLine] _Refrection ("Refrection", Vector) = (1.1, 1.2, 1.3, 1)
 
 		[Header(Reflection)]
-		_ReflectionCube ("Reflection Cube", Cube) = "" {}
+		[EZTextureMini] _ReflectionCube ("Reflection Cube", Cube) = "" {}
 		[PowerSlider(8)]_ReflectionPower ("Reflection Power", Range(0.1, 128)) = 0.8
 		_ReflectionStrength ("Reflection Strength", Range(0, 1)) = 1
 
 		[Header(Roughness)]
-		_RoughTex ("Rough Texture", 2D) = "black" {}
-		_Roughness ("Roughness Speed(XY) Refl(Z) Refr(W)", Vector) = (0.1, 0.1, 0.5, 0.5)
+		[EZTextureMini] _RoughTex ("Rough Texture", 2D) = "black" {}
+		[EZVectorSingleLine] _Roughness ("Roughness Speed(XY) Refl(Z) Refr(W)", Vector) = (0.1, 0.1, 0.5, 0.5)
 		
 		[Header(Specular)]
 		_SpecAtten ("Spec Atten", Range(0, 1)) = 1

@@ -6,19 +6,21 @@
 Shader "EZUnity/Matcap" {
 	Properties {
 		[Header(Base)]
-		[NoScaleOffset] _MainTex ("Main Texture", 2D) = "white" {}
-		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
-
-		[NoScaleOffset] _BumpTex ("Bump Texture", 2D) = "bump" {}
-		_Bumpiness ("Bumpiness", Range(0, 2)) = 1
+		[EZTextureMini(_Color)] _MainTex ("Main Texture", 2D) = "white" {}
+		[HideInInspector][HDR] _Color ("Color", Color) = (1, 1, 1, 1)
 		
-		[NoScaleOffset] _DiffMatcap ("Diffuse Matcap", 2D) = "white" {}
-		[HDR] _DiffColor ("Diffuse Color (RGB, Strength)", Color) = (1, 1, 1, 1)
-
-		[NoScaleOffset] _SpecMatcap ("Specular Matcap", 2D) = "black" {}
-		[HDR] _SpecColor ("Specular Color (RGB, Strength)", Color) = (1, 1, 1, 1)
+		[EZTextureKeyword(_BUMP_ON)]
+		[EZTextureSingleLine(_Bumpiness)] _BumpTex ("Bump Texture", 2D) = "bump" {}
+		[HideInInspector] _Bumpiness ("Bumpiness", Range(0, 2)) = 1
+		
+		[EZTextureSingleLine(_DiffColor)] _DiffMatcap ("Diffuse Matcap", 2D) = "white" {}
+		[HideInInspector][HDR] _DiffColor ("Diffuse Color (RGB, Strength)", Color) = (1, 1, 1, 1)
+		
+		[EZTextureKeyword(_SPEC_ON)]
+		[EZTextureSingleLine(_SpecColor)] _SpecMatcap ("Specular Matcap", 2D) = "black" {}
+		[HideInInspector][HDR] _SpecColor ("Specular Color (RGB, Strength)", Color) = (1, 1, 1, 1)
 	}
-	CustomEditor "EZMatcapShaderGUI"
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 

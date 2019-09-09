@@ -345,5 +345,5 @@ Shader "EZUnity/EZStandard"
 
 
     FallBack "VertexLit"
-    CustomEditor "EZStandardShaderGUI"
+    CustomEditor "EZhex1991.EZUnity.EZStandardShaderGUI"
 }

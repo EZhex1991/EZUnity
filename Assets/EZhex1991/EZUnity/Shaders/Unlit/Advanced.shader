@@ -20,7 +20,7 @@ Shader "EZUnity/Unlit/Advanced" {
 		[HideInInspector] _OffsetFactor ("Offset Factor", Float) = 0
 		[HideInInspector] _OffsetUnit ("Offset Unit", Float) = 0
 	} 
-	CustomEditor "EZRenderingSettingsShaderGUI"
+	CustomEditor "EZhex1991.EZUnity.EZRenderingSettingsShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 

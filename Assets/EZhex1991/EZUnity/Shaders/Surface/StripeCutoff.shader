@@ -11,9 +11,10 @@ Shader "EZUnity/Surface/StripeCutoff" {
 
 		[Header(Cutoff)]
 		[KeywordEnum(Local, World)] _CoordMode ("Coordinate Mode", Float) = 0
-		_AxisWeight ("Axis Weight(XYZ) Offset(W)", Vector) = (1, 1, 1, 0)
+		[EZVectorSingleLine] _AxisWeight ("Axis Weight(XYZ) Offset(W)", Vector) = (1, 1, 1, 0)
 		_FillRate ("Fill Rate", Range(0, 1)) = 0.5
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 		

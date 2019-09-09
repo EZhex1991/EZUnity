@@ -6,29 +6,37 @@
 Shader "EZUnity/Fur" {
 	Properties {
 		[Header(Base)]
-		_MainTex ("Main Texture", 2D) = "white" {}
-		[HDR] _Color ("Color", Color) = (1, 1, 1, 1)
+		[EZTextureSingleLine(_Color)] _MainTex ("Main Texture", 2D) = "white" {}
+		[HideInInspector][HDR] _Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(Fur)]
-		_FurOffset ("Fur Offset", Vector) = (0.1, -0.5, 1, 1)
-		_FurTex ("Fur Texture", 2D) = "white" {}
-		_FurLength ("Fur Length", Float) = 0.2
-		_FurUVOffset ("Fur UV Offset(XY) Scale(ZW)", Vector) = (5, 5, 0.01, 0.01)
+		[EZTextureSingleLine(_FurLength)] _FurTex ("Fur Texture", 2D) = "white" {}
+		[HideInInspector] _FurLength ("Fur Length", Float) = 0.2
+		[EZVectorSingleLine] _FurOffset ("Fur Offset", Vector) = (0.1, -0.5, 1, 1)
+		[EZVectorSingleLine] _FurUVOffset ("Fur UV Offset(XY) Scale(ZW)", Vector) = (5, 5, 0.01, 0.01)
 		[PowerSlider(2)] _AlphaPower ("Alpha Power", Range(0.01, 4)) = 0.5
 
-		[Header(Lighting)]
-		[KeywordEnum(Vertex, Pixel)] _LightingMode ("Lighting Mode", Float) = 0
+		[EZKeywordEnumHeader(Vertex, Pixel)] _LightingMode ("Lighting Mode", Float) = 0
 		_LambertOffset ("Lambert Offset", Range(0, 1)) = 0.5
-		_AOColor ("AO Color", Color) = (0.2, 0.2, 0.2, 1)
+
+		[EZSingleLine(_AOPower)]
+		_AOColor ("AO Color, Power", Color) = (0.2, 0.2, 0.2, 1)
+		[HideInInspector][PowerSlider(2)] _AOPower ("AO Power", Range(0.01, 2)) = 0.5
 		_AOOffset ("AO Offset", Range(0, 1)) = 0.2
-		[PowerSlider(2)] _AOPower ("AO Power", Range(0.01, 2)) = 0.5
-		[HDR] _Spec1Color ("Spec1 Color", Color) = (0.5, 0.5, 0.5, 1)
-		[PowerSlider(4)] _Spec1Power ("Spec1 Power", Range(0.01, 32)) = 1
-		[HDR] _Spec2Color ("Spec2 Color", Color) = (0.5, 0.5, 0.5, 1)
-		[PowerSlider(4)] _Spec2Power ("Spec2 Power", Range(0.01, 32)) = 32
+		
+		[EZSingleLine(_Spec1Power)]
+		[HDR] _Spec1Color ("Spec1 Color, Power", Color) = (0.5, 0.5, 0.5, 1)
+		[HideInInspector][PowerSlider(4)] _Spec1Power ("Spec1 Power", Range(0.01, 32)) = 1
+
+		[EZSingleLine(_Spec2Power)]
+		[HDR] _Spec2Color ("Spec2 Color, Power", Color) = (0.5, 0.5, 0.5, 1)
+		[HideInInspector][PowerSlider(4)] _Spec2Power ("Spec2 Power", Range(0.01, 32)) = 32
+
+		[EZSingleLine(_RimPower)]
 		[HDR] _RimColor ("Rim Color", Color) = (0.5, 0.5, 0.5, 1)
-		[PowerSlider(4)] _RimPower ("Rim Power", Range(0.01, 32)) = 1
+		[HideInInspector][PowerSlider(4)] _RimPower ("Rim Power", Range(0.01, 32)) = 1
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 		Blend SrcAlpha OneMinusSrcAlpha

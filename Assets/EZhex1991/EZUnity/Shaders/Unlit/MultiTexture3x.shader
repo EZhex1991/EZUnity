@@ -6,20 +6,20 @@
 Shader "EZUnity/Unlit/MultiTexture3x" {
 	Properties {
 		[Header(Base)]
-		_MainTex ("Main Texture", 2D) = "white" {}
-		[KeywordEnum(UV0, UV1)] _MainUV ("Main UV", Int) = 0
-		_Color ("Color", Color) = (1, 1, 1, 1)
+		[EZTextureMini(_Color, _MainUV)] _MainTex ("Main Texture", 2D) = "white" {}
+		[HideInInspector][KeywordEnum(UV0, UV1)] _MainUV ("Main UV", Int) = 0
+		[HideInInspector] _Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(Additional 1)]
-		_Add1Tex ("Texture", 2D) = "black" {}
-		[KeywordEnum(UV0, UV1)] _Add1UV ("UV", Int) = 0
-		_Add1Color ("Color", Color) = (1, 1, 1, 1)
+		[EZTextureMini(_Add1Color, _Add1UV)] _Add1Tex ("Texture", 2D) = "black" {}
+		[HideInInspector][KeywordEnum(UV0, UV1)] _Add1UV ("UV", Int) = 0
+		[HideInInspector] _Add1Color ("Color", Color) = (1, 1, 1, 1)
 		[KeywordEnum(AlphaBlend, Additive, Multiply)] _Add1BlendMode ("Blend Mode", Int) = 0
 		
 		[Header(Additional 2)]
-		_Add2Tex ("Texture", 2D) = "black" {}
-		[KeywordEnum(UV0, UV1)] _Add2UV ("UV", Int) = 0
-		_Add2Color ("Color", Color) = (1, 1, 1, 1)
+		[EZTextureMini(_Add2Color, _Add2UV)] _Add2Tex ("Texture", 2D) = "black" {}
+		[HideInInspector][KeywordEnum(UV0, UV1)] _Add2UV ("UV", Int) = 0
+		[HideInInspector] _Add2Color ("Color", Color) = (1, 1, 1, 1)
 		[KeywordEnum(AlphaBlend, Additive, Multiply)] _Add2BlendMode ("Blend Mode", Int) = 0
 		
 		[Header(Rendering Settings)]
@@ -33,7 +33,7 @@ Shader "EZUnity/Unlit/MultiTexture3x" {
 		[HideInInspector] _OffsetFactor ("Offset Factor", Float) = 0
 		[HideInInspector] _OffsetUnit ("Offset Unit", Float) = 0
 	}
-	CustomEditor "EZRenderingSettingsShaderGUI"
+	CustomEditor "EZhex1991.EZUnity.EZRenderingSettingsShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 

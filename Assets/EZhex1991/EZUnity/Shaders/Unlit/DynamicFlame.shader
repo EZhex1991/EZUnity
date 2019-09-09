@@ -6,20 +6,20 @@
 Shader "EZUnity/Unlit/DynamicFlame" {
 	Properties {
 		[Header(Flame)]
-		_FlameTex ("FlameTex", 2D) = "white" {}
-		_FlameNoise1 ("Noise1 UV(RG) Alpha(B)", 2D) = "white" {}
-		_FlameNoise2 ("Noise2 UV(RG) Alpha(B)", 2D) = "white" {}
-		_FlameFactor1 ("Flame1 Speed(XY) Strength(Z)", Vector) = (-0.2, -0.5, 1, 1)
-		_FlameFactor2 ("Flame2 Speed(XY) Strength(Z)", Vector) = (0.12, -0.6, 1, 1)
+		[EZTextureMini] _FlameTex ("FlameTex", 2D) = "white" {}
+		[EZTextureMini] _FlameNoise1 ("Noise1 UV(RG) Alpha(B)", 2D) = "white" {}
+		[EZTextureMini] _FlameNoise2 ("Noise2 UV(RG) Alpha(B)", 2D) = "white" {}
+		[EZVectorSingleLine] _FlameFactor1 ("Flame1 Speed(XY) Strength(Z)", Vector) = (-0.2, -0.5, 1, 1)
+		[EZVectorSingleLine] _FlameFactor2 ("Flame2 Speed(XY) Strength(Z)", Vector) = (0.12, -0.6, 1, 1)
 		[HDR] _FlameColor1 ("Flame Color1", Color) = (2, 0, 0, 1)
 		[HDR] _FlameColor2 ("Flame Color2", Color) = (2, 1, 0, 1)
 
 		[Header(Shape)]
 		[KeywordEnum(Plane, Volume)] _FlameMode ("Flame Mode", Float) = 0
-		_AlphaFactor ("Alpha Power(XY) Strength(ZW)", Vector) = (1, 1, 1, 1)
-		_ShapeFactor ("Shape Form(X) Inflate(Y) Speed(Z)", Vector) = (1, 1, 1, 1)
+		[EZVectorSingleLine] _AlphaFactor ("Alpha Power(XY) Strength(ZW)", Vector) = (1, 1, 1, 1)
+		[EZVectorSingleLine] _ShapeFactor ("Shape Form(X) Inflate(Y) Speed(Z)", Vector) = (1, 1, 1, 1)
 	}
-	CustomEditor "EZUnlitDynamicFlameShaderGUI"
+	CustomEditor "EZhex1991.EZUnity.EZUnlitDynamicFlameShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 

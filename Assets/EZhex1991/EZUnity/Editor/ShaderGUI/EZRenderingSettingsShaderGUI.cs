@@ -5,11 +5,14 @@
  */
 using UnityEditor;
 
-public class EZRenderingSettingsShaderGUI : EZShaderGUI
+namespace EZhex1991.EZUnity
 {
-    public override void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+    public class EZRenderingSettingsShaderGUI : EZShaderGUI
     {
-        materialEditor.PropertiesDefaultGUI(properties);
-        RenderingSettingsGUI(materialEditor, properties);
+        public override void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+        {
+            materialEditor.PropertiesDefaultGUI(properties);
+            RenderingSettingsGUI(materialEditor, properties);
+        }
     }
 }

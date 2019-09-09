@@ -5,6 +5,7 @@
 
 Shader "Hidden/EZUnity/Effects/EZReflection" {
 	Properties {
+		[HideInInspector]
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
@@ -19,7 +20,7 @@ Shader "Hidden/EZUnity/Effects/EZReflection" {
 		_RefractionStrength ("Refraction Strength", Range(0, 1)) = 0.5
 	}
 	SubShader {
-		Tags { "RenderType" = "Opaque" }
+		Tags { "RenderType" = "Opaque" "PreviewType" = "Plane" }
 
 		Pass {
 			CGPROGRAM

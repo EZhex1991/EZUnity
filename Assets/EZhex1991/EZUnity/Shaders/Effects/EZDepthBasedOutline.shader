@@ -20,7 +20,7 @@ Shader "Hidden/EZUnity/Effects/EZDepthBasedOutline" {
 		_OutlineStrength ("Outline Strength", Range(0, 1)) = 1
 	}
 	SubShader {
-		Tags { "RenderType" = "Opaque" }
+		Tags { "RenderType" = "Opaque" "PreviewType" = "Plane" }
 		Cull Off
 		ZWrite Off
 		ZTest Always

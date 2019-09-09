@@ -14,6 +14,7 @@ Shader "EZUnity/Surface/ColorFilter"{
 		_GreyFactor ("RGB Weight", Color) = (0.299, 0.587, 0.114, 1)
 		_HSVFactor ("H(X) S(Y) V(Z) Scale(W)", Vector) = (0, 0, 0, 0.01)
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags{ "RenderType" = "Opaque" }
 

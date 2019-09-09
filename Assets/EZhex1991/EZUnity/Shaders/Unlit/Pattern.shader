@@ -15,8 +15,8 @@ Shader "EZUnity/Unlit/Pattern" {
 		[KeywordEnum(UV, LocalPos_XY, LocalPos_XZ, LocalPos_YZ, ScreenPos)]
 		_CoordMode ("Coordinate Mode", Float) = 0
 		_SecondColor ("Second Color", Color) = (0, 0, 0, 1)
-		_ScaleOffset ("Scale(XY) Offset(ZW)", Vector) = (2, 2, 0, 0)
-		_PatternCenter ("Center", Vector) = (0.5, 0.5, 0, 0)
+		[EZVectorSingleLine] _ScaleOffset ("Scale(XY) Offset(ZW)", Vector) = (2, 2, 0, 0)
+		[EZVectorSingleLine] _PatternCenter ("Center", Vector) = (0.5, 0.5, 0, 0)
 		_FillRatio ("Fill Ratio", Range(0, 1)) = 0.5
 
 		[Header(Distrotion)]
@@ -26,7 +26,7 @@ Shader "EZUnity/Unlit/Pattern" {
 		_Swirl ("Swirl", float) = 3.14
 		_Shrink ("Shrink", float) = 1
 	}
-	CustomEditor "EZUnlitPatternShaderGUI"
+	CustomEditor "EZhex1991.EZUnity.EZUnlitPatternShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 

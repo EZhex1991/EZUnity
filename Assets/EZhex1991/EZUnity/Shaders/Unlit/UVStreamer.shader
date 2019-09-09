@@ -10,7 +10,7 @@ Shader "EZUnity/Unlit/UVStreamer" {
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(UV Movements)]
-		_UVMovements ("UV Movements", Vector) = (1, 1, 0, 0)
+		[EZVectorSingleLine] _UVMovements ("UV Movements", Vector) = (1, 1, 0, 0)
 	}
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }

@@ -14,9 +14,8 @@ Shader "Hidden/EZUnity/Effects/EZDepthGradient" {
 		[PowerSlider(8)] _GradientPower ("Gradient Power", Range(0.1, 128)) = 1
 		[EZMinMaxSlider(0, 1)] _GradientSoftness ("Gradient Softness", Vector) = (0, 1, 0, 1)
 	}
-	CustomEditor "EZDepthGradientShaderGUI"
 	SubShader {
-		Tags { "RenderType" = "Opaque" }
+		Tags { "RenderType" = "Opaque" "PreviewType" = "Plane" }
 		Cull Off
 		ZWrite Off
 		ZTest Always
