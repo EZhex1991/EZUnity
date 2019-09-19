@@ -6,15 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Example/Menu.unity
+    path: Assets/XLuaExamples/Tutorial/Menu.unity
     guid: 4a3778f83de77d1429b0417be26c9cc0
   - enabled: 1
-    path: Assets/Example/00_LuaBehaviour/LuaBehaviour.unity
-    guid: 00000000000000000000000000000000
+    path: Assets/XLuaExamples/Tutorial/00_LuaBehaviour/LuaBehaviour.unity
+    guid: a53d9c938e2c226459642717a11f22e0
   - enabled: 1
-    path: Assets/Example/01_LuckyBall/LuckyBall.unity
+    path: Assets/XLuaExamples/Tutorial/01_LuckyBall/LuckyBall.unity
     guid: 7f4018c3f10876e4182e1db4ecc3c2eb
   - enabled: 1
-    path: Assets/Example/02_SpaceShooter/_Complete-Lua/SpaceShooter.unity
+    path: Assets/XLuaExamples/Tutorial/02_SpaceShooter/_Complete-Lua/SpaceShooter.unity
     guid: 2292d28d37d658a4193ed5682a8536e6
-  m_configObjects: {}
