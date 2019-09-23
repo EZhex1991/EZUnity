@@ -143,5 +143,43 @@ namespace EZhex1991.EZUnity
             });
             return menu;
         }
+
+        public static Vector2 MinMaxSliderV2(Rect position, Vector2 value, float limitMin, float limitMax)
+        {
+            float valueRectWidth = 50f;
+            float margin = 5f;
+            float sliderRectWidth = position.width - (valueRectWidth + margin) * 2f;
+
+            position.width = valueRectWidth;
+            value.x = EditorGUI.FloatField(position, value.x);
+
+            position.x += valueRectWidth + margin;
+            position.width = sliderRectWidth;
+            EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, limitMin, limitMax);
+
+            position.x += sliderRectWidth + margin;
+            position.width = valueRectWidth;
+            value.y = EditorGUI.FloatField(position, value.y);
+
+            value.x = Mathf.Clamp(value.x, limitMin, limitMax);
+            value.y = Mathf.Clamp(value.y, value.x, limitMax);
+            return value;
+        }
+        // zw components will leave unchanged
+        public static Vector4 MinMaxSliderV4(Rect position, Vector4 value)
+        {
+            Vector2 valueXY = MinMaxSliderV2(position, value, value.z, value.w);
+            value.x = valueXY.x;
+            value.y = valueXY.y;
+            return value;
+        }
+        // zw components will leave unchanged
+        public static Vector4 MinMaxSliderV4(Rect position, Vector4 value, float limitMin, float limitMax)
+        {
+            Vector2 valueXY = MinMaxSliderV2(position, value, limitMin, limitMax);
+            value.x = valueXY.x;
+            value.y = valueXY.y;
+            return value;
+        }
     }
 }
