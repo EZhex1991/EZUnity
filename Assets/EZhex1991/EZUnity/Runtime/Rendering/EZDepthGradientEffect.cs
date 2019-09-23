@@ -21,7 +21,7 @@ namespace EZhex1991.EZUnity.Rendering
         public Color colorFar = new Color(0.9f, 1, 1, 1);
         [Range(0.1f, 128)]
         public float gradientPower = 1f;
-        [EZMinMaxSlider]
+        [EZMinMax]
         public Vector4 gradientSoftness = new Vector4(0, 1, 0, 1);
 
         protected override void SetMaterial()

@@ -17,8 +17,7 @@ namespace EZhex1991.EZUnity.ShaderAttributes
 
         public EZMinMaxSliderDrawer()
         {
-            // limit will be retrived from zw component of the vector
-            // you can change limit on Debug(Inspector) Window
+            // limits will be retrived from zw component of the vector
             fixedLimit = false;
             limitMin = 0;
             limitMax = 1;
@@ -68,10 +67,6 @@ namespace EZhex1991.EZUnity.ShaderAttributes
             }
             else
             {
-                float valueRectWidth = 50f;
-                float margin = 5;
-                float sliderRectWidth = position.width - (valueRectWidth + margin) * 2f;
-
                 Vector4 value = prop.vectorValue;
                 if (!fixedLimit)
                 {
@@ -80,26 +75,12 @@ namespace EZhex1991.EZUnity.ShaderAttributes
                 }
                 EditorGUI.showMixedValue = prop.hasMixedValue;
                 EditorGUI.BeginChangeCheck();
-
-                position.width = valueRectWidth;
-                value.x = EditorGUI.FloatField(position, value.x);
-
-                position.x += valueRectWidth + margin;
-                position.width = sliderRectWidth;
-                EditorGUI.MinMaxSlider(position, ref value.x, ref value.y, limitMin, limitMax);
-
-                position.x += sliderRectWidth + margin;
-                position.width = valueRectWidth;
-                value.y = EditorGUI.FloatField(position, value.y);
-
-                value.x = Mathf.Clamp(value.x, limitMin, limitMax);
-                value.y = Mathf.Clamp(value.y, value.x, limitMax);
-
-                EditorGUI.showMixedValue = false;
+                EZEditorGUIUtility.MinMaxSliderV4(position, value, limitMin, limitMax);
                 if (EditorGUI.EndChangeCheck())
                 {
                     prop.vectorValue = value;
                 }
+                EditorGUI.showMixedValue = false;
             }
         }
     }

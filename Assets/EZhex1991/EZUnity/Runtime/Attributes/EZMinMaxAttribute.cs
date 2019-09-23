@@ -7,22 +7,20 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
-    public class EZMinMaxSliderAttribute : PropertyAttribute
+    public class EZMinMaxAttribute : PropertyAttribute
     {
         public readonly bool fixedLimit;
-        public bool showAsVectorValue;
         public float limitMin;
         public float limitMax;
 
-        public EZMinMaxSliderAttribute()
+        public EZMinMaxAttribute()
         {
-            // limit will be retrived from zw component of the vector
-            // you can change limit on Debug(Inspector) Window
+            // limits will be retrived from zw component of the vector
             fixedLimit = false;
             limitMin = 0;
             limitMax = 1;
         }
-        public EZMinMaxSliderAttribute(float min, float max)
+        public EZMinMaxAttribute(float min, float max)
         {
             fixedLimit = true;
             this.limitMin = min;
