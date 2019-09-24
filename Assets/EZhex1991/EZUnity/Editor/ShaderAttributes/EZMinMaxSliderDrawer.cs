@@ -75,7 +75,7 @@ namespace EZhex1991.EZUnity.ShaderAttributes
                 }
                 EditorGUI.showMixedValue = prop.hasMixedValue;
                 EditorGUI.BeginChangeCheck();
-                EZEditorGUIUtility.MinMaxSliderV4(position, value, limitMin, limitMax);
+                value = EZEditorGUIUtility.MinMaxSliderV4(position, value, limitMin, limitMax);
                 if (EditorGUI.EndChangeCheck())
                 {
                     prop.vectorValue = value;
