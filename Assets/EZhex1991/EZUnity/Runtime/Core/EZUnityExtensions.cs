@@ -277,6 +277,13 @@ namespace EZhex1991.EZUnity
         {
             return string.Format("{0}_{1}", prefix, selection).ToUpper();
         }
+        public static void DisableKeywords(this Material mat, string prefix, Type enumType)
+        {
+            foreach (Enum value in Enum.GetValues(enumType))
+            {
+                mat.DisableKeyword(FormatKeyword(prefix, value));
+            }
+        }
         public static void SetKeyword(this Material mat, string prefix, Enum selection)
         {
             foreach (Enum value in Enum.GetValues(selection.GetType()))

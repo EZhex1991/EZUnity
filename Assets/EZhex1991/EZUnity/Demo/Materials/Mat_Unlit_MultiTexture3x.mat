@@ -8,8 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Mat_Unlit_MultiTexture3x
   m_Shader: {fileID: 4800000, guid: f6c36ce0485215a43aac05773245e94d, type: 3}
-  m_ShaderKeywords: _ADD1BLENDMODE_ALPHABLEND _ADD1UV_UV0 _ADD2BLENDMODE_ALPHABLEND
-    _ADD2UV_UV0 _ALPHAMODE_ALPHAPREMULTIPLY _MAINUV_UV0
+  m_ShaderKeywords: _ADD1BLENDMODE_ALPHABLEND _ADD2BLENDMODE_ALPHABLEND _ALPHAMODE_ALPHAPREMULTIPLY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

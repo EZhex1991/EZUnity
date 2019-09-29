@@ -15,7 +15,7 @@ Shader "EZUnity/Unlit/Advanced" {
 		[HideInInspector] _AlphaClipThreshold ("Alpha Clip Threshold", Range(0, 1)) = 0.5
 		[HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _SrcBlendMode ("Src Blend Mode", Float) = 1
 		[HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _DstBlendMode ("Dst Blend Mode", Float) = 0
-		[HideInInspector][Toggle] _ZWriteMode ("ZWrite", Float) = 1
+		[HideInInspector][Enum(Off, 0, On, 1)] _ZWriteMode ("ZWrite", Float) = 1
 		[HideInInspector][Enum(UnityEngine.Rendering.CullMode)] _CullMode ("Cull Mode", Float) = 2
 		[HideInInspector] _OffsetFactor ("Offset Factor", Float) = 0
 		[HideInInspector] _OffsetUnit ("Offset Unit", Float) = 0
