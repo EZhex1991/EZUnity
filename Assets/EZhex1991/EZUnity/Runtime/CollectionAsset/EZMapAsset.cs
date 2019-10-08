@@ -33,7 +33,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
         public int Count { get { return m_Keys.Count; } }
 
         public TValue this[TKey key] { get { return m_Values[m_KeyIndexMap[key]]; } set { m_Values[m_KeyIndexMap[key]] = value; } }
-        public TValue this[int index] { get { return m_Values[index]; } set { m_Values[index] = value; } }
+        protected TValue this[int index] { get { return m_Values[index]; } set { m_Values[index] = value; } }
 
         public virtual void OnBeforeSerialize()
         {
