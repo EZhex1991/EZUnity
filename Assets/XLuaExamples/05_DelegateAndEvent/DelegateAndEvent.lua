@@ -27,12 +27,23 @@ behaviour.onTriggerEnterAction = behaviour.onTriggerEnterAction + OnTriggerEnter
 
 -- 注意：这是个OnCollisionEnterEvent类型实例，通过调用封装过的方法把function(collision)添加到Action<Collision>，
 -- OnCollisionEnterEvent需要加到LuaCallCSharp，Action<Collision>需要加到CSharpCallLua
--- Button.onClick:AddListener同理
 function OnCollisionEnter(collision)
 	print("OnCollisionEnter in lua, objName:" .. collision.collider.name)
 	CS.UnityEngine.Object.Destroy(gameObject)
 end
 behaviour.onCollisionEnterEvent:Add(OnCollisionEnter)
+
+-- Button和其他UI组件同理
+function OnButtonClick()
+	print("OnButtonClick")
+end
+function OnToggleValueChanged(value)
+	print("OnToggleValueChanged, value:", value)
+end
+local button = CS.UnityEngine.GameObject.Find("Button"):GetComponent("Button")
+button.onClick:AddListener(OnButtonClick)
+local toggle = CS.UnityEngine.GameObject.Find("Toggle"):GetComponent("Toggle")
+toggle.onValueChanged:AddListener(OnToggleValueChanged)
 
 -- C#知识：event用来修饰一个delegate，使其只能由声明类调用，非声明类中其只能作为+=/-=表达式的左值
 -- 在xLua中，使用':'，并且第一个参数使用'+'或'-'，为一个event添加和移除function监听(添加C#delegate监听参考下面createdelegate的使用)

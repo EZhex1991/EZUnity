@@ -71,6 +71,8 @@ namespace EZhex1991.EZUnity.XLuaExample
         {
             typeof(TestBehaviour),
             typeof(TestBehaviour.OnCollisionEnterEvent),  // 注意，这是个class
+            typeof(UnityEngine.UI.Button),
+            typeof(UnityEngine.UI.Toggle),
         };
         [CSharpCallLua] // 因为是lua传过来的方法适配到了delegate由CSharp去调用，所以是CSharpCallLua
         public static List<Type> CSharpCallLua = new List<Type>()
@@ -80,6 +82,8 @@ namespace EZhex1991.EZUnity.XLuaExample
             typeof(System.Action),  // update和onDestroy都需要这个
             typeof(TestBehaviour.OnTriggerEnterAction), // onTriggerEnterEvent需要这个，其实可以换成Action<Collider>
             typeof(System.Action<Collision>),   // OnCollisionEnterEvent里需要这个
+            typeof(UnityEngine.Events.UnityAction), // Button需要这个
+            typeof(UnityEngine.Events.UnityAction<bool>), // Toggle需要这个
             typeof(System.Action<int>), // testEvent需要这个
         };
     }
