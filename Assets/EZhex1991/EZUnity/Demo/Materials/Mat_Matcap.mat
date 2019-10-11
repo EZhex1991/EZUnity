@@ -30,29 +30,13 @@ Material:
         m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MatcapTex:
-        m_Texture: {fileID: 2800000, guid: ceffb95a3efab1d4dbe924d717c4fed3, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SpecMatcap:
         m_Texture: {fileID: 2800000, guid: 9e1bad4f32811b546964fec716a7589f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecMatcapTex:
-        m_Texture: {fileID: 2800000, guid: ceffb95a3efab1d4dbe924d717c4fed3, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecTex:
-        m_Texture: {fileID: 2800000, guid: ceffb95a3efab1d4dbe924d717c4fed3, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpOn: 1
     - _Bumpiness: 1
-    - _MatcapBrightness: 1.1
-    - _SpecOn: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MatcapColor: {r: 1.4980392, g: 1.2, b: 1.2, a: 1}
     - _SpecColor: {r: 1, g: 0.5019608, b: 1, a: 1}

@@ -29,20 +29,13 @@ Material:
     m_Floats:
     - _AOOffset: 0.5
     - _AOPower: 2
-    - _AlphaOffset: 1
     - _AlphaPower: 0.5
-    - _CutOff: -1.06
-    - _FurLayerLength: 0.1
     - _FurLength: 0.1
     - _LambertOffset: 0.5
     - _LightingMode: 1
     - _RimPower: 16
     - _Spec1Power: 2
     - _Spec2Power: 8
-    - _SpecPower: 1
-    - _SpecPower1: 1
-    - _SpecPower2: 32
-    - _Thickness: 0
     m_Colors:
     - _AOColor: {r: 0.24, g: 0.24, b: 0.6, a: 1}
     - _Color: {r: 0.7, g: 0.7, b: 1, a: 1}
@@ -51,7 +44,3 @@ Material:
     - _RimColor: {r: 1, g: 1, b: 0.5, a: 1}
     - _Spec1Color: {r: 0.6007843, g: 0.4, b: 0.8, a: 1}
     - _Spec2Color: {r: 0.6519217, g: 0.16, b: 0.8, a: 1}
-    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _SpecColor1: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _SpecColor2: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _UVOffset: {r: 0, g: 0, b: 0.2, a: 0.2}

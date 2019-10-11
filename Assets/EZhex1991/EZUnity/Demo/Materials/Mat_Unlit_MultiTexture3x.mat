@@ -37,18 +37,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Add1BlendMode: 0
-    - _Add1UV: 0
     - _Add2BlendMode: 0
-    - _Add2UV: 0
     - _AlphaClipThreshold: 0.5
-    - _AlphaCutoff: 0.5
     - _AlphaMode: 3
     - _CullMode: 2
     - _DstBlendMode: 10
-    - _MainUV: 0
     - _OffsetFactor: 0
     - _OffsetUnit: 0
-    - _RenderingMode: 0
     - _SrcBlendMode: 1
     - _ZWriteMode: 0
     m_Colors:
