@@ -10,12 +10,13 @@ Shader "EZUnity/Unlit/UVStreamer" {
 		_Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(UV Movements)]
-		[EZVectorSingleLine] _UVMovements ("UV Movements", Vector) = (1, 1, 0, 0)
+		[EZVectorSingleLine] _DirU ("Dir U", Vector) = (1, 0, 0, 0)
+		[EZVectorSingleLine] _DirV ("Dir V", Vector) = (0, 1, 0, 0)
 	}
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 
-		Blend SrcAlpha One
+		Blend SrcAlpha OneMinusSrcAlpha
 		ZWrite Off
 
 		Pass {
@@ -29,7 +30,8 @@ Shader "EZUnity/Unlit/UVStreamer" {
 			float4 _MainTex_ST;
 			half4 _Color;
 
-			fixed4 _UVMovements;
+			fixed4 _DirU;
+			fixed4 _DirV;
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -47,13 +49,9 @@ Shader "EZUnity/Unlit/UVStreamer" {
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.uv_MainTex = TRANSFORM_TEX(v.uv0, _MainTex);
 
-				float3 worldNormal = UnityObjectToWorldNormal(v.normal);
-				float3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
-				float3 worldBitangent = cross(worldNormal, worldTangent);
-				float3 worldView = normalize(WorldSpaceViewDir(v.vertex));
-
-				float2 offset = float2(dot(worldView, worldTangent), dot(worldView, worldBitangent));
-				o.uv_MainTex += offset * _UVMovements.xy + offset * _UVMovements.wz;
+				float3 viewDir = normalize(ObjSpaceViewDir(v.vertex));
+				float2 uvOffset = float2(dot(viewDir, _DirU), dot(viewDir, _DirV));
+				o.uv_MainTex += uvOffset;
 				return o;
 			}
 			half4 frag (v2f i) : SV_Target {

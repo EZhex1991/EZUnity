@@ -116,37 +116,18 @@ namespace EZhex1991.EZUnity
         }
 
         protected bool firstCall = true;
-        protected bool keywordListFoldout = true;
         public sealed override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
         {
             OnEZShaderGUI(materialEditor, properties);
-            KeywordListGUI(materialEditor);
+            EditorGUILayout.Space();
+            materialEditor.KeywordsGUI();
+            EditorGUILayout.Space();
+            materialEditor.ExtraPropertiesGUI();
             firstCall = false;
         }
         public virtual void OnEZShaderGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
         {
             materialEditor.PropertiesDefaultGUI(properties);
-        }
-        protected void KeywordListGUI(MaterialEditor materialEditor)
-        {
-            if (materialEditor.targets.Length != 1) return;
-            EditorGUILayout.Space();
-            keywordListFoldout = EditorGUILayout.Foldout(keywordListFoldout, "Keywords", new GUIStyle(EditorStyles.foldout) { fontStyle = FontStyle.Bold });
-            if (keywordListFoldout)
-            {
-                Material mat = materialEditor.target as Material;
-                foreach (string keyword in mat.shaderKeywords)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.SelectableLabel(keyword, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-                    if (GUILayout.Button("Delete"))
-                    {
-                        mat.DisableKeyword(keyword);
-                        EditorUtility.SetDirty(mat);
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-            }
         }
 
         private MaterialProperty _MainTex;

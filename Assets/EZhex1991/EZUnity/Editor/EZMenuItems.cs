@@ -120,6 +120,12 @@ namespace EZhex1991.EZUnity
             EditorWindow.GetWindow<EZShaderKeywordManager>("Keyword Manager").Show();
         }
 
+        [MenuItem(ROOT_NAME + "Material Optimizer", false, (int)EZMenuItemOrder.MaterialOptimizer)]
+        private static void MaterialOptimizer()
+        {
+            EditorWindow.GetWindow<EZMaterialOptimizer>("Material Optimizer").Show();
+        }
+
         [MenuItem(ROOT_NAME + "Regex Tester", false, (int)EZMenuItemOrder.RegexTester)]
         private static void RegexTester()
         {

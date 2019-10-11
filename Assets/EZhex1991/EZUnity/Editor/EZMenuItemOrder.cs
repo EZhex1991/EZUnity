@@ -23,6 +23,7 @@ namespace EZhex1991.EZUnity
         AssetReferenceViewer,
         CorrespondingObjectViewer,
         FontReferenceViewer,
+        MaterialOptimizer,
 
         _Section_3 = _Section_0 + 300,
         GuidGenerator,

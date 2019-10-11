@@ -106,29 +106,6 @@ namespace EZhex1991.EZUnity
                 keywordInfoDict.Clear();
             }
 
-            Material selection = Selection.activeObject as Material;
-
-            EditorGUILayout.Space();
-            if (selection != null)
-            {
-                EditorGUILayout.ObjectField("Selection", selection, typeof(Material), true);
-                EditorGUI.indentLevel++;
-                for (int i = 0; i < selection.shaderKeywords.Length; i++)
-                {
-                    string keyword = selection.shaderKeywords[i];
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(keyword);
-                    if (GUILayout.Button("Delete"))
-                    {
-                        selection.DisableKeyword(keyword);
-                        EditorUtility.SetDirty(selection);
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-                EditorGUI.indentLevel--;
-                EditorGUILayout.Space();
-            }
-
             EditorGUILayout.Space();
             keywordStringFromWarning = EditorGUILayout.TextArea(keywordStringFromWarning, GUILayout.Height(80));
             if (GUILayout.Button("Get Keywords"))
