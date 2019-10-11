@@ -12,6 +12,7 @@ Shader "EZUnity/Unlit/EdgeFadeOut" {
 		[Header(Edge)]
 		[PowerSlider(8)] _AlphaPower ("Alpha Power", Range(0.01, 128)) = 32
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 

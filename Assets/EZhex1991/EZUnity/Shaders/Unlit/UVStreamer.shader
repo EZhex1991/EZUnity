@@ -13,6 +13,7 @@ Shader "EZUnity/Unlit/UVStreamer" {
 		[EZVectorSingleLine] _DirU ("Dir U", Vector) = (1, 0, 0, 0)
 		[EZVectorSingleLine] _DirV ("Dir V", Vector) = (0, 1, 0, 0)
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 

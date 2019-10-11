@@ -13,6 +13,7 @@ Shader "EZUnity/Unlit/LaserProcessed" {
 		_FlowMap("Flow Map", 2D) = "grey" {}
 		_FlowMapStrength ("Flow Map Strength", Range(-1, 1)) = 0.2
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 

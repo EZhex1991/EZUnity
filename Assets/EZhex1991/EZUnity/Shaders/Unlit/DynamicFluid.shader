@@ -27,6 +27,7 @@ Shader "EZUnity/Unlit/DynamicFluid" {
 		[HDR] _SpecColor ("Spec Color", Color) = (1, 1, 1, 1)
 		[PowerSlider(8)]_SpecPower ("Spec Power", Range(0.1, 128)) = 16
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent+100" }
 		//Cull Off

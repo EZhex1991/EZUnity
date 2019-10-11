@@ -9,6 +9,7 @@ Shader "EZUnity/#SCRIPTNAME#" {
 		_MainTex ("Main Texture", 2D) = "white" {}
 		_Color ("Color", Color) = (1, 1, 1, 1)
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 

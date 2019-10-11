@@ -11,6 +11,7 @@ Shader "EZUnity/_Debug" {
 		[KeywordEnum(Clamp, Repeat)]
 		_WrapMode ("Wrap Mode", Int) = 0
 	}
+	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
 
