@@ -13,10 +13,13 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZColorBasedOutline)]
     public class EZColorBasedOutline : EZTextureProcessor
     {
-        private const string PropertyName_GrayWeight = "_GrayWeight";
-        private const string PropertyName_Tolerance = "_Tolerance";
-        private const string PropertyName_OutlineColor = "_OutlineColor";
-        private const string PropertyName_OutlineThickness = "_OutlineThickness";
+        private static class Uniforms
+        {
+            public static readonly int PropertyID_GrayWeight = Shader.PropertyToID("_GrayWeight");
+            public static readonly int PropertyID_Tolerance = Shader.PropertyToID("_Tolerance");
+            public static readonly int PropertyID_OutlineColor = Shader.PropertyToID("_OutlineColor");
+            public static readonly int PropertyID_OutlineThickness = Shader.PropertyToID("_OutlineThickness");
+        }
 
         public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/ColorBasedOutline"; } }
 
@@ -47,10 +50,10 @@ namespace EZhex1991.EZTextureProcessor
         {
             if (material != null)
             {
-                material.SetVector(PropertyName_GrayWeight, grayWeight);
-                material.SetFloat(PropertyName_Tolerance, tolerance);
-                material.SetColor(PropertyName_OutlineColor, outlineColor);
-                material.SetInt(PropertyName_OutlineThickness, outlineThickness);
+                material.SetVector(Uniforms.PropertyID_GrayWeight, grayWeight);
+                material.SetFloat(Uniforms.PropertyID_Tolerance, tolerance);
+                material.SetColor(Uniforms.PropertyID_OutlineColor, outlineColor);
+                material.SetInt(Uniforms.PropertyID_OutlineThickness, outlineThickness);
                 Graphics.Blit(sourceTexture, destinationTexture, material);
             }
             else

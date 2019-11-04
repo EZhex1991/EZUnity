@@ -13,9 +13,12 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZTextureSpherize)]
     public class EZTextureSpherize : EZTextureProcessor
     {
-        private const string PropertyName_SpherizePower = "_SpherizePower";
-        private const string PropertyName_SpherizeCenter = "_SpherizeCenter";
-        private const string PropertyName_SpherizeStrength = "_SpherizeStrength";
+        private static class Uniforms
+        {
+            public static readonly int PropertyID_SpherizePower = Shader.PropertyToID("_SpherizePower");
+            public static readonly int PropertyID_SpherizeCenter = Shader.PropertyToID("_SpherizeCenter");
+            public static readonly int PropertyID_SpherizeStrength = Shader.PropertyToID("_SpherizeStrength");
+        }
 
         public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/Distort_Spherize"; } }
 
@@ -44,9 +47,9 @@ namespace EZhex1991.EZTextureProcessor
         {
             if (material != null)
             {
-                material.SetFloat(PropertyName_SpherizePower, spherizePower);
-                material.SetVector(PropertyName_SpherizeCenter, spherizeCenter);
-                material.SetVector(PropertyName_SpherizeStrength, spherizeStrength);
+                material.SetFloat(Uniforms.PropertyID_SpherizePower, spherizePower);
+                material.SetVector(Uniforms.PropertyID_SpherizeCenter, spherizeCenter);
+                material.SetVector(Uniforms.PropertyID_SpherizeStrength, spherizeStrength);
                 Graphics.Blit(sourceTexture, destinationTexture, material);
             }
             else

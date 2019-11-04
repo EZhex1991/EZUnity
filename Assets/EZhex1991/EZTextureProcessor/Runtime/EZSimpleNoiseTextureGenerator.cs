@@ -14,7 +14,10 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZSimpleNoiseTextureGenerator)]
     public class EZSimpleNoiseTextureGenerator : EZTextureProcessor
     {
-        private const string PropertyName_NoiseDensity = "_NoiseDensity";
+        private static class Uniforms
+        {
+            public static readonly int PropertyID_NoiseDensity = Shader.PropertyToID("_NoiseDensity");
+        }
 
         public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/Noise_Simple"; } }
 
@@ -39,7 +42,7 @@ namespace EZhex1991.EZTextureProcessor
         {
             if (material != null)
             {
-                material.SetVector(PropertyName_NoiseDensity, noiseDensity);
+                material.SetVector(Uniforms.PropertyID_NoiseDensity, noiseDensity);
                 Graphics.Blit(sourceTexture, destinationTexture, material);
             }
             else

@@ -13,8 +13,11 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZTextureTwirl)]
     public class EZTextureTwirl : EZTextureProcessor
     {
-        private const string PropertyName_TwirlCenter = "_TwirlCenter";
-        private const string PropertyName_TwirlStrength = "_TwirlStrength";
+        private static class Uniforms
+        {
+            public static readonly int PropertyID_TwirlCenter = Shader.PropertyToID("_TwirlCenter");
+            public static readonly int PropertyID_TwirlStrength = Shader.PropertyToID("_TwirlStrength");
+        }
 
         public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/Distort_Twirl"; } }
 
@@ -42,8 +45,8 @@ namespace EZhex1991.EZTextureProcessor
         {
             if (material != null)
             {
-                material.SetVector(PropertyName_TwirlCenter, twirlCenter);
-                material.SetFloat(PropertyName_TwirlStrength, twirlStrength);
+                material.SetVector(Uniforms.PropertyID_TwirlCenter, twirlCenter);
+                material.SetFloat(Uniforms.PropertyID_TwirlStrength, twirlStrength);
                 Graphics.Blit(sourceTexture, destinationTexture, material);
             }
             else

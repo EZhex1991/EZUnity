@@ -12,10 +12,10 @@ namespace EZhex1991.EZUnity.Rendering
     {
         private static class Uniforms
         {
-            public const string PropertyID_ColorNear = "_ColorNear";
-            public const string PropertyID_ColorFar = "_ColorFar";
-            public const string PropertyID_GradientPower = "_GradientPower";
-            public const string PropertyID_GradientSoftness = "_GradientSoftness";
+            public static readonly int PropertyID_ColorNear = Shader.PropertyToID("_ColorNear");
+            public static readonly int PropertyID_ColorFar = Shader.PropertyToID("_ColorFar");
+            public static readonly int PropertyID_GradientPower = Shader.PropertyToID("_GradientPower");
+            public static readonly int PropertyID_GradientSoftness = Shader.PropertyToID("_GradientSoftness");
         }
 
         [ColorUsage(true)]

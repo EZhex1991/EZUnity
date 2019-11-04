@@ -13,9 +13,12 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZTextureBlurProcessor)]
     public class EZTextureBlurProcessor : EZTextureProcessor
     {
-        private const string PropertyName_BlurWeightTex = "_BlurWeightTex";
-        private const string PropertyName_BlurRadius = "_BlurRadius";
-        private const string PropertyName_BlurDirection = "_BlurDirection";
+        private static class Uniforms
+        {
+            public static readonly int PropertyID_BlurWeightTex = Shader.PropertyToID("_BlurWeightTex");
+            public static readonly int PropertyID_BlurRadius = Shader.PropertyToID("_BlurRadius");
+            public static readonly int PropertyID_BlurDirection = Shader.PropertyToID("_BlurDirection");
+        }
 
         public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/MotionBlur"; } }
 
@@ -43,15 +46,15 @@ namespace EZhex1991.EZTextureProcessor
         {
             if (sourceTexture != null && material != null)
             {
-                material.SetTexture(PropertyName_BlurWeightTex, blurWeightTexture);
+                material.SetTexture(Uniforms.PropertyID_BlurWeightTex, blurWeightTexture);
                 RenderTexture tempTexture = RenderTexture.GetTemporary(sourceTexture.width, sourceTexture.height);
 
-                material.SetInt(PropertyName_BlurRadius, blurRadius.y);
-                material.SetVector(PropertyName_BlurDirection, new Vector4(0, 1, 0, 0));
+                material.SetInt(Uniforms.PropertyID_BlurRadius, blurRadius.y);
+                material.SetVector(Uniforms.PropertyID_BlurDirection, new Vector4(0, 1, 0, 0));
                 Graphics.Blit(sourceTexture, tempTexture, material);
 
-                material.SetInt(PropertyName_BlurRadius, blurRadius.x);
-                material.SetVector(PropertyName_BlurDirection, new Vector4(1, 0, 0, 0));
+                material.SetInt(Uniforms.PropertyID_BlurRadius, blurRadius.x);
+                material.SetVector(Uniforms.PropertyID_BlurDirection, new Vector4(1, 0, 0, 0));
                 Graphics.Blit(tempTexture, destinationTexture, material);
 
                 RenderTexture.ReleaseTemporary(tempTexture);

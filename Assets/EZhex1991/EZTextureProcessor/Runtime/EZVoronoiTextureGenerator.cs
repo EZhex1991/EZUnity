@@ -13,9 +13,12 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZVoronoiTextureGenerator)]
     public class EZVoronoiTextureGenerator : EZTextureProcessor
     {
-        private const string Keyword_FillType = "_FillType";
-        private const string PropertyName_VoronoiAngleOffset = "_VoronoiAngleOffset";
-        private const string PropertyName_VoronoiDensity = "_VoronoiDensity";
+        private static class Uniforms
+        {
+            public const string Keyword_FillType = "_FillType";
+            public static readonly int PropertyID_VoronoiAngleOffset = Shader.PropertyToID("_VoronoiAngleOffset");
+            public static readonly int PropertyID_VoronoiDensity = Shader.PropertyToID("_VoronoiDensity");
+        }
 
         public enum FillType { Gradient, Random }
 
@@ -44,9 +47,9 @@ namespace EZhex1991.EZTextureProcessor
         {
             if (material != null)
             {
-                material.SetKeyword(Keyword_FillType, fillType);
-                material.SetFloat(PropertyName_VoronoiAngleOffset, angleOffset);
-                material.SetVector(PropertyName_VoronoiDensity, voronoiDensity);
+                material.SetKeyword(Uniforms.Keyword_FillType, fillType);
+                material.SetFloat(Uniforms.PropertyID_VoronoiAngleOffset, angleOffset);
+                material.SetVector(Uniforms.PropertyID_VoronoiDensity, voronoiDensity);
                 Graphics.Blit(sourceTexture, destinationTexture, material);
             }
             else

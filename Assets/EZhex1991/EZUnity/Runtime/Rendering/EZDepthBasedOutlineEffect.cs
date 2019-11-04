@@ -12,13 +12,13 @@ namespace EZhex1991.EZUnity.Rendering
     {
         private static class Uniforms
         {
-            public const string PropertyID_SampleDistance = "_SampleDistance";
-            public const string PropertyID_DepthSensitivity = "_DepthSensitivity";
-            public const string PropertyID_NormalSensitivity = "_NormalSensitivity";
-            public const string PropertyID_CoverColor = "_CoverColor";
-            public const string PropertyID_CoverStrength = "_CoverStrength";
-            public const string PropertyID_OutlineColor = "_OutlineColor";
-            public const string PropertyID_OutlineStrength = "_OutlineStrength";
+            public static readonly int PropertyID_SampleDistance = Shader.PropertyToID("_SampleDistance");
+            public static readonly int PropertyID_DepthSensitivity = Shader.PropertyToID("_DepthSensitivity");
+            public static readonly int PropertyID_NormalSensitivity = Shader.PropertyToID("_NormalSensitivity");
+            public static readonly int PropertyID_CoverColor = Shader.PropertyToID("_CoverColor");
+            public static readonly int PropertyID_CoverStrength = Shader.PropertyToID("_CoverStrength");
+            public static readonly int PropertyID_OutlineColor = Shader.PropertyToID("_OutlineColor");
+            public static readonly int PropertyID_OutlineStrength = Shader.PropertyToID("_OutlineStrength");
         }
 
         public float sampleDistance = 0.5f;

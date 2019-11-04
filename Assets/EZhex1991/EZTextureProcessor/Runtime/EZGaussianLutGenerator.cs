@@ -13,11 +13,14 @@ namespace EZhex1991.EZTextureProcessor
         order = (int)EZAssetMenuOrder.EZGaussianLutGenerator)]
     public class EZGaussianLutGenerator : EZTextureProcessor
     {
-        private const string Keyword_GaussianTextureType = "_GaussianTextureType";
-        private const string PropertyName_GaussianRangeX = "_GaussianRangeX";
-        private const string PropertyName_GaussianSigmaX = "_GaussianSigmaX";
-        private const string PropertyName_GaussianRangeY = "_GaussianRangeY";
-        private const string PropertyName_GaussianSigmaY = "_GaussianSigmaY";
+        private static class Uniforms
+        {
+            public static readonly string Keyword_GaussianTextureType = "_GaussianTextureType";
+            public static readonly int PropertyID_GaussianRangeX = Shader.PropertyToID("_GaussianRangeX");
+            public static readonly int PropertyID_GaussianSigmaX = Shader.PropertyToID("_GaussianSigmaX");
+            public static readonly int PropertyID_GaussianRangeY = Shader.PropertyToID("_GaussianRangeY");
+            public static readonly int PropertyID_GaussianSigmaY = Shader.PropertyToID("_GaussianSigmaY");
+        }
 
         public enum TextureType { Wave, Lut1D, Lut2D }
 
@@ -50,11 +53,11 @@ namespace EZhex1991.EZTextureProcessor
         {
             if (material != null)
             {
-                material.SetKeyword(Keyword_GaussianTextureType, textureType);
-                material.SetVector(PropertyName_GaussianRangeX, rangeX);
-                material.SetFloat(PropertyName_GaussianSigmaX, sigmaX);
-                material.SetVector(PropertyName_GaussianRangeY, rangeY);
-                material.SetFloat(PropertyName_GaussianSigmaY, sigmaY);
+                material.SetKeyword(Uniforms.Keyword_GaussianTextureType, textureType);
+                material.SetVector(Uniforms.PropertyID_GaussianRangeX, rangeX);
+                material.SetFloat(Uniforms.PropertyID_GaussianSigmaX, sigmaX);
+                material.SetVector(Uniforms.PropertyID_GaussianRangeY, rangeY);
+                material.SetFloat(Uniforms.PropertyID_GaussianSigmaY, sigmaY);
                 Graphics.Blit(sourceTexture, destinationTexture, material);
             }
             else
