@@ -10,10 +10,13 @@ namespace EZhex1991.EZUnity.Rendering
     [DisallowMultipleComponent]
     public class EZColorBasedOutlineEffect : EZImageEffect
     {
-        private const string PropertyName_GrayWeight = "_GrayWeight";
-        private const string PropertyName_Tolerance = "_Tolerance";
-        private const string PropertyName_OutlineColor = "_OutlineColor";
-        private const string PropertyName_OutlineThickness = "_OutlineThickness";
+        private static class Uniforms
+        {
+            public static int PropertyID_GrayWeight = Shader.PropertyToID("_GrayWeight");
+            public static int PropertyID_Tolerance = Shader.PropertyToID("_Tolerance");
+            public static int PropertyID_OutlineColor = Shader.PropertyToID("_OutlineColor");
+            public static int PropertyID_OutlineThickness = Shader.PropertyToID("_OutlineThickness");
+        }
 
         public Color grayWeight = new Color(0.299f, 0.587f, 0.114f);
         [Range(0, 255)]
@@ -23,10 +26,10 @@ namespace EZhex1991.EZUnity.Rendering
 
         protected override void SetMaterial()
         {
-            material.SetVector(PropertyName_GrayWeight, grayWeight);
-            material.SetFloat(PropertyName_Tolerance, tolerance);
-            material.SetColor(PropertyName_OutlineColor, outlineColor);
-            material.SetInt(PropertyName_OutlineThickness, outlineThickness);
+            material.SetVector(Uniforms.PropertyID_GrayWeight, grayWeight);
+            material.SetFloat(Uniforms.PropertyID_Tolerance, tolerance);
+            material.SetColor(Uniforms.PropertyID_OutlineColor, outlineColor);
+            material.SetInt(Uniforms.PropertyID_OutlineThickness, outlineThickness);
         }
 
         private void OnValidate()

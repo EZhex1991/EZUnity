@@ -10,10 +10,13 @@ namespace EZhex1991.EZUnity.Rendering
     [DisallowMultipleComponent]
     public class EZDepthGradientEffect : EZImageEffect
     {
-        private const string PropertyName_ColorNear = "_ColorNear";
-        private const string PropertyName_ColorFar = "_ColorFar";
-        private const string PropertyName_GradientPower = "_GradientPower";
-        private const string PropertyName_GradientSoftness = "_GradientSoftness";
+        private static class Uniforms
+        {
+            public const string PropertyID_ColorNear = "_ColorNear";
+            public const string PropertyID_ColorFar = "_ColorFar";
+            public const string PropertyID_GradientPower = "_GradientPower";
+            public const string PropertyID_GradientSoftness = "_GradientSoftness";
+        }
 
         [ColorUsage(true)]
         public Color colorNear = Color.white;
@@ -26,10 +29,10 @@ namespace EZhex1991.EZUnity.Rendering
 
         protected override void SetMaterial()
         {
-            material.SetColor(PropertyName_ColorNear, colorNear);
-            material.SetColor(PropertyName_ColorFar, colorFar);
-            material.SetFloat(PropertyName_GradientPower, gradientPower);
-            material.SetVector(PropertyName_GradientSoftness, gradientSoftness);
+            material.SetColor(Uniforms.PropertyID_ColorNear, colorNear);
+            material.SetColor(Uniforms.PropertyID_ColorFar, colorFar);
+            material.SetFloat(Uniforms.PropertyID_GradientPower, gradientPower);
+            material.SetVector(Uniforms.PropertyID_GradientSoftness, gradientSoftness);
         }
 
         private void Reset()

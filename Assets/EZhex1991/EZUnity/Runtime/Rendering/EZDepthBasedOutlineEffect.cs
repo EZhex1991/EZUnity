@@ -10,13 +10,16 @@ namespace EZhex1991.EZUnity.Rendering
     [DisallowMultipleComponent]
     public class EZDepthBasedOutlineEffect : EZImageEffect
     {
-        private const string PropertyName_SampleDistance = "_SampleDistance";
-        private const string PropertyName_DepthSensitivity = "_DepthSensitivity";
-        private const string PropertyName_NormalSensitivity = "_NormalSensitivity";
-        private const string PropertyName_CoverColor = "_CoverColor";
-        private const string PropertyName_CoverStrength = "_CoverStrength";
-        private const string PropertyName_OutlineColor = "_OutlineColor";
-        private const string PropertyName_OutlineStrength = "_OutlineStrength";
+        private static class Uniforms
+        {
+            public const string PropertyID_SampleDistance = "_SampleDistance";
+            public const string PropertyID_DepthSensitivity = "_DepthSensitivity";
+            public const string PropertyID_NormalSensitivity = "_NormalSensitivity";
+            public const string PropertyID_CoverColor = "_CoverColor";
+            public const string PropertyID_CoverStrength = "_CoverStrength";
+            public const string PropertyID_OutlineColor = "_OutlineColor";
+            public const string PropertyID_OutlineStrength = "_OutlineStrength";
+        }
 
         public float sampleDistance = 0.5f;
         public float depthSensitivity = 10f;
@@ -28,13 +31,13 @@ namespace EZhex1991.EZUnity.Rendering
 
         protected override void SetMaterial()
         {
-            material.SetFloat(PropertyName_SampleDistance, sampleDistance);
-            material.SetFloat(PropertyName_DepthSensitivity, depthSensitivity);
-            material.SetFloat(PropertyName_NormalSensitivity, normalSensitivity);
-            material.SetColor(PropertyName_CoverColor, coverColor);
-            material.SetFloat(PropertyName_CoverStrength, coverStrength);
-            material.SetColor(PropertyName_OutlineColor, outlineColor);
-            material.SetFloat(PropertyName_OutlineStrength, outlineStrength);
+            material.SetFloat(Uniforms.PropertyID_SampleDistance, sampleDistance);
+            material.SetFloat(Uniforms.PropertyID_DepthSensitivity, depthSensitivity);
+            material.SetFloat(Uniforms.PropertyID_NormalSensitivity, normalSensitivity);
+            material.SetColor(Uniforms.PropertyID_CoverColor, coverColor);
+            material.SetFloat(Uniforms.PropertyID_CoverStrength, coverStrength);
+            material.SetColor(Uniforms.PropertyID_OutlineColor, outlineColor);
+            material.SetFloat(Uniforms.PropertyID_OutlineStrength, outlineStrength);
         }
 
         private void Reset()
