@@ -112,6 +112,15 @@ namespace EZhex1991.EZUnity
             tf.localEulerAngles = angles;
         }
 
+        public static Quaternion TransformRotation(this Transform tf, Quaternion q)
+        {
+            return tf.rotation * q;
+        }
+        public static Quaternion InverseTransformRotation(this Transform tf, Quaternion q)
+        {
+            return Quaternion.Inverse(tf.rotation) * q;
+        }
+
         public static Vector3 WorldCenter(this BoxCollider collider)
         {
             return collider.transform.TransformPoint(collider.center);
