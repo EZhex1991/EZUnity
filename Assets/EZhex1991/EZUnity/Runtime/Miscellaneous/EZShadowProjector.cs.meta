@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9d9929347f188444fbed2c55de6ae807
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - shadowCollectorShader: {fileID: 4800000, guid: 93e1810105643814fa6188bb9a625ad5,
+      type: 3}
+  - shadowCasterShader: {fileID: 4800000, guid: ef104ff2dca9215459a03575100cd221,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
