@@ -43,5 +43,61 @@ namespace EZhex1991.EZUnity
                 tf.rotation = Quaternion.identity;
             }
         }
+
+        [MenuItem(MENU_NAME + "Align Parent Transform", false)]
+        private static void AlignParentTransform(MenuCommand command)
+        {
+            Transform tf = (Transform)command.context;
+            if (tf.parent == null) return;
+            if (tf.localPosition != Vector3.zero || tf.localRotation != Quaternion.identity)
+            {
+                Undo.RecordObject(tf.parent, "Align Parent Transform");
+                Undo.RecordObject(tf, "Align Parent Transform");
+                tf.parent.SetPositionAndRotation(tf.position, tf.rotation);
+                tf.localPosition = Vector3.zero;
+                tf.localRotation = Quaternion.identity;
+            }
+        }
+        [MenuItem(MENU_NAME + "Align Parent Transform", true)]
+        private static bool AlignParentTransformValidation(MenuCommand command)
+        {
+            Transform tf = (Transform)command.context;
+            if (tf.parent == null) return false;
+            if (tf.localPosition == Vector3.zero && tf.localRotation == Quaternion.identity) return false;
+            return true;
+        }
+
+        [MenuItem(MENU_NAME + "Align To Active Position", false)]
+        private static void AlignToActivePosition(MenuCommand command)
+        {
+            Transform tf = (Transform)command.context;
+            Transform alignTo = Selection.activeTransform;
+            Undo.RecordObject(tf, "Align To Active Position");
+            tf.position = alignTo.position;
+        }
+        [MenuItem(MENU_NAME + "Align To Active Rotation", false)]
+        private static void AlignToActiveRotation(MenuCommand command)
+        {
+            Transform tf = (Transform)command.context;
+            Transform alignTo = Selection.activeTransform;
+            Undo.RecordObject(tf, "Align To Active Rotation");
+            tf.rotation = alignTo.rotation;
+        }
+        [MenuItem(MENU_NAME + "Align To Active Transform", false)]
+        private static void AlignToActiveTransform(MenuCommand command)
+        {
+            Transform tf = (Transform)command.context;
+            Transform alignTo = Selection.activeTransform;
+            Undo.RecordObject(tf, "Align To Active Transform");
+            tf.position = alignTo.position;
+            tf.rotation = alignTo.rotation;
+        }
+        [MenuItem(MENU_NAME + "Align To Active Position", true)]
+        [MenuItem(MENU_NAME + "Align To Active Rotation", true)]
+        [MenuItem(MENU_NAME + "Align To Active Transform", true)]
+        private static bool AlignToActive_Validattion(MenuCommand command)
+        {
+            return Selection.transforms.Length > 1;
+        }
     }
 }
