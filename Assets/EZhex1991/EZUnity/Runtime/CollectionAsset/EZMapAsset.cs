@@ -111,6 +111,10 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
             }
         }
 
+        public bool TryGetIndex(TKey key, out int index)
+        {
+            return m_KeyIndexMap.TryGetValue(key, out index);
+        }
         public bool TryGetValue(TKey key, out TValue value)
         {
             int index;
@@ -134,6 +138,13 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
         public bool ContainsKey(TKey key)
         {
             return m_KeyIndexMap.ContainsKey(key);
+        }
+        public void Clear()
+        {
+            m_Keys.Clear();
+            m_Values.Clear();
+            m_KeyIndexMap.Clear();
+            m_KeyCountMap.Clear();
         }
     }
 }
