@@ -19,11 +19,8 @@ namespace EZhex1991.EZUnity.Playables
 
         public bool tweenPosition = true;
         public bool tweenRotation = true;
-        public bool tweenScale = false;
+        public bool tweenScale = true;
         public AnimationCurve curve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
-
-        public Vector3 startEulerAngles;
-        public Vector3 endEulerAngles;
 
         [NonSerialized]
         public Vector3 startPosition;

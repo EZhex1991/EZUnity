@@ -1,5 +1,5 @@
 /* Author:          ezhex1991@outlook.com
- * CreateTime:      2018-06-22 21:36:33
+ * CreateTime:      2019-11-07 10:36:18
  * Organization:    #ORGANIZATION#
  * Description:     
  */
@@ -10,19 +10,19 @@ using UnityEngine.Timeline;
 namespace EZhex1991.EZUnity.Playables
 {
     [TrackBindingType(typeof(Transform))]
-    [TrackClipType(typeof(EZTransformTweenClip))]
-    public class EZTransformTweenTrack : TrackAsset
+    [TrackClipType(typeof(EZTransformConstraintClip))]
+    public class EZTransformPositionTrack : TrackAsset
     {
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            return ScriptPlayable<EZTransformTweenMixer>.Create(graph, inputCount);
+            return ScriptPlayable<EZTransformPositionMixer>.Create(graph, inputCount);
         }
 
         public override void GatherProperties(PlayableDirector director, IPropertyCollector driver)
         {
             var binding = director.GetGenericBinding(this) as Transform;
             if (binding == null) return;
-            driver.AddFromComponent(binding.gameObject, binding);
+            driver.AddFromName<Transform>(binding.gameObject, "m_LocalPosition");
             base.GatherProperties(director, driver);
         }
     }

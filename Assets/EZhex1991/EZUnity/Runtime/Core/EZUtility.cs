@@ -44,6 +44,64 @@ namespace EZhex1991.EZUnity
             return gradient;
         }
 
+        public static Quaternion QuaternionCumulate(Quaternion q1, Quaternion q2)
+        {
+            if (Quaternion.Dot(q1, q2) < 0)
+            {
+                return QuaternionAdd(q1, new Quaternion(-q2.x, -q2.y, -q2.z, -q2.w));
+            }
+            else
+            {
+                return QuaternionAdd(q1, q2);
+            }
+        }
+        public static Quaternion QuaternionAdd(Quaternion q1, Quaternion q2)
+        {
+            return new Quaternion(
+                q1.x + q2.x,
+                q1.y + q2.y,
+                q1.z + q2.z,
+                q1.w + q2.w
+            );
+        }
+
+        public static Vector2 Abs(Vector2 v2)
+        {
+            return new Vector2(Mathf.Abs(v2.x), Mathf.Abs(v2.y));
+        }
+        public static Vector3 Abs(Vector3 v3)
+        {
+            return new Vector3(Mathf.Abs(v3.x), Mathf.Abs(v3.y), Mathf.Abs(v3.z));
+        }
+        public static Vector4 Abs(Vector4 v4)
+        {
+            return new Vector4(Mathf.Abs(v4.x), Mathf.Abs(v4.y), Mathf.Abs(v4.z), Mathf.Abs(v4.w));
+        }
+        public static float MaxComponent(Vector2 v2)
+        {
+            return Mathf.Max(v2.x, v2.y);
+        }
+        public static float MaxComponent(Vector3 v3)
+        {
+            return Mathf.Max(v3.x, v3.y, v3.z);
+        }
+        public static float MaxComponent(Vector4 v4)
+        {
+            return Mathf.Max(v4.x, v4.y, v4.z, v4.w);
+        }
+        public static float MinComponent(Vector2 v2)
+        {
+            return Mathf.Min(v2.x, v2.y);
+        }
+        public static float MinComponent(Vector3 v3)
+        {
+            return Mathf.Min(v3.x, v3.y, v3.z);
+        }
+        public static float MinComponent(Vector4 v4)
+        {
+            return Mathf.Min(v4.x, v4.y, v4.z, v4.w);
+        }
+
         public static bool IsNetAvailable
         {
             get { return Application.internetReachability != NetworkReachability.NotReachable; }

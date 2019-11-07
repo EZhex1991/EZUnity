@@ -3,17 +3,13 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
 namespace EZhex1991.EZUnity.Playables
 {
-    [Serializable]
     public class EZTransformTweenMixer : PlayableBehaviour
     {
-        public bool eulerRotation;
-
         private bool started;
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
@@ -24,12 +20,10 @@ namespace EZhex1991.EZUnity.Playables
             Vector3 originalPosition = targetTransform.position;
             Quaternion originalRotation = targetTransform.rotation;
             Vector3 originalScale = targetTransform.localScale;
-            Vector3 originalEulerAngles = targetTransform.localEulerAngles;
 
             Vector3 outputPosition = Vector3.zero;
             Quaternion outputRotation = new Quaternion(0f, 0f, 0f, 0f);
             Vector3 outputScale = Vector3.zero;
-            Vector3 outputEulerAngles = Vector3.zero;
 
             float positionWeight = 0f;
             float rotationWeight = 0f;
@@ -58,26 +52,11 @@ namespace EZhex1991.EZUnity.Playables
                 }
                 if (inputBehaviour.tweenRotation)
                 {
-                    if (eulerRotation)
-                    {
-                        rotationWeight += inputWeight;
-                        outputEulerAngles += Vector3.Lerp(inputBehaviour.startEulerAngles, inputBehaviour.endEulerAngles, process) * inputWeight;
-                    }
-                    else if (inputBehaviour.endPoint != null)
+                    if (inputBehaviour.endPoint != null)
                     {
                         rotationWeight += inputWeight;
                         Quaternion targetRotation = Quaternion.Lerp(inputBehaviour.startRotation, inputBehaviour.endPoint.rotation, process);
-#if UNITY_2018_1
-                        targetRotation = targetRotation.Normalize();
-#else
-                        targetRotation.Normalize();
-#endif
-                        if (Quaternion.Dot(outputRotation, targetRotation) < 0f)
-                        {
-                            targetRotation = targetRotation.Scale(-1f);
-                        }
-                        targetRotation = targetRotation.Scale(inputWeight);
-                        outputRotation = outputRotation.Add(targetRotation);
+                        outputRotation = EZUtility.QuaternionCumulate(outputRotation, targetRotation.Scale(inputWeight));
                     }
                 }
                 if (inputBehaviour.tweenScale && inputBehaviour.endPoint != null)
@@ -86,16 +65,18 @@ namespace EZhex1991.EZUnity.Playables
                     outputScale += Vector3.Lerp(inputBehaviour.startScale, inputBehaviour.endPoint.localScale, process) * inputWeight;
                 }
             }
-            targetTransform.position = outputPosition + originalPosition * (1f - positionWeight);
-            if (eulerRotation)
+            if (positionWeight > 1e-5)
             {
-                targetTransform.localEulerAngles = outputEulerAngles + originalEulerAngles * (1f - rotationWeight);
+                targetTransform.position = outputPosition + originalPosition * (1f - positionWeight);
             }
-            else
+            if (rotationWeight > 1e-5)
             {
-                targetTransform.rotation = outputRotation.Add(originalRotation.Scale(1f - rotationWeight));
+                targetTransform.rotation = EZUtility.QuaternionCumulate(outputRotation, originalRotation.Scale(1f - rotationWeight));
             }
-            targetTransform.localScale = outputScale + originalScale * (1f - scaleWeight);
+            if (scaleWeight > 1e-5)
+            {
+                targetTransform.localScale = outputScale + originalScale * (1f - scaleWeight);
+            }
             started = true;
         }
 
