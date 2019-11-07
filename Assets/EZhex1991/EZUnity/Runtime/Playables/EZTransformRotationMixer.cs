@@ -33,7 +33,7 @@ namespace EZhex1991.EZUnity.Playables
                 outputRotation = EZUtility.QuaternionCumulate(outputRotation, inputBehaviour.target.rotation.Scale(inputWeight));
             }
             if (totalWeight < 1e-5) return;
-            binding.rotation = outputRotation.normalized;
+            binding.rotation = outputRotation;
         }
     }
 }

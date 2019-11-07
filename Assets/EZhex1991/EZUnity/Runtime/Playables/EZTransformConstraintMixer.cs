@@ -49,7 +49,7 @@ namespace EZhex1991.EZUnity.Playables
             }
             if (rotationConstraint)
             {
-                binding.rotation = rotation.normalized;
+                binding.rotation = rotation;
             }
             if (scaleConstraint)
             {

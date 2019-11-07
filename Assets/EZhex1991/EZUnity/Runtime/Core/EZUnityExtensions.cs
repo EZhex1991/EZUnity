@@ -266,22 +266,6 @@ namespace EZhex1991.EZUnity
             return texture.EncodeToPNG();
         }
 
-#if !UNITY_2018_2_OR_NEWER
-        public static Quaternion Normalize(this Quaternion rotation)
-        {
-            float magnitude = rotation.Magnitude();
-            if (magnitude > 0f)
-            {
-                return rotation.Scale(1f / magnitude);
-            }
-            else
-            {
-                Debug.LogWarning("Cannot normalize a quaternion with zero magnitude.");
-                return Quaternion.identity;
-            }
-        }
-#endif
-
         public static string FormatKeyword(string prefix, Enum selection)
         {
             return string.Format("{0}_{1}", prefix, selection).ToUpper();
