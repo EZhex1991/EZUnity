@@ -2,6 +2,8 @@
 
 经常说到的“纯lua”逻辑并不是整个项目不用到任何C#，而是在已有的框架下，游戏机制相关逻辑都使用lua编写。该示例用到的C#脚本主要在[EZhex1991/EZUnity/XLuaExtension](../EZhex1991/EZUnity/XLuaExtension)目录下。
 
+示例用到的配置放在[XLuaExamples/Editor](Editor)目录下。
+
 该示例分两个部分。
 
 ## 常见问题的示例
