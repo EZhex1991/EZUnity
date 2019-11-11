@@ -10,7 +10,7 @@
 
 0. [CustomLoader](00_CustomLoader) - “lua只能放Resources？只能用‘.txt’后缀？”
 0. [Dictionary](01_Dictionary) - “词典不可以用？泛型不能用？”
-0. [InexpliciteOverload](02_InexpliciteOverload) - “Physics.Raycat返回值错误？out和ref不能用？”
+0. [InexpliciteOverload](02_InexpliciteOverload) - “Physics.Raycast返回值错误？out和ref不能用？”
 0. [IsNilOrNull](03_IsNilOrNull) - “销毁了不是nil？GetComponent拿不到nil？”
 0. [Coroutine](04_Coroutine) - “协程不能用？协程不能停？”
 0. [DelegateAndEvent](05_DelegateAndEvent) - “delegate不能？event不能用？ButtonClickedEvent是个class，不能用？”
