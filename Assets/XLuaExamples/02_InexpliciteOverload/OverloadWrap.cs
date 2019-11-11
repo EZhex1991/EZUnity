@@ -21,18 +21,14 @@ namespace EZhex1991.EZUnity.XLuaExample
             return UnityEngine.Random.Range(min, max);
         }
 
-        // out和ref参数造成UnityEngine.Physics.Raycast重载调用不明确
-        public static bool Raycast(Ray ray, out RaycastHit hitInfo)
+        // out参数造成UnityEngine.Physics.Raycast重载调用不明确(ref同理)
+        public static bool Raycast(Ray ray)
+        {
+            return UnityEngine.Physics.Raycast(ray);
+        }
+        public static bool RaycastOut(Ray ray, out RaycastHit hitInfo)
         {
             return UnityEngine.Physics.Raycast(ray, out hitInfo);
-        }
-        public static bool Raycast(Ray ray, out RaycastHit hitInfo, float maxDistance)
-        {
-            return UnityEngine.Physics.Raycast(ray, out hitInfo, maxDistance);
-        }
-        public static bool Raycast(Ray ray, out RaycastHit hitInfo, float maxDistance, int layerMask)
-        {
-            return UnityEngine.Physics.Raycast(ray, out hitInfo, maxDistance, layerMask);
         }
     }
 }
