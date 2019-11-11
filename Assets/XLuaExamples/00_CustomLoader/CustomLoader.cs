@@ -2,10 +2,12 @@
  * CreateTime:      2017-05-23 18:20:26
  * Organization:    #ORGANIZATION#
  * Description:     
+ 
+ * `require`会通过xlua的`Loader`来获取lua代码，且xlua已经自带了“从Resources和StreamingAssets目录加载lua文件”的Loader。
+ * 你自己可以通过实现`CustomLoader`来增加自定义的lua代码读取方式。lua端require的字符串参数会作为C#端CustomLoader的参数给
+ * 你，你可以对这个字符串进行任何更改，然后读取文件/加载Bundle/网络请求，只要最终以byte[]形式返回lua代码即可。
  * 
- * xlua中require实际就是调用Loader来读取lua代码
- * xlua已经实现了从Resources和StreamingAssets目录加载lua文件的Loader。你可以通过CustomLoader来自定义lua代码的读取方式
- * lua端require时传入字符串，C#端CustomLoader里根据这个字符串返回lua代码byte[]，这个过程是读取文件，还是加载bundle，都由你自己决定。
+ * require的参数是你写的，CustomLoader的逻辑也是你写的，xlua并不关心你在其中做了什么。
  */
 using System.IO;
 using UnityEngine;

@@ -6,7 +6,7 @@
 
 该示例分两个部分。
 
-## 常见问题的示例
+## 常见问题的示例（代码都很短并且有注释，请点开耐心阅读）
 
 0. [CustomLoader](00_CustomLoader) - “lua只能放Resources？只能用‘.txt’后缀？”
 0. [Dictionary](01_Dictionary) - “词典不可以用？泛型不能用？”
