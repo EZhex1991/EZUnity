@@ -27,4 +27,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _GreyFactor: {r: 0.299, g: 0.587, b: 0.114, a: 1}
-    - _HSVFactor: {r: 0, g: 0, b: 0, a: 0.01}
+    - _HSVFactor: {r: 50, g: -50, b: 50, a: 0.01}
