@@ -1,5 +1,5 @@
 /* Author:          ezhex1991@outlook.com
- * CreateTime:      2017-05-23 18:20:26
+ * CreateTime:      2019-11-25 11:13:00
  * Organization:    #ORGANIZATION#
  * Description:     
  */
@@ -14,19 +14,32 @@ namespace EZhex1991.EZUnity.XLuaExample
     [LuaCallCSharp]
     public class LuaManager : MonoBehaviour
     {
-        public string fileName;
+        private static LuaManager m_Instance;
+        public static LuaManager Instance
+        {
+            get
+            {
+                if (m_Instance == null)
+                {
+                    m_Instance = FindObjectOfType<LuaManager>();
+                    if (m_Instance == null)
+                    {
+                        m_Instance = new GameObject("LuaManager").AddComponent<LuaManager>();
+                    }
+                }
+                return m_Instance;
+            }
+        }
 
-        private static string luaDirPath { get { return Application.dataPath + "/XLuaExamples/"; } }
-        private static LuaEnv luaEnv;
+        public string luaDirPath { get { return Application.dataPath + "/XLuaExamples/"; } }
+        public LuaEnv luaEnv { get; private set; }
 
         private void Awake()
         {
-            if (luaEnv == null)
-            {
-                luaEnv = new LuaEnv();
-                luaEnv.AddLoader(LoadFromFile); // AddLoader(CustomLoader)文档上有说明，自己读取lua源码以byte[]形式返回即可。
-                luaEnv.DoString("require('" + fileName + "')");
-            }
+            DontDestroyOnLoad(this);
+            m_Instance = this;
+            luaEnv = new LuaEnv();
+            luaEnv.AddLoader(LoadFromFile); // AddLoader(CustomLoader)文档上有说明，自己读取lua源码以byte[]形式返回即可。
         }
         private void Update()
         {
