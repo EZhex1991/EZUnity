@@ -45,11 +45,6 @@ namespace EZhex1991.EZUnity.XLuaExample
         {
             luaEnv.Tick();
         }
-        private IEnumerator OnApplicationQuit()
-        {
-            yield return null;
-            luaEnv.Dispose();
-        }
 
         private byte[] LoadFromFile(ref string fileName)    // 这里的fileName就是lua中require的参数
         {
