@@ -65,15 +65,6 @@ namespace EZhex1991.EZUnity.Framework
         [SerializeField]
         private string[] m_LuaBundles = new string[] { "script_lua" };
         public string[] luaBundles { get { return m_LuaBundles; } set { m_LuaBundles = value; } }
-        [SerializeField]
-        private string m_LuaBootModule;
-        public string luaBootModule;
-        [SerializeField]
-        private string m_LuaEntrance;
-        public string luaEntrance;
-        [SerializeField]
-        private string m_LuaExit;
-        public string luaExit;
         #endregion
     }
 }

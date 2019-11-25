@@ -101,9 +101,6 @@ namespace EZhex1991.EZUnity.XLuaExtension
             }
         }
 
-        private LuaAction luaStart;
-        private LuaAction luaExit;
-
         protected override void Init()
         {
             AddBuildin();
@@ -119,22 +116,6 @@ namespace EZhex1991.EZUnity.XLuaExtension
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
             }
-            ezApplication.onApplicationQuitEvent += ExitLua;
-        }
-
-        public void StartLua()
-        {
-            if (!string.IsNullOrEmpty(settings.luaBootModule))
-            {
-                luaRequire(settings.luaBootModule);
-                luaStart = luaEnv.Global.Get<LuaAction>(settings.luaEntrance);
-                luaExit = luaEnv.Global.Get<LuaAction>(settings.luaExit);
-            }
-            if (luaStart != null) luaStart();
-        }
-        public void ExitLua()
-        {
-            if (luaExit != null) luaExit();
         }
 
         private void AddBuildin()

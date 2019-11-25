@@ -50,8 +50,9 @@ namespace EZhex1991.EZUnity.Framework
             if (onApplicationStartEvent != null) onApplicationStartEvent();
         }
 
-        private void OnApplicationQuit()
+        private IEnumerator OnApplicationQuit()
         {
+            yield return null;
             if (onApplicationQuitEvent != null) onApplicationQuitEvent();
         }
 
