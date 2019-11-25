@@ -23,8 +23,31 @@ namespace EZhex1991.EZUnity.XLuaExtension
         private EZResources ezResources { get { return EZResources.Instance; } }
         private EZApplicationSettings settings { get { return EZApplicationSettings.Instance; } }
 
-        private LuaEnv m_LuaEnv = new LuaEnv();
-        public LuaEnv luaEnv { get { return m_LuaEnv; } }
+        private static LuaEnv m_LuaEnv;
+        public LuaEnv luaEnv
+        {
+            get
+            {
+                if (m_LuaEnv == null)
+                {
+                    m_LuaEnv = new LuaEnv();
+                    //luaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
+                    switch (ezApplication.runMode)
+                    {
+                        case RunMode.Develop:
+                            m_LuaEnv.AddLoader(LoadFromFile);
+                            break;
+                        case RunMode.Package:
+                            m_LuaEnv.AddLoader(LoadFromBundle);
+                            break;
+                        case RunMode.Update:
+                            m_LuaEnv.AddLoader(LoadFromBundle);
+                            break;
+                    }
+                }
+                return m_LuaEnv;
+            }
+        }
 
         private LuaRequire m_LuaRequire;
         public LuaRequire luaRequire
@@ -100,29 +123,6 @@ namespace EZhex1991.EZUnity.XLuaExtension
                 }
                 return m_LuaAssets;
             }
-        }
-
-        protected override void Init()
-        {
-            AddBuildin();
-            switch (ezApplication.runMode)
-            {
-                case RunMode.Develop:
-                    luaEnv.AddLoader(LoadFromFile);
-                    break;
-                case RunMode.Package:
-                    luaEnv.AddLoader(LoadFromBundle);
-                    break;
-                case RunMode.Update:
-                    luaEnv.AddLoader(LoadFromBundle);
-                    break;
-            }
-            ezApplication.onApplicationQuitEvent += luaEnv.Dispose;
-        }
-
-        private void AddBuildin()
-        {
-            //luaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         }
 
         private byte[] LoadFromFile(ref string fileKey)

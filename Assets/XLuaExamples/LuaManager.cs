@@ -31,15 +31,27 @@ namespace EZhex1991.EZUnity.XLuaExample
             }
         }
 
-        public string luaDirPath { get { return Application.dataPath + "/XLuaExamples/"; } }
-        public LuaEnv luaEnv { get; private set; }
+        public static string luaDirPath { get { return Application.dataPath + "/XLuaExamples/"; } }
+
+        private static LuaEnv m_LuaEnv;
+        public LuaEnv luaEnv
+        {
+            get
+            {
+                if (m_LuaEnv == null)
+                {
+                    m_LuaEnv = new LuaEnv();
+                    m_LuaEnv.AddLoader(LoadFromFile); // AddLoader(CustomLoader)文档上有说明，自己读取lua源码以byte[]形式返回即可。
+                    print("LuaEnv Initialized");
+                }
+                return m_LuaEnv;
+            }
+        }
 
         private void Awake()
         {
             DontDestroyOnLoad(this);
             m_Instance = this;
-            luaEnv = new LuaEnv();
-            luaEnv.AddLoader(LoadFromFile); // AddLoader(CustomLoader)文档上有说明，自己读取lua源码以byte[]形式返回即可。
         }
         private void Update()
         {
