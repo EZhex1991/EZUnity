@@ -25,6 +25,7 @@ namespace EZhex1991.EZUnity.XLuaExtension
 
         private LuaEnv m_LuaEnv = new LuaEnv();
         public LuaEnv luaEnv { get { return m_LuaEnv; } }
+
         private LuaRequire m_LuaRequire;
         public LuaRequire luaRequire
         {
@@ -116,6 +117,7 @@ namespace EZhex1991.EZUnity.XLuaExtension
                     luaEnv.AddLoader(LoadFromBundle);
                     break;
             }
+            ezApplication.onApplicationQuitEvent += luaEnv.Dispose;
         }
 
         private void AddBuildin()
