@@ -38,7 +38,7 @@ namespace EZhex1991.EZUnity.Playables
 
                 totalWeight += inputWeight;
                 position += inputBehaviour.target.position * inputWeight;
-                rotation = EZUtility.QuaternionCumulate(rotation, inputBehaviour.target.rotation.Scale(inputWeight));
+                rotation = QuaternionExt.Cumulate(rotation, inputBehaviour.target.rotation.Scale(inputWeight));
                 scale += inputBehaviour.target.lossyScale * inputWeight;
             }
 

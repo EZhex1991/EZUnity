@@ -56,7 +56,7 @@ namespace EZhex1991.EZUnity.Playables
                     {
                         rotationWeight += inputWeight;
                         Quaternion targetRotation = Quaternion.Lerp(inputBehaviour.startRotation, inputBehaviour.endPoint.rotation, process);
-                        outputRotation = EZUtility.QuaternionCumulate(outputRotation, targetRotation.Scale(inputWeight));
+                        outputRotation = QuaternionExt.Cumulate(outputRotation, targetRotation.Scale(inputWeight));
                     }
                 }
                 if (inputBehaviour.tweenScale && inputBehaviour.endPoint != null)
@@ -71,7 +71,7 @@ namespace EZhex1991.EZUnity.Playables
             }
             if (rotationWeight > 1e-5)
             {
-                targetTransform.rotation = EZUtility.QuaternionCumulate(outputRotation, originalRotation.Scale(1f - rotationWeight));
+                targetTransform.rotation = QuaternionExt.Cumulate(outputRotation, originalRotation.Scale(1f - rotationWeight));
             }
             if (scaleWeight > 1e-5)
             {
