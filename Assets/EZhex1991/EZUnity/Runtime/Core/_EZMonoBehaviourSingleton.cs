@@ -22,7 +22,7 @@ namespace EZhex1991.EZUnity
                     m_Instance = FindObjectOfType<T>();
                     if (m_Instance == null)
                     {
-                        m_Instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                        m_Instance = new GameObject(nameof(T)).AddComponent<T>();
                     }
                 }
                 return m_Instance;
