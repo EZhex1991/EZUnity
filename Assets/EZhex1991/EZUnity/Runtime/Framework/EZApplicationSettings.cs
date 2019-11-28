@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+#pragma warning disable 0414
 using UnityEngine;
 
 namespace EZhex1991.EZUnity.Framework

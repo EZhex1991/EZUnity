@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 using UnityEngine;
 
 namespace EZhex1991.EZUnity
