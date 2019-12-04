@@ -9,34 +9,46 @@ local M = {}
 local DisposeTest = CS.EZhex1991.EZUnity.XLuaExample.DisposeTest
 xlua.private_accessible(DisposeTest)
 
-function TestLuaFunction()
+function LuaFunction()
     print("Lua Function")
 end
 
-print("----------Action Test----------")
-DisposeTest.testAction = TestLuaFunction
-DisposeTest.testAction = DisposeTest.testAction + DisposeTest.TestFunction
+print("----------Action----------")
+DisposeTest.testAction = LuaFunction
+DisposeTest.testAction = DisposeTest.testAction + DisposeTest.CSharpFunction
 DisposeTest.testAction()
-DisposeTest.testAction = DisposeTest.testAction - DisposeTest.TestFunction
+
+print("----------CSharpFunction Unregistered----------")
+DisposeTest.testAction = DisposeTest.testAction - DisposeTest.CSharpFunction
 DisposeTest.testAction()
+
 
 print("----------Event Test----------")
-DisposeTest.testEvent("+", TestLuaFunction)
-DisposeTest.testEvent("+", DisposeTest.TestFunction)
-DisposeTest["&testEvent"]()
-DisposeTest.testEvent("-", DisposeTest.TestFunction)
+DisposeTest.testEvent("+", LuaFunction)
+DisposeTest.testEvent("+", DisposeTest.CSharpFunction)
 DisposeTest["&testEvent"]()
 
-print("----------Unregister Test----------")
-require("xlua.util").print_func_ref_by_csharp()
--- 反注册回调函数
-function Unregister()
-    DisposeTest.testAction = DisposeTest.testAction - TestLuaFunction
+print("----------CSharpFunction Unregistered----------")
+DisposeTest.testEvent("-", DisposeTest.CSharpFunction) -- Lua端注册的事件，直接注销
+local TestDelegate = require("xlua.util").createdelegate(
+    CS.System.Action,
+    nil,
+    DisposeTest,
+    "CSharpFunction",
+    {}
+)
+DisposeTest.testEvent("-", TestDelegate) -- 如果是在C#端注册的事件，那必须先createdelegate然后注销
+DisposeTest["&testEvent"]()
+
+function UnregisterLuaFunction()
+    print("----------Unregister LuaFunction----------")
+    require("xlua.util").print_func_ref_by_csharp()
+    DisposeTest.testAction = DisposeTest.testAction - LuaFunction
     -- 当然，你也可以这样：
     -- DisposeTest.testAction = nil
 
     -- 而event，在lua里你只能这样：
-    DisposeTest.testEvent("-", TestLuaFunction)
+    DisposeTest.testEvent("-", LuaFunction)
 
     -- 当然，你也可以直接在C#里清空掉这些回调
 end

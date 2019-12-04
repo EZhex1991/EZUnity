@@ -25,24 +25,31 @@ namespace EZhex1991.EZUnity.XLuaExample
         public static Action testAction;
         public static event Action testEvent;
 
-        public static Action unregister;
+        public static Action unregisterLuaFunction;
+
+        static DisposeTest()
+        {
+            testEvent += CSharpFunction;
+        }
 
         private void Start()
         {
-            unregister = luaEnv.Global.Get<Action>("Unregister");
+            unregisterLuaFunction = luaEnv.Global.Get<Action>("UnregisterLuaFunction");
 
-            unregister();
+            unregisterLuaFunction();
             // C#变量引用的lua function置为null
-            unregister = null;
+            unregisterLuaFunction = null;
         }
 
         private void OnDestroy()
         {
+            print("----------OnDestroy----------");
+            //luaEnv.DoString("require('xlua.util').print_func_ref_by_csharp()");
             luaEnv.Dispose();
             print("LuaEnv Disposed");
         }
 
-        public static void TestFunction()
+        public static void CSharpFunction()
         {
             print("C# Function");
         }
