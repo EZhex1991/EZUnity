@@ -11,13 +11,13 @@ using XLua;
 namespace EZhex1991.EZUnity.XLuaExample
 {
     /// <summary>
-    /// -----Dispose²¢²»ÊÇ±ØÒªµÄ-----
-    /// -----Dispose²¢²»ÊÇ±ØÒªµÄ-----
-    /// -----Dispose²¢²»ÊÇ±ØÒªµÄ-----
-    /// Í¨³£À´Ëµ£¬Õû¸öÓ¦ÓÃÖ»ĞèÒªÒ»¸öLuaEnv£¬²¢ÇÒÕâ¸öLuaEnvµÄÉúÃüÖÜÆÚÓë¸ÃÓ¦ÓÃÒ»ÖÂ£¬»»¾ä»°Ëµ£¬Dispose´ó²¿·ÖÊ±ºòÒâÎ¶×ÅÓ¦ÓÃÒªÍË³öÁË
-    /// Äã¸ù±¾²»ÓÃÔÚºõÕâ¸öLuaEnvÔÚÍË³öÇ°ÊÇ·ñ±»ºÏÀíÊÍ·Å - ËüÊÇÓ¦ÓÃµÄÒ»²¿·Ö£¬×ÔÈ»»áËæ×ÅÓ¦ÓÃµÄ½áÊø¶ø±»ÏµÍ³´¦Àí
+    /// -----Disposeå¹¶ä¸æ˜¯å¿…è¦çš„-----
+    /// -----Disposeå¹¶ä¸æ˜¯å¿…è¦çš„-----
+    /// -----Disposeå¹¶ä¸æ˜¯å¿…è¦çš„-----
+    /// é€šå¸¸æ¥è¯´ï¼Œæ•´ä¸ªåº”ç”¨åªéœ€è¦ä¸€ä¸ªLuaEnvï¼Œå¹¶ä¸”è¿™ä¸ªLuaEnvçš„ç”Ÿå‘½å‘¨æœŸä¸è¯¥åº”ç”¨ä¸€è‡´ï¼Œæ¢å¥è¯è¯´ï¼ŒDisposeå¤§éƒ¨åˆ†æ—¶å€™æ„å‘³ç€åº”ç”¨è¦é€€å‡ºäº†
+    /// ä½ æ ¹æœ¬ä¸ç”¨åœ¨ä¹è¿™ä¸ªLuaEnvåœ¨é€€å‡ºå‰æ˜¯å¦è¢«åˆç†é‡Šæ”¾ - å®ƒæ˜¯åº”ç”¨çš„ä¸€éƒ¨åˆ†ï¼Œè‡ªç„¶ä¼šéšç€åº”ç”¨çš„ç»“æŸè€Œè¢«ç³»ç»Ÿå¤„ç†
     /// 
-    /// Èç¹ûÄãÕæµÄÒªÊÖ¶¯Dispose£¬ÄãÖ»ĞèÒªÊÍ·Åµô±»ÒıÓÃµÄlua·½·¨¼´¿É£¬¾ßÌåËµÃ÷Çë²é¿´¹Ù·½FAQ
+    /// å¦‚æœä½ çœŸçš„è¦æ‰‹åŠ¨Disposeï¼Œä½ åªéœ€è¦é‡Šæ”¾æ‰è¢«å¼•ç”¨çš„luaæ–¹æ³•å³å¯ï¼Œå…·ä½“è¯´æ˜è¯·æŸ¥çœ‹å®˜æ–¹FAQ
     /// </summary>
     [LuaCallCSharp]
     public class DisposeTest : LuaManager
@@ -31,11 +31,8 @@ namespace EZhex1991.EZUnity.XLuaExample
         {
             unregister = luaEnv.Global.Get<Action>("Unregister");
 
-            testAction();
-            testEvent();
             unregister();
-
-            // C#±äÁ¿ÒıÓÃµÄlua functionÖÃÎªnull
+            // C#å˜é‡å¼•ç”¨çš„lua functionç½®ä¸ºnull
             unregister = null;
         }
 
@@ -43,6 +40,11 @@ namespace EZhex1991.EZUnity.XLuaExample
         {
             luaEnv.Dispose();
             print("LuaEnv Disposed");
+        }
+
+        public static void TestFunction()
+        {
+            print("C# Function");
         }
     }
 
