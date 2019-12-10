@@ -11,8 +11,8 @@ M.__index = M -- 这个是为了方便模拟继承，详见ColliderB
 ----- begin module -----
 local Color = CS.UnityEngine.Color
 local Random = CS.UnityEngine.Random
+local GameObject = CS.UnityEngine.GameObject
 local Vector3 = CS.UnityEngine.Vector3
-local Quaternion = CS.UnityEngine.Quaternion
 local LuaMessage = CS.EZhex1991.EZUnity.XLuaExample.LuaMessage
 local util = require("xlua.util")
 -- 以上类似于java的import或者C#的using，使用local避免污染全局环境（虽然有点麻烦，但5.2取消module也是这个原因，尽量遵守）
@@ -27,29 +27,32 @@ function M:_New() -- 拷贝一个table
     return t
 end
 
-function M:New(gameObject) -- 初始化
+function M:New()
     self = self:_New() -- 获取拷贝的table，右值的self是为了实现多态（这样描述其实不太准确。。。）
-    self.gameObject = gameObject
+    self.gameObject = GameObject.CreatePrimitive(CS.UnityEngine.PrimitiveType.Cube)
     self.gameObject.name = self.name
     self.gameObject.transform.position = self.position
     self.message = LuaMessage.Require(self.gameObject) -- 获取事件分发组件
     self.message.start:AddAction(util.bind(self.Start, self)) -- 为事件添加方法
+    self.message.onTriggerEnter:AddAction(util.bind(self.OnTriggerEnter, self))
     self.message.onCollisionEnter:AddAction(util.bind(self.OnCollisionEnter, self))
-    self.message.onMouseOver:AddAction(util.bind(self.OnMouseOver, self))
     return self
+end
+function M:ChangeColor()
+    self.gameObject:GetComponent("Renderer").material.color =
+        Color(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1), 1)
 end
 
 -- 以下为ColliderA的行为
 function M:Start() -- 加了Rigidbody，开始时会下落
     self.gameObject:AddComponent(typeof(CS.UnityEngine.Rigidbody))
 end
-function M:OnCollisionEnter(collision) -- 碰撞时回到原位置，随机换颜色
-    self.gameObject.transform.position = self.position
-    self.gameObject:GetComponent("Renderer").material.color =
-        Color(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1), 1)
+function M:OnTriggerEnter(collider) -- OnTriggerEnter更换颜色
+    self:ChangeColor()
 end
-function M:OnMouseOver() -- 鼠标悬停print自己的名字，这个方法会被B继承
-    print(self.name)
+function M:OnCollisionEnter(collision) -- OnCollisionEnter回到原位置，更换颜色
+    self.gameObject.transform.position = self.position
+    self:ChangeColor()
 end
 ----- end -----
 return M
