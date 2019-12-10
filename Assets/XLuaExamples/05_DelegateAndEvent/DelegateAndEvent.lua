@@ -32,7 +32,6 @@ function OnCollisionEnter(collision)
 	CS.UnityEngine.Object.Destroy(gameObject)
 end
 behaviour.onCollisionEnterEvent:Add(OnCollisionEnter)
-
 -- Button和其他UI组件同理
 function OnButtonClick()
 	print("OnButtonClick")
@@ -60,7 +59,7 @@ end
 local closure = require("xlua.util").bind(M.OnDestroyInBind, M)
 behaviour:onDestroyEvent("+", closure)
 
--- xlua.util.createdelegate的使用，使用一个C#方法在lua上创建一个C#delegate为event添加监听（多用于hotfix）
+-- xlua.util.createdelegate的使用，使用一个C#方法在lua上创建一个C#Delegate
 -- 五个参数分别是：delegate的类型，C#方法所作用的实例，实例的类型，方法的名称，参数的类型列表
 -- 如果是静态方法，那么“C#方法所作用的实例”使用nil，如果方法无参，那么“参数的类型列表”空着即可
 local nonStaticDelegate =

@@ -7,51 +7,58 @@
 local M = {}
 ----- CODE -----
 local DisposeTest = CS.EZhex1991.EZUnity.XLuaExample.DisposeTest
-xlua.private_accessible(DisposeTest)
+local testObject = CS.UnityEngine.GameObject.Find("DisposeTest")
+                        :GetComponent("EZhex1991.EZUnity.XLuaExample.DisposeTest")
 
-function LuaFunction()
+local LuaFunction = function()
     print("Lua Function")
 end
 
-print("----------Action----------")
-DisposeTest.testAction = LuaFunction
-DisposeTest.testAction = DisposeTest.testAction + DisposeTest.CSharpFunction
-DisposeTest.testAction()
-
-print("----------CSharpFunction Unregistered----------")
-DisposeTest.testAction = DisposeTest.testAction - DisposeTest.CSharpFunction
-DisposeTest.testAction()
-
-
-print("----------Event Test----------")
-DisposeTest.testEvent("+", LuaFunction)
-DisposeTest.testEvent("+", DisposeTest.CSharpFunction)
-DisposeTest["&testEvent"]()
-
-print("----------CSharpFunction Unregistered----------")
-DisposeTest.testEvent("-", DisposeTest.CSharpFunction) -- Lua端注册的事件，直接注销
-local TestDelegate = require("xlua.util").createdelegate(
+-- xlua.util.createdelegate的使用，使用一个C#方法在lua上创建一个C#Delegate
+-- 五个参数分别是：delegate的类型，C#方法所作用的实例，实例的类型，方法的名称，参数的类型列表
+-- 如果是静态方法，那么“C#方法所作用的实例”使用nil，如果方法无参，那么“参数的类型列表”空着即可
+local CSharpDelegate = require("xlua.util").createdelegate(
     CS.System.Action,
-    nil,
+    testObject,
     DisposeTest,
     "CSharpFunction",
     {}
 )
-DisposeTest.testEvent("-", TestDelegate) -- 如果是在C#端注册的事件，那必须先createdelegate然后注销
-DisposeTest["&testEvent"]()
 
-function UnregisterLuaFunction()
-    print("----------Unregister LuaFunction----------")
-    require("xlua.util").print_func_ref_by_csharp()
-    DisposeTest.testAction = DisposeTest.testAction - LuaFunction
-    -- 当然，你也可以这样：
-    -- DisposeTest.testAction = nil
+-- 注册
+function Register()
+    print("----------Register----------");
+    -- 先判断是否为nil才能用'+'
+    -- if testObject.testAction == nil then
+    --     testObject.testAction = LuaFunction
+    --     testObject.testAction = testObject.testAction + CSharpDelegate
+    -- else
+    --     testObject.testAction = testObject.testAction + LuaFunction
+    --     testObject.testAction = testObject.testAction + CSharpDelegate
+    -- end
 
-    -- 而event，在lua里你只能这样：
-    DisposeTest.testEvent("-", LuaFunction)
-
-    -- 当然，你也可以直接在C#里清空掉这些回调
+    -- testObject:testEvent("+", LuaFunction)
+    -- testObject:testEvent("+", CSharpDelegate)
 end
 
+-- 注销
+function Unregister()
+    print("----------Unregister----------");
+    -- if testObject.testAction ~= nil then 
+    --     testObject.testAction = testObject.testAction - LuaFunction
+    -- end
+    -- if testObject.testAction ~= nil then 
+    --     testObject.testAction = testObject.testAction - CSharpDelegate
+    -- end
+
+    -- testObject:testEvent("-", LuaFunction)
+    -- testObject:testEvent("-", CSharpDelegate)
+
+    testObject.button_Register.onClick:RemoveListener(Register)
+    testObject.button_Unregister.onClick:RemoveListener(Unregister)
+end
+
+testObject.button_Register.onClick:AddListener(Register)
+testObject.button_Unregister.onClick:AddListener(Unregister)
 ----- CODE -----
 return M

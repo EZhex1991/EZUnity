@@ -5,7 +5,8 @@
  */
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 using XLua;
 
 namespace EZhex1991.EZUnity.XLuaExample
@@ -22,34 +23,49 @@ namespace EZhex1991.EZUnity.XLuaExample
     [LuaCallCSharp]
     public class DisposeTest : LuaManager
     {
-        public static Action testAction;
-        public static event Action testEvent;
+        public Action testAction;
+        public event Action testEvent;
 
-        public static Action unregisterLuaFunction;
-
-        static DisposeTest()
-        {
-            testEvent += CSharpFunction;
-        }
+        public Button button_Test;
+        public Button button_Register;
+        public Button button_Unregister;
 
         private void Start()
         {
-            unregisterLuaFunction = luaEnv.Global.Get<Action>("UnregisterLuaFunction");
-
-            unregisterLuaFunction();
-            // C#变量引用的lua function置为null
-            unregisterLuaFunction = null;
+            button_Test.onClick.AddListener(TestFunction);
         }
 
         private void OnDestroy()
         {
             print("----------OnDestroy----------");
-            //luaEnv.DoString("require('xlua.util').print_func_ref_by_csharp()");
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            print("----------Check References----------");
+            luaEnv.DoString("require('xlua.util').print_func_ref_by_csharp()");
             luaEnv.Dispose();
+            
             print("LuaEnv Disposed");
         }
 
-        public static void CSharpFunction()
+        public void TestFunction()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            print("----------Check References----------");
+            luaEnv.DoString("require('xlua.util').print_func_ref_by_csharp()");
+
+            print("----------Call Action----------");
+            if (testAction != null) testAction();
+
+            print("----------Call Event----------");
+            if (testEvent != null) testEvent();
+
+            print("--------------------");
+        }
+
+        public void CSharpFunction()
         {
             print("C# Function");
         }
@@ -57,9 +73,11 @@ namespace EZhex1991.EZUnity.XLuaExample
 
     public static class DisposeTestConfig
     {
+        [CSharpCallLua]
         public static List<Type> CSharpCallLua = new List<Type>()
         {
             typeof(Action),
+            typeof(UnityAction),
         };
     }
 }
