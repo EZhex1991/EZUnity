@@ -54,8 +54,8 @@ namespace EZhex1991.EZUnity.Builder
 
         public EZBundleBuilder bundleBuilder;
 
-        [Tooltip("Wildcards: <Date>|<Time>|<CompanyName>|<ProductName>|<BundleIdentifier>|<BundleVersion>|<BuildNumber>|<BuildTarget>")]
-        public string locationPathName = "Builds/<ProductName>-<BuildTarget>-<BuildNumber>-<BundleVersion>";
+        public string locationPathName = "Builds/<ProductName>-<BuildTarget>-<BundleVersion>-<BuildNumber>";
+        public string exeFileName = "<ProductName>-<BundleVersion>-<BuildNumber>";
         public SceneAsset[] scenes;
 
         public string companyName;
@@ -63,6 +63,7 @@ namespace EZhex1991.EZUnity.Builder
         public string bundleIdentifier;
         public string bundleVersion;
         public int buildNumber;
+        public bool buildNumberIncrement;
         public Texture2D icon;
 
         public EZCopyList copyList;
@@ -116,22 +117,14 @@ namespace EZhex1991.EZUnity.Builder
                 locationPathName = EditorUtility.SaveFolderPanel("Choose Output Folder", "", "");
                 if (string.IsNullOrEmpty(locationPathName)) return;
             }
-            string path = locationPathName
-                .Replace(Wildcard_BuildTarget, buildTarget.ToString())
-                .Replace(Wildcard_BuildNumber, buildNumber.ToString())
-                .Replace(Wildcard_BundleIdentifier, bundleIdentifier)
-                .Replace(Wildcard_BundleVersion, bundleVersion)
-                .Replace(Wildcard_CompanyName, companyName)
-                .Replace(Wildcard_Date, DateTime.Now.ToString("yyyyMMdd"))
-                .Replace(Wildcard_ProductName, productName)
-                .Replace(Wildcard_Time, DateTime.Now.ToString("HHmmss"));
+            string path = HandleWildcards(locationPathName, buildTarget);
             switch (buildTarget)
             {
                 case BuildTarget.StandaloneWindows:
-                    options.locationPathName = string.Format("{0}/{1}.exe", path, PlayerSettings.productName);
+                    options.locationPathName = string.Format("{0}/{1}.exe", path, HandleWildcards(exeFileName, buildTarget));
                     break;
                 case BuildTarget.StandaloneWindows64:
-                    options.locationPathName = string.Format("{0}/{1}.exe", path, PlayerSettings.productName);
+                    options.locationPathName = string.Format("{0}/{1}.exe", path, HandleWildcards(exeFileName, buildTarget));
                     break;
                 case BuildTarget.Android:
                     options.locationPathName = string.Format("{0}.apk", path);
@@ -159,6 +152,24 @@ namespace EZhex1991.EZUnity.Builder
             Debug.Log(BuildPipeline.BuildPlayer(options));
             copyList.CopyFiles(path);
 #endif
+            if (buildNumberIncrement)
+            {
+                buildNumber++;
+                EditorUtility.SetDirty(this);
+            }
+        }
+
+        public string HandleWildcards(string text, BuildTarget buildTarget)
+        {
+            return text
+                .Replace(Wildcard_BuildTarget, buildTarget.ToString())
+                .Replace(Wildcard_BuildNumber, buildNumber.ToString())
+                .Replace(Wildcard_BundleIdentifier, bundleIdentifier)
+                .Replace(Wildcard_BundleVersion, bundleVersion)
+                .Replace(Wildcard_CompanyName, companyName)
+                .Replace(Wildcard_Date, DateTime.Now.ToString("yyyyMMdd"))
+                .Replace(Wildcard_ProductName, productName)
+                .Replace(Wildcard_Time, DateTime.Now.ToString("HHmmss"));
         }
     }
 }
