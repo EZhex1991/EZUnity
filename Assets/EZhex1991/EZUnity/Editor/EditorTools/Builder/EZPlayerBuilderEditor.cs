@@ -78,8 +78,6 @@ namespace EZhex1991.EZUnity.Builder
                     GUIUtility.ExitGUI();
                 }
                 EditorGUILayout.Space();
-                DrawQuickBuildButtons();
-                EditorGUILayout.Space();
             }
 
             EditorGUILayout.LabelField("Build Options", EditorStyles.boldLabel);
@@ -120,38 +118,6 @@ namespace EZhex1991.EZUnity.Builder
             EditorGUILayout.PropertyField(m_CopyList);
 
             serializedObject.ApplyModifiedProperties();
-        }
-        public void DrawQuickBuildButtons()
-        {
-            if (GUILayout.Button("Android"))
-            {
-                playerBuilder.Execute(BuildTarget.Android);
-                GUIUtility.ExitGUI();
-            }
-            if (GUILayout.Button("iOS"))
-            {
-                playerBuilder.Execute(BuildTarget.iOS);
-                GUIUtility.ExitGUI();
-            }
-            {
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Windows"))
-                {
-                    playerBuilder.Execute(BuildTarget.StandaloneWindows);
-                    GUIUtility.ExitGUI();
-                }
-                if (GUILayout.Button("Windows64"))
-                {
-                    playerBuilder.Execute(BuildTarget.StandaloneWindows64);
-                    GUIUtility.ExitGUI();
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            if (GUILayout.Button("OSX"))
-            {
-                playerBuilder.Execute(BuildTarget.StandaloneOSX);
-                GUIUtility.ExitGUI();
-            }
         }
     }
 }
