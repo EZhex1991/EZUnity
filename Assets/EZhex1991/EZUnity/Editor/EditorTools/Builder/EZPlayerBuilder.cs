@@ -99,7 +99,19 @@ namespace EZhex1991.EZUnity.Builder
         }
         public void Execute(BuildTarget buildTarget)
         {
-            ConfigTargetGroup(GetGroup(buildTarget));
+            BuildTargetGroup selectedGroup = GetGroup(EditorUserBuildSettings.activeBuildTarget);
+            BuildTargetGroup buildGroup = GetGroup(buildTarget);
+            if (selectedGroup != buildGroup)
+            {
+                string message = string.Format("Selected BuildTargetGroup is {0}, build {1} anyway?", selectedGroup, buildTarget);
+                if (!EditorUtility.DisplayDialog("BuildTarget Not Match with selected BuildTargetGroup", message, "Yes", "Cancel"))
+                {
+                    Debug.Log("Build Canceled");
+                    return;
+                }
+            }
+
+            ConfigTargetGroup(buildGroup);
             if (configButDontBuild) return;
             if (bundleBuilder != null)
             {
