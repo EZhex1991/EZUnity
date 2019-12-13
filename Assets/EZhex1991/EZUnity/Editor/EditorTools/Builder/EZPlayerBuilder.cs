@@ -54,8 +54,8 @@ namespace EZhex1991.EZUnity.Builder
 
         public EZBundleBuilder bundleBuilder;
 
-        public string locationPathName = "Builds/<ProductName>-<BuildTarget>-<BundleVersion>-<BuildNumber>";
-        public string exeFileName = "<ProductName>-<BundleVersion>-<BuildNumber>";
+        public string locationPathName = "Builds/<ProductName>-<BuildTarget>-<BundleVersion>";
+        public string exeFileName = "<ProductName>-<BundleVersion>";
         public SceneAsset[] scenes;
 
         public string companyName;
@@ -63,7 +63,7 @@ namespace EZhex1991.EZUnity.Builder
         public string bundleIdentifier;
         public string bundleVersion;
         public int buildNumber;
-        public bool buildNumberIncrement;
+        public bool buildNumberIncrement = true;
         public Texture2D icon;
 
         public EZCopyList copyList;
