@@ -8,6 +8,12 @@ using XLua;
 
 namespace EZhex1991.EZUnity.XLuaExample
 {
+    [CSharpCallLua]
+    public interface IMessage
+    {
+        string content { get; }
+    }
+
     public class FromLua : MonoBehaviour
     {
         LuaEnv luaEnv = new LuaEnv();
@@ -32,6 +38,10 @@ namespace EZhex1991.EZUnity.XLuaExample
                     ArrayTest({ Color.red, Color.green, Color.blue }, 0)
                     ArrayTest({ Color.red, Color.green, Color.blue }, 1)
                 end
+
+                Message = {
+                    content = 'Interface Test'
+                }
             ");
             int intValue = 0;
             float floatValue = 0;
@@ -52,6 +62,9 @@ namespace EZhex1991.EZUnity.XLuaExample
             func3.Call();
 
             table.ForEach<string, object>((key, value) => print(string.Format("{0}={1}, type:{2}", key, value, value.GetType())));
+
+            IMessage test = luaEnv.Global.Get<IMessage>("Message");
+            print(test.content);
         }
 
         public static void ArrayTest(Color[] colors, int index)

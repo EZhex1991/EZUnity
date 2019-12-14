@@ -131,7 +131,7 @@ public static class ExampleConfig
     //                }
     //            }
     //        }
-    //        return delegate_types.Distinct().ToList();
+    //        return delegate_types.Where(t => t.BaseType == typeof(MulticastDelegate) && !hasGenericParameter(t) && !delegateHasEditorRef(t)).Distinct().ToList();
     //    }
     //}
     //--------------end 纯lua编程配置参考----------------------------
@@ -142,9 +142,9 @@ public static class ExampleConfig
     //{
     //    get
     //    {
-    //        return (from type in Assembly.Load("Assembly-CSharp").GetExportedTypes()
-    //                           where type.Namespace == null || !type.Namespace.StartsWith("XLua")
-    //                           select type);
+    //        return (from type in Assembly.Load("Assembly-CSharp").GetTypes()
+    //                where type.Namespace == null || !type.Namespace.StartsWith("XLua")
+    //                select type);
     //    }
     //}
     //--------------begin 热补丁自动化配置-------------------------
@@ -273,4 +273,35 @@ public static class ExampleConfig
                 new List<string>(){"System.IO.DirectoryInfo", "Create", "System.Security.AccessControl.DirectorySecurity"},
                 new List<string>(){"UnityEngine.MonoBehaviour", "runInEditMode"},
             };
+
+#if UNITY_2018_1_OR_NEWER
+    [BlackList]
+    public static Func<MemberInfo, bool> MethodFilter = (memberInfo) =>
+    {
+        if (memberInfo.DeclaringType.IsGenericType && memberInfo.DeclaringType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+        {
+            if (memberInfo.MemberType == MemberTypes.Constructor)
+            {
+                ConstructorInfo constructorInfo = memberInfo as ConstructorInfo;
+                var parameterInfos = constructorInfo.GetParameters();
+                if (parameterInfos.Length > 0)
+                {
+                    if (typeof(System.Collections.IEnumerable).IsAssignableFrom(parameterInfos[0].ParameterType))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (memberInfo.MemberType == MemberTypes.Method)
+            {
+                var methodInfo = memberInfo as MethodInfo;
+                if (methodInfo.Name == "TryAdd" || methodInfo.Name == "Remove" && methodInfo.GetParameters().Length == 2)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+#endif
 }

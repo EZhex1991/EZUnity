@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace #NAMESPACE#
 {
-    [CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "EZUnity/#SCRIPTNAME#", order = (int)EZAssetMenuOrder._Section_0)]
+    [CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "#NAMESPACE#/#SCRIPTNAME#")]
     public class #SCRIPTNAME# : ScriptableObject
     {
         

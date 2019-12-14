@@ -2,8 +2,9 @@
 
 **部分模块已从该目录中移除**
 
-- [EZPhysicsBone](https://github.com/EZhex1991/EZPhysicsBone): 动态骨骼。支持所有碰撞体；独立的材质"EZPhysicsBoneMaterial"存放参数，重用度高；代码可读性强；碰撞体可通过继承EZPhysicsBoneColliderBase进行自定义扩展。
+- [EZSoftBone](https://github.com/EZhex1991/EZSoftBone): 柔性物体（头发/尾巴/胸部/裙子）模拟插件。支持所有碰撞体；独立的材质"EZSoftBoneMaterial"存放参数，重用度高；代码可读性强；碰撞体可通过继承EZSoftBoneColliderBase进行自定义扩展。
 - [EZAnimation](https://github.com/EZhex1991/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
+- [EZPostProcessing](https://github.com/EZhex1991/EZPostProcessing): 基于PostProcessing Stack V2开发的一系列后处理效果。
 
 ## 功能菜单（EZUnity/..）
 

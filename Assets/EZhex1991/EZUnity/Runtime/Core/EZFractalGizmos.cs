@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+#pragma warning disable 0414
 using UnityEngine;
 
 namespace EZhex1991.EZUnity
@@ -85,7 +86,7 @@ namespace EZhex1991.EZUnity
 
         public static void DrawFlowSnake(int sub)
         {
-            Matrix4x4 matrix = Gizmos.matrix;
+            Matrix4x4 matrix = Gizmos.matrix * Matrix4x4.Translate(new Vector3(-0.5f, -0.25f));
             DrawFlowSnakeSub(matrix, sub);
         }
         private static void DrawFlowSnakeSub(Matrix4x4 matrix, int sub)
@@ -117,7 +118,7 @@ namespace EZhex1991.EZUnity
 
         public static void DrawSierpinskiTriangle(int sub)
         {
-            Matrix4x4 matrix = Gizmos.matrix;
+            Matrix4x4 matrix = Gizmos.matrix * Matrix4x4.Translate(new Vector3(0, sqrt3 * -0.33f));
             DrawSierpinskiTriangleSub(matrix, sub);
         }
         private static void DrawSierpinskiTriangleSub(Matrix4x4 matrix, int sub)
@@ -221,7 +222,7 @@ namespace EZhex1991.EZUnity
 
         public static void DrawFractalTriangle(int sub, Color color1, Color color2)
         {
-            Matrix4x4 matrix = Gizmos.matrix;
+            Matrix4x4 matrix = Gizmos.matrix * Matrix4x4.Translate(new Vector3(0, sqrt3 * -0.33f));
             DrawFractalTriangleSub(matrix, sub, color1, color2);
         }
         private static void DrawFractalTriangleSub(Matrix4x4 matrix, int sub, Color c1, Color c2)

@@ -19,6 +19,7 @@
 0. [RawObject](08_RawObject) - “int传过去成了long？byte[]传过去成了string？”
 0. [DOTween](09_DOTween) - “DOTween不能用？扩展方法不能用？”
 0. [Hotfix](10_Hotfix) - “Hotfix不能用？官方示例报错？HotFix不能调用原来的方法？”
+0. [Dispose](11_Dispose) - "LuaEnv.Dispose报错？"
 
 ## Tutorial（相对完整的demo）
 

@@ -19,20 +19,16 @@ namespace EZhex1991.EZUnity.XLuaExample
     {
         public string fileName;
 
-        private string luaDirPath;
-        private LuaEnv luaEnv;
-
-        void Start()
+        private void Start()
         {
-            luaDirPath = Application.dataPath + "/XLuaExamples/";
-            luaEnv = new LuaEnv();
+            LuaEnv luaEnv = new LuaEnv();
             luaEnv.AddLoader(LoadFromFile); // AddLoader(CustomLoader)文档上有说明，自己读取lua源码以byte[]形式返回即可。
             luaEnv.DoString("require('" + fileName + "')");
         }
 
         private byte[] LoadFromFile(ref string fileName)    // 这里的fileName就是lua中require的参数
         {
-            string filePath = luaDirPath + fileName.Replace('.', '/') + ".lua";             // lua文件的实际路径
+            string filePath = Application.dataPath + "/XLuaExamples/" + fileName.Replace('.', '/') + ".lua";             // lua文件的实际路径
             fileName = fileName.Replace('.', '/');     // 返给lua调试器的路径，不用调试lua的就不用管这个了
             try
             {
