@@ -22,11 +22,11 @@ namespace EZhex1991.EZUnity
 
         public static float MaxComponent(this Vector3 v3)
         {
-            return Mathf.Max(v3.x, v3.y, v3.z);
+            return Mathf.Max(v3.x, Mathf.Max(v3.y, v3.z));
         }
         public static float MinComponent(this Vector3 v3)
         {
-            return Mathf.Min(v3.x, v3.y, v3.z);
+            return Mathf.Min(v3.x, Mathf.Min(v3.y, v3.z));
         }
 
         public static Vector3 Abs(this Vector3 v3)

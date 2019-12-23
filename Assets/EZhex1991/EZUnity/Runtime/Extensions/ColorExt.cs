@@ -23,13 +23,22 @@ namespace EZhex1991.EZUnity
             return 0;
         }
 
-        public static float MaxComponent(this Color color)
+        public static float MaxRGB(this Color color)
         {
-            return Mathf.Max(color.r, color.g, color.b, color.a);
+            return Mathf.Max(Mathf.Max(color.r, color.g), color.b);
         }
-        public static float MinComponent(this Color color)
+        public static float MinRGB(this Color color)
         {
-            return Mathf.Min(color.r, color.g, color.b, color.a);
+            return Mathf.Min(Mathf.Min(color.r, color.g), color.b);
+        }
+
+        public static float MaxRGBA(this Color color)
+        {
+            return Mathf.Max(Mathf.Max(color.r, color.g), Mathf.Max(color.b, color.a));
+        }
+        public static float MinRGBA(this Color color)
+        {
+            return Mathf.Min(Mathf.Min(color.r, color.g), Mathf.Min(color.b, color.a));
         }
 
         public static float ToGray(this Color color)

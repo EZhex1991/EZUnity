@@ -19,13 +19,13 @@ namespace EZhex1991.EZUnity
             return angles;
         }
 
-        public static float MaxComponent(this Vector3Int v3)
+        public static int MaxComponent(this Vector3Int v3)
         {
-            return Mathf.Max(v3.x, v3.y, v3.z);
+            return Mathf.Max(v3.x, Mathf.Max(v3.y, v3.z));
         }
-        public static float MinComponent(this Vector3Int v3)
+        public static int MinComponent(this Vector3Int v3)
         {
-            return Mathf.Min(v3.x, v3.y, v3.z);
+            return Mathf.Min(v3.x, Mathf.Min(v3.y, v3.z));
         }
 
         public static Vector3Int Abs(this Vector3Int v3)

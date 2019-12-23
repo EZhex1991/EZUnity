@@ -12,11 +12,11 @@ namespace EZhex1991.EZUnity
     {
         public static float MaxComponent(this Vector4 v4)
         {
-            return Mathf.Max(v4.x, v4.y, v4.z, v4.w);
+            return Mathf.Max(Mathf.Max(v4.x, v4.y), Mathf.Max(v4.z, v4.w));
         }
         public static float MinComponent(this Vector4 v4)
         {
-            return Mathf.Min(v4.x, v4.y, v4.z, v4.w);
+            return Mathf.Min(Mathf.Min(v4.x, v4.y), Mathf.Min(v4.z, v4.w));
         }
 
         public static Vector4 Abs(this Vector4 v4)

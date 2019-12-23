@@ -18,11 +18,11 @@ namespace EZhex1991.EZUnity
             return UnityEngine.Random.Range(v2.x, v2.y);
         }
 
-        public static float MaxComponent(this Vector2Int v2)
+        public static int MaxComponent(this Vector2Int v2)
         {
             return Mathf.Max(v2.x, v2.y);
         }
-        public static float MinComponent(this Vector2Int v2)
+        public static int MinComponent(this Vector2Int v2)
         {
             return Mathf.Min(v2.x, v2.y);
         }
