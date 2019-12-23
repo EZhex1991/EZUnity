@@ -28,8 +28,10 @@ namespace EZhex1991.EZUnity
         [Range(0, 8)]
         public int subDivisions;
 
-        public Color color1 = Color.red;
-        public Color color2 = Color.yellow;
+        public Color colorStart = Color.red;
+        public Color colorEnd = Color.yellow;
+
+        public float treeBranchAngle = 30f;
 
         private void OnDrawGizmos()
         {
@@ -37,214 +39,263 @@ namespace EZhex1991.EZUnity
             switch (shape)
             {
                 case Shape.FlowSnake:
-                    DrawFlowSnake(subDivisions);
+                    DrawFlowSnake(subDivisions, colorStart, colorEnd);
                     break;
                 case Shape.KochSnowFlake:
-                    DrawKochSnowFlake(subDivisions);
+                    DrawKochSnowFlake(subDivisions, colorStart, colorEnd);
                     break;
                 case Shape.SierpinskiTriangle:
-                    DrawSierpinskiTriangle(subDivisions);
+                    DrawSierpinskiTriangle(subDivisions, colorStart, colorEnd);
                     break;
                 case Shape.FractalTree:
-                    DrawFractalTree(subDivisions);
+                    DrawFractalTree(subDivisions, treeBranchAngle, colorStart, colorEnd);
                     break;
                 case Shape.FractalTree2:
-                    DrawFractalTree2(subDivisions);
+                    DrawFractalTree2(subDivisions, treeBranchAngle, colorStart, colorEnd);
                     break;
                 case Shape.FractalRect:
-                    DrawFractalRect(subDivisions, color1, color2);
+                    DrawFractalRect(subDivisions, colorStart, colorEnd);
                     break;
                 case Shape.FractalTriangle:
-                    DrawFractalTriangle(subDivisions, color1, color2);
+                    DrawFractalTriangle(subDivisions, colorStart, colorEnd);
                     break;
             }
         }
 
-        public static void DrawKochSnowFlake(int sub)
+        public static void DrawKochSnowFlake(int sub, Color colorStart, Color colorEnd)
         {
             Matrix4x4 matrix = Gizmos.matrix;
-            DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(0, sqrt3 * d3)), sub);
-            DrawKochSnowFlakeSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(new Vector3(0, sqrt3 * d3)), sub);
-            DrawKochSnowFlakeSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120)) * Matrix4x4.Translate(new Vector3(0, sqrt3 * d3)), sub);
+            DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(0, sqrt3 * d3)), sub, colorStart, colorEnd);
+            DrawKochSnowFlakeSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(new Vector3(0, sqrt3 * d3)), sub, colorStart, colorEnd);
+            DrawKochSnowFlakeSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120)) * Matrix4x4.Translate(new Vector3(0, sqrt3 * d3)), sub, colorStart, colorEnd);
         }
-        private static void DrawKochSnowFlakeSub(Matrix4x4 matrix, int sub)
+        private static void DrawKochSnowFlakeSub(Matrix4x4 matrix, int sub, Color colorStart, Color colorEnd)
         {
             if (sub > 0)
             {
                 matrix *= scaleMatrix_d3;
-                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(-2, 0)), sub - 1);
-                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(2, 0)), sub - 1);
-                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(-1, sqrt3) * 0.5f) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 60)), sub - 1);
-                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(1, sqrt3) * 0.5f) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -60)), sub - 1);
+
+                Color c1 = Color.Lerp(colorStart, colorEnd, d3);
+
+                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(-2, 0)), sub - 1, c1, colorEnd);
+                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(2, 0)), sub - 1, c1, colorEnd);
+                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(-1, sqrt3) * 0.5f) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 60)), sub - 1, c1, colorEnd);
+                DrawKochSnowFlakeSub(matrix * Matrix4x4.Translate(new Vector3(1, sqrt3) * 0.5f) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -60)), sub - 1, c1, colorEnd);
             }
             else
             {
                 Gizmos.matrix = matrix;
+                Gizmos.color = colorStart;
                 Gizmos.DrawLine(new Vector3(-1, 0), new Vector3(1, 0));
             }
         }
 
-        public static void DrawFlowSnake(int sub)
+        public static void DrawFlowSnake(int sub, Color colorStart, Color colorEnd)
         {
             Matrix4x4 matrix = Gizmos.matrix * Matrix4x4.Translate(new Vector3(-0.5f, -0.25f));
-            DrawFlowSnakeSub(matrix, sub);
+            DrawFlowSnakeSub(matrix, sub, colorStart, colorEnd);
         }
-        private static void DrawFlowSnakeSub(Matrix4x4 matrix, int sub)
+        private static void DrawFlowSnakeSub(Matrix4x4 matrix, int sub, Color colorStart, Color colorEnd)
         {
             if (sub > 0)
             {
-                matrix *= Matrix4x4.Scale(Vector3.one / sqrt7);
-                matrix *= Matrix4x4.Rotate(Quaternion.Euler(0, 0, -19.1f));
-                DrawFlowSnakeSub(matrix, sub - 1);
-                matrix *= Matrix4x4.Translate(Vector3.right) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 60)) * Matrix4x4.Translate(Vector3.right);
-                DrawFlowSnakeSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 180)), sub - 1);
-                matrix *= Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(Vector3.right);
-                DrawFlowSnakeSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 180)), sub - 1);
-                matrix *= Matrix4x4.Rotate(Quaternion.Euler(0, 0, -60));
-                DrawFlowSnakeSub(matrix, sub - 1);
-                matrix *= Matrix4x4.Translate(Vector3.right) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120));
-                DrawFlowSnakeSub(matrix, sub - 1);
-                matrix *= Matrix4x4.Translate(Vector3.right);
-                DrawFlowSnakeSub(matrix, sub - 1);
-                matrix *= Matrix4x4.Translate(Vector3.right) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -60)) * Matrix4x4.Translate(Vector3.right);
-                DrawFlowSnakeSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 180)), sub - 1);
+                Color c1 = Color.Lerp(colorStart, colorEnd, d7);
+                Color c2 = Color.Lerp(colorStart, colorEnd, d7 * 2);
+                Color c3 = Color.Lerp(colorStart, colorEnd, d7 * 3);
+                Color c4 = Color.Lerp(colorStart, colorEnd, d7 * 4);
+                Color c5 = Color.Lerp(colorStart, colorEnd, d7 * 5);
+                Color c6 = Color.Lerp(colorStart, colorEnd, d7 * 6);
+
+                matrix *= Matrix4x4.Scale(Vector3.one / sqrt7) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 19.1f));
+                Matrix4x4 m1 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120)) * Matrix4x4.Translate(Vector3.left);
+                Matrix4x4 m2 = m1 * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120));
+                Matrix4x4 m3 = m2 * Matrix4x4.Translate(Vector3.right);
+                Matrix4x4 m4 = m3 * Matrix4x4.Translate(Vector3.right) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120));
+                Matrix4x4 m5 = m4 * Matrix4x4.Translate(Vector3.right) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(Vector3.left);
+                Matrix4x4 m6 = m5 * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(Vector3.left);
+                Matrix4x4 m7 = m6 * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120));
+
+                DrawFlowSnakeSub(m1, sub - 1, c1, colorStart);
+                DrawFlowSnakeSub(m2, sub - 1, c1, c2);
+                DrawFlowSnakeSub(m3, sub - 1, c2, c3);
+                DrawFlowSnakeSub(m4, sub - 1, c3, c4);
+                DrawFlowSnakeSub(m5, sub - 1, c5, c4);
+                DrawFlowSnakeSub(m6, sub - 1, c6, c5);
+                DrawFlowSnakeSub(m7, sub - 1, c6, colorEnd);
             }
             else
             {
                 Gizmos.matrix = matrix;
+                Gizmos.color = colorStart;
                 Gizmos.DrawLine(Vector3.zero, Vector3.right);
             }
         }
 
-        public static void DrawSierpinskiTriangle(int sub)
+        public static void DrawSierpinskiTriangle(int sub, Color colorStart, Color colorEnd)
         {
             Matrix4x4 matrix = Gizmos.matrix * Matrix4x4.Translate(new Vector3(0, sqrt3 * -0.33f));
-            DrawSierpinskiTriangleSub(matrix, sub);
+            DrawSierpinskiTriangleSub(matrix, sub, colorStart, colorEnd);
         }
-        private static void DrawSierpinskiTriangleSub(Matrix4x4 matrix, int sub)
+        private static void DrawSierpinskiTriangleSub(Matrix4x4 matrix, int sub, Color colorStart, Color colorEnd)
         {
             if (sub > 0)
             {
+                Color c1 = Color.Lerp(colorStart, colorEnd, d3);
+                Color c2 = Color.Lerp(colorStart, colorEnd, d3 * 2);
+
                 matrix *= scaleMatrix_d2;
-                DrawSierpinskiTriangleSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(new Vector3(0, -sqrt3)), sub - 1);
-                DrawSierpinskiTriangleSub(matrix * Matrix4x4.Translate(new Vector3(0, sqrt3)), sub - 1);
-                DrawSierpinskiTriangleSub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120)) * Matrix4x4.Translate(new Vector3(0, -sqrt3)), sub - 1);
+                Matrix4x4 m1 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -120)) * Matrix4x4.Translate(new Vector3(0, -sqrt3));
+                Matrix4x4 m2 = matrix * Matrix4x4.Translate(new Vector3(0, sqrt3));
+                Matrix4x4 m3 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(new Vector3(0, -sqrt3));
+
+                DrawSierpinskiTriangleSub(m1, sub - 1, c1, colorStart);
+                DrawSierpinskiTriangleSub(m2, sub - 1, c1, c2);
+                DrawSierpinskiTriangleSub(m3, sub - 1, colorEnd, c2);
             }
             else
             {
                 Gizmos.matrix = matrix;
+                Gizmos.color = colorStart;
                 Gizmos.DrawLine(new Vector3(-1, 0), new Vector3(1, 0));
             }
         }
 
-        public static void DrawFractalTree(int sub)
+        public static void DrawFractalTree(int sub, float branchAngle, Color colorStart, Color colorEnd)
         {
-            DrawFractalTreeSub(Gizmos.matrix, sub);
+            DrawFractalTreeSub(Gizmos.matrix, sub, branchAngle, colorStart, colorEnd);
         }
-        private static void DrawFractalTreeSub(Matrix4x4 matrix, int sub)
+        private static void DrawFractalTreeSub(Matrix4x4 matrix, int sub, float branchAngle, Color colorStart, Color colorEnd)
         {
             if (sub > 0)
             {
+                Color c1 = Color.Lerp(colorStart, colorEnd, 0.5f);
+
                 Gizmos.matrix = matrix;
+                Gizmos.color = c1;
                 Gizmos.DrawLine(Vector3.zero, Vector3.up);
+
                 matrix *= Matrix4x4.Translate(Vector3.up);
-                DrawFractalTreeSub(matrix * scaleMatrix_m07, sub - 1);
-                DrawFractalTreeSub(matrix * scaleMatrix_d3 * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -60)), sub - 1);
-                DrawFractalTreeSub(matrix * scaleMatrix_d3 * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 60)), sub - 1);
+                Matrix4x4 m1 = matrix * scaleMatrix_m07;
+                Matrix4x4 m2 = matrix * scaleMatrix_d3 * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -branchAngle));
+                Matrix4x4 m3 = matrix * scaleMatrix_d3 * Matrix4x4.Rotate(Quaternion.Euler(0, 0, branchAngle));
+
+                DrawFractalTreeSub(m1, sub - 1, branchAngle, c1, colorEnd);
+                DrawFractalTreeSub(m2, sub - 1, branchAngle, c1, colorEnd);
+                DrawFractalTreeSub(m3, sub - 1, branchAngle, c1, colorEnd);
             }
             else
             {
                 Gizmos.matrix = matrix;
+                Gizmos.color = colorStart;
                 Gizmos.DrawLine(Vector3.zero, Vector3.up);
             }
         }
 
-        public static void DrawFractalTree2(int sub)
+        public static void DrawFractalTree2(int sub, float branchAngle, Color colorStart, Color colorEnd)
         {
             Matrix4x4 matrix = Gizmos.matrix;
-            DrawFractalTree2Sub(matrix, sub);
+            DrawFractalTree2Sub(matrix, sub, branchAngle, colorStart, colorEnd);
         }
-        private static void DrawFractalTree2Sub(Matrix4x4 matrix, int sub)
+        private static void DrawFractalTree2Sub(Matrix4x4 matrix, int sub, float branchAngle, Color colorStart, Color colorEnd)
         {
             if (sub > 0)
             {
+                Color c1 = Color.Lerp(colorStart, colorEnd, 0.5f);
+
+                Gizmos.color = c1;
                 Gizmos.matrix = matrix;
                 Gizmos.DrawLine(Vector3.zero, Vector3.up);
+
                 matrix *= Matrix4x4.Translate(Vector3.up) * scaleMatrix_m07;
-                DrawFractalTree2Sub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -30)), sub - 1);
-                DrawFractalTree2Sub(matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 30)), sub - 1);
+                Matrix4x4 m1 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -branchAngle));
+                Matrix4x4 m2 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, branchAngle));
+
+                DrawFractalTree2Sub(m1, sub - 1, branchAngle, c1, colorEnd);
+                DrawFractalTree2Sub(m2, sub - 1, branchAngle, c1, colorEnd);
             }
             else
             {
                 Gizmos.matrix = matrix;
+                Gizmos.color = colorStart;
                 Gizmos.DrawLine(Vector3.zero, Vector3.up);
             }
         }
 
-        public static void DrawFractalRect(int sub, Color color1, Color color2)
+        public static void DrawFractalRect(int sub, Color colorStart, Color colorEnd)
         {
             Matrix4x4 matrix = Gizmos.matrix;
-            DrawFractalRectSub(matrix, sub, color1, color2);
+            DrawFractalRectSub(matrix, sub, colorStart, colorEnd);
         }
-        private static void DrawFractalRectSub(Matrix4x4 matrix, int sub, Color c1, Color c2)
+        private static void DrawFractalRectSub(Matrix4x4 matrix, int sub, Color colorStart, Color colorEnd)
         {
             if (sub > 0)
             {
+                Color c1 = Color.Lerp(colorStart, colorEnd, d9);
+                Color c2 = Color.Lerp(colorStart, colorEnd, d9 * 2);
+                Color c3 = Color.Lerp(colorStart, colorEnd, d9 * 3);
+                Color c4 = Color.Lerp(colorStart, colorEnd, d9 * 4);
+                Color c5 = Color.Lerp(colorStart, colorEnd, d9 * 5);
+                Color c6 = Color.Lerp(colorStart, colorEnd, d9 * 6);
+                Color c7 = Color.Lerp(colorStart, colorEnd, d9 * 7);
+                Color c8 = Color.Lerp(colorStart, colorEnd, d9 * 8);
+
                 matrix *= Matrix4x4.Scale(Vector3.one / 3);
+                Matrix4x4 m1 = matrix * Matrix4x4.Translate(new Vector3(-2, 0, 0));
+                Matrix4x4 m2 = matrix;
+                Matrix4x4 m3 = matrix * Matrix4x4.Translate(new Vector3(2, 0, 0));
+                Matrix4x4 m4 = matrix * Matrix4x4.Translate(new Vector3(1, 1, 0)) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 90));
+                Matrix4x4 m5 = matrix * Matrix4x4.Translate(new Vector3(0, 2, 0)) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 180));
+                Matrix4x4 m6 = m4 * Matrix4x4.Translate(new Vector3(0, 2, 0)) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 180));
+                Matrix4x4 m7 = m6 * Matrix4x4.Translate(new Vector3(2, 0, 0));
+                Matrix4x4 m8 = m2 * Matrix4x4.Translate(new Vector3(0, -2, 0));
+                Matrix4x4 m9 = m4 * Matrix4x4.Translate(new Vector3(-2, 0, 0));
 
-                Matrix4x4 matrix1 = matrix * Matrix4x4.Translate(new Vector3(-2, 0, 0));
-                Matrix4x4 matrix2 = matrix;
-                Matrix4x4 matrix3 = matrix * Matrix4x4.Translate(new Vector3(2, 0, 0));
-                Matrix4x4 matrix4 = matrix * Matrix4x4.Translate(new Vector3(1, 1, 0)) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 90));
-                Matrix4x4 matrix5 = matrix * Matrix4x4.Translate(new Vector3(0, 2, 0)) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 180));
-                Matrix4x4 matrix6 = matrix4 * Matrix4x4.Translate(new Vector3(0, 2, 0)) * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 180));
-                Matrix4x4 matrix7 = matrix6 * Matrix4x4.Translate(new Vector3(2, 0, 0));
-                Matrix4x4 matrix8 = matrix2 * Matrix4x4.Translate(new Vector3(0, -2, 0));
-                Matrix4x4 matrix9 = matrix4 * Matrix4x4.Translate(new Vector3(-2, 0, 0));
-
-                DrawFractalRectSub(matrix1, sub - 1, c1, Color.Lerp(c1, c2, d9));
-                DrawFractalRectSub(matrix7, sub - 1, Color.Lerp(c1, c2, d9), Color.Lerp(c1, c2, d9 * 2));
-                DrawFractalRectSub(matrix8, sub - 1, Color.Lerp(c1, c2, d9 * 2), Color.Lerp(c1, c2, d9 * 3));
-                DrawFractalRectSub(matrix9, sub - 1, Color.Lerp(c1, c2, d9 * 3), Color.Lerp(c1, c2, d9 * 4));
-                DrawFractalRectSub(matrix4, sub - 1, Color.Lerp(c1, c2, d9 * 4), Color.Lerp(c1, c2, d9 * 5));
-                DrawFractalRectSub(matrix5, sub - 1, Color.Lerp(c1, c2, d9 * 5), Color.Lerp(c1, c2, d9 * 6));
-                DrawFractalRectSub(matrix6, sub - 1, Color.Lerp(c1, c2, d9 * 6), Color.Lerp(c1, c2, d9 * 7));
-                DrawFractalRectSub(matrix2, sub - 1, Color.Lerp(c1, c2, d9 * 7), Color.Lerp(c1, c2, d9 * 8));
-                DrawFractalRectSub(matrix3, sub - 1, Color.Lerp(c1, c2, d9 * 8), c2);
+                DrawFractalRectSub(m1, sub - 1, colorStart, c1);
+                DrawFractalRectSub(m7, sub - 1, c1, c2);
+                DrawFractalRectSub(m8, sub - 1, c2, c3);
+                DrawFractalRectSub(m9, sub - 1, c3, c4);
+                DrawFractalRectSub(m4, sub - 1, c4, c5);
+                DrawFractalRectSub(m5, sub - 1, c5, c6);
+                DrawFractalRectSub(m6, sub - 1, c6, c7);
+                DrawFractalRectSub(m2, sub - 1, c7, c8);
+                DrawFractalRectSub(m3, sub - 1, c8, colorEnd);
             }
             else
             {
                 Gizmos.matrix = matrix;
-                Gizmos.color = Color.Lerp(c1, c2, 0.5f);
+                Gizmos.color = colorStart;
                 Gizmos.DrawLine(Vector3.left, Vector3.right);
             }
         }
 
-        public static void DrawFractalTriangle(int sub, Color color1, Color color2)
+        public static void DrawFractalTriangle(int sub, Color colorStart, Color colorEnd)
         {
             Matrix4x4 matrix = Gizmos.matrix * Matrix4x4.Translate(new Vector3(0, sqrt3 * -0.33f));
-            DrawFractalTriangleSub(matrix, sub, color1, color2);
+            DrawFractalTriangleSub(matrix, sub, colorStart, colorEnd);
         }
-        private static void DrawFractalTriangleSub(Matrix4x4 matrix, int sub, Color c1, Color c2)
+        private static void DrawFractalTriangleSub(Matrix4x4 matrix, int sub, Color colorStart, Color colorEnd)
         {
             if (sub > 0)
             {
+                Color c1 = Color.Lerp(colorStart, colorEnd, 0.25f);
+                Color c2 = Color.Lerp(colorStart, colorEnd, 0.50f);
+                Color c3 = Color.Lerp(colorStart, colorEnd, 0.75f);
+
                 matrix *= Matrix4x4.Scale(Vector3.one * 0.5f);
+                Matrix4x4 m1 = matrix * Matrix4x4.Translate(new Vector3(-1, 0, 0));
+                Matrix4x4 m2 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -60)) * Matrix4x4.Translate(new Vector3(-1, 0, 0));
+                Matrix4x4 m3 = matrix * Matrix4x4.Translate(new Vector3(0, sqrt3, 0));
+                Matrix4x4 m4 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(new Vector3(0, -sqrt3, 0));
 
-                Matrix4x4 matrix1 = matrix * Matrix4x4.Translate(new Vector3(-1, 0, 0));
-                Matrix4x4 matrix2 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, -60)) * Matrix4x4.Translate(new Vector3(-1, 0, 0));
-                Matrix4x4 matrix3 = matrix * Matrix4x4.Translate(new Vector3(0, sqrt3, 0));
-                Matrix4x4 matrix4 = matrix * Matrix4x4.Rotate(Quaternion.Euler(0, 0, 120)) * Matrix4x4.Translate(new Vector3(0, -sqrt3, 0));
-
-                DrawFractalTriangleSub(matrix1, sub - 1, c1, Color.Lerp(c1, c2, 0.25f));
-                DrawFractalTriangleSub(matrix2, sub - 1, Color.Lerp(c1, c2, 0.25f), Color.Lerp(c1, c2, 0.5f));
-                DrawFractalTriangleSub(matrix3, sub - 1, Color.Lerp(c1, c2, 0.5f), Color.Lerp(c1, c2, 0.75f));
-                DrawFractalTriangleSub(matrix4, sub - 1, Color.Lerp(c1, c2, 0.75f), c2);
+                DrawFractalTriangleSub(m1, sub - 1, colorStart, c1);
+                DrawFractalTriangleSub(m2, sub - 1, c1, c2);
+                DrawFractalTriangleSub(m3, sub - 1, c2, c3);
+                DrawFractalTriangleSub(m4, sub - 1, c3, colorEnd);
             }
             else
             {
                 Gizmos.matrix = matrix;
-                Gizmos.color = Color.Lerp(c1, c2, 0.5f);
+                Gizmos.color = colorStart;
                 Gizmos.DrawLine(Vector3.left, Vector3.right);
             }
         }

@@ -261,9 +261,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shape: 0
-  subDivisions: 3
-  color1: {r: 1, g: 0, b: 0, a: 1}
-  color2: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  subDivisions: 6
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  treeBranchAngle: 30
 --- !u!1001 &211005040
 Prefab:
   m_ObjectHideFlags: 0
@@ -497,8 +498,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape: 4
   subDivisions: 6
-  color1: {r: 1, g: 0, b: 0, a: 1}
-  color2: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  treeBranchAngle: 30
 --- !u!1 &627411802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,8 +1141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape: 1
   subDivisions: 3
-  color1: {r: 1, g: 0, b: 0, a: 1}
-  color2: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  treeBranchAngle: 30
 --- !u!1001 &1291671523
 Prefab:
   m_ObjectHideFlags: 0
@@ -1259,8 +1262,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape: 3
   subDivisions: 6
-  color1: {r: 1, g: 0, b: 0, a: 1}
-  color2: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  treeBranchAngle: 30
 --- !u!1001 &1340437964
 Prefab:
   m_ObjectHideFlags: 0
@@ -1408,8 +1412,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape: 6
   subDivisions: 4
-  color1: {r: 1, g: 0, b: 0, a: 1}
-  color2: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  treeBranchAngle: 30
 --- !u!1 &1507251611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,8 +1682,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape: 5
   subDivisions: 3
-  color1: {r: 1, g: 0, b: 0, a: 1}
-  color2: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  treeBranchAngle: 30
 --- !u!1001 &1694522865
 Prefab:
   m_ObjectHideFlags: 0
@@ -2107,5 +2113,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shape: 2
   subDivisions: 6
-  color1: {r: 1, g: 0, b: 0, a: 1}
-  color2: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  treeBranchAngle: 30
