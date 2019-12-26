@@ -10,7 +10,7 @@ Shader "EZUnity/Fur" {
 		[HideInInspector][HDR] _Color ("Color", Color) = (1, 1, 1, 1)
 
 		[Header(Fur)]
-		[EZTextureSingleLine(_FurLength)] _FurTex ("Fur Texture", 2D) = "white" {}
+		[EZTextureMini(_FurLength)] _FurTex ("Fur Texture", 2D) = "white" {}
 		[HideInInspector] _FurLength ("Fur Length", Float) = 0.2
 		[EZVectorSingleLine] _FurOffset ("Fur Offset", Vector) = (0.1, -0.5, 1, 1)
 		[EZVectorSingleLine] _FurUVOffset ("Fur UV Offset(XY) Scale(ZW)", Vector) = (5, 5, 0.01, 0.01)
