@@ -1,20 +1,28 @@
 # Materials
 
-## Reflection
+## DynamicFlame
 
-![Reflection](.SamplePicture/Reflection.png)
+![DynamicFlame](.SamplePicture/Mat_Unlit_DynamicFlame.gif)
 
-## Flame (Dynamic)
+## DynamicFluid
 
-![Flame](.SamplePicture/Flame.png)
+![DynamicFluid](.SamplePicture/Mat_Unlit_DynamicFluid.gif)
+
+## WobblingLiquid
+
+![WobblingLiquid](.SamplePicture/Mat_Unlit_WobblingLiquid.gif)
+
+## LaserProcessed
+
+![LaserProcessed](.SamplePicture/Mat_Unlit_LaserProcessed.gif)
 
 ## Fur
 
 ![Fur](.SamplePicture/Fur.png)
 
-## Liquid (Dynamic)
+## Reflection
 
-![Liquid](.SamplePicture/Liquid.png)
+![Reflection](.SamplePicture/Reflection.png)
 
 ## Matcap
 
