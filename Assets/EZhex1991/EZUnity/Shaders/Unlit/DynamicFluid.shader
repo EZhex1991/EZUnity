@@ -88,11 +88,12 @@ Shader "EZUnity/Unlit/DynamicFluid" {
 				o.roughnessUV = TRANSFORM_TEX(v.uv, _RoughTex);
 				o.worldNormal = normalize(UnityObjectToWorldNormal(v.normal));
 				o.worldViewDir = normalize(WorldSpaceViewDir(v.vertex));
-				fixed4 grabPosR = UnityObjectToClipPos(v.vertex - v.normal * _Refrection.r * _Refrection.w);
+				fixed4 refrection = (1 - dot(o.worldNormal, o.worldViewDir)) * _Refrection;
+				fixed4 grabPosR = UnityObjectToClipPos(v.vertex - v.normal * refrection.r * _Refrection.w);
 				o.grabPosR = ComputeGrabScreenPos(grabPosR);
-				fixed4 grabPosG = UnityObjectToClipPos(v.vertex - v.normal * _Refrection.g * _Refrection.w);
+				fixed4 grabPosG = UnityObjectToClipPos(v.vertex - v.normal * refrection.g * _Refrection.w);
 				o.grabPosG = ComputeGrabScreenPos(grabPosG);
-				fixed4 grabPosB = UnityObjectToClipPos(v.vertex - v.normal * _Refrection.b * _Refrection.w);
+				fixed4 grabPosB = UnityObjectToClipPos(v.vertex - v.normal * refrection.b * _Refrection.w);
 				o.grabPosB = ComputeGrabScreenPos(grabPosB);
 				return o;
 			}
