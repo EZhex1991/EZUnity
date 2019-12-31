@@ -18,16 +18,20 @@
 
 ## Fur
 
-![Fur](.SamplePicture/Fur.png)
+![Fur](.SamplePicture/Mat_Fur.gif)
 
 ## Reflection
 
-![Reflection](.SamplePicture/Reflection.png)
+![Reflection](.SamplePicture/EZReflection.gif)
 
 ## Matcap
 
-![Matcap](.SamplePicture/Matcap.png)
+![Matcap](.SamplePicture/Mat_Matcap.gif)
+
+## UVStreamer
+
+![UVStreamer](.SamplePicture/Mat_Unlit_UVStreamer.gif)
 
 ## MultiTexture3x
 
-![MultiTexture3x](.SamplePicture/MultiTexture3x.png)
+![MultiTexture3x](.SamplePicture/Mat_Unlit_MultiTexture3x.gif)
