@@ -100,7 +100,6 @@ namespace EZhex1991.EZTextureProcessor
         }
         protected virtual void OnTextureCreated(TextureImporter importer)
         {
-            importer.isReadable = true;
             importer.wrapMode = defaultWrapMode;
             importer.mipmapEnabled = defaultMipmapSetting;
         }

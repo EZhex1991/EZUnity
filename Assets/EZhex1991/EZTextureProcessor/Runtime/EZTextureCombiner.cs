@@ -11,36 +11,60 @@ namespace EZhex1991.EZTextureProcessor
     [CreateAssetMenu(fileName = "EZTextureCombiner",
         menuName = EZTextureProcessorUtility.MenuName_TextureProcessor + "EZTextureCombiner",
         order = (int)EZAssetMenuOrder.EZTextureCombiner)]
-    public class EZTextureCombiner : EZTextureGenerator
+    public class EZTextureCombiner : EZTextureProcessor
     {
+        private static class Uniforms
+        {
+            public static readonly string ShaderName = "Hidden/EZTextureProcessor/Combiner";
+            public static readonly int PropertyID_AddTex = Shader.PropertyToID("_AddTex");
+        }
+
+        public override string defaultShaderName { get { return Uniforms.ShaderName; } }
+
+        public override Texture inputTexture { get { return Texture2DExt.white; } }
+
+        [System.NonSerialized]
+        protected Material m_Material;
+        public override Material material
+        {
+            get
+            {
+                if (m_Material == null && shader != null)
+                {
+                    m_Material = new Material(shader);
+                }
+                return m_Material;
+            }
+        }
+
         public Vector2Int cellSize = new Vector2Int(2, 2);
         public Texture2D[] inputTextures = new Texture2D[36];
 
-        public override void SetTexturePixels(Texture2D texture)
+        public override void ProcessTexture(Texture sourceTexture, RenderTexture destinationTexture)
         {
-            float subTextureWidth = (float)texture.width / cellSize.x;
-            float subTextureheight = (float)texture.height / cellSize.y;
-
-            for (int cellX = 0; cellX < cellSize.x; cellX++)
+            if (material != null)
             {
-                for (int cellY = 0; cellY < cellSize.y; cellY++)
+                RenderTexture lastTexture = RenderTexture.GetTemporary(destinationTexture.width, destinationTexture.height);
+                Graphics.Blit(inputTexture, lastTexture, material);
+                for (int i = 0; i < cellSize.x; i++)
                 {
-                    int textureIndex = cellY * 6 + cellX;
-                    Texture2D subTexture = inputTextures[textureIndex];
-
-                    for (int x = 0; x < subTextureWidth; x++)
+                    for (int j = 0; j < cellSize.y; j++)
                     {
-                        for (int y = 0; y < subTextureheight; y++)
-                        {
-                            float coordX = (float)x / (subTextureWidth - 1);
-                            float coordY = (float)y / (subTextureheight - 1);
-                            Color color = subTexture == null ? Color.white : subTexture.GetPixelBilinear(coordX, coordY);
-                            int pixelX = (int)(cellX * subTextureWidth + x);
-                            int pixelY = (int)(cellY * subTextureheight + y);
-                            texture.SetPixel(pixelX, pixelY, color);
-                        }
+                        RenderTexture tempTexture = RenderTexture.GetTemporary(destinationTexture.width, destinationTexture.height);
+                        material.SetTexture(Uniforms.PropertyID_AddTex, inputTextures[j * 6 + i]);
+                        material.SetTextureScale(Uniforms.PropertyID_AddTex, cellSize);
+                        material.SetTextureOffset(Uniforms.PropertyID_AddTex, -new Vector2(i, j));
+                        Graphics.Blit(lastTexture, tempTexture, material);
+                        RenderTexture.ReleaseTemporary(lastTexture);
+                        lastTexture = tempTexture;
                     }
                 }
+                Graphics.Blit(lastTexture, destinationTexture, material);
+                RenderTexture.ReleaseTemporary(lastTexture);
+            }
+            else
+            {
+                Graphics.Blit(sourceTexture, destinationTexture);
             }
         }
     }

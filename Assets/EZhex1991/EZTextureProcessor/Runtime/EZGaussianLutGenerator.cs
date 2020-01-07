@@ -28,6 +28,7 @@ namespace EZhex1991.EZTextureProcessor
 
         public override Texture inputTexture { get { return null; } }
 
+        [System.NonSerialized]
         protected Material m_Material;
         public override Material material
         {

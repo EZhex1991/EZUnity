@@ -15,17 +15,19 @@ namespace EZhex1991.EZTextureProcessor
     {
         private static class Uniforms
         {
+            public static readonly string ShaderName = "Hidden/EZTextureProcessor/MotionBlur";
             public static readonly int PropertyID_BlurWeightTex = Shader.PropertyToID("_BlurWeightTex");
             public static readonly int PropertyID_BlurRadius = Shader.PropertyToID("_BlurRadius");
             public static readonly int PropertyID_BlurDirection = Shader.PropertyToID("_BlurDirection");
         }
 
-        public override string defaultShaderName { get { return "Hidden/EZTextureProcessor/MotionBlur"; } }
+        public override string defaultShaderName { get { return Uniforms.ShaderName; } }
 
         [SerializeField]
         protected Texture m_InputTexture;
         public override Texture inputTexture { get { return m_InputTexture; } }
 
+        [System.NonSerialized]
         protected Material m_Material;
         public override Material material
         {

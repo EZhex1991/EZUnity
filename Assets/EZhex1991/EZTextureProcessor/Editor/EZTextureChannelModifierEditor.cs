@@ -29,7 +29,7 @@ namespace EZhex1991.EZTextureProcessor
 
         protected override void GetInputProperties()
         {
-            m_InputTexture = serializedObject.FindProperty("inputTexture");
+            m_InputTexture = serializedObject.FindProperty("m_InputTexture");
             m_OutputCurve = serializedObject.FindProperty("outputCurve");
 
             m_OverrideTextureR = serializedObject.FindProperty("overrideTextureR");
