@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZTextureSpherize",
-        menuName = EZTextureProcessorUtility.MenuName_TextureProcessor + "EZTextureSpherize",
-        order = (int)EZAssetMenuOrder.EZTextureSpherize)]
+    [CreateAssetMenu(fileName = nameof(EZTextureSpherize),
+        menuName = MenuName_TextureProcessor + nameof(EZTextureSpherize))]
     public class EZTextureSpherize : EZTextureProcessor
     {
         private static class Uniforms

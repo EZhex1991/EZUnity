@@ -3,15 +3,13 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
     [CreateAssetMenu(
-        fileName = "EZGradient2DTextureGenerator",
-        menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZGradient2DTextureGenerator",
-        order = (int)EZAssetMenuOrder.EZGradient2DTextureGenerator)]
+        fileName = nameof(EZGradient2DTextureGenerator),
+        menuName = MenuName_TextureGenerator + nameof(EZGradient2DTextureGenerator))]
     public class EZGradient2DTextureGenerator : EZTextureGenerator
     {
         public enum CoordinateMode
@@ -26,7 +24,7 @@ namespace EZhex1991.EZTextureProcessor
         }
         private delegate float Sampler(float x, float y);
 
-        public Gradient gradient = EZTextureProcessorUtility.GradientBlackToWhite();
+        public Gradient gradient = GradientExt.BlackToWhite();
         [EZCurveRect]
         public AnimationCurve gradientCurve = AnimationCurve.Linear(0, 0, 1, 1);
 

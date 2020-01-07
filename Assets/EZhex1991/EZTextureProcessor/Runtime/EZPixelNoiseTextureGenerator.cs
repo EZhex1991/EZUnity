@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZPixelNoiseTextureGenerator",
-        menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZPixelNoiseTextureGenerator",
-        order = (int)EZAssetMenuOrder.EZPixelNoiseTextureGenerator)]
+    [CreateAssetMenu(fileName = nameof(EZPixelNoiseTextureGenerator),
+        menuName = MenuName_TextureGenerator + nameof(EZPixelNoiseTextureGenerator))]
     public class EZPixelNoiseTextureGenerator : EZTextureGenerator
     {
         public int randomSeed = 17685;

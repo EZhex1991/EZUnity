@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZTextureCombiner",
-        menuName = EZTextureProcessorUtility.MenuName_TextureProcessor + "EZTextureCombiner",
-        order = (int)EZAssetMenuOrder.EZTextureCombiner)]
+    [CreateAssetMenu(fileName = nameof(EZTextureCombiner),
+        menuName = MenuName_TextureProcessor + nameof(EZTextureCombiner))]
     public class EZTextureCombiner : EZTextureProcessor
     {
         private static class Uniforms

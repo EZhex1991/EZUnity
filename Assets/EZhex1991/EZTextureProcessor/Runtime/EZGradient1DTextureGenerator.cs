@@ -3,18 +3,16 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
     [CreateAssetMenu(
-        fileName = "EZGradient1DTextureGenerator",
-        menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZGradient1DTextureGenerator",
-        order = (int)EZAssetMenuOrder.EZGradient1DTextureGenerator)]
+        fileName = nameof(EZGradient1DTextureGenerator),
+        menuName = MenuName_TextureGenerator + nameof(EZGradient1DTextureGenerator))]
     public class EZGradient1DTextureGenerator : EZTextureGenerator
     {
-        public Gradient gradient = EZTextureProcessorUtility.GradientBlackToWhite();
+        public Gradient gradient = GradientExt.BlackToWhite();
         [EZCurveRect]
         public AnimationCurve gradientCurve = AnimationCurve.Linear(0, 0, 1, 1);
 

@@ -3,15 +3,13 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
     [CreateAssetMenu(
-        fileName = "EZMaterialToTexture",
-        menuName = "EZUnity/EZMaterialToTexture",
-        order = (int)EZAssetMenuOrder.EZMaterialToTexture)]
+        fileName = nameof(EZMaterialToTexture),
+        menuName = "EZUnity/" + nameof(EZMaterialToTexture))]
     public class EZMaterialToTexture : EZTextureProcessor
     {
         public override string defaultShaderName { get { return ""; } }

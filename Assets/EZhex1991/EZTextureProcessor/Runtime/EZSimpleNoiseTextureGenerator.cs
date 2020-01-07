@@ -3,15 +3,13 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
     [CreateAssetMenu(
-        fileName = "EZSimpleNoiseTextureGenerator",
-        menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZSimpleNoiseTextureGenerator",
-        order = (int)EZAssetMenuOrder.EZSimpleNoiseTextureGenerator)]
+        fileName = nameof(EZSimpleNoiseTextureGenerator),
+        menuName = MenuName_TextureGenerator + nameof(EZSimpleNoiseTextureGenerator))]
     public class EZSimpleNoiseTextureGenerator : EZTextureProcessor
     {
         private static class Uniforms

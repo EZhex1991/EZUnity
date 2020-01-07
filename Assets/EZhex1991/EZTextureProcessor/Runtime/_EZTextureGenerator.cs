@@ -15,6 +15,9 @@ namespace EZhex1991.EZTextureProcessor
 {
     public abstract class EZTextureGenerator : ScriptableObject
     {
+        public const string MenuName_TextureGenerator = "EZTextureProcessor/TextureGenerator/";
+        public const string MenuName_TextureProcessor = "EZTextureProcessor/TextureProcessor/";
+
         [SerializeField]
         protected Vector2Int m_OutputResolution = new Vector2Int(256, 256);
         public Vector2Int outputResolution { get { return m_OutputResolution; } }

@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZVoronoiTextureGenerator",
-        menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZVoronoiTextureGenerator",
-        order = (int)EZAssetMenuOrder.EZVoronoiTextureGenerator)]
+    [CreateAssetMenu(fileName = nameof(EZVoronoiTextureGenerator),
+        menuName = MenuName_TextureGenerator + nameof(EZVoronoiTextureGenerator))]
     public class EZVoronoiTextureGenerator : EZTextureProcessor
     {
         private static class Uniforms

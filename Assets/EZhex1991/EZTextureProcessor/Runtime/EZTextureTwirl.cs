@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZTextureTwirl",
-        menuName = EZTextureProcessorUtility.MenuName_TextureProcessor + "EZTextureTwirl",
-        order = (int)EZAssetMenuOrder.EZTextureTwirl)]
+    [CreateAssetMenu(fileName = nameof(EZTextureTwirl),
+        menuName = MenuName_TextureProcessor + nameof(EZTextureTwirl))]
     public class EZTextureTwirl : EZTextureProcessor
     {
         private static class Uniforms

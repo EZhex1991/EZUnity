@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZGaussianLutGenerator",
-        menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZGaussianLutGenerator",
-        order = (int)EZAssetMenuOrder.EZGaussianLutGenerator)]
+    [CreateAssetMenu(fileName = nameof(EZGaussianLutGenerator),
+        menuName = MenuName_TextureGenerator + nameof(EZGaussianLutGenerator))]
     public class EZGaussianLutGenerator : EZTextureProcessor
     {
         private static class Uniforms

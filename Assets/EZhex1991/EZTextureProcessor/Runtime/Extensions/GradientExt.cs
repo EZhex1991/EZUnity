@@ -5,7 +5,7 @@
  */
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZTextureProcessor
 {
     public static class GradientExt
     {

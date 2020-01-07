@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZWaveTextureGenerator",
-        menuName = EZTextureProcessorUtility.MenuName_TextureGenerator + "EZWaveTextureGenerator",
-        order = (int)EZAssetMenuOrder.EZWaveTextureGenerator)]
+    [CreateAssetMenu(fileName = nameof(EZWaveTextureGenerator),
+        menuName = MenuName_TextureGenerator + nameof(EZWaveTextureGenerator))]
     public class EZWaveTextureGenerator : EZTextureGenerator
     {
         public enum Antialiasing { None, X2, X4 }

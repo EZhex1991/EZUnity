@@ -3,14 +3,12 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity;
 using UnityEngine;
 
 namespace EZhex1991.EZTextureProcessor
 {
-    [CreateAssetMenu(fileName = "EZTexturePipeline",
-        menuName = EZTextureProcessorUtility.MenuName_TextureProcessor + "EZTexturePipeline",
-        order = (int)EZAssetMenuOrder.EZTexturePipeline)]
+    [CreateAssetMenu(fileName = nameof(EZTexturePipeline),
+        menuName = MenuName_TextureProcessor + nameof(EZTexturePipeline))]
     public class EZTexturePipeline : EZTextureGenerator
     {
         public EZTextureGenerator[] textureProcessors;
