@@ -3,6 +3,7 @@
 **部分模块已从该目录中移除**
 
 - [EZSoftBone](https://github.com/EZhex1991/EZSoftBone): 柔性物体（头发/尾巴/胸部/裙子）模拟插件。支持所有碰撞体；独立的材质"EZSoftBoneMaterial"存放参数，重用度高；代码可读性强；碰撞体可通过继承EZSoftBoneColliderBase进行自定义扩展。
+- [EZTextureProcessor](https://github.com/EZhex1991/EZTextureProcessor): 图片处理工具，可在Unity中进行参数化图片生成/图片拼合/图片通道调整/描边/模糊/扭曲等效果。
 - [EZAnimation](https://github.com/EZhex1991/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
 - [EZPostProcessing](https://github.com/EZhex1991/EZPostProcessing): 基于PostProcessing Stack V2开发的一系列后处理效果。
 
@@ -23,30 +24,6 @@ Unity2018.3以上版本在ProjectSettings窗口中，**低版本在Preferences�
 - EZEditorSettings: 开启某些选项能提高工作效率
 - EZGraphicsSettings: 提供更加方便的界面来管理AlwaysIncludedShaders，其他功能开发中
 - EZScriptSettings: 提供脚本模板的管理功能
-
-## 图片处理工具([Asset/Create/EZUnity/EZTextureProcessor/...](Assets/EZhex1991/EZTextureProcessor/README.md))
-
-- 图片生成
-  - EZGaussianLutGenerator: 高斯查找表
-  - EZGradient1DTextureGenerator: 渐变生成图片
-  - EZGradient2DTextureGenerator: 坐标运算+渐变
-  - EZWaveTextureGenerator: 波浪图形
-  - EZPerlinNoiseTextureGenerator: 柏林噪声
-  - EZPixelNoiseTextureGenerator: 随机噪点
-  - EZSimpleNoiseTextureGenerator: 普通噪声
-  - EZVoronoiTextureGenerator: 泰森多边形
-
-- 图片处理（部分shader可直接用于后处理）
-  - EZTextureBlurProcessor: 模糊（配合高斯查找表做高斯模糊）
-  - EZColorBasedOutline: 基于色彩容差的图片描边
-  - EZTextureSpherize: 球面化处理
-  - EZTextureTwirl: 漩涡扭曲处理
-  - EZTextureChannelModifier: 图片通道调整（交换通道、提取单通道、调整特定通道曲线）
-  - EZTextureCombiner: 图片拼合
-
-- 通用（自定义）
-  - EZMaterialToTexture: 材质直接输出图片（不要使用依赖光照的Shader！！！）
-  - EZTexturePipeline: 图片处理管线，多个图片处理会按顺序执行
 
 ## 附加资源 ([Asset/Create/EZUnity/...](Assets/EZhex1991/EZUnity/Demo/CustomAssets/README.md))
 
