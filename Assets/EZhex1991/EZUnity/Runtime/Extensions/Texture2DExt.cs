@@ -69,6 +69,37 @@ namespace EZhex1991.EZUnity
             }
         }
 
+        public static Texture2D GetLut(AnimationCurve curve, int width = 1024, int height = 1, TextureFormat format = TextureFormat.RFloat)
+        {
+            Texture2D lut = new Texture2D(width, height, format, false, false);
+            float maxX = width - 1;
+            for (int i = 0; i < width; i++)
+            {
+                Color color = curve.Evaluate(i / maxX) * Color.white;
+                for (int j = 0; j < height; j++)
+                {
+                    lut.SetPixel(i, j, color);
+                }
+            }
+            lut.Apply();
+            lut.wrapMode = TextureWrapMode.Clamp;
+            return lut;
+        }
+
+        public static void SetLut(this Texture2D texture, AnimationCurve curve)
+        {
+            float maxX = texture.width - 1;
+            for (int i = 0; i < texture.width; i++)
+            {
+                Color color = curve.Evaluate(i / maxX) * Color.white;
+                for (int j = 0; j < texture.height; j++)
+                {
+                    texture.SetPixel(i, j, color);
+                }
+            }
+            texture.Apply();
+        }
+
         public static byte[] Encode(this Texture2D texture, TextureEncoding encoding)
         {
             switch (encoding)
