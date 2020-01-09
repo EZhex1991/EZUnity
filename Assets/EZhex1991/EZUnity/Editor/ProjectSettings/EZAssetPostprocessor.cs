@@ -17,7 +17,8 @@ namespace EZhex1991.EZUnity
 
         public string dirPath { get { return Path.GetDirectoryName(assetPath); } }
         public string dirName { get { return dirPath.Substring(dirPath.LastIndexOf("/") + 1); } }
-        public string assetName { get { return Path.GetFileName(assetPath); } }
+        public string fileName { get { return Path.GetFileName(assetPath); } }
+        public string assetName { get { return Path.GetFileNameWithoutExtension(assetPath); } }
 
         private void ImportWithPreset(string importerName, string[] importerTags)
         {
@@ -27,7 +28,7 @@ namespace EZhex1991.EZUnity
             {
                 string tag = importerTags[i];
                 if (string.IsNullOrEmpty(tag)) continue;
-                if (assetName.Contains(tag))
+                if (fileName.Contains(tag))
                 {
                     taggedImporterName += tag;
                     break;
