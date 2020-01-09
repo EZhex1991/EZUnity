@@ -46,5 +46,14 @@ namespace EZhex1991.EZUnity
         {
             return new Vector3Int(Mathf.RoundToInt(v3.x), Mathf.RoundToInt(v3.y), Mathf.RoundToInt(v3.z));
         }
+
+        public static Color ToColor(this Vector3 v3)
+        {
+            return new Color(v3.x, v3.y, v3.z);
+        }
+        public static Color ToColor256(this Vector3 v3)
+        {
+            return new Color(v3.x / 255f, v3.y / 255f, v3.z / 255f);
+        }
     }
 }
