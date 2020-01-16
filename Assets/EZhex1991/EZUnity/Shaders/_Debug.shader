@@ -5,11 +5,13 @@
 
 Shader "EZUnity/_Debug" {
 	Properties {
+		_MainTex ("Main Texture", 2D) = "white" {}
 		[KeywordEnum(Normal, Tangent, Bitangent, Color, UV0, UV1)]
 		_DebugMode ("Debug Mode", Int) = 0
-
-		[KeywordEnum(Clamp, Repeat)]
+		[KeywordEnum(Clamp, Repeat, Mirror)]
 		_WrapMode ("Wrap Mode", Int) = 0
+
+		_DebugColor ("Debug Color", Color) = (1, 1, 1, 1)
 	}
 	CustomEditor "EZhex1991.EZUnity.EZShaderGUI"
 	SubShader {
@@ -20,9 +22,13 @@ Shader "EZUnity/_Debug" {
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma shader_feature _DEBUGMODE_NORMAL _DEBUGMODE_TANGENT _DEBUGMODE_BITANGENT _DEBUGMODE_COLOR _DEBUGMODE_UV0 _DEBUGMODE_UV1
-			#pragma shader_feature _WRAPMODE_CLAMP _WRAPMODE_REPEAT
+			#pragma shader_feature _WRAPMODE_CLAMP _WRAPMODE_REPEAT _WRAPMODE_MIRROR
 
 			#include "UnityCG.cginc"
+
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			half4 _DebugColor;
 
 			struct appdata {
 				float4 vertex : POSITION;
@@ -45,23 +51,23 @@ Shader "EZUnity/_Debug" {
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.uv0 = v.uv0;
-				o.uv1 = v.uv1;
+				o.uv0 = TRANSFORM_TEX(v.uv0, _MainTex);
+				o.uv1 = TRANSFORM_TEX(v.uv1, _MainTex);
 				o.worldNormal = normalize(UnityObjectToWorldNormal(v.normal));
 				o.worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
 				o.worldBitangent = normalize(cross(o.worldNormal, o.worldTangent));
 				o.color = v.color;
 				return o;
 			}
-			fixed4 frag (v2f i) : SV_Target {
-				fixed4 color = 1;
+			half4 frag (v2f i) : SV_Target {
+				half4 color = 0;
 
 				#if _DEBUGMODE_NORMAL
-					color.rgb = i.worldNormal;
+					color.rgb = i.worldNormal * 0.5 + 0.5;
 				#elif _DEBUGMODE_TANGENT
-					color.rgb = i.worldTangent;
+					color.rgb = i.worldTangent * 0.5 + 0.5;
 				#elif _DEBUGMODE_BITANGENT
-					color.rgb = i.worldBitangent;
+					color.rgb = i.worldBitangent * 0.5 + 0.5;
 				#elif _DEBUGMODE_UV0
 					color.rg = i.uv0;
 				#elif _DEBUGMODE_UV1
@@ -71,12 +77,14 @@ Shader "EZUnity/_Debug" {
 				#endif
 
 				#if _WRAPMODE_CLAMP
-					color.rg = clamp(color.rg, 0, 1);
+					color = clamp(color, 0, 1);
 				#elif _WRAPMODE_REPEAT
-					color.rg = fmod(color.rg, 1);
+					color = fmod(color, 1);
+				#elif _WRAPMODE_MIRROR
+					color = abs(fmod(color + 1, 2) - 1);
 				#endif
 
-				return color;
+				return color * tex2D(_MainTex, i.uv0) * _DebugColor;
 			}
 			ENDCG
 		}
