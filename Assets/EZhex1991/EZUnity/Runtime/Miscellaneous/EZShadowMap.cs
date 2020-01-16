@@ -223,7 +223,6 @@ namespace EZhex1991.EZUnity
             Shader.SetGlobalFloat(Uniforms.GlobalPropertyID_ShadowBias, shadowBias);
             Shader.SetGlobalMatrixArray(Uniforms.GlobalPropertyID_WorldToShadow, worldToShadow);
             Shader.SetGlobalMatrix(Uniforms.GlobalPropertyID_WorldToCamera, targetCamera.worldToCameraMatrix);
-            m_ShadowRendererObject.hideFlags = HideFlags.None;
         }
     }
 }

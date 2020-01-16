@@ -144,7 +144,6 @@ namespace EZhex1991.EZUnity
             m_Projector.material = projectorMaterial;
             m_Projector.ignoreLayers = ~receiverLayerMask;
             m_Projector.material = projectorMaterial;
-            m_CollectorObject.hideFlags = HideFlags.None;
         }
     }
 }
