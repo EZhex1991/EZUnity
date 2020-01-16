@@ -2285,7 +2285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowCollectorShader: {fileID: 4800000, guid: 93e1810105643814fa6188bb9a625ad5,
     type: 3}
-  shadowCasterShader: {fileID: 4800000, guid: ef104ff2dca9215459a03575100cd221, type: 3}
+  shadowProjectorShader: {fileID: 4800000, guid: ef104ff2dca9215459a03575100cd221,
+    type: 3}
   textureResolution: {x: 512, y: 512}
   textureFormat: 16
   nearClipPlane: 0.1
@@ -2298,6 +2299,7 @@ MonoBehaviour:
   receiverLayerMask:
     serializedVersion: 2
     m_Bits: 2
+  shadowBias: 0.03
   shadowColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &2083926004
 GameObject:
