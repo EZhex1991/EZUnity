@@ -134,7 +134,7 @@ namespace EZhex1991.EZUnity
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    shadowTextures[i] = new RenderTexture(textureResolution.x, textureResolution.y, 24, RenderTextureFormat.Depth, RenderTextureReadWrite.Default);
+                    shadowTextures[i] = new RenderTexture(textureResolution.x, textureResolution.y, 16, RenderTextureFormat.Depth, RenderTextureReadWrite.Default);
                     shadowTextures[i].useMipMap = false;
                     Shader.SetGlobalTexture(Uniforms.GlobalPropertyIDs_ShadowTex[i], shadowTextures[i]);
                 }

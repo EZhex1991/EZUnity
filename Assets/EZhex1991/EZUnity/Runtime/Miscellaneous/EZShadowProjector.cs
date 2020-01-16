@@ -23,15 +23,14 @@ namespace EZhex1991.EZUnity
 
         [Header("Texture Settings")]
         public Vector2Int textureResolution = new Vector2Int(512, 512);
-        public RenderTextureFormat textureFormat = RenderTextureFormat.Depth;
 
         [Header("Render Settings")]
         public float nearClipPlane = 0.1f;
         public float farClipPlane = 100;
         public float orthographicSize = 5;
         public int cameraDepth = -100;
-        public LayerMask casterLayerMask = 0;
-        public LayerMask receiverLayerMask;
+        public LayerMask casterLayerMask = -1;
+        public LayerMask receiverLayerMask = -1;
         public float shadowBias = 0.03f;
         public Color shadowColor = new Color(0, 0, 0, 0.5f);
 
@@ -40,6 +39,7 @@ namespace EZhex1991.EZUnity
         private Projector m_Projector;
 
         private RenderTexture shadowTexture;
+        private Vector2Int oldResolution;
         private Material projectorMaterial;
 
         private void Awake()
@@ -105,12 +105,11 @@ namespace EZhex1991.EZUnity
 
         private void SetupTexture()
         {
-            if (shadowTexture == null ||
-                shadowTexture.width != textureResolution.x || shadowTexture.height != textureResolution.y ||
-                shadowTexture.format != textureFormat)
+            if (oldResolution != textureResolution || shadowTexture == null)
             {
-                shadowTexture = new RenderTexture(textureResolution.x, textureResolution.y, 24, textureFormat);
+                shadowTexture = new RenderTexture(textureResolution.x, textureResolution.y, 16, RenderTextureFormat.Depth);
                 shadowTexture.useMipMap = false;
+                oldResolution = textureResolution;
             }
         }
         private void SetupMaterial()
