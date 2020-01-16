@@ -3,7 +3,7 @@
 // Organization:	#ORGANIZATION#
 // Description:		
 
-Shader "EZUnity/EZShadowCaster" {
+Shader "EZUnity/EZShadowProjector" {
 	Properties {
 		_ShadowTex ("Shadow Texture", 2D) = "black" {}
 		_ShadowColor ("Shadow Color", Color) = (0, 0, 0, 0.5)
@@ -43,12 +43,11 @@ Shader "EZUnity/EZShadowCaster" {
 			}
 			half4 frag (v2f i) : SV_Target {
 				fixed shadow = tex2Dproj(_ShadowTex, UNITY_PROJ_COORD(i.uv_ShadowTex));
-				half4 color = _ShadowColor * shadow;
+				half4 color = _ShadowColor * step(0.5 - i.uv_ShadowTex.z * 0.5, shadow);
 
 				return color;
 			}
 			ENDCG
 		}
 	}
-	FallBack "Unlit/Texture"
 }

@@ -11,13 +11,19 @@ namespace EZhex1991.EZUnity
     [ExecuteInEditMode]
     public class EZShadowProjector : MonoBehaviour
     {
+        private static class Uniforms
+        {
+            public static readonly int PropertyID_ShadowTex = Shader.PropertyToID("_ShadowTex");
+            public static readonly int PropertyID_ShadowColor = Shader.PropertyToID("_ShadowColor");
+        }
+
         [Header("Shader Settings")]
         public Shader shadowCollectorShader;
-        public Shader shadowCasterShader;
+        public Shader shadowProjectorShader;
 
         [Header("Texture Settings")]
         public Vector2Int textureResolution = new Vector2Int(512, 512);
-        public RenderTextureFormat textureFormat = RenderTextureFormat.R8;
+        public RenderTextureFormat textureFormat = RenderTextureFormat.Depth;
 
         [Header("Render Settings")]
         public float nearClipPlane = 0.1f;
@@ -26,22 +32,33 @@ namespace EZhex1991.EZUnity
         public int cameraDepth = -100;
         public LayerMask casterLayerMask = 0;
         public LayerMask receiverLayerMask;
+        public float shadowBias = 0.03f;
         public Color shadowColor = new Color(0, 0, 0, 0.5f);
 
         private GameObject m_CollectorObject;
         private Camera m_Camera;
         private Projector m_Projector;
 
-        private RenderTexture renderTexture;
-        private Material casterMaterial;
+        private RenderTexture shadowTexture;
+        private Material projectorMaterial;
 
         private void Awake()
         {
             m_CollectorObject = new GameObject(string.Format("{0}-{1}", nameof(EZShadowProjector), GetInstanceID()));
             m_CollectorObject.transform.SetParent(transform, false);
             m_CollectorObject.hideFlags = HideFlags.HideAndDontSave;
+
             m_Camera = m_CollectorObject.AddComponent<Camera>();
+            m_Camera.SetReplacementShader(shadowCollectorShader, "RenderType");
+            m_Camera.clearFlags = CameraClearFlags.SolidColor;
+            m_Camera.backgroundColor = Color.black;
+            m_Camera.orthographic = true;
+            m_Camera.depthTextureMode = DepthTextureMode.Depth;
+            m_Camera.allowHDR = false;
+            m_Camera.allowMSAA = false;
+
             m_Projector = m_CollectorObject.AddComponent<Projector>();
+            m_Projector.orthographic = true;
         }
         private void Start()
         {
@@ -62,12 +79,12 @@ namespace EZhex1991.EZUnity
         {
 #if UNITY_EDITOR
             DestroyImmediate(m_CollectorObject);
-            if (casterMaterial != null) DestroyImmediate(casterMaterial);
+            if (projectorMaterial != null) DestroyImmediate(projectorMaterial);
 #else
             Destroy(m_CollectorObject);
             if (casterMaterial != null) Destroy(casterMaterial);
 #endif
-            if (renderTexture != null) renderTexture.Release();
+            if (shadowTexture != null) shadowTexture.Release();
         }
 
         private void OnValidate()
@@ -82,41 +99,37 @@ namespace EZhex1991.EZUnity
             Gizmos.matrix = transform.localToWorldMatrix;
             float center = (farClipPlane + nearClipPlane) * 0.5f;
             float length = (farClipPlane - nearClipPlane) * 0.5f;
-            Vector3 size = new Vector3(orthographicSize * renderTexture.width / renderTexture.height, orthographicSize, length);
+            Vector3 size = new Vector3(orthographicSize * shadowTexture.width / shadowTexture.height, orthographicSize, length);
             Gizmos.DrawWireCube(center * Vector3.forward, size * 2);
         }
 
         private void SetupTexture()
         {
-            if (renderTexture == null ||
-                renderTexture.width != textureResolution.x || renderTexture.height != textureResolution.y ||
-                renderTexture.format != textureFormat)
+            if (shadowTexture == null ||
+                shadowTexture.width != textureResolution.x || shadowTexture.height != textureResolution.y ||
+                shadowTexture.format != textureFormat)
             {
-                renderTexture = new RenderTexture(textureResolution.x, textureResolution.y, 0, textureFormat);
-                renderTexture.useMipMap = false;
+                shadowTexture = new RenderTexture(textureResolution.x, textureResolution.y, 24, textureFormat);
+                shadowTexture.useMipMap = false;
             }
         }
         private void SetupMaterial()
         {
-            if (casterMaterial == null)
+            if (projectorMaterial == null)
             {
-                casterMaterial = new Material(shadowCasterShader);
+                projectorMaterial = new Material(shadowProjectorShader);
             }
-            casterMaterial.SetTexture("_ShadowTex", renderTexture);
-            casterMaterial.SetColor("_ShadowColor", shadowColor);
+            projectorMaterial.SetTexture(Uniforms.PropertyID_ShadowTex, shadowTexture);
+            projectorMaterial.SetColor(Uniforms.PropertyID_ShadowColor, shadowColor);
         }
         private void SetupCamera()
         {
             if (m_Camera == null) return;
-            m_Camera.SetReplacementShader(shadowCollectorShader, "RenderType");
-            m_Camera.clearFlags = CameraClearFlags.SolidColor;
-            m_Camera.backgroundColor = Color.black;
-            m_Camera.orthographic = true;
-            m_Camera.targetTexture = renderTexture;
+            m_Camera.targetTexture = shadowTexture;
 
             m_Camera.cullingMask = casterLayerMask;
             m_Camera.orthographicSize = orthographicSize;
-            m_Camera.aspect = (float)renderTexture.width / renderTexture.height;
+            m_Camera.aspect = (float)shadowTexture.width / shadowTexture.height;
             m_Camera.nearClipPlane = nearClipPlane;
             m_Camera.farClipPlane = farClipPlane;
             m_Camera.depth = cameraDepth;
@@ -124,14 +137,14 @@ namespace EZhex1991.EZUnity
         private void SetupProjector()
         {
             if (m_Projector == null) return;
-            m_Projector.aspectRatio = (float)renderTexture.width / renderTexture.height;
-            m_Projector.orthographic = true;
+            m_Projector.aspectRatio = (float)shadowTexture.width / shadowTexture.height;
             m_Projector.nearClipPlane = nearClipPlane;
             m_Projector.farClipPlane = farClipPlane;
             m_Projector.orthographicSize = orthographicSize;
-            m_Projector.material = casterMaterial;
+            m_Projector.material = projectorMaterial;
             m_Projector.ignoreLayers = ~receiverLayerMask;
-            m_Projector.material = casterMaterial;
+            m_Projector.material = projectorMaterial;
+            m_CollectorObject.hideFlags = HideFlags.None;
         }
     }
 }
