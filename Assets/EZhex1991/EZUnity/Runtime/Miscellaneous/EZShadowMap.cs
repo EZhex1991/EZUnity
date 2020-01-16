@@ -165,6 +165,7 @@ namespace EZhex1991.EZUnity
             Shader.SetGlobalVector(Uniforms.GlobalPropertyID_LightSplitsNear, splitsNear);
             Shader.SetGlobalVector(Uniforms.GlobalPropertyID_LightSplitsFar, splitsFar);
 
+            Shader.SetGlobalFloat(Uniforms.GlobalPropertyID_ShadowBias, shadowBias);
             for (int cascade = 0; cascade < cascades.Length; cascade++)
             {
                 targetCamera.CalculateFrustumCorners(new Rect(0, 0, 1, 1), splitsFar[cascade], Camera.MonoOrStereoscopicEye.Mono, targetCameraCornersFar);
@@ -220,7 +221,6 @@ namespace EZhex1991.EZUnity
 
                 worldToShadow[cascade] = GL.GetGPUProjectionMatrix(m_ShadowCamera.projectionMatrix, false) * m_ShadowCamera.worldToCameraMatrix;
             }
-            Shader.SetGlobalFloat(Uniforms.GlobalPropertyID_ShadowBias, shadowBias);
             Shader.SetGlobalMatrixArray(Uniforms.GlobalPropertyID_WorldToShadow, worldToShadow);
             Shader.SetGlobalMatrix(Uniforms.GlobalPropertyID_WorldToCamera, targetCamera.worldToCameraMatrix);
         }

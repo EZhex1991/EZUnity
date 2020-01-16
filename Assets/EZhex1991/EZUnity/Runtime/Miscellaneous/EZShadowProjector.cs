@@ -13,6 +13,8 @@ namespace EZhex1991.EZUnity
     {
         private static class Uniforms
         {
+            public static readonly int GlobalPropertyID_ShadowBias = Shader.PropertyToID("_EZShadowCollector_ShadowBias");
+
             public static readonly int PropertyID_ShadowTex = Shader.PropertyToID("_ShadowTex");
             public static readonly int PropertyID_ShadowColor = Shader.PropertyToID("_ShadowColor");
         }
@@ -49,7 +51,6 @@ namespace EZhex1991.EZUnity
             m_CollectorObject.hideFlags = HideFlags.HideAndDontSave;
 
             m_Camera = m_CollectorObject.AddComponent<Camera>();
-            m_Camera.SetReplacementShader(shadowCollectorShader, "RenderType");
             m_Camera.clearFlags = CameraClearFlags.SolidColor;
             m_Camera.backgroundColor = Color.black;
             m_Camera.orthographic = true;
@@ -125,6 +126,8 @@ namespace EZhex1991.EZUnity
         {
             if (m_Camera == null) return;
             m_Camera.targetTexture = shadowTexture;
+            m_Camera.SetReplacementShader(shadowCollectorShader, "");
+            Shader.SetGlobalFloat(Uniforms.GlobalPropertyID_ShadowBias, shadowBias);
 
             m_Camera.cullingMask = casterLayerMask;
             m_Camera.orthographicSize = orthographicSize;
