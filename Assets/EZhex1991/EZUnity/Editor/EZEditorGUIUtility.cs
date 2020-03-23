@@ -12,10 +12,8 @@ namespace EZhex1991.EZUnity
     public static partial class EZEditorGUIUtility
     {
         public const float digitWidth_2 = 30;
-        public const float digitWidth_3 = 40;
+        public const float digitWidth_3 = 35;
         public const float dragHandleWidth = 15;
-
-        public static float reorderableListPrefixWidth = digitWidth_2;
 
         public static void WindowTitle(EditorWindow target)
         {
@@ -41,13 +39,15 @@ namespace EZhex1991.EZUnity
 
         public static Rect CalcReorderableListHeaderRect(Rect rect, ReorderableList list)
         {
-            float indentWidth = list.draggable ? (dragHandleWidth + reorderableListPrefixWidth) : reorderableListPrefixWidth;
+            float indentWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
+            if (list.draggable) indentWidth += dragHandleWidth;
             rect.x += indentWidth; rect.width -= indentWidth;
             return rect;
         }
         public static Rect DrawReorderableListCount(Rect rect, ReorderableList list)
         {
-            float indentWidth = list.draggable ? (dragHandleWidth + reorderableListPrefixWidth) : reorderableListPrefixWidth;
+            float indentWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
+            if (list.draggable) indentWidth += dragHandleWidth;
             Rect countRect = new Rect(rect);
             countRect.width = indentWidth - 5;
             countRect.y += 2;
@@ -62,11 +62,12 @@ namespace EZhex1991.EZUnity
 
         public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty listProperty, int index)
         {
-            if (GUI.Button(new Rect(rect.x, rect.y, reorderableListPrefixWidth, EditorGUIUtility.singleLineHeight), index.ToString("00"), EditorStyles.label))
+            float labelWidth = listProperty.arraySize > 100 ? digitWidth_3 : digitWidth_2;
+            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
             {
                 DrawReorderMenu(listProperty, index).ShowAsContext();
             }
-            rect.x += reorderableListPrefixWidth; rect.width -= reorderableListPrefixWidth;
+            rect.x += labelWidth; rect.width -= labelWidth;
             return rect;
         }
         public static GenericMenu DrawReorderMenu(SerializedProperty listProperty, int index)
@@ -98,11 +99,12 @@ namespace EZhex1991.EZUnity
 
         public static Rect DrawReorderableListIndex(Rect rect, int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
         {
-            if (GUI.Button(new Rect(rect.x, rect.y, reorderableListPrefixWidth, EditorGUIUtility.singleLineHeight), index.ToString("00"), EditorStyles.label))
+            float labelWidth = listProperties[0].arraySize > 100 ? digitWidth_3 : digitWidth_2;
+            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
             {
                 DrawReorderMenu(index, serializedObject, listProperties).ShowAsContext();
             }
-            rect.x += reorderableListPrefixWidth; rect.width -= reorderableListPrefixWidth;
+            rect.x += labelWidth; rect.width -= labelWidth;
             return rect;
         }
         public static GenericMenu DrawReorderMenu(int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
