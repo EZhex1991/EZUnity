@@ -132,6 +132,12 @@ namespace EZhex1991.EZUnity
             EditorWindow.GetWindow<EZRegexTester>("Regex Tester").Show();
         }
 
+        [MenuItem(ROOT_NAME + "Hierachy Diff Checker", false, (int)EZMenuItemOrder.HierachyDiffChecker)]
+        private static void HierachyDiffChecker()
+        {
+            EditorWindow.GetWindow<EZHierachyDiffChecker>("Hierarchey Diff Checker").Show();
+        }
+
 #if UNITY_2018_3_OR_NEWER
         [SettingsProvider]
         private static SettingsProvider CreateEZScriptSettingsProvider()

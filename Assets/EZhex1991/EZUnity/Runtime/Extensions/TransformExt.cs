@@ -91,5 +91,26 @@ namespace EZhex1991.EZUnity
         {
             return Quaternion.Inverse(tf.rotation) * q;
         }
+
+        public static void CopyTRSFrom(this Transform tf, Transform target, bool recursive)
+        {
+#if UNITY_EDITOR
+            UnityEditor.Undo.RegisterFullObjectHierarchyUndo(tf, "Copy TRS");
+#endif
+            tf.localPosition = target.localPosition;
+            tf.localRotation = target.localRotation;
+            tf.localScale = target.localScale;
+            if (recursive)
+            {
+                foreach (Transform child in tf)
+                {
+                    Transform childTarget = target.Find(child.name);
+                    if (childTarget != null)
+                    {
+                        child.CopyTRSFrom(childTarget, recursive);
+                    }
+                }
+            }
+        }
     }
 }
