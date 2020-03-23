@@ -18,4 +18,15 @@ namespace EZhex1991.EZUnity.Playables
             return ScriptPlayable<EZMaterialColorPropertyBehaviour>.Create(graph, template);
         }
     }
+
+    [System.Serializable]
+    public class EZMaterialColorPropertyBehaviour : PlayableBehaviour
+    {
+#if UNITY_2018_1_OR_NEWER
+        [ColorUsage(true, true)]
+#else
+        [ColorUsage(true, true, 0, 8, 0.125f, 3)]
+#endif
+        public Color value = Color.white;
+    }
 }

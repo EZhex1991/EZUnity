@@ -18,4 +18,11 @@ namespace EZhex1991.EZUnity.Playables
             return ScriptPlayable<EZMaterialVectorPropertyBehaviour>.Create(graph, template);
         }
     }
+
+    [System.Serializable]
+    public class EZMaterialVectorPropertyBehaviour : PlayableBehaviour
+    {
+        [EZSingleLineVector4]
+        public Vector4 value = Vector4.zero;
+    }
 }

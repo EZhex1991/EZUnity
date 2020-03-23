@@ -21,4 +21,9 @@ namespace EZhex1991.EZUnity.Playables
             return ScriptPlayable<EZTransformConstraintBehaviour>.Create(graph, behaviour);
         }
     }
+
+    public class EZTransformConstraintBehaviour : PlayableBehaviour
+    {
+        public Transform target;
+    }
 }

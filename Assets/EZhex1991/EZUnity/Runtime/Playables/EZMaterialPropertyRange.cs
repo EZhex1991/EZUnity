@@ -12,7 +12,6 @@ namespace EZhex1991.EZUnity.Playables
     {
         public string propertyName;
     }
-
     public abstract class EZMaterialPropertyRange<T> : EZMaterialPropertyRange
     {
         public abstract T GetValue(float time);
@@ -34,6 +33,7 @@ namespace EZhex1991.EZUnity.Playables
             propertyBlock.SetFloat(propertyName, GetValue(time));
         }
     }
+
     [Serializable]
     public class EZMaterialVectorRange : EZMaterialPropertyRange<Vector4>
     {
@@ -51,6 +51,7 @@ namespace EZhex1991.EZUnity.Playables
             propertyBlock.SetVector(propertyName, GetValue(time));
         }
     }
+
     [Serializable]
     public class EZMaterialColorRange : EZMaterialPropertyRange<Color>
     {

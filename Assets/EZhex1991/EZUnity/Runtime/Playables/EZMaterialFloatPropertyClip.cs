@@ -18,4 +18,10 @@ namespace EZhex1991.EZUnity.Playables
             return ScriptPlayable<EZMaterialFloatPropertyBehaviour>.Create(graph, template);
         }
     }
+
+    [System.Serializable]
+    public class EZMaterialFloatPropertyBehaviour : PlayableBehaviour
+    {
+        public float value = 0;
+    }
 }
