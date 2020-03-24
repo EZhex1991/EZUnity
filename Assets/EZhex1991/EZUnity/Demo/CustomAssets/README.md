@@ -1,12 +1,16 @@
 # Custom Assets
 
-## EZStringCollection (右键菜单/Create/EZUnity/EZStringCollection)
+## EZStringCollection
+
+(右键菜单/Create/EZUnity/EZStringCollection)
 
 ![EZStringCollection](.SamplePicture/EZStringCollection.png)
 
 用来存放多语言的长文本。key如果重复会显示在红色背景中。
 
-## EZStringDictionary (右键菜单/Create/EZUnity/EZStringDictionary)
+## EZStringDictionary
+
+(右键菜单/Create/EZUnity/EZStringDictionary)
 
 ![EZStringDictionary](.SamplePicture/EZStringDictionary.png)
 
@@ -30,11 +34,15 @@
 
 统计结果以Author进行分组，对每个Author显示其名称，贡献度，脚本数量，有效行数，总行数。对每个脚本显示其路径，创建时间，有效行数，总行数。
 
-## EZPlayerBuilder (右键菜单/Create/EZUnity/EZPlayerBuilder)
+## EZPlayerBuilder
+
+(右键菜单/Create/EZUnity/EZPlayerBuilder)
 
 Unity工程的PlayerSettings和EditorBuildSettings设置是唯一的，但有些情况下我们工程中会有多个场景需要分别打包，Unity提供了Build Player Pipeline，可用代码控制打包流程。
 
-## EZBundleBuilder (右键菜单/Create/EZUnity/EZBundleBuilder)
+## EZBundleBuilder
+
+(右键菜单/Create/EZUnity/EZBundleBuilder)
 
 Unity5.x中Bundle的build可以说是非常简单了，但是却没有一个官方的管理工具。
 大部分项目使用bundle都是通过单个资源设置，然后代码中一句`BuildAssetBundles(string outputPath, BuildAssetBundleOptions assetBundleOptions, BuildTarget targetPlatform)`然后做成一个MenuItem，对于buildTarget、outputPath、后缀名等都是写死在代码中，通用性很差。
@@ -61,7 +69,9 @@ EZBundleBuilder会用一个*.asset文件保存Build偏好如：buildTarget, outp
 
 ![EZBundleBuilder_ManagerMode](.SamplePicture/EZBundleBuilder_ManagerMode.png)
 
-### OnPreBuildAttribute, OnPostBuildAttribute 和 CopyList
+### Attributes
+
+`OnPreBuildAttribute`, `OnPostBuildAttribute` 和CopyList
 
 对于build Bundle，很多情况下意味着要出包，而出包，往往要做的前期工作不仅仅是build Bundle。
 
