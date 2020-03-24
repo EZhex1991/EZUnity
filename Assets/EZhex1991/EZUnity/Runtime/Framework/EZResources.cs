@@ -76,15 +76,15 @@ namespace EZhex1991.EZUnity.Framework
         // 初始化资源管理器，读取StreamingAssets的所有依赖（即所有的资源包名）
         protected override void Init()
         {
-            switch (ezApplication.runMode)
+            switch (ezApplication.packageMode)
             {
-                case RunMode.Develop:
+                case PackageMode.Develop:
                     LoadBuiltinFileList();
                     break;
-                case RunMode.Package:
+                case PackageMode.Local:
                     LoadBuiltinFileList();
                     break;
-                case RunMode.Update:
+                case PackageMode.Remote:
                     LoadBuiltinFileList();
                     StartCoroutine(Cor_Update());
                     break;
@@ -131,7 +131,7 @@ namespace EZhex1991.EZUnity.Framework
                 {
                     if (string.IsNullOrEmpty(builtinList[i])) continue;
                     FileInfo info = JsonUtility.FromJson<FileInfo>(builtinList[i]);
-                    info.filePath = Path.Combine(ezApplication.streamingAssetsPath, info.fileName);
+                    info.filePath = Path.Combine(Application.streamingAssetsPath, info.fileName);
                     info.isUpated = true;
                     fileList[info.fileName] = info;
                 }
@@ -144,7 +144,7 @@ namespace EZhex1991.EZUnity.Framework
 
         public bool IsUpdated(string fileName)
         {
-            if (ezApplication.runMode != RunMode.Update) return true;
+            if (ezApplication.packageMode != PackageMode.Remote) return true;
 
             FileInfo info; if (!fileList.TryGetValue(fileName, out info))
             {
@@ -231,7 +231,7 @@ namespace EZhex1991.EZUnity.Framework
         // 记录bundle里的资源路径，在Editor+Develop模式时可以直接从路径加载文件
         private void GetAssetPathFromBundle(AssetBundle bundle)
         {
-            if (ezApplication.runMode == RunMode.Develop)
+            if (ezApplication.packageMode == PackageMode.Develop)
             {
                 foreach (string filePath in bundle.GetAllAssetNames())
                 {
@@ -257,7 +257,7 @@ namespace EZhex1991.EZUnity.Framework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (ezApplication.runMode == RunMode.Develop)
+            if (ezApplication.packageMode == PackageMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
@@ -278,7 +278,7 @@ namespace EZhex1991.EZUnity.Framework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (ezApplication.runMode == RunMode.Develop)
+            if (ezApplication.packageMode == PackageMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
@@ -299,7 +299,7 @@ namespace EZhex1991.EZUnity.Framework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (ezApplication.runMode == RunMode.Develop)
+            if (ezApplication.packageMode == PackageMode.Develop)
             {
                 string assetKey = GetAssetKey(bundleName, assetName);
                 string assetPath;
@@ -320,7 +320,7 @@ namespace EZhex1991.EZUnity.Framework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (ezApplication.runMode == RunMode.Develop)
+            if (ezApplication.packageMode == PackageMode.Develop)
             {
                 string[] assetPaths = bundle.GetAllAssetNames();
                 T[] assets = new T[assetPaths.Length];
@@ -337,7 +337,7 @@ namespace EZhex1991.EZUnity.Framework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (ezApplication.runMode == RunMode.Develop)
+            if (ezApplication.packageMode == PackageMode.Develop)
             {
                 string[] assetPaths = bundle.GetAllAssetNames();
                 UObject[] assets = new UObject[assetPaths.Length];
@@ -354,7 +354,7 @@ namespace EZhex1991.EZUnity.Framework
         {
             AssetBundle bundle = LoadBundle(bundleName);
 #if UNITY_EDITOR
-            if (ezApplication.runMode == RunMode.Develop)
+            if (ezApplication.packageMode == PackageMode.Develop)
             {
                 string[] assetPaths = bundle.GetAllAssetNames();
                 List<UObject> assets = new List<UObject>();
@@ -388,7 +388,7 @@ namespace EZhex1991.EZUnity.Framework
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
 #if UNITY_EDITOR
-                if (ezApplication.runMode == RunMode.Develop)
+                if (ezApplication.packageMode == PackageMode.Develop)
                 {
                     string assetKey = GetAssetKey(bundleName, assetName);
                     string assetPath;
@@ -420,7 +420,7 @@ namespace EZhex1991.EZUnity.Framework
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
 #if UNITY_EDITOR
-                if (ezApplication.runMode == RunMode.Develop)
+                if (ezApplication.packageMode == PackageMode.Develop)
                 {
                     string assetKey = GetAssetKey(bundleName, assetName);
                     string assetPath;
@@ -452,7 +452,7 @@ namespace EZhex1991.EZUnity.Framework
             if (bundleDict.TryGetValue(bundleName, out bundle))
             {
 #if UNITY_EDITOR
-                if (ezApplication.runMode == RunMode.Develop)
+                if (ezApplication.packageMode == PackageMode.Develop)
                 {
                     string assetKey = GetAssetKey(bundleName, assetName);
                     string assetPath;
@@ -482,7 +482,7 @@ namespace EZhex1991.EZUnity.Framework
         public void LoadScene(string bundleName, string sceneName, LoadSceneMode mode)
         {
 #if UNITY_EDITOR    // Editor+Develop模式下不加载bundle，直接读场景文件（需要将场景加到BuildSettings，打包时取消勾选）
-            if (ezApplication.runMode != RunMode.Develop)
+            if (ezApplication.packageMode != PackageMode.Develop)
 #endif
                 LoadBundle(bundleName);
             SceneManager.LoadScene(sceneName, mode);
@@ -496,7 +496,7 @@ namespace EZhex1991.EZUnity.Framework
         {
             yield return null;
 #if UNITY_EDITOR    // Editor+Develop模式下不加载bundle，直接读场景文件（需要将场景加到BuildSettings，打包时取消勾选）
-            if (ezApplication.runMode != RunMode.Develop)
+            if (ezApplication.packageMode != PackageMode.Develop)
 #endif
                 yield return Cor_LoadBundleAsync(bundleName, null);
             AsyncOperation opr = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);

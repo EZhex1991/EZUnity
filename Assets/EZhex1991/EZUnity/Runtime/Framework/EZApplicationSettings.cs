@@ -8,20 +8,27 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.Framework
 {
+    public enum PackageMode
+    {
+        Develop = 0,
+        Local = 1,
+        Remote = 2
+    }
+
     public class EZApplicationSettings : EZScriptableObjectSingleton<EZApplicationSettings>
     {
         [SerializeField]
-        private RunMode m_RunModeInEditor = RunMode.Develop;
+        private PackageMode m_PackageModeInEditor = PackageMode.Develop;
         [SerializeField, Tooltip("Don't use 'Develop Mode' here.")]
-        private RunMode m_RunModeInApp = RunMode.Package;
-        public RunMode runMode
+        private PackageMode m_PackageModeInApp = PackageMode.Local;
+        public PackageMode packageMode
         {
 #if UNITY_EDITOR
-            get { return m_RunModeInEditor; }
-            set { m_RunModeInEditor = value; }
+            get { return m_PackageModeInEditor; }
+            set { m_PackageModeInEditor = value; }
 #else
-            get { return m_RunModeInApp; }
-            set { m_RunModeInApp = value; }
+            get { return m_PackageModeInApp; }
+            set { m_PackageModeInApp = value; }
 #endif
         }
 
@@ -57,15 +64,6 @@ namespace EZhex1991.EZUnity.Framework
         [SerializeField]
         private string m_IgnoreSuffix = "delay";
         public string ignoreSuffix { get { return m_IgnoreSuffix; } set { m_IgnoreSuffix = value; } }
-        #endregion
-
-        #region Lua
-        [SerializeField]
-        private string[] m_LuaFolders = new string[] { "Script_Lua" };
-        public string[] luaFolders { get { return m_LuaFolders; } set { m_LuaFolders = value; } }
-        [SerializeField]
-        private string[] m_LuaBundles = new string[] { "script_lua" };
-        public string[] luaBundles { get { return m_LuaBundles; } set { m_LuaBundles = value; } }
         #endregion
     }
 }

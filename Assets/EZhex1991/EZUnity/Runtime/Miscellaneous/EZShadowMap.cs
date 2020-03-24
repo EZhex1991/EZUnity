@@ -62,7 +62,7 @@ namespace EZhex1991.EZUnity
 
         private void Awake()
         {
-            m_ShadowRendererObject = new GameObject(string.Format("{0}-{1}", nameof(EZShadowMap), GetInstanceID()));
+            m_ShadowRendererObject = new GameObject(string.Format("{0}-{1}", typeof(EZShadowMap).Name, GetInstanceID()));
             m_ShadowRendererObject.transform.SetParent(transform, false);
             m_ShadowRendererObject.hideFlags = HideFlags.HideAndDontSave;
             m_ShadowCamera = m_ShadowRendererObject.AddComponent<Camera>();

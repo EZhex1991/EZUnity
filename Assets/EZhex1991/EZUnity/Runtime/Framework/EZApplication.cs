@@ -8,21 +8,11 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity.Framework
 {
-    public enum RunMode
-    {
-        Develop = 0,
-        Package = 1,
-        Update = 2
-    }
-
     public class EZApplication : EZMonoBehaviourSingleton<EZApplication>
     {
         public EZApplicationSettings settings { get { return EZApplicationSettings.Instance; } }
-        public RunMode runMode { get { return settings.runMode; } }
+        public PackageMode packageMode { get { return settings.packageMode; } }
 
-        // 不能在static或者constructor里调用Application.dataPath
-        public string dataPath { get { return Application.dataPath; } }
-        public string streamingAssetsPath { get { return Application.streamingAssetsPath; } }
         public string persistentDataPath
         {
             get

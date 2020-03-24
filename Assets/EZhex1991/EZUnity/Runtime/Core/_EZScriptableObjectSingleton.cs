@@ -26,7 +26,10 @@ namespace EZhex1991.EZUnity
                         m_Instance = CreateInstance<T>();
 #if UNITY_EDITOR
                         string assetName = typeof(T).Name + ".asset";
-                        UnityEditor.AssetDatabase.CreateFolder("Assets", "Resources");
+                        if (!UnityEditor.AssetDatabase.IsValidFolder("Assets/Resources"))
+                        {
+                            UnityEditor.AssetDatabase.CreateFolder("Assets", "Resources");
+                        }
                         UnityEditor.AssetDatabase.CreateAsset(m_Instance, Path.Combine(AssetFolderPath, assetName));
 #endif
                     }

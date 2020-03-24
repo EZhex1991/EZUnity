@@ -41,8 +41,6 @@ namespace EZhex1991.EZUnity
         _Section_7 = _Section_0 + 700,
 
         _Section_8 = _Section_0 + 800,
-        LuaToTxt,
-        ClearLuaTextFolder,
 
         _Section_9 = _Section_0 + 900,
         ShaderKeywordManager,

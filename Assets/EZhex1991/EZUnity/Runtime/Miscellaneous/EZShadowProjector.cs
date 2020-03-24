@@ -46,7 +46,7 @@ namespace EZhex1991.EZUnity
 
         private void Awake()
         {
-            m_CollectorObject = new GameObject(string.Format("{0}-{1}", nameof(EZShadowProjector), GetInstanceID()));
+            m_CollectorObject = new GameObject(string.Format("{0}-{1}", typeof(EZShadowProjector).Name, GetInstanceID()));
             m_CollectorObject.transform.SetParent(transform, false);
             m_CollectorObject.hideFlags = HideFlags.HideAndDontSave;
 
@@ -83,7 +83,7 @@ namespace EZhex1991.EZUnity
             if (projectorMaterial != null) DestroyImmediate(projectorMaterial);
 #else
             Destroy(m_CollectorObject);
-            if (casterMaterial != null) Destroy(casterMaterial);
+            if (projectorMaterial != null) Destroy(projectorMaterial);
 #endif
             if (shadowTexture != null) shadowTexture.Release();
         }

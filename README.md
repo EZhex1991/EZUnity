@@ -6,6 +6,7 @@
 - [EZTextureProcessor](https://github.com/EZhex1991/EZTextureProcessor): 图片处理工具，可在Unity中进行参数化图片生成/图片拼合/图片通道调整/描边/模糊/扭曲等效果。
 - [EZAnimation](https://github.com/EZhex1991/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
 - [EZPostProcessing](https://github.com/EZhex1991/EZPostProcessing): 基于PostProcessing Stack V2开发的一系列后处理效果。
+- [XLuaExtension](https://github.com/EZhex1991/XLuaExtension): 在腾讯XLua的基础上做的一些非官方示例和扩展工具.
 
 ## 功能菜单（EZUnity/..）
 
@@ -46,11 +47,6 @@ Unity2018.3以上版本在ProjectSettings窗口中，**低版本在Preferences�
 - StripeCutoff: 条纹渐隐/渐出
 - MultiTexture3x: 多贴图叠加
 - Pattern: 程序化纹理
-
-## 基于XLua的逻辑热更方案（需要加宏'XLUA'启用）
-
-- [XLuaExtension](Assets/EZhex1991/EZUnity/XLuaExtension/README.md)
-- [XLuaExamples](Assets/XLuaExamples/README.md)
 
 -----
 
