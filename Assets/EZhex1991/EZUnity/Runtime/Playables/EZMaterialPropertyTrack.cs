@@ -67,7 +67,6 @@ namespace EZhex1991.EZUnity.Playables
             lastIndex = materialIndex;
 
             int inputCount = playable.GetInputCount();
-            if (inputCount == 0) return;
 
             floatMap.Clear();
             colorMap.Clear();

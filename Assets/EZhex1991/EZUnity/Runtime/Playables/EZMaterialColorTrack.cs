@@ -77,9 +77,9 @@ namespace EZhex1991.EZUnity.Playables
             lastRenderer = renderer;
             lastIndex = materialIndex;
             lastPropertyName = propertyName;
+            if (propertyName == null) return;
 
             int inputCount = playable.GetInputCount();
-            if (inputCount == 0) return;
 
             float totalWeight = 0;
             Color outputValue = Color.black;
