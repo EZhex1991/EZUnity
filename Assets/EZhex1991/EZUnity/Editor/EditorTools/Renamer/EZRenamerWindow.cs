@@ -40,7 +40,7 @@ namespace EZhex1991.EZUnity
 
         private Vector2 scrollView;
 
-        private void Reset()
+        private void ResetConfigs()
         {
             GUI.FocusControl(null);
             caseConversion = CaseConversion.None;
@@ -168,15 +168,10 @@ namespace EZhex1991.EZUnity
             }
             EditorUtility.ClearProgressBar();
         }
-        private void RenameObjects()
-        {
-            RenameAssets();
-            RenameSceneObjects();
-        }
 
         protected void OnEnable()
         {
-            Reset();
+            ResetConfigs();
             GetObjects();
         }
         protected void OnSelectionChange()
@@ -209,6 +204,7 @@ namespace EZhex1991.EZUnity
                 suffix = EditorGUILayout.TextField("Suffix", suffix);
                 EditorGUILayout.EndHorizontal();
             }
+            showLog = EditorGUILayout.ToggleLeft("Show Log", showLog);
         }
         private void DrawButton()
         {
@@ -216,21 +212,22 @@ namespace EZhex1991.EZUnity
             {
                 assetList.Clear();
                 sceneObjectList.Clear();
-                Reset();
+                ResetConfigs();
             }
-            if (GUILayout.Button("Confirm"))
+            if (GUILayout.Button("Rename Assets"))
             {
-                RenameObjects();
-                Reset();
+                RenameAssets();
+                ResetConfigs();
+            }
+            if (GUILayout.Button("Rename Scene Objects"))
+            {
+                RenameSceneObjects();
+                ResetConfigs();
             }
         }
         private void DrawPreview()
         {
-            EditorGUILayout.BeginHorizontal();
-            showLog = EditorGUILayout.ToggleLeft("Show Log", showLog);
             collapse = EditorGUILayout.ToggleLeft("Collapse", collapse);
-            EditorGUILayout.EndHorizontal();
-
             scrollView = EditorGUILayout.BeginScrollView(scrollView);
             if (assetListFoldOut = EditorGUILayout.Foldout(assetListFoldOut, "Asset List " + assetNameList.Count.ToString("(00)")))
             {
