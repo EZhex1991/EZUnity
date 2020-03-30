@@ -5,6 +5,7 @@
  */
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 namespace #NAMESPACE#
 {
@@ -12,7 +13,20 @@ namespace #NAMESPACE#
     {
         public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
         {
-            return Playable.Create(graph);
+            var playable = ScriptPlayable<#SCRIPTNAME#PlayableBehaviour>.Create(graph);
+            return playable;
+        }
+    }
+
+    public class #SCRIPTNAME#PlayableBehaviour : PlayableBehaviour
+    {
+        public override void PrepareFrame(Playable playable, FrameData info)
+        {
+
+        }
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        {
+
         }
     }
 }
