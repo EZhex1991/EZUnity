@@ -183,5 +183,13 @@ namespace EZhex1991.EZUnity
             value.y = valueXY.y;
             return value;
         }
+
+        public static void GUIDrawSprite(Rect rect, Sprite sprite)
+        {
+            Rect spriteRect = sprite.rect;
+            Texture2D texture = sprite.texture;
+            Rect texCoords = new Rect(spriteRect.x / texture.width, spriteRect.y / texture.height, spriteRect.width / texture.width, spriteRect.height / texture.height);
+            GUI.DrawTextureWithTexCoords(rect, texture, texCoords);
+        }
     }
 }
