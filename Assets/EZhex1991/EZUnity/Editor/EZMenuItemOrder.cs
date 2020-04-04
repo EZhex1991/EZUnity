@@ -31,6 +31,7 @@ namespace EZhex1991.EZUnity
         RegexTester,
         ColorBlender,
         TimePanel,
+        TypeReflectionHelper,
 
         _Section_4 = _Section_0 + 400,
 

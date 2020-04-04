@@ -138,6 +138,12 @@ namespace EZhex1991.EZUnity
             EditorWindow.GetWindow<EZHierachyDiffChecker>("Hierarchey Diff Checker").Show();
         }
 
+        [MenuItem(ROOT_NAME + "Type Reflection Helper", false, (int)EZMenuItemOrder.TypeReflectionHelper)]
+        private static void ReflectionHelper()
+        {
+            EditorWindow.GetWindow<EZTypeReflectionHelper>("Type Reflection Helper").Show();
+        }
+
 #if UNITY_2018_3_OR_NEWER
         [SettingsProvider]
         private static SettingsProvider CreateEZScriptSettingsProvider()
