@@ -153,7 +153,7 @@ namespace EZhex1991.EZUnity
             SerializedProperty m_SrcPath = m_PathPair.FindPropertyRelative("m_SrcPath");
             SerializedProperty m_DstPath = m_PathPair.FindPropertyRelative("m_DstPath");
 
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_CopyList, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, copyList);
             rect.y += 1; rect.height = EditorGUIUtility.singleLineHeight;
             float width = rect.width / 2; float margin = 5; rect.width = width - margin;
             EditorGUI.PropertyField(rect, m_SrcPath, GUIContent.none);
@@ -168,7 +168,7 @@ namespace EZhex1991.EZUnity
         }
         public void DrawBlackListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_BlackList, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, blackList);
             rect.y += 1; rect.height = EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(rect, m_BlackList.GetArrayElementAtIndex(index), GUIContent.none);
         }

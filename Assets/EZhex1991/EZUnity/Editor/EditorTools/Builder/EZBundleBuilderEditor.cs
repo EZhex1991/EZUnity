@@ -150,7 +150,7 @@ namespace EZhex1991.EZUnity.Builder
         }
         private void DrawCopyListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_CopyList, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, copyList);
             rect.y += 1; rect.height = EditorGUIUtility.singleLineHeight;
 
             SerializedProperty m_CopyInfo = m_CopyList.GetArrayElementAtIndex(index);
@@ -179,7 +179,7 @@ namespace EZhex1991.EZUnity.Builder
         }
         private void DrawBundleListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_BundleList, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, bundleList);
             rect.y += 1; rect.height = EditorGUIUtility.singleLineHeight;
 
             SerializedProperty m_BundleInfo = m_BundleList.GetArrayElementAtIndex(index);

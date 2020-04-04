@@ -30,7 +30,7 @@ namespace EZhex1991.EZUnity
         protected virtual void DrawPrefabListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
             rect.y += 1;
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_Options, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, optionList);
             SerializedProperty prefab = optionList.serializedProperty.GetArrayElementAtIndex(index);
             rect.height = EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(rect, prefab, GUIContent.none);

@@ -42,7 +42,7 @@ namespace EZhex1991.EZUnity
         }
         private void DrawObjectListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_ObjectList, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, objectList);
             rect.height = EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(rect, m_ObjectList.GetArrayElementAtIndex(index), GUIContent.none);
         }

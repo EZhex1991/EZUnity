@@ -89,7 +89,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
             }
             SerializedProperty value = m_Values.GetArrayElementAtIndex(index);
 
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, serializedObject, m_Keys, m_Values);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, m_Keys, m_Values);
             Rect keyRect, valueRect;
             SplitRect(rect, out keyRect, out valueRect);
 

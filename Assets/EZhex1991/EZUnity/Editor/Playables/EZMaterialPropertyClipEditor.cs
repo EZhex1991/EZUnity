@@ -12,38 +12,15 @@ namespace EZhex1991.EZUnity.Playables
     [CustomEditor(typeof(EZMaterialPropertyClip))]
     public class EZMaterialPropertyClipEditor : Editor
     {
-        private SerializedProperty m_Template;
-        private SerializedProperty m_FloatProperties;
-        private SerializedProperty m_ColorProperties;
-        private SerializedProperty m_VectorProperties;
-        private ReorderableList floatPropertyList;
-        private ReorderableList colorPropertyList;
-        private ReorderableList vectorPropertyList;
+        protected SerializedProperty m_Template;
+        protected SerializedProperty m_FloatProperties;
+        protected SerializedProperty m_ColorProperties;
+        protected SerializedProperty m_VectorProperties;
+        protected ReorderableList floatPropertyList;
+        protected ReorderableList colorPropertyList;
+        protected ReorderableList vectorPropertyList;
 
-        private void OnEnable()
-        {
-            m_Template = serializedObject.FindProperty("template");
-            m_FloatProperties = m_Template.FindPropertyRelative("floatProperties");
-            m_ColorProperties = m_Template.FindPropertyRelative("colorProperties");
-            m_VectorProperties = m_Template.FindPropertyRelative("vectorProperties");
-            floatPropertyList = new ReorderableList(serializedObject, m_FloatProperties)
-            {
-                drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, floatPropertyList),
-                drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, m_FloatProperties, index, isActive, isFocused),
-            };
-            colorPropertyList = new ReorderableList(serializedObject, m_ColorProperties)
-            {
-                drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, colorPropertyList),
-                drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, m_ColorProperties, index, isActive, isFocused),
-            };
-            vectorPropertyList = new ReorderableList(serializedObject, m_VectorProperties)
-            {
-                drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, vectorPropertyList),
-                drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, m_VectorProperties, index, isActive, isFocused),
-            };
-        }
-
-        private void DrawPropertyListHeader(Rect rect, ReorderableList list)
+        protected static void DrawPropertyListHeader(Rect rect, ReorderableList list)
         {
             rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, list);
             float margin = 2;
@@ -53,13 +30,13 @@ namespace EZhex1991.EZUnity.Playables
             rect.x += width + margin;
             EditorGUI.LabelField(rect, "Value");
         }
-        private void DrawPropertyListElement(Rect rect, SerializedProperty listProperty, int index, bool isActive, bool isFocused)
+        protected static void DrawPropertyListElement(Rect rect, int index, ReorderableList list)
         {
-            SerializedProperty element = listProperty.GetArrayElementAtIndex(index);
+            SerializedProperty element = list.serializedProperty.GetArrayElementAtIndex(index);
             SerializedProperty propertyName = element.FindPropertyRelative("propertyName");
             SerializedProperty value = element.FindPropertyRelative("value");
 
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, listProperty, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, list);
             float margin = 2;
             float width = (rect.width - margin) / 2;
             rect.width = width;
@@ -69,6 +46,28 @@ namespace EZhex1991.EZUnity.Playables
             EditorGUI.PropertyField(rect, value, GUIContent.none);
         }
 
+        protected virtual void OnEnable()
+        {
+            m_Template = serializedObject.FindProperty("template");
+            m_FloatProperties = m_Template.FindPropertyRelative("floatProperties");
+            m_ColorProperties = m_Template.FindPropertyRelative("colorProperties");
+            m_VectorProperties = m_Template.FindPropertyRelative("vectorProperties");
+            floatPropertyList = new ReorderableList(serializedObject, m_FloatProperties)
+            {
+                drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, floatPropertyList),
+                drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, index, floatPropertyList),
+            };
+            colorPropertyList = new ReorderableList(serializedObject, m_ColorProperties)
+            {
+                drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, colorPropertyList),
+                drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, index, colorPropertyList),
+            };
+            vectorPropertyList = new ReorderableList(serializedObject, m_VectorProperties)
+            {
+                drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, vectorPropertyList),
+                drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, index, vectorPropertyList),
+            };
+        }
         public override void OnInspectorGUI()
         {
             serializedObject.Update();

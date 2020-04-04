@@ -100,7 +100,7 @@ namespace EZhex1991.EZUnity
         }
         protected void DrawExtensionListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_ExtensionList, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, extensionList);
             rect.height = EditorGUIUtility.singleLineHeight;
             SerializedProperty extension = extensionList.serializedProperty.GetArrayElementAtIndex(index);
             EditorGUI.PropertyField(rect, extension, GUIContent.none);
@@ -112,7 +112,7 @@ namespace EZhex1991.EZUnity
         }
         protected void DrawPatternListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_PatternList, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, patternList);
             SerializedProperty pattern = patternList.serializedProperty.GetArrayElementAtIndex(index);
             float width = rect.width / 2; float margin = 5;
             EditorGUI.PropertyField(new Rect(rect.x, rect.y, width - margin, EditorGUIUtility.singleLineHeight), pattern.FindPropertyRelative("Key"), GUIContent.none);

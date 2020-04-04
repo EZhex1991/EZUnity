@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
+using System.Collections;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -50,27 +51,40 @@ namespace EZhex1991.EZUnity
             if (list.draggable) indentWidth += dragHandleWidth;
             Rect countRect = new Rect(rect);
             countRect.width = indentWidth - 5;
-            countRect.y += 2;
-            int length = EditorGUI.DelayedIntField(countRect, list.count, EditorStyles.miniTextField);
-            if (length != list.count)
+            if (list.serializedProperty != null)
             {
-                list.serializedProperty.arraySize = length;
+                int length = EditorGUI.DelayedIntField(countRect, list.count, EditorStyles.miniTextField);
+                if (length != list.count)
+                {
+                    list.serializedProperty.arraySize = length;
+                }
+            }
+            else
+            {
+                EditorGUI.LabelField(countRect, list.count.ToString(), EditorStyles.miniLabel);
             }
             rect.x += indentWidth; rect.width -= indentWidth;
             return rect;
         }
 
-        public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty listProperty, int index)
+        public static Rect DrawReorderableListIndex(Rect rect, int index, ReorderableList list)
         {
-            float labelWidth = listProperty.arraySize > 100 ? digitWidth_3 : digitWidth_2;
-            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
+            float labelWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
+            if (list.serializedProperty != null)
             {
-                DrawReorderMenu(listProperty, index).ShowAsContext();
+                if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
+                {
+                    DrawReorderMenu(index, list.serializedProperty).ShowAsContext();
+                }
+            }
+            else
+            {
+                EditorGUI.LabelField(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString());
             }
             rect.x += labelWidth; rect.width -= labelWidth;
             return rect;
         }
-        public static GenericMenu DrawReorderMenu(SerializedProperty listProperty, int index)
+        private static GenericMenu DrawReorderMenu(int index, SerializedProperty listProperty)
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Insert"), false, delegate
@@ -97,17 +111,17 @@ namespace EZhex1991.EZUnity
             return menu;
         }
 
-        public static Rect DrawReorderableListIndex(Rect rect, int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
+        public static Rect DrawReorderableListIndex(Rect rect, int index, params SerializedProperty[] listProperties)
         {
             float labelWidth = listProperties[0].arraySize > 100 ? digitWidth_3 : digitWidth_2;
             if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
             {
-                DrawReorderMenu(index, serializedObject, listProperties).ShowAsContext();
+                DrawReorderMenu(index, listProperties).ShowAsContext();
             }
             rect.x += labelWidth; rect.width -= labelWidth;
             return rect;
         }
-        public static GenericMenu DrawReorderMenu(int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
+        private static GenericMenu DrawReorderMenu(int index, params SerializedProperty[] listProperties)
         {
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Insert"), false, delegate
@@ -115,16 +129,16 @@ namespace EZhex1991.EZUnity
                 for (int i = 0; i < listProperties.Length; i++)
                 {
                     listProperties[i].InsertArrayElementAtIndex(index);
+                    listProperties[i].serializedObject.ApplyModifiedProperties();
                 }
-                serializedObject.ApplyModifiedProperties();
             });
             menu.AddItem(new GUIContent("Delete"), false, delegate
             {
                 for (int i = 0; i < listProperties.Length; i++)
                 {
                     listProperties[i].DeleteArrayElementAtIndex(index);
+                    listProperties[i].serializedObject.ApplyModifiedProperties();
                 }
-                serializedObject.ApplyModifiedProperties();
             });
             menu.AddSeparator("");
             menu.AddItem(new GUIContent("Move to Top"), false, delegate
@@ -132,16 +146,16 @@ namespace EZhex1991.EZUnity
                 for (int i = 0; i < listProperties.Length; i++)
                 {
                     listProperties[i].MoveArrayElement(index, 0);
+                    listProperties[i].serializedObject.ApplyModifiedProperties();
                 }
-                serializedObject.ApplyModifiedProperties();
             });
             menu.AddItem(new GUIContent("Move to Bottom"), false, delegate
             {
                 for (int i = 0; i < listProperties.Length; i++)
                 {
                     listProperties[i].MoveArrayElement(index, listProperties[i].arraySize - 1);
+                    listProperties[i].serializedObject.ApplyModifiedProperties();
                 }
-                serializedObject.ApplyModifiedProperties();
             });
             return menu;
         }
@@ -190,6 +204,29 @@ namespace EZhex1991.EZUnity
             Texture2D texture = sprite.texture;
             Rect texCoords = new Rect(spriteRect.x / texture.width, spriteRect.y / texture.height, spriteRect.width / texture.width, spriteRect.height / texture.height);
             GUI.DrawTextureWithTexCoords(rect, texture, texCoords);
+        }
+
+        [System.Obsolete("Use DrawReorderableListIndex(Rect rect, int index, ReorderableList list) instead")]
+        public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty listProperty, int index)
+        {
+            float labelWidth = listProperty.arraySize > 100 ? digitWidth_3 : digitWidth_2;
+            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
+            {
+                DrawReorderMenu(index, listProperty).ShowAsContext();
+            }
+            rect.x += labelWidth; rect.width -= labelWidth;
+            return rect;
+        }
+        [System.Obsolete("Use DrawReorderableListIndex(Rect rect, int index, params SerializedProperty[] listProperties) instead")]
+        public static Rect DrawReorderableListIndex(Rect rect, int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
+        {
+            float labelWidth = listProperties[0].arraySize > 100 ? digitWidth_3 : digitWidth_2;
+            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
+            {
+                DrawReorderMenu(index, listProperties).ShowAsContext();
+            }
+            rect.x += labelWidth; rect.width -= labelWidth;
+            return rect;
         }
     }
 }

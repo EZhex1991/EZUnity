@@ -51,7 +51,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
         {
             SerializedProperty key = m_Elements.GetArrayElementAtIndex(index);
 
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, serializedObject, m_Elements);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, elementList);
             rect.height = EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(rect, key, GUIContent.none);
         }
