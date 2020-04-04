@@ -4,8 +4,10 @@
  * Description:     
  */
 using System;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace EZhex1991.EZUnity
@@ -15,15 +17,126 @@ namespace EZhex1991.EZUnity
         private static string typeName = "UnityEditor.GameView,UnityEditor";
         private static Type type;
 
-        private static FieldInfo[] fields;
-        private static PropertyInfo[] properties;
-        private static MethodInfo[] methods;
-        private static string[] enumNames;
+        private static ReorderableList fieldList;
+        private static ReorderableList propertyList;
+        private static ReorderableList methodList;
+        private static ReorderableList enumNameList;
 
         private static Vector2 scrollPosition;
         private static bool[] foldouts = new bool[10];
 
-        private static void GetTypeInfo()
+        private float margin = 2;
+
+        private void DrawFieldListHeader(Rect rect, ReorderableList list)
+        {
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, list);
+            float width = rect.width / 5;
+
+            rect.width = width;
+            EditorGUI.LabelField(rect, "DeclaringType");
+            rect.x += rect.width;
+            EditorGUI.LabelField(rect, "FieldType");
+            rect.x += rect.width;
+            rect.width = rect.width * 2;
+            EditorGUI.LabelField(rect, "FieldName");
+            rect.x += rect.width;
+            rect.width = rect.width;
+            EditorGUI.LabelField(rect, "IsStatic");
+        }
+        private void DrawFieldListElement(Rect rect, int index, ReorderableList list)
+        {
+            var info = list.list[index] as FieldInfo;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, list);
+            float width = rect.width / 5;
+            rect.height = EditorGUIUtility.singleLineHeight;
+
+            rect.width = width - margin;
+            EditorGUI.TextField(rect, info.DeclaringType.Name);
+            rect.x += width;
+            EditorGUI.TextField(rect, info.FieldType.Name);
+            rect.x += width;
+            rect.width = width * 2 - margin;
+            EditorGUI.TextField(rect, info.Name);
+            rect.x += width * 2;
+            rect.width = width - margin;
+            EditorGUI.TextField(rect, info.IsStatic.ToString());
+        }
+        private void DrawPropertyListHeader(Rect rect, ReorderableList list)
+        {
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, list);
+            float width = rect.width / 5;
+
+            rect.width = width;
+            EditorGUI.LabelField(rect, "DeclaringType");
+            rect.x += rect.width;
+            EditorGUI.LabelField(rect, "PropertyType");
+            rect.x += rect.width;
+            rect.width = width * 3;
+            EditorGUI.LabelField(rect, "PropertyName");
+        }
+        private void DrawPropertyListElement(Rect rect, int index, ReorderableList list)
+        {
+            var info = list.list[index] as PropertyInfo;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, list);
+            float width = rect.width / 5;
+            rect.height = EditorGUIUtility.singleLineHeight;
+
+            rect.width = width - margin;
+            EditorGUI.TextField(rect, info.DeclaringType.Name);
+            rect.x += width;
+            EditorGUI.TextField(rect, info.PropertyType.Name);
+            rect.x += width;
+            rect.width = width * 3 - margin;
+            EditorGUI.TextField(rect, info.Name);
+        }
+        private void DrawMethodListHeader(Rect rect, ReorderableList list)
+        {
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, list);
+            float width = rect.width / 5;
+
+            rect.width = width;
+            EditorGUI.LabelField(rect, "DeclaringType");
+            rect.x += rect.width;
+            EditorGUI.LabelField(rect, "ReturnType");
+            rect.x += rect.width;
+            rect.width = width * 2;
+            EditorGUI.LabelField(rect, "MethodName");
+            rect.x += rect.width;
+            rect.width = width - margin;
+            EditorGUI.LabelField(rect, "IsStatic");
+        }
+        private void DrawMethodListElement(Rect rect, int index, ReorderableList list)
+        {
+            var info = list.list[index] as MethodInfo;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, list);
+            float width = rect.width / 5;
+            rect.height = EditorGUIUtility.singleLineHeight;
+
+            rect.width = width - margin;
+            EditorGUI.TextField(rect, info.DeclaringType.Name);
+            rect.x += width;
+            EditorGUI.TextField(rect, info.ReturnType.Name);
+            rect.x += width;
+            rect.width = width * 2 - margin;
+            EditorGUI.TextField(rect, info.Name);
+            rect.x += width * 2;
+            rect.width = width - margin;
+            EditorGUI.TextField(rect, info.IsStatic.ToString());
+        }
+        private void DrawEnumNameListHeader(Rect rect, ReorderableList list)
+        {
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, list);
+            EditorGUI.LabelField(rect, "EnumNames");
+        }
+        private void DrawEnumNameListElement(Rect rect, int index, ReorderableList list)
+        {
+            var info = enumNameList.list[index] as string;
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, list);
+            rect.height = EditorGUIUtility.singleLineHeight;
+            EditorGUI.TextField(rect, info);
+        }
+
+        private void GetTypeInfo()
         {
             type = Type.GetType(typeName);
             for (int i = 0; i < foldouts.Length; i++)
@@ -34,17 +147,37 @@ namespace EZhex1991.EZUnity
             {
                 if (type.IsClass)
                 {
-                    fields = type.GetFields();
-                    properties = type.GetProperties();
-                    methods = type.GetMethods();
-                    enumNames = null;
+                    fieldList = new ReorderableList(type.GetFields(), typeof(FieldInfo), false, true, false, false)
+                    {
+                        drawHeaderCallback = (rect) => DrawFieldListHeader(rect, fieldList),
+                        drawElementCallback = (rect, index, isActive, isFocused) => DrawFieldListElement(rect, index, fieldList),
+                    };
+                    propertyList = new ReorderableList(type.GetProperties(), typeof(PropertyInfo), false, true, false, false)
+                    {
+                        drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, propertyList),
+                        drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, index, propertyList),
+                    };
+                    methodList = new ReorderableList(
+                        (from methodInfo in type.GetMethods()
+                         where !(methodInfo.IsSpecialName && (methodInfo.Name.StartsWith("set_") || methodInfo.Name.StartsWith("get_")))
+                         select methodInfo).ToList()
+                        , typeof(MethodInfo), false, true, false, false)
+                    {
+                        drawHeaderCallback = (rect) => DrawMethodListHeader(rect, methodList),
+                        drawElementCallback = (rect, index, isActive, isFocused) => DrawMethodListElement(rect, index, methodList),
+                    };
+                    enumNameList = null;
                 }
                 else if (type.IsEnum)
                 {
-                    fields = null;
-                    properties = null;
-                    methods = null;
-                    enumNames = type.GetEnumNames();
+                    fieldList = null;
+                    propertyList = null;
+                    methodList = null;
+                    enumNameList = new ReorderableList(type.GetEnumNames(), typeof(string), false, true, false, false)
+                    {
+                        drawHeaderCallback = (rect) => DrawEnumNameListHeader(rect, enumNameList),
+                        drawElementCallback = (rect, index, isActive, isFocused) => DrawEnumNameListElement(rect, index, enumNameList),
+                    };
                 }
             }
         }
@@ -62,10 +195,10 @@ namespace EZhex1991.EZUnity
             if (type != null)
             {
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-                DrawInfo(ref foldouts[0], "Fields", fields, FieldInfoDrawer);
-                DrawInfo(ref foldouts[1], "Methods", methods, MethodInfoDrawer);
-                DrawInfo(ref foldouts[2], "Properties", properties, PropertyInfoDrawer);
-                DrawInfo(ref foldouts[3], "Enum Names", enumNames);
+                DrawInfo(ref foldouts[0], "Fields", fieldList);
+                DrawInfo(ref foldouts[2], "Properties", propertyList);
+                DrawInfo(ref foldouts[1], "Methods", methodList);
+                DrawInfo(ref foldouts[3], "Enum Names", enumNameList);
                 EditorGUILayout.EndScrollView();
             }
             else
@@ -73,66 +206,15 @@ namespace EZhex1991.EZUnity
                 EditorGUILayout.HelpBox("Not a valid type", MessageType.Info);
             }
         }
-        private void DrawInfo(ref bool foldout, string label, MemberInfo[] info, Action<MemberInfo> drawer)
+        private void DrawInfo(ref bool foldout, string label, ReorderableList list)
         {
-            if (info == null) return;
+            if (list == null) return;
             EditorStyles.foldout.fontStyle = FontStyle.Bold;
-            foldout = EditorGUILayout.Foldout(foldout, string.Format("{0} ({1})", label, info.Length), true);
+            foldout = EditorGUILayout.Foldout(foldout, string.Format("{0} ({1})", label, list.count), true);
             EditorStyles.foldout.fontStyle = FontStyle.Normal;
             if (foldout)
             {
-                EditorGUI.indentLevel++;
-                for (int i = 0; i < info.Length; i++)
-                {
-                    drawer(info[i]);
-                }
-                EditorGUI.indentLevel--;
-            }
-        }
-        private void FieldInfoDrawer(MemberInfo info)
-        {
-            FieldInfo fieldInfo = info as FieldInfo;
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.TextField(info.DeclaringType.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(fieldInfo.FieldType.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(info.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(fieldInfo.IsStatic.ToString(), EditorStyles.textField);
-            EditorGUILayout.EndHorizontal();
-        }
-        private void PropertyInfoDrawer(MemberInfo info)
-        {
-            PropertyInfo propertyInfo = info as PropertyInfo;
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.TextField(info.DeclaringType.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(propertyInfo.PropertyType.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(info.Name, EditorStyles.textField);
-            EditorGUILayout.EndHorizontal();
-        }
-        private void MethodInfoDrawer(MemberInfo info)
-        {
-            MethodInfo methodInfo = info as MethodInfo;
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.TextField(info.DeclaringType.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(methodInfo.ReturnType.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(info.Name, EditorStyles.textField);
-            EditorGUILayout.TextField(methodInfo.IsStatic.ToString(), EditorStyles.textField);
-            EditorGUILayout.EndHorizontal();
-        }
-
-        private void DrawInfo(ref bool foldout, string label, string[] info)
-        {
-            if (info == null) return;
-            EditorStyles.foldout.fontStyle = FontStyle.Bold;
-            foldout = EditorGUILayout.Foldout(foldout, string.Format("{0} ({1})", label, info.Length), true);
-            EditorStyles.foldout.fontStyle = FontStyle.Normal;
-            if (foldout)
-            {
-                EditorGUI.indentLevel++;
-                for (int i = 0; i < info.Length; i++)
-                {
-                    EditorGUILayout.TextField(info[i], EditorStyles.textField);
-                }
-                EditorGUI.indentLevel--;
+                list.DoLayoutList();
             }
         }
     }
