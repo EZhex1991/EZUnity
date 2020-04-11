@@ -144,6 +144,12 @@ namespace EZhex1991.EZUnity
             EditorWindow.GetWindow<EZTypeReflectionHelper>("Type Reflection Helper").Show();
         }
 
+        [MenuItem(ROOT_NAME + "Property Path Viewer", false, (int)EZMenuItemOrder.PropertyPathViewer)]
+        private static void PropertyPathViewer()
+        {
+            EditorWindow.GetWindow<EZPropertyPathViewer>("PropertyPathViewer").Show();
+        }
+
 #if UNITY_2018_3_OR_NEWER
         [SettingsProvider]
         private static SettingsProvider CreateEZScriptSettingsProvider()

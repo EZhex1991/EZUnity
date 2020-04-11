@@ -25,6 +25,7 @@ namespace EZhex1991.EZUnity
         FontReferenceViewer,
         MaterialOptimizer,
         HierachyDiffChecker,
+        PropertyPathViewer,
 
         _Section_3 = _Section_0 + 300,
         GuidGenerator,
