@@ -5,7 +5,7 @@
 
 Shader "EZUnity/_Debug" {
 	Properties {
-		_MainTex ("Main Texture", 2D) = "white" {}
+		_DebugTex ("Debug Texture", 2D) = "white" {}
 		[KeywordEnum(Normal, Tangent, Bitangent, Color, UV0, UV1)]
 		_DebugMode ("Debug Mode", Int) = 0
 		[KeywordEnum(Clamp, Repeat, Mirror)]
@@ -26,8 +26,8 @@ Shader "EZUnity/_Debug" {
 
 			#include "UnityCG.cginc"
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			sampler2D _DebugTex;
+			float4 _DebugTex_ST;
 			half4 _DebugColor;
 
 			struct appdata {
@@ -51,8 +51,8 @@ Shader "EZUnity/_Debug" {
 			v2f vert (appdata v) {
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.uv0 = TRANSFORM_TEX(v.uv0, _MainTex);
-				o.uv1 = TRANSFORM_TEX(v.uv1, _MainTex);
+				o.uv0 = TRANSFORM_TEX(v.uv0, _DebugTex);
+				o.uv1 = TRANSFORM_TEX(v.uv1, _DebugTex);
 				o.worldNormal = normalize(UnityObjectToWorldNormal(v.normal));
 				o.worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
 				o.worldBitangent = normalize(cross(o.worldNormal, o.worldTangent));
@@ -84,7 +84,7 @@ Shader "EZUnity/_Debug" {
 					color = abs(fmod(color + 1, 2) - 1);
 				#endif
 
-				return color * tex2D(_MainTex, i.uv0) * _DebugColor;
+				return color * tex2D(_DebugTex, i.uv0) * _DebugColor;
 			}
 			ENDCG
 		}
