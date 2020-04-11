@@ -17,6 +17,8 @@
 - Color Blender: 颜色混合计算器
 - Asset Bundle Manager: [Obsolete]老的Bundle管理工具
 - PlayerPrefs Editor: PlayerPrefs编辑工具，目前只有Win下可以用
+- Property Path Viewer: 可以查看和修改SerializedProperty，所有property的label都会显示路径
+- Type Reflection Helper: 通过反射查看无法访问的类，根据成员的名称可以猜到很多有用的东西
 
 ## 附加设置 ([Edit/ProjectSettings/EZUnity/..](Assets/EZhex1991/EZUnity/Demo/EZProjectSettings/README.md))
 
