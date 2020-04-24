@@ -110,15 +110,23 @@ namespace EZhex1991.EZUnity
                 }
             }
             PathNormalize(scriptFilePaths);
-            List<ScriptInfo> scriptInfoList = (from scriptPath in scriptFilePaths
-                                               select GetScriptInfo(scriptPath)).ToList();
+            List<ScriptInfo> scriptInfoList = new List<ScriptInfo>();
+            for (int i = 0; i < scriptFilePaths.Count; i++)
+            {
+                var scriptInfo = GetScriptInfo(scriptFilePaths[i]);
+                if (scriptInfo != null) scriptInfoList.Add(scriptInfo);
+            }
+            if (scriptInfoList.Count == 0)
+            {
+                Debug.Log("No script file found");
+                return;
+            }
 
             EZScriptStatisticResult result = CreateInstance<EZScriptStatisticResult>();
             result.time = DateTime.Now.ToString("yyyyMMdd-HHmmss");
             result.name = "Result-" + result.time;
-            var authorGroupedContributions = scriptInfoList.GroupBy(info => info.author);
             int totalValidLineCount = 0;
-            foreach (var contribution in authorGroupedContributions)
+            foreach (var contribution in scriptInfoList.GroupBy(info => info.author))
             {
                 Contributor contributor = new Contributor(contribution.Key);
                 foreach (ScriptInfo info in contribution.Cast<ScriptInfo>())
