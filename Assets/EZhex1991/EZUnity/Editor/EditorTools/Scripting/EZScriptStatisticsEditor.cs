@@ -100,7 +100,7 @@ namespace EZhex1991.EZUnity
                 if (string.IsNullOrEmpty(includePath)) continue;
                 for (int j = 0; j < statistics.filePatterns.Length; j++)
                 {
-                    string pattern = statistics.filePatterns[i];
+                    string pattern = statistics.filePatterns[j];
                     if (string.IsNullOrEmpty(pattern)) continue;
                     try
                     {
