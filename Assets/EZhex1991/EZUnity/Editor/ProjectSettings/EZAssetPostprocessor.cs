@@ -3,7 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-#if UNITY_2018_1_OR_NEWER
+#if UNITY_2018_3_OR_NEWER
 using System.IO;
 using UnityEditor;
 using UnityEditor.Presets;
@@ -13,7 +13,7 @@ namespace EZhex1991.EZUnity
 {
     public class EZAssetPostprocessor : AssetPostprocessor
     {
-        public EZEditorSettings settings { get { return EZEditorSettings.Instance; } }
+        public EZAssetImporterManager importerManager { get { return EZAssetImporterManager.Instance; } }
 
         public string dirPath { get { return Path.GetDirectoryName(assetPath); } }
         public string dirName { get { return dirPath.Substring(dirPath.LastIndexOf("/") + 1); } }
@@ -61,36 +61,58 @@ namespace EZhex1991.EZUnity
                 dir = Path.GetDirectoryName(dir);
             }
         }
-
-        private void OnPreprocessAsset()
+        private bool MatchImporter(EZAssetImporterManager.Importer[] importers, string targetTypeName)
         {
-            if (!settings.importerPresetEnabled) return;
-            if (assetImporter.importSettingsMissing)
+            foreach (var importer in importers)
             {
+                if (importer.preset.GetTargetFullTypeName() != targetTypeName)
+                {
+                    Debug.LogError("Importer type mismatch in EZAssetImporterManager");
+                    continue;
+                }
+                if (importer.Match(assetPath))
+                {
+                    importer.preset.ApplyTo(assetImporter);
+                    return true;
+                }
             }
+            return false;
         }
 
         private void OnPreprocessTexture()
         {
-            if (assetImporter.importSettingsMissing && settings.importerPresetEnabled)
+            if (assetImporter.importSettingsMissing)
             {
-                ImportWithPreset(settings.textureImporterName, settings.textureTags);
+                MatchImporter(importerManager.textureImporters, typeof(TextureImporter).FullName);
+                var overrides = importerManager.defaultTextureImporterOverrides;
+                if (overrides.enabled)
+                {
+                    var textureImporter = assetImporter as TextureImporter;
+                    textureImporter.alphaIsTransparency = overrides.alphaIsTransparency;
+                    textureImporter.mipmapEnabled = overrides.mipmapEnabled;
+                }
             }
         }
-
         private void OnPreprocessModel()
         {
-            if (assetImporter.importSettingsMissing && settings.importerPresetEnabled)
+            if (assetImporter.importSettingsMissing)
             {
-                ImportWithPreset(settings.modelImporterName, settings.modelTags);
+                if (MatchImporter(importerManager.modelImporters, "UnityEditor.FBXImporter")) return;
+                var overrides = importerManager.defaultModelImporterOverrides;
+                if (overrides.enabled)
+                {
+                    var modelImporter = assetImporter as ModelImporter;
+                    modelImporter.importBlendShapeNormals = overrides.blendShapeNormals;
+                    modelImporter.resampleCurves = overrides.resampleCurves;
+                    modelImporter.animationCompression = overrides.animationCompression;
+                }
             }
         }
-
         private void OnPreprocessAudio()
         {
-            if (assetImporter.importSettingsMissing && settings.importerPresetEnabled)
+            if (assetImporter.importSettingsMissing)
             {
-                ImportWithPreset(settings.audioImporterName, settings.audioTags);
+                MatchImporter(importerManager.audioImporters, typeof(AudioImporter).FullName);
             }
         }
     }

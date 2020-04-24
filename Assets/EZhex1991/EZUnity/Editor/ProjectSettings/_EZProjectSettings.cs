@@ -30,12 +30,6 @@ namespace EZhex1991.EZUnity
             }
         }
 
-        internal EZProjectSettingsSingleton()
-        {
-            if (m_Instance != null)
-                Debug.LogError(typeof(T) + " already exists!");
-        }
-
         public void Load()
         {
             try

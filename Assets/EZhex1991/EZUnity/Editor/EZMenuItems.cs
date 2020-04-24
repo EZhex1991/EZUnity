@@ -151,25 +151,29 @@ namespace EZhex1991.EZUnity
         }
 
 #if UNITY_2018_3_OR_NEWER
-        [SettingsProvider]
-        private static SettingsProvider CreateEZScriptSettingsProvider()
+        private static SettingsProvider CreateProjectSettingsProvider<T>(string name, T instance) where T : EZProjectSettingsSingleton<T>
         {
-            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/" + ROOT_NAME + "EZScriptSettings", EZScriptSettings.Instance);
+            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/" + ROOT_NAME + name, instance);
             provider.guiHandler += (searchContext) =>
             {
-                if (GUI.changed) EZScriptSettings.Instance.Save();
+                if (GUI.changed) instance.Save();
             };
             return provider;
         }
         [SettingsProvider]
+        private static SettingsProvider CreateEZScriptSettingsProvider()
+        {
+            return CreateProjectSettingsProvider("EZScriptSettings", EZScriptSettings.Instance);
+        }
+        [SettingsProvider]
         private static SettingsProvider CreateEZEditorSettingsProvider()
         {
-            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/" + ROOT_NAME + "EZEditorSettings", EZEditorSettings.Instance);
-            provider.guiHandler += (searchContext) =>
-            {
-                if (GUI.changed) EZEditorSettings.Instance.Save();
-            };
-            return provider;
+            return CreateProjectSettingsProvider("EZEditorSettings", EZEditorSettings.Instance);
+        }
+        [SettingsProvider]
+        private static SettingsProvider CreateEZAssetImporterProvider()
+        {
+            return CreateProjectSettingsProvider(typeof(EZAssetImporterManager).Name, EZAssetImporterManager.Instance);
         }
         [SettingsProvider]
         private static SettingsProvider CreateEZGrapicSettingsProvider()

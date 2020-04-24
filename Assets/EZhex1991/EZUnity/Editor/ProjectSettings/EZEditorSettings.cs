@@ -17,15 +17,6 @@ namespace EZhex1991.EZUnity
         [Header("Editor Modifier")]
         public bool hierarchyToggleEnabled;
 
-        [Header("Asset Importer")]
-        public bool importerPresetEnabled;
-        public string audioImporterName = "EZAudioImporter";
-        public string[] audioTags = new string[] { "_Mono" };
-        public string modelImporterName = "EZModelImporter";
-        public string[] modelTags = new string[] { "@" };
-        public string textureImporterName = "EZTextureImporter";
-        public string[] textureTags = new string[] { "_Sprite", "_Bump", "_AO" };
-
         static EZEditorSettings()
         {
             EditorApplication.hierarchyWindowItemOnGUI += DrawActiveToggleOnHierarchy;

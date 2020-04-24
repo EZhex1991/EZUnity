@@ -100,7 +100,11 @@ namespace EZhex1991.EZUnity
                 {
                     string pattern = m_FilePatterns.GetArrayElementAtIndex(j).stringValue;
                     if (string.IsNullOrEmpty(pattern)) continue;
-                    scripts.AddRange(Directory.GetFiles(includePath, pattern, SearchOption.AllDirectories));
+                    try
+                    {
+                        scripts.AddRange(Directory.GetFiles(includePath, pattern, SearchOption.AllDirectories));
+                    }
+                    catch { }
                 }
             }
             PathNormalize(scripts);
