@@ -27,6 +27,8 @@ namespace EZhex1991.EZUnity
         protected void OnGUI()
         {
             EZEditorGUIUtility.WindowTitle(this);
+            bool wideMode = EditorGUIUtility.wideMode;
+            EditorGUIUtility.wideMode = true;
 
             EditorGUI.BeginChangeCheck();
             target = EditorGUILayout.ObjectField("Target", target, typeof(Object), true);
@@ -68,6 +70,8 @@ namespace EZhex1991.EZUnity
                 serializedObject.ApplyModifiedProperties();
                 EditorGUILayout.EndScrollView();
             }
+
+            EditorGUIUtility.wideMode = wideMode;
         }
         private void PropertyField(SerializedProperty sp)
         {
