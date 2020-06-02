@@ -53,7 +53,7 @@ namespace EZhex1991.EZUnity
             }
             EditorGUILayout.EndHorizontal();
 
-            if (GUILayout.Button("Copy TRS"))
+            if (GUILayout.Button("Copy TRS From 2"))
             {
                 rootTransform1.CopyTRSFrom(rootTransform2, true);
             }
@@ -83,6 +83,7 @@ namespace EZhex1991.EZUnity
             for (int i = 0; i < t.childCount; i++)
             {
                 Transform child = t.GetChild(i);
+                if (child == null) continue;
                 GUI.backgroundColor = checker.ContainsValue(pathMap[child]) ? colorNormal : colorDiff;
                 EditorGUILayout.ObjectField(child, typeof(Transform), true);
                 EditorGUI.indentLevel++;
