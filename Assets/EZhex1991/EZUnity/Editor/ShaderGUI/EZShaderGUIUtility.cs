@@ -8,8 +8,16 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
+    public enum MaterialPropertyFilter
+    {
+        All,
+        Exposed,
+        Extra,
+    }
+
     public static class EZShaderGUIUtility
     {
+
         public static void ShaderProperty(this MaterialEditor materialEditor, MaterialProperty property)
         {
             materialEditor.ShaderProperty(property, property.displayName);
@@ -99,11 +107,7 @@ namespace EZhex1991.EZUnity
             if (materialEditor.targets.Length != 1) return;
             Material material = materialEditor.target as Material;
             SerializedProperty m_ShaderKeywords = materialEditor.serializedObject.FindProperty("m_ShaderKeywords");
-            m_ShaderKeywords.isExpanded = EditorGUILayout.Foldout(m_ShaderKeywords.isExpanded, "Keywords", new GUIStyle(EditorStyles.foldout) { fontStyle = FontStyle.Bold });
-            if (m_ShaderKeywords.isExpanded)
-            {
-                KeywordsGUI(material, m_ShaderKeywords);
-            }
+            KeywordsGUI(material, m_ShaderKeywords);
         }
         public static void ExtraPropertiesGUI(this MaterialEditor materialEditor)
         {
@@ -133,62 +137,140 @@ namespace EZhex1991.EZUnity
                 SerializedProperty m_Floats = m_SavedProperties.FindPropertyRelative("m_Floats");
                 SerializedProperty m_Colors = m_SavedProperties.FindPropertyRelative("m_Colors");
 
-                EditorGUILayout.BeginHorizontal();
-                m_SavedProperties.isExpanded = EditorGUILayout.Foldout(m_SavedProperties.isExpanded, "Extra Properties", new GUIStyle(EditorStyles.foldout) { fontStyle = FontStyle.Bold });
-                if (GUILayout.Button("Optimize"))
-                {
-                    OptimizeProperties(material, m_TexEnvs, m_Floats, m_Colors);
-                }
-                EditorGUILayout.EndHorizontal();
-                if (m_SavedProperties.isExpanded)
-                {
-                    ExtraPropertiesGUI(material, m_TexEnvs, m_Floats, m_Colors);
-                }
+                TexturePropertiesGUI(material, m_TexEnvs, MaterialPropertyFilter.Extra);
+                PropertiesGUI(material, m_Floats, MaterialPropertyFilter.Extra);
+                PropertiesGUI(material, m_Colors, MaterialPropertyFilter.Extra);
+
                 serializedObject.ApplyModifiedProperties();
             }
         }
 
         public static void KeywordsGUI(Material material, SerializedProperty m_ShaderKeywords)
         {
-            EditorGUI.indentLevel++;
-            foreach (string keyword in material.shaderKeywords)
+            m_ShaderKeywords.isExpanded = EditorGUILayout.Foldout(m_ShaderKeywords.isExpanded, m_ShaderKeywords.displayName, true, new GUIStyle(EditorStyles.foldout) { fontStyle = FontStyle.Bold });
+            if (m_ShaderKeywords.isExpanded)
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.SelectableLabel(keyword, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-                if (GUILayout.Button("Delete", GUILayout.Width(80)))
-                {
-                    string keywords = m_ShaderKeywords.stringValue;
-                    m_ShaderKeywords.stringValue = keywords.Replace(keyword, "");
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            EditorGUI.indentLevel--;
-        }
-
-        public static void ExtraPropertiesGUI(Material material, SerializedProperty m_TexEnvs, SerializedProperty m_Floats, SerializedProperty m_Colors)
-        {
-            EditorGUI.indentLevel++;
-            ExtraPropertiesGUI(material, m_TexEnvs);
-            ExtraPropertiesGUI(material, m_Floats);
-            ExtraPropertiesGUI(material, m_Colors);
-            EditorGUI.indentLevel--;
-        }
-        private static void ExtraPropertiesGUI(Material material, SerializedProperty property)
-        {
-            for (int j = property.arraySize - 1; j >= 0; j--)
-            {
-                SerializedProperty propertyName = property.GetArrayElementAtIndex(j).FindPropertyRelative("first");
-                if (!material.HasProperty(propertyName.stringValue))
+                EditorGUI.indentLevel++;
+                foreach (string keyword in material.shaderKeywords)
                 {
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(propertyName.stringValue);
+                    EditorGUILayout.SelectableLabel(keyword, GUILayout.Height(EditorGUIUtility.singleLineHeight));
                     if (GUILayout.Button("Delete", GUILayout.Width(80)))
                     {
-                        Debug.LogFormat(material, "Remove Property: {0} from {1}", propertyName.stringValue, material.name);
-                        property.DeleteArrayElementAtIndex(j);
+                        string keywords = m_ShaderKeywords.stringValue;
+                        m_ShaderKeywords.stringValue = keywords.Replace(keyword, "");
                     }
                     EditorGUILayout.EndHorizontal();
                 }
+                EditorGUI.indentLevel--;
+            }
+        }
+
+        private static bool FilterProperty(bool hasProperty, MaterialPropertyFilter filter)
+        {
+            if (filter == MaterialPropertyFilter.All) return true;
+            else if (filter == MaterialPropertyFilter.Exposed) return hasProperty;
+            else if (filter == MaterialPropertyFilter.Extra) return !hasProperty;
+            return true;
+        }
+        public static void PropertiesGUI(Material material, SerializedProperty m_TexEnvs, SerializedProperty m_Floats, SerializedProperty m_Colors, MaterialPropertyFilter filter)
+        {
+            TexturePropertiesGUI(material, m_TexEnvs, filter);
+            PropertiesGUI(material, m_Floats, filter);
+            PropertiesGUI(material, m_Colors, filter);
+        }
+        private static void PropertiesGUI(Material material, SerializedProperty property, MaterialPropertyFilter filter)
+        {
+            EditorGUILayout.BeginHorizontal();
+            property.isExpanded = EditorGUILayout.Foldout(property.isExpanded, filter + " " + property.displayName, true, new GUIStyle(EditorStyles.foldout) { fontStyle = FontStyle.Bold });
+            if (GUILayout.Button("Optimize"))
+            {
+                OptimizeProperties(material, property);
+            }
+            EditorGUILayout.EndHorizontal();
+
+            if (property.isExpanded)
+            {
+                EditorGUIUtility.labelWidth = 0;
+                EditorGUI.indentLevel++;
+                for (int i = property.arraySize - 1; i >= 0; i--)
+                {
+                    SerializedProperty child = property.GetArrayElementAtIndex(i);
+                    SerializedProperty propertyName = child.FindPropertyRelative("first");
+
+                    bool hasProperty = material.HasProperty(propertyName.stringValue);
+                    if (FilterProperty(hasProperty, filter))
+                    {
+                        SerializedProperty propertyValue = child.FindPropertyRelative("second");
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(propertyValue, new GUIContent(propertyName.stringValue));
+                        GUI.enabled = !hasProperty;
+                        if (GUILayout.Button("Delete", GUILayout.Width(80)))
+                        {
+                            Debug.LogFormat(material, "Remove Property: {0} from {1}", propertyName.stringValue, material.name);
+                            property.DeleteArrayElementAtIndex(i);
+                        }
+                        GUI.enabled = true;
+                        EditorGUILayout.EndHorizontal();
+                    }
+                }
+                EditorGUI.indentLevel--;
+            }
+        }
+        private static void TexturePropertiesGUI(Material material, SerializedProperty property, MaterialPropertyFilter filter)
+        {
+            EditorGUILayout.BeginHorizontal();
+            property.isExpanded = EditorGUILayout.Foldout(property.isExpanded, filter + " " + property.displayName, true, new GUIStyle(EditorStyles.foldout) { fontStyle = FontStyle.Bold });
+            if (GUILayout.Button("Optimize"))
+            {
+                OptimizeProperties(material, property);
+            }
+            EditorGUILayout.EndHorizontal();
+
+            if (property.isExpanded)
+            {
+                EditorGUIUtility.labelWidth = 0;
+                EditorGUI.indentLevel++;
+                for (int i = property.arraySize - 1; i >= 0; i--)
+                {
+                    SerializedProperty child = property.GetArrayElementAtIndex(i);
+                    SerializedProperty propertyName = child.FindPropertyRelative("first");
+
+                    bool hasProperty = material.HasProperty(propertyName.stringValue);
+                    if (FilterProperty(hasProperty, filter))
+                    {
+                        SerializedProperty texEnv = child.FindPropertyRelative("second");
+                        SerializedProperty texture = texEnv.FindPropertyRelative("m_Texture");
+                        SerializedProperty scale = texEnv.FindPropertyRelative("m_Scale");
+                        SerializedProperty offset = texEnv.FindPropertyRelative("m_Offset");
+
+                        EditorGUILayout.BeginHorizontal();
+                        texEnv.isExpanded = EditorGUILayout.Foldout(texEnv.isExpanded, propertyName.stringValue, true);
+                        if (!texEnv.isExpanded)
+                        {
+                            EditorGUILayout.PropertyField(texture, GUIContent.none);
+                        }
+                        GUI.enabled = !hasProperty;
+                        if (GUILayout.Button("Delete", GUILayout.Width(80)))
+                        {
+                            Debug.LogFormat(material, "Remove Property: {0} from {1}", propertyName.stringValue, material.name);
+                            property.DeleteArrayElementAtIndex(i);
+                        }
+                        GUI.enabled = true;
+                        EditorGUILayout.EndHorizontal();
+
+                        if (texEnv.isExpanded)
+                        {
+                            EditorGUIUtility.wideMode = true;
+                            EditorGUI.indentLevel++;
+                            EditorGUILayout.PropertyField(texture);
+                            EditorGUILayout.PropertyField(scale);
+                            EditorGUILayout.PropertyField(offset);
+                            EditorGUI.indentLevel--;
+                        }
+                    }
+                }
+                EditorGUI.indentLevel--;
             }
         }
 
