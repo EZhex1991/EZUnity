@@ -3,7 +3,6 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,11 +11,17 @@ namespace EZhex1991.EZUnity
     public class EZMaterialOptimizer : EditorWindow
     {
         private Material[] materials;
+        private SerializedObject[] serializedMaterials;
         private Vector2 scrollPosition;
 
         private void GetMaterials()
         {
             materials = Selection.GetFiltered<Material>(SelectionMode.Editable | SelectionMode.Assets);
+            serializedMaterials = new SerializedObject[materials.Length];
+            for (int i = 0; i < materials.Length; i++)
+            {
+                serializedMaterials[i] = new SerializedObject(materials[i]);
+            }
         }
 
         private void OnEnable()
@@ -50,12 +55,13 @@ namespace EZhex1991.EZUnity
                 for (int i = 0; i < materials.Length; i++)
                 {
                     Material material = materials[i];
-                    SerializedObject serializedObject = new SerializedObject(material);
+                    SerializedObject serializedObject = serializedMaterials[i];
                     SerializedProperty m_SavedProperties = serializedObject.FindProperty("m_SavedProperties");
                     SerializedProperty m_TexEnvs = m_SavedProperties.FindPropertyRelative("m_TexEnvs");
                     SerializedProperty m_Floats = m_SavedProperties.FindPropertyRelative("m_Floats");
                     SerializedProperty m_Colors = m_SavedProperties.FindPropertyRelative("m_Colors");
                     EZShaderGUIUtility.OptimizeProperties(material, m_TexEnvs, m_Floats, m_Colors);
+                    serializedObject.ApplyModifiedProperties();
                 }
             }
 
@@ -63,30 +69,22 @@ namespace EZhex1991.EZUnity
             for (int i = 0; i < materials.Length; i++)
             {
                 Material material = materials[i];
-                SerializedObject serializedObject = new SerializedObject(material);
+                SerializedObject serializedObject = serializedMaterials[i];
+                EditorGUI.indentLevel++;
+                serializedObject.Update();
 
                 GUI.enabled = false;
                 EditorGUILayout.ObjectField(material, typeof(Material), true);
                 GUI.enabled = true;
 
-                EditorGUI.indentLevel++;
-
-                EditorGUILayout.LabelField("Keywords", EditorStyles.boldLabel);
-                SerializedProperty m_ShaderKeywords = serializedObject.FindProperty("m_ShaderKeywords");
-                EZShaderGUIUtility.KeywordsGUI(material, m_ShaderKeywords);
-
                 SerializedProperty m_SavedProperties = serializedObject.FindProperty("m_SavedProperties");
                 SerializedProperty m_TexEnvs = m_SavedProperties.FindPropertyRelative("m_TexEnvs");
                 SerializedProperty m_Floats = m_SavedProperties.FindPropertyRelative("m_Floats");
                 SerializedProperty m_Colors = m_SavedProperties.FindPropertyRelative("m_Colors");
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Extra Properties", EditorStyles.boldLabel);
-                if (GUILayout.Button("Optimize"))
-                {
-                    EZShaderGUIUtility.OptimizeProperties(material, m_TexEnvs, m_Floats, m_Colors);
-                }
-                EditorGUILayout.EndHorizontal();
-                EZShaderGUIUtility.ExtraPropertiesGUI(material, m_TexEnvs, m_Floats, m_Colors);
+                SerializedProperty m_ShaderKeywords = serializedObject.FindProperty("m_ShaderKeywords");
+
+                EZShaderGUIUtility.PropertiesGUI(material, m_TexEnvs, m_Floats, m_Colors, MaterialPropertyFilter.All);
+                EZShaderGUIUtility.KeywordsGUI(material, m_ShaderKeywords);
 
                 serializedObject.ApplyModifiedProperties();
                 EditorGUI.indentLevel--;
