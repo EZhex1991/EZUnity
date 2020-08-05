@@ -10,16 +10,16 @@ namespace EZhex1991.EZUnity
 {
     public static class EZGameView
     {
-        private static Type m_GameViewType;
-        public static Type gameViewType
+        private static Type m_Type;
+        public static Type type
         {
             get
             {
-                if (m_GameViewType == null)
+                if (m_Type == null)
                 {
-                    m_GameViewType = Type.GetType("UnityEditor.GameView,UnityEditor");
+                    m_Type = Type.GetType("UnityEditor.GameView,UnityEditor");
                 }
-                return m_GameViewType;
+                return m_Type;
             }
         }
 
@@ -30,7 +30,7 @@ namespace EZhex1991.EZUnity
             {
                 if (m_EditorWindow == null)
                 {
-                    m_EditorWindow = EditorWindow.GetWindow(gameViewType);
+                    m_EditorWindow = EditorWindow.GetWindow(type);
                 }
                 return m_EditorWindow;
             }
