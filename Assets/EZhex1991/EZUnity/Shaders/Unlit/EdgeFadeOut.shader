@@ -18,6 +18,7 @@ Shader "EZUnity/Unlit/EdgeFadeOut" {
 
 		Pass {
 			Blend SrcAlpha One
+			ZWrite Off
 
 			CGPROGRAM
 			#pragma vertex vert
