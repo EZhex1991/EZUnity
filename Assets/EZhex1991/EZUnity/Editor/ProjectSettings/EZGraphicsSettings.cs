@@ -93,7 +93,7 @@ namespace EZhex1991.EZUnity
         private void DrawAlwaysIncludedShaderListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
             SerializedProperty shaderProperty = m_AlwaysIncludedShaders.GetArrayElementAtIndex(index);
-            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, m_AlwaysIncludedShaders, index);
+            rect = EZEditorGUIUtility.DrawReorderableListIndex(rect, index, alwaysIncludedShaderList);
             rect.y += 1;
             rect.height = EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(rect, shaderProperty, GUIContent.none);

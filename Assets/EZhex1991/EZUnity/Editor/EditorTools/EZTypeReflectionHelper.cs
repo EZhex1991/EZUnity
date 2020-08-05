@@ -147,18 +147,18 @@ namespace EZhex1991.EZUnity
             {
                 if (type.IsClass)
                 {
-                    fieldList = new ReorderableList(type.GetFields(), typeof(FieldInfo), false, true, false, false)
+                    fieldList = new ReorderableList(type.GetFields(bindingFlags), typeof(FieldInfo), false, true, false, false)
                     {
                         drawHeaderCallback = (rect) => DrawFieldListHeader(rect, fieldList),
                         drawElementCallback = (rect, index, isActive, isFocused) => DrawFieldListElement(rect, index, fieldList),
                     };
-                    propertyList = new ReorderableList(type.GetProperties(), typeof(PropertyInfo), false, true, false, false)
+                    propertyList = new ReorderableList(type.GetProperties(bindingFlags), typeof(PropertyInfo), false, true, false, false)
                     {
                         drawHeaderCallback = (rect) => DrawPropertyListHeader(rect, propertyList),
                         drawElementCallback = (rect, index, isActive, isFocused) => DrawPropertyListElement(rect, index, propertyList),
                     };
                     methodList = new ReorderableList(
-                        (from methodInfo in type.GetMethods()
+                        (from methodInfo in type.GetMethods(bindingFlags)
                          where !(methodInfo.IsSpecialName && (methodInfo.Name.StartsWith("set_") || methodInfo.Name.StartsWith("get_")))
                          select methodInfo).ToList()
                         , typeof(MethodInfo), false, true, false, false)

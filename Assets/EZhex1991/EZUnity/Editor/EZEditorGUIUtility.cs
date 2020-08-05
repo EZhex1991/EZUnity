@@ -3,7 +3,6 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using System.Collections;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -204,29 +203,6 @@ namespace EZhex1991.EZUnity
             Texture2D texture = sprite.texture;
             Rect texCoords = new Rect(spriteRect.x / texture.width, spriteRect.y / texture.height, spriteRect.width / texture.width, spriteRect.height / texture.height);
             GUI.DrawTextureWithTexCoords(rect, texture, texCoords);
-        }
-
-        [System.Obsolete("Use DrawReorderableListIndex(Rect rect, int index, ReorderableList list) instead")]
-        public static Rect DrawReorderableListIndex(Rect rect, SerializedProperty listProperty, int index)
-        {
-            float labelWidth = listProperty.arraySize > 100 ? digitWidth_3 : digitWidth_2;
-            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
-            {
-                DrawReorderMenu(index, listProperty).ShowAsContext();
-            }
-            rect.x += labelWidth; rect.width -= labelWidth;
-            return rect;
-        }
-        [System.Obsolete("Use DrawReorderableListIndex(Rect rect, int index, params SerializedProperty[] listProperties) instead")]
-        public static Rect DrawReorderableListIndex(Rect rect, int index, SerializedObject serializedObject, params SerializedProperty[] listProperties)
-        {
-            float labelWidth = listProperties[0].arraySize > 100 ? digitWidth_3 : digitWidth_2;
-            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
-            {
-                DrawReorderMenu(index, listProperties).ShowAsContext();
-            }
-            rect.x += labelWidth; rect.width -= labelWidth;
-            return rect;
         }
     }
 }
