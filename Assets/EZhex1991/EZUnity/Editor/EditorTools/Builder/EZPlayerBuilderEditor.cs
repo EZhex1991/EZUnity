@@ -13,7 +13,6 @@ namespace EZhex1991.EZUnity.Builder
     {
         protected EZPlayerBuilder playerBuilder;
 
-        protected SerializedProperty m_ConfigButDontBuild;
         protected SerializedProperty m_BuildTarget;
         protected SerializedProperty m_BuildOptions;
 
@@ -44,7 +43,6 @@ namespace EZhex1991.EZUnity.Builder
         protected void OnEnable()
         {
             playerBuilder = target as EZPlayerBuilder;
-            m_ConfigButDontBuild = serializedObject.FindProperty("configButDontBuild");
             m_BuildTarget = serializedObject.FindProperty("buildTarget");
             m_BuildOptions = serializedObject.FindProperty("buildOptions");
             m_BundleBuilder = serializedObject.FindProperty("bundleBuilder");
@@ -70,11 +68,18 @@ namespace EZhex1991.EZUnity.Builder
             if (!serializedObject.isEditingMultipleObjects)
             {
                 EditorGUILayout.LabelField("Build", EditorStyles.boldLabel);
-                EditorGUILayout.PropertyField(m_ConfigButDontBuild);
+
+                EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(m_BuildTarget);
+                if (GUILayout.Button("Config"))
+                {
+                    playerBuilder.ConfigPlayerSettings((BuildTarget)m_BuildTarget.intValue);
+                }
+                EditorGUILayout.EndHorizontal();
+
                 if (GUILayout.Button("Build"))
                 {
-                    playerBuilder.Execute((BuildTarget)m_BuildTarget.intValue);
+                    playerBuilder.BuildPlayer((BuildTarget)m_BuildTarget.intValue);
                     GUIUtility.ExitGUI();
                 }
                 EditorGUILayout.Space();

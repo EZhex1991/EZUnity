@@ -6,6 +6,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 #if UNITY_2018_1_OR_NEWER
 using UnityEditor.Build.Reporting;
@@ -38,6 +39,28 @@ namespace EZhex1991.EZUnity.Builder
                 default: return BuildTargetGroup.Unknown;
             }
         }
+        public static string GetTargetName(BuildTarget buildTarget)
+        {
+            switch (buildTarget)
+            {
+                case BuildTarget.NoTarget: return "Unknow";
+                case BuildTarget.StandaloneOSX: return "OSX";
+                case BuildTarget.StandaloneWindows: return "Win";
+                case BuildTarget.StandaloneWindows64: return "Win64";
+                case BuildTarget.StandaloneLinux: return "Linux";
+                case BuildTarget.StandaloneLinux64: return "Linux64";
+                case BuildTarget.StandaloneLinuxUniversal: return "LinuxU";
+                case BuildTarget.iOS: return "iOS";
+                case BuildTarget.Android: return "Android";
+                case BuildTarget.WebGL: return "WebGL";
+                case BuildTarget.WSAPlayer: return "WSA";
+                case BuildTarget.PS4: return "PS4";
+                case BuildTarget.XboxOne: return "Xbox";
+                case BuildTarget.tvOS: return "tvOS";
+                case BuildTarget.Switch: return "Switch";
+                default: return "Unknown";
+            }
+        }
 
         public const string Wildcard_Date = "<Date>";
         public const string Wildcard_Time = "<Time>";
@@ -48,7 +71,6 @@ namespace EZhex1991.EZUnity.Builder
         public const string Wildcard_BuildNumber = "<BuildNumber>";
         public const string Wildcard_BuildTarget = "<BuildTarget>";
 
-        public bool configButDontBuild;
         public BuildTarget buildTarget = BuildTarget.NoTarget;
         public BuildOptions buildOptions = BuildOptions.ShowBuiltPlayer;
 
@@ -68,11 +90,35 @@ namespace EZhex1991.EZUnity.Builder
 
         public EZCopyList copyList;
 
+        public bool CheckTarget(BuildTargetGroup buildGroup)
+        {
+            BuildTargetGroup selectedGroup = GetGroup(EditorUserBuildSettings.activeBuildTarget);
+            if (selectedGroup != buildGroup)
+            {
+                string message = string.Format("Selected BuildTargetGroup is {0}, Use {1} anyway?", selectedGroup, buildTarget);
+                if (!EditorUtility.DisplayDialog("BuildTarget Not Match with selected BuildTargetGroup", message, "Yes", "Cancel"))
+                {
+                    Debug.Log("Build Canceled");
+                    return false;
+                }
+            }
+            return true;
+        }
         public void ConfigTargetGroup(BuildTargetGroup buildTargetGroup)
         {
-            if (!string.IsNullOrEmpty(companyName)) PlayerSettings.companyName = companyName;
-            if (!string.IsNullOrEmpty(productName)) PlayerSettings.productName = productName;
-            if (!string.IsNullOrEmpty(bundleVersion)) PlayerSettings.bundleVersion = bundleVersion;
+            if (!string.IsNullOrEmpty(companyName))
+            {
+                PlayerSettings.companyName = companyName;
+            }
+            if (!string.IsNullOrEmpty(productName))
+            {
+                PlayerSettings.productName = productName;
+            }
+            if (!string.IsNullOrEmpty(bundleVersion))
+            {
+                PlayerSettings.bundleVersion = bundleVersion;
+            }
+
             if (icon != null)
             {
                 Texture2D[] icons = PlayerSettings.GetIconsForTargetGroup(buildTargetGroup, IconKind.Any);
@@ -82,7 +128,12 @@ namespace EZhex1991.EZUnity.Builder
                 }
                 PlayerSettings.SetIconsForTargetGroup(buildTargetGroup, icons, IconKind.Any);
             }
-            if (!string.IsNullOrEmpty(bundleIdentifier)) PlayerSettings.SetApplicationIdentifier(buildTargetGroup, bundleIdentifier);
+
+            if (!string.IsNullOrEmpty(bundleIdentifier))
+            {
+                PlayerSettings.SetApplicationIdentifier(buildTargetGroup, bundleIdentifier);
+            }
+
             switch (buildTargetGroup)
             {
                 case BuildTargetGroup.Standalone:
@@ -95,28 +146,18 @@ namespace EZhex1991.EZUnity.Builder
                     PlayerSettings.Android.bundleVersionCode = buildNumber;
                     break;
             }
-
         }
-        public void Execute(BuildTarget buildTarget)
+
+        public void ConfigPlayerSettings(BuildTarget buildTarget)
         {
-            BuildTargetGroup selectedGroup = GetGroup(EditorUserBuildSettings.activeBuildTarget);
             BuildTargetGroup buildGroup = GetGroup(buildTarget);
-            if (selectedGroup != buildGroup)
-            {
-                string message = string.Format("Selected BuildTargetGroup is {0}, build {1} anyway?", selectedGroup, buildTarget);
-                if (!EditorUtility.DisplayDialog("BuildTarget Not Match with selected BuildTargetGroup", message, "Yes", "Cancel"))
-                {
-                    Debug.Log("Build Canceled");
-                    return;
-                }
-            }
+            if (!CheckTarget(buildGroup)) return;
 
             ConfigTargetGroup(buildGroup);
-            if (configButDontBuild) return;
-            if (bundleBuilder != null)
-            {
-                bundleBuilder.Execute(buildTarget);
-            }
+        }
+
+        public BuildPlayerOptions GetBuildOptions(string path)
+        {
             BuildPlayerOptions options = new BuildPlayerOptions();
             string[] scenePaths = new string[scenes.Length];
             for (int i = 0; i < scenePaths.Length; i++)
@@ -124,12 +165,6 @@ namespace EZhex1991.EZUnity.Builder
                 scenePaths[i] = AssetDatabase.GetAssetPath(scenes[i]);
             }
             options.scenes = scenePaths;
-            if (string.IsNullOrEmpty(locationPathName))
-            {
-                locationPathName = EditorUtility.SaveFolderPanel("Choose Output Folder", "", "");
-                if (string.IsNullOrEmpty(locationPathName)) return;
-            }
-            string path = HandleWildcards(locationPathName, buildTarget);
             switch (buildTarget)
             {
                 case BuildTarget.StandaloneWindows:
@@ -147,8 +182,31 @@ namespace EZhex1991.EZUnity.Builder
             }
             options.target = buildTarget;
             options.options = buildOptions;
+            return options;
+        }
+        public void BuildPlayer(BuildTarget buildTarget)
+        {
+            BuildTargetGroup buildGroup = GetGroup(buildTarget);
+            if (!CheckTarget(buildGroup)) return;
+
+            if (string.IsNullOrEmpty(locationPathName))
+            {
+                locationPathName = EditorUtility.SaveFolderPanel("Choose Output Folder", "", "");
+                if (string.IsNullOrEmpty(locationPathName)) return;
+            }
+            string path = HandleWildcards(locationPathName, buildTarget);
+
+            string projectSettingsPath = Application.dataPath.Substring(0, Application.dataPath.Length - "Assets".Length) + "/ProjectSettings/ProjectSettings.asset";
+            string oldSettings = File.ReadAllText(projectSettingsPath);
+
+            ConfigTargetGroup(buildGroup);
+            if (bundleBuilder != null)
+            {
+                bundleBuilder.Execute(buildTarget);
+            }
+
 #if UNITY_2018_1_OR_NEWER
-            BuildReport report = BuildPipeline.BuildPlayer(options);
+            BuildReport report = BuildPipeline.BuildPlayer(GetBuildOptions(path));
             var summary = report.summary;
             switch (summary.result)
             {
@@ -164,6 +222,8 @@ namespace EZhex1991.EZUnity.Builder
             Debug.Log(BuildPipeline.BuildPlayer(options));
             copyList.CopyFiles(path);
 #endif
+            File.WriteAllText(projectSettingsPath, oldSettings);
+
             if (buildNumberIncrement)
             {
                 buildNumber++;
@@ -174,7 +234,7 @@ namespace EZhex1991.EZUnity.Builder
         public string HandleWildcards(string text, BuildTarget buildTarget)
         {
             return text
-                .Replace(Wildcard_BuildTarget, buildTarget.ToString())
+                .Replace(Wildcard_BuildTarget, GetTargetName(buildTarget))
                 .Replace(Wildcard_BuildNumber, buildNumber.ToString())
                 .Replace(Wildcard_BundleIdentifier, bundleIdentifier)
                 .Replace(Wildcard_BundleVersion, bundleVersion)
