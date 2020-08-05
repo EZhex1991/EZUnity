@@ -15,6 +15,7 @@ namespace EZhex1991.EZUnity
     public class EZTypeReflectionHelper : EditorWindow
     {
         private static string typeName = "UnityEditor.GameView,UnityEditor";
+        private static BindingFlags bindingFlags = ~BindingFlags.Default;
         private static Type type;
 
         private static ReorderableList fieldList;
@@ -23,7 +24,7 @@ namespace EZhex1991.EZUnity
         private static ReorderableList enumNameList;
 
         private static Vector2 scrollPosition;
-        private static bool[] foldouts = new bool[10];
+        private static bool[] foldouts = new bool[8];
 
         private float margin = 2;
 
@@ -71,8 +72,11 @@ namespace EZhex1991.EZUnity
             rect.x += rect.width;
             EditorGUI.LabelField(rect, "PropertyType");
             rect.x += rect.width;
-            rect.width = width * 3;
+            rect.width = width * 2;
             EditorGUI.LabelField(rect, "PropertyName");
+            rect.x += rect.width;
+            rect.width = width - margin;
+            EditorGUI.LabelField(rect, "IsStatic(Get/Set)");
         }
         private void DrawPropertyListElement(Rect rect, int index, ReorderableList list)
         {
@@ -86,8 +90,11 @@ namespace EZhex1991.EZUnity
             rect.x += width;
             EditorGUI.TextField(rect, info.PropertyType.Name);
             rect.x += width;
-            rect.width = width * 3 - margin;
+            rect.width = width * 2 - margin;
             EditorGUI.TextField(rect, info.Name);
+            rect.x += width * 2;
+            rect.width = width - margin;
+            EditorGUI.TextField(rect, string.Format("{0}/{1}", info.GetMethod == null ? "-" : info.GetMethod.IsStatic.ToString(), info.SetMethod == null ? "-" : info.SetMethod.IsStatic.ToString()));
         }
         private void DrawMethodListHeader(Rect rect, ReorderableList list)
         {
@@ -187,6 +194,7 @@ namespace EZhex1991.EZUnity
             EZEditorGUIUtility.WindowTitle(this);
 
             typeName = EditorGUILayout.TextField("Type Name", typeName);
+            bindingFlags = (BindingFlags)EditorGUILayout.EnumFlagsField(bindingFlags);
             if (GUILayout.Button("Get Type Info"))
             {
                 GetTypeInfo();
