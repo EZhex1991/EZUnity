@@ -46,4 +46,54 @@ namespace EZhex1991.EZUnity
             EditorGUI.EndProperty();
         }
     }
+
+    public abstract class EZNestedPropertyDrawer : PropertyDrawer
+    {
+        protected bool initialized;
+        protected SerializedObject serializedObject;
+
+        protected abstract void GetSerializedProperties();
+        protected abstract void OnNestedEditorGUI(Rect position, SerializedProperty property, GUIContent label);
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+
+            if (property.hasMultipleDifferentValues)
+            {
+                EditorGUI.PropertyField(position, property, label);
+            }
+            else
+            {
+                EditorGUI.BeginChangeCheck();
+                EditorGUI.PropertyField(position, property, label, true);
+                if (EditorGUI.EndChangeCheck() || !initialized)
+                {
+                    if (property.objectReferenceValue == null)
+                    {
+                        serializedObject = null;
+                    }
+                    else
+                    {
+                        serializedObject = new SerializedObject(property.objectReferenceValue);
+                        GetSerializedProperties();
+                    }
+                    initialized = true;
+                }
+                if (serializedObject != null)
+                {
+                    property.isExpanded = EditorGUI.Foldout(new Rect(position) { width = 0 }, property.isExpanded, GUIContent.none, false);
+                    if (property.isExpanded)
+                    {
+                        serializedObject.Update();
+                        EditorGUI.indentLevel++;
+                        OnNestedEditorGUI(position, property, label);
+                        EditorGUI.indentLevel--;
+                        serializedObject.ApplyModifiedProperties();
+                    }
+                }
+            }
+            EditorGUI.EndProperty();
+        }
+    }
 }
