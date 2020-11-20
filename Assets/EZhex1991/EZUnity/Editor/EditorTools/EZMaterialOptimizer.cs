@@ -12,15 +12,32 @@ namespace EZhex1991.EZUnity
     {
         private Material[] materials;
         private SerializedObject[] serializedMaterials;
+        private SerializedProperty[] shaderKeywords;
+        private SerializedProperty[] texEnvs;
+        private SerializedProperty[] floats;
+        private SerializedProperty[] colors;
         private Vector2 scrollPosition;
+
+        private string propertyName1;
+        private string propertyName2;
 
         private void GetMaterials()
         {
             materials = Selection.GetFiltered<Material>(SelectionMode.Editable | SelectionMode.Assets);
-            serializedMaterials = new SerializedObject[materials.Length];
-            for (int i = 0; i < materials.Length; i++)
+            int count = materials.Length;
+            serializedMaterials = new SerializedObject[count];
+            texEnvs = new SerializedProperty[count];
+            floats = new SerializedProperty[count];
+            colors = new SerializedProperty[count];
+            shaderKeywords = new SerializedProperty[count];
+            for (int i = 0; i < count; i++)
             {
                 serializedMaterials[i] = new SerializedObject(materials[i]);
+                shaderKeywords[i] = serializedMaterials[i].FindProperty("m_ShaderKeywords");
+                SerializedProperty m_SavedProperties = serializedMaterials[i].FindProperty("m_SavedProperties");
+                texEnvs[i] = m_SavedProperties.FindPropertyRelative("m_TexEnvs");
+                floats[i] = m_SavedProperties.FindPropertyRelative("m_Floats");
+                colors[i] = m_SavedProperties.FindPropertyRelative("m_Colors");
             }
         }
 
@@ -54,39 +71,73 @@ namespace EZhex1991.EZUnity
             {
                 for (int i = 0; i < materials.Length; i++)
                 {
-                    Material material = materials[i];
-                    SerializedObject serializedObject = serializedMaterials[i];
-                    SerializedProperty m_SavedProperties = serializedObject.FindProperty("m_SavedProperties");
-                    SerializedProperty m_TexEnvs = m_SavedProperties.FindPropertyRelative("m_TexEnvs");
-                    SerializedProperty m_Floats = m_SavedProperties.FindPropertyRelative("m_Floats");
-                    SerializedProperty m_Colors = m_SavedProperties.FindPropertyRelative("m_Colors");
-                    EZShaderGUIUtility.OptimizeProperties(material, m_TexEnvs, m_Floats, m_Colors);
-                    serializedObject.ApplyModifiedProperties();
+                    EZShaderGUIUtility.OptimizeProperties(materials[i], texEnvs[i], floats[i], colors[i]);
+                    serializedMaterials[i].ApplyModifiedProperties();
                 }
             }
+
+            propertyName1 = EditorGUILayout.TextField("Copy From", propertyName1);
+            propertyName2 = EditorGUILayout.TextField("To", propertyName2);
+            GUI.enabled = !(string.IsNullOrEmpty(propertyName1) || string.IsNullOrEmpty(propertyName2) || propertyName1 == propertyName2);
+            if (GUILayout.Button("Copy Property"))
+            {
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    Material material = materials[i];
+                    for (int j = 0; j < texEnvs[i].arraySize; j++)
+                    {
+                        SerializedProperty property1 = texEnvs[i].GetArrayElementAtIndex(j);
+                        if (property1.FindPropertyRelative("first").stringValue == propertyName1)
+                        {
+                            Undo.RecordObject(material, "Copy Material Properties");
+                            SerializedProperty texture = property1.FindPropertyRelative("second.m_Texture");
+                            SerializedProperty scale = property1.FindPropertyRelative("second.m_Scale");
+                            SerializedProperty offset = property1.FindPropertyRelative("second.m_Offset");
+                            material.SetTexture(propertyName2, texture.objectReferenceValue as Texture);
+                            material.SetTextureScale(propertyName2, scale.vector2Value);
+                            material.SetTextureOffset(propertyName2, offset.vector2Value);
+                            serializedMaterials[i].Update();
+                        }
+                    }
+                    for (int j = 0; j < floats[i].arraySize; j++)
+                    {
+                        Undo.RecordObject(material, "Copy Material Properties");
+                        SerializedProperty property1 = floats[i].GetArrayElementAtIndex(j);
+                        if (property1.FindPropertyRelative("first").stringValue == propertyName1)
+                        {
+                            SerializedProperty second = property1.FindPropertyRelative("second");
+                            material.SetFloat(propertyName2, second.floatValue);
+                        }
+                    }
+                    for (int j = 0; j < colors[i].arraySize; j++)
+                    {
+                        Undo.RecordObject(material, "Copy Material Properties");
+                        SerializedProperty property1 = colors[i].GetArrayElementAtIndex(j);
+                        if (property1.FindPropertyRelative("first").stringValue == propertyName1)
+                        {
+                            SerializedProperty second = property1.FindPropertyRelative("second");
+                            material.SetVector(propertyName2, second.colorValue);
+                        }
+                    }
+                    serializedMaterials[i].Update();
+                }
+            }
+            GUI.enabled = true;
 
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             for (int i = 0; i < materials.Length; i++)
             {
-                Material material = materials[i];
-                SerializedObject serializedObject = serializedMaterials[i];
                 EditorGUI.indentLevel++;
-                serializedObject.Update();
+                serializedMaterials[i].Update();
 
                 GUI.enabled = false;
-                EditorGUILayout.ObjectField(material, typeof(Material), true);
+                EditorGUILayout.ObjectField(materials[i], typeof(Material), true);
                 GUI.enabled = true;
 
-                SerializedProperty m_SavedProperties = serializedObject.FindProperty("m_SavedProperties");
-                SerializedProperty m_TexEnvs = m_SavedProperties.FindPropertyRelative("m_TexEnvs");
-                SerializedProperty m_Floats = m_SavedProperties.FindPropertyRelative("m_Floats");
-                SerializedProperty m_Colors = m_SavedProperties.FindPropertyRelative("m_Colors");
-                SerializedProperty m_ShaderKeywords = serializedObject.FindProperty("m_ShaderKeywords");
+                EZShaderGUIUtility.PropertiesGUI(materials[i], texEnvs[i], floats[i], colors[i], MaterialPropertyFilter.All);
+                EZShaderGUIUtility.KeywordsGUI(materials[i], shaderKeywords[i]);
 
-                EZShaderGUIUtility.PropertiesGUI(material, m_TexEnvs, m_Floats, m_Colors, MaterialPropertyFilter.All);
-                EZShaderGUIUtility.KeywordsGUI(material, m_ShaderKeywords);
-
-                serializedObject.ApplyModifiedProperties();
+                serializedMaterials[i].ApplyModifiedProperties();
                 EditorGUI.indentLevel--;
             }
             EditorGUILayout.EndScrollView();
