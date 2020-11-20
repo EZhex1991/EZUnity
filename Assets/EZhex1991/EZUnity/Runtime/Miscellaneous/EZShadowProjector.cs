@@ -40,7 +40,7 @@ namespace EZhex1991.EZUnity
         private Camera m_Camera;
         private Projector m_Projector;
 
-        private RenderTexture shadowTexture;
+        public RenderTexture shadowTexture { get; private set; }
         private Vector2Int oldResolution;
         private Material projectorMaterial;
 

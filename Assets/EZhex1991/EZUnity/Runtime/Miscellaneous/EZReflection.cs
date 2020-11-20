@@ -11,6 +11,7 @@ namespace EZhex1991.EZUnity
 {
     [ExecuteInEditMode]
     [RequireComponent(typeof(Renderer))]
+    [DisallowMultipleComponent]
     public class EZReflection : MonoBehaviour
     {
         public const string SHADER_NAME = "Hidden/EZUnity/Effects/EZReflection";
@@ -45,15 +46,24 @@ namespace EZhex1991.EZUnity
                 return m_Renderer;
             }
         }
+
+        private Material m_Material;
         public Material material
         {
             get
             {
-                if (shader != null && renderer.sharedMaterial.shader != shader)
+                if (m_Material == null)
                 {
-                    Debug.LogErrorFormat(renderer, "Shader {0} is required for EZReflection renderer", shader.name);
+                    if (shader == null)
+                    {
+                        Debug.LogErrorFormat(renderer, "Shader {0} is required for EZReflection renderer", SHADER_NAME);
+                    }
+                    else
+                    {
+                        m_Material = new Material(shader);
+                    }
                 }
-                return renderer.sharedMaterial;
+                return m_Material;
             }
         }
 
@@ -128,59 +138,43 @@ namespace EZhex1991.EZUnity
         private Dictionary<Camera, Camera> m_ReflectionCameras = new Dictionary<Camera, Camera>();
         private Dictionary<Camera, Camera> m_RefractionCameras = new Dictionary<Camera, Camera>();
 
-        private Camera GetRenderCamera(Dictionary<Camera, Camera> dict, Camera targetCamera, string tag)
+        private void Awake()
         {
-            Camera renderCamera;
-            dict.TryGetValue(targetCamera, out renderCamera);
-            if (renderCamera == null)
-            {
-                GameObject go = new GameObject(string.Format("{0}-{1}-{2}", GetInstanceID(), targetCamera.GetInstanceID(), tag));
-                renderCamera = go.AddComponent<Camera>();
-                renderCamera.enabled = false;
-                renderCamera.transform.position = transform.position;
-                renderCamera.transform.rotation = transform.rotation;
-                go.AddComponent<FlareLayer>();
-                go.AddComponent<Skybox>();
-                go.hideFlags = HideFlags.HideAndDontSave;
-                dict[targetCamera] = renderCamera;
-            }
-            return renderCamera;
+            renderer.material = material;
         }
-        private void SetCamera(Camera src, Camera dst)
+        private void OnDestroy()
         {
-            if (src == null || dst == null) return;
-            dst.clearFlags = src.clearFlags;
-            dst.backgroundColor = src.backgroundColor;
-            if (src.clearFlags == CameraClearFlags.Skybox)
+            foreach (var pair in m_ReflectionCameras)
             {
-                Skybox srcSky = src.GetComponent<Skybox>();
-                Skybox dstSky = dst.GetComponent<Skybox>();
-                if (srcSky == null || srcSky.material == null)
-                {
-                    dstSky.enabled = false;
-                }
-                else
-                {
-                    dstSky.enabled = true;
-                    dstSky.material = srcSky.material;
-                }
+                SafeDestroy(pair.Value.gameObject);
             }
-            dst.orthographic = src.orthographic;
-            dst.farClipPlane = src.farClipPlane;
-            dst.nearClipPlane = src.nearClipPlane;
-            dst.fieldOfView = src.fieldOfView;
-            dst.aspect = src.aspect;
-            dst.orthographicSize = src.orthographicSize;
+            m_ReflectionCameras.Clear();
+            foreach (var pair in m_RefractionCameras)
+            {
+                SafeDestroy(pair.Value.gameObject);
+            }
+            m_RefractionCameras.Clear();
+            SafeDestroy(m_Material);
+            SafeDestroy(m_ReflectionTexture);
+            SafeDestroy(m_RefractionTexture);
         }
-        private Vector4 GetCameraSpacePlane(Camera camera, Vector3 position, Vector3 normal, float sideSign = 1)
+        private void SafeDestroy(Object o)
         {
-            Vector3 offsetPos = position + normal * clipPlaneOffset;
-            Matrix4x4 matrix = camera.worldToCameraMatrix;
-            Vector3 cPos = matrix.MultiplyPoint(offsetPos);
-            Vector3 cNormal = matrix.MultiplyVector(normal).normalized * sideSign;
-            return new Vector4(cNormal.x, cNormal.y, cNormal.z, -Vector3.Dot(cPos, cNormal));
+            if (o == null) return;
+#if UNITY_EDITOR
+            DestroyImmediate(o);
+#else
+            Destroy(o);
+#endif
         }
 
+        private void OnValidate()
+        {
+            material.SetFloat("_ReflectionStrength", m_ReflectionStrength);
+            material.SetFloat("_RefractionStrength", m_RefractionStrength);
+            material.SetKeyword(KEYWORD_REFLECTION_ON, reflectionOn);
+            material.SetKeyword(KEYWORD_REFRACTION_ON, refractionOn);
+        }
         private void OnWillRenderObject()
         {
             if (!enabled) return;
@@ -241,22 +235,67 @@ namespace EZhex1991.EZUnity
 
             isRendering = false;
         }
+
+        private void OnEnable()
+        {
+            renderer.enabled = true;
+        }
         private void OnDisable()
         {
-            foreach (var pair in m_ReflectionCameras)
-            {
-                DestroyImmediate(pair.Value.gameObject);
-            }
-            m_ReflectionCameras.Clear();
+            renderer.enabled = false;
         }
 
-        private void OnValidate()
+        private Camera GetRenderCamera(Dictionary<Camera, Camera> dict, Camera targetCamera, string tag)
         {
-            material.SetFloat("_ReflectionStrength", m_ReflectionStrength);
-            material.SetFloat("_RefractionStrength", m_RefractionStrength);
-            material.SetKeyword(KEYWORD_REFLECTION_ON, reflectionOn);
-            material.SetKeyword(KEYWORD_REFRACTION_ON, refractionOn);
+            Camera renderCamera;
+            dict.TryGetValue(targetCamera, out renderCamera);
+            if (renderCamera == null)
+            {
+                GameObject go = new GameObject(string.Format("{0}-{1}-{2}", GetInstanceID(), targetCamera.GetInstanceID(), tag));
+                renderCamera = go.AddComponent<Camera>();
+                renderCamera.enabled = false;
+                renderCamera.transform.position = transform.position;
+                renderCamera.transform.rotation = transform.rotation;
+                go.AddComponent<FlareLayer>();
+                go.AddComponent<Skybox>();
+                go.hideFlags = HideFlags.HideAndDontSave;
+                dict[targetCamera] = renderCamera;
+            }
+            return renderCamera;
         }
-
+        private void SetCamera(Camera src, Camera dst)
+        {
+            if (src == null || dst == null) return;
+            dst.clearFlags = src.clearFlags;
+            dst.backgroundColor = src.backgroundColor;
+            if (src.clearFlags == CameraClearFlags.Skybox)
+            {
+                Skybox srcSky = src.GetComponent<Skybox>();
+                Skybox dstSky = dst.GetComponent<Skybox>();
+                if (srcSky == null || srcSky.material == null)
+                {
+                    dstSky.enabled = false;
+                }
+                else
+                {
+                    dstSky.enabled = true;
+                    dstSky.material = srcSky.material;
+                }
+            }
+            dst.orthographic = src.orthographic;
+            dst.farClipPlane = src.farClipPlane;
+            dst.nearClipPlane = src.nearClipPlane;
+            dst.fieldOfView = src.fieldOfView;
+            dst.aspect = src.aspect;
+            dst.orthographicSize = src.orthographicSize;
+        }
+        private Vector4 GetCameraSpacePlane(Camera camera, Vector3 position, Vector3 normal, float sideSign = 1)
+        {
+            Vector3 offsetPos = position + normal * clipPlaneOffset;
+            Matrix4x4 matrix = camera.worldToCameraMatrix;
+            Vector3 cPos = matrix.MultiplyPoint(offsetPos);
+            Vector3 cNormal = matrix.MultiplyVector(normal).normalized * sideSign;
+            return new Vector4(cNormal.x, cNormal.y, cNormal.z, -Vector3.Dot(cPos, cNormal));
+        }
     }
 }
