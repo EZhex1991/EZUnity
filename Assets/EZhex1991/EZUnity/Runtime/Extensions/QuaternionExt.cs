@@ -73,5 +73,18 @@ namespace EZhex1991.EZUnity
             }
             return output;
         }
+
+        public static Quaternion MirrorX(this Quaternion q)
+        {
+            return new Quaternion(q.x, q.y, -q.z, -q.w);
+        }
+        public static Quaternion MirrorY(this Quaternion q)
+        {
+            return new Quaternion(q.x, -q.y, q.z, -q.w);
+        }
+        public static Quaternion MirrorZ(this Quaternion q)
+        {
+            return new Quaternion(q.x, -q.y, -q.z, q.w);
+        }
     }
 }
