@@ -1,4 +1,4 @@
-/* Author:          ezhex1991@outlook.com
+﻿/* Author:          ezhex1991@outlook.com
  * CreateTime:      2019-04-02 20:41:29
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -83,7 +83,7 @@ namespace EZhex1991.EZUnity.Builder
         public string companyName;
         public string productName;
         public string bundleIdentifier;
-        public string bundleVersion;
+        public string bundleVersion = "1.0.0.<BuildNumber>";
         public int buildNumber;
         public bool buildNumberIncrement = true;
         public Texture2D icon;
@@ -116,7 +116,7 @@ namespace EZhex1991.EZUnity.Builder
             }
             if (!string.IsNullOrEmpty(bundleVersion))
             {
-                PlayerSettings.bundleVersion = bundleVersion;
+                PlayerSettings.bundleVersion = GetBundleVersion();
             }
 
             if (icon != null)
@@ -168,10 +168,10 @@ namespace EZhex1991.EZUnity.Builder
             switch (buildTarget)
             {
                 case BuildTarget.StandaloneWindows:
-                    options.locationPathName = string.Format("{0}/{1}.exe", path, HandleWildcards(exeFileName, buildTarget));
+                    options.locationPathName = string.Format("{0}/{1}.exe", path, GetExeFileName());
                     break;
                 case BuildTarget.StandaloneWindows64:
-                    options.locationPathName = string.Format("{0}/{1}.exe", path, HandleWildcards(exeFileName, buildTarget));
+                    options.locationPathName = string.Format("{0}/{1}.exe", path, GetExeFileName());
                     break;
                 case BuildTarget.Android:
                     options.locationPathName = string.Format("{0}.apk", path);
@@ -184,7 +184,7 @@ namespace EZhex1991.EZUnity.Builder
             options.options = buildOptions;
             return options;
         }
-        public void BuildPlayer(BuildTarget buildTarget)
+        public void BuildPlayer()
         {
             BuildTargetGroup buildGroup = GetGroup(buildTarget);
             if (!CheckTarget(buildGroup)) return;
@@ -194,7 +194,7 @@ namespace EZhex1991.EZUnity.Builder
                 locationPathName = EditorUtility.SaveFolderPanel("Choose Output Folder", "", "");
                 if (string.IsNullOrEmpty(locationPathName)) return;
             }
-            string path = HandleWildcards(locationPathName, buildTarget);
+            string path = GetLocationPathName();
 
             string projectSettingsPath = Application.dataPath.Substring(0, Application.dataPath.Length - "Assets".Length) + "/ProjectSettings/ProjectSettings.asset";
             string oldSettings = File.ReadAllText(projectSettingsPath);
@@ -205,7 +205,6 @@ namespace EZhex1991.EZUnity.Builder
                 bundleBuilder.Execute(buildTarget);
             }
 
-#if UNITY_2018_1_OR_NEWER
             BuildReport report = BuildPipeline.BuildPlayer(GetBuildOptions(path));
             var summary = report.summary;
             switch (summary.result)
@@ -218,10 +217,6 @@ namespace EZhex1991.EZUnity.Builder
                     copyList.CopyFiles(path);
                     break;
             }
-#else
-            Debug.Log(BuildPipeline.BuildPlayer(options));
-            copyList.CopyFiles(path);
-#endif
             File.WriteAllText(projectSettingsPath, oldSettings);
 
             if (buildNumberIncrement)
@@ -231,17 +226,29 @@ namespace EZhex1991.EZUnity.Builder
             }
         }
 
-        public string HandleWildcards(string text, BuildTarget buildTarget)
+        public string HandleWildcards(string text)
         {
             return text
                 .Replace(Wildcard_BuildTarget, GetTargetName(buildTarget))
-                .Replace(Wildcard_BuildNumber, buildNumber.ToString())
                 .Replace(Wildcard_BundleIdentifier, bundleIdentifier)
-                .Replace(Wildcard_BundleVersion, bundleVersion)
+                // BundleVersion could contains BuildNumber wildcard
+                .Replace(Wildcard_BundleVersion, bundleVersion).Replace(Wildcard_BuildNumber, buildNumber.ToString())
                 .Replace(Wildcard_CompanyName, companyName)
                 .Replace(Wildcard_Date, DateTime.Now.ToString("yyyyMMdd"))
                 .Replace(Wildcard_ProductName, productName)
                 .Replace(Wildcard_Time, DateTime.Now.ToString("HHmmss"));
+        }
+        public string GetLocationPathName()
+        {
+            return HandleWildcards(locationPathName);
+        }
+        public string GetExeFileName()
+        {
+            return HandleWildcards(exeFileName);
+        }
+        public string GetBundleVersion()
+        {
+            return bundleVersion.Replace(Wildcard_BuildNumber, buildNumber.ToString());
         }
     }
 }

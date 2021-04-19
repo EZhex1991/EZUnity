@@ -1,4 +1,4 @@
-/* Author:          ezhex1991@outlook.com
+﻿/* Author:          ezhex1991@outlook.com
  * CreateTime:      2019-04-04 16:14:44
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -32,6 +32,9 @@ namespace EZhex1991.EZUnity.Builder
 
         protected SerializedProperty m_CopyList;
 
+        private string locationPathName;
+        private string bundleVersion;
+
         public static class Styles
         {
             public static string Tooltip_Wildcards = "Wildcards: <Date>|<Time>|<CompanyName>|<ProductName>|<BundleIdentifier>|<BundleVersion>|<BuildNumber>|<BuildTarget>";
@@ -58,6 +61,9 @@ namespace EZhex1991.EZUnity.Builder
             m_Icon = serializedObject.FindProperty("icon");
 
             m_CopyList = serializedObject.FindProperty("copyList");
+
+            locationPathName = playerBuilder.GetLocationPathName();
+            bundleVersion = playerBuilder.GetBundleVersion();
         }
 
         public override void OnInspectorGUI()
@@ -79,50 +85,70 @@ namespace EZhex1991.EZUnity.Builder
 
                 if (GUILayout.Button("Build"))
                 {
-                    playerBuilder.BuildPlayer((BuildTarget)m_BuildTarget.intValue);
+                    playerBuilder.BuildPlayer();
                     GUIUtility.ExitGUI();
                 }
                 EditorGUILayout.Space();
             }
 
+            BuildOptionsGUI();
+            EditorGUILayout.Space();
+            PlayerSettingsGUI();
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(m_CopyList);
+
+            serializedObject.ApplyModifiedProperties();
+        }
+        private void BuildOptionsGUI()
+        {
             EditorGUILayout.LabelField("Build Options", EditorStyles.boldLabel);
             m_BuildOptions.intValue = (int)(BuildOptions)EditorGUILayout.EnumFlagsField("Build Options", (BuildOptions)m_BuildOptions.intValue);
             {
                 EditorGUILayout.BeginHorizontal();
+                EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(m_LocationPathName, Styles.Label_LocationPathName);
                 if (GUILayout.Button("...", EditorStyles.miniButton, new GUILayoutOption[] { GUILayout.Width(30) }))
                 {
                     string path = EditorUtility.SaveFolderPanel("Choose Output Folder", "", "");
                     if (!string.IsNullOrEmpty(path)) m_LocationPathName.stringValue = path;
                 }
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    locationPathName = playerBuilder.GetLocationPathName();
+                }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.PropertyField(m_ExeFileName, Styles.Label_ExeFileName);
+                EditorGUILayout.HelpBox(locationPathName, MessageType.Info);
             }
             EditorGUILayout.PropertyField(m_BundleBuilder);
             EditorGUILayout.PropertyField(m_Scenes, true);
-            EditorGUILayout.Space();
-
+        }
+        private void PlayerSettingsGUI()
+        {
             EditorGUILayout.LabelField("Player Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_CompanyName);
             EditorGUILayout.PropertyField(m_ProductName);
             EditorGUILayout.PropertyField(m_BundleIdentifier);
-            EditorGUILayout.PropertyField(m_BundleVersion);
+
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(m_BuildNumber);
+            if (GUILayout.Button("+", EditorStyles.miniButton, new GUILayoutOption[] { GUILayout.Width(30) }))
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(m_BuildNumber);
-                if (GUILayout.Button("+", EditorStyles.miniButton, new GUILayoutOption[] { GUILayout.Width(30) }))
-                {
-                    m_BuildNumber.intValue++;
-                }
-                EditorGUILayout.EndHorizontal();
+                m_BuildNumber.intValue++;
             }
+            EditorGUILayout.EndHorizontal();
             EditorGUILayout.PropertyField(m_BuildNumberIncrement, Styles.Label_BuildNumberIncrement);
+            EditorGUILayout.PropertyField(m_BundleVersion);
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+                bundleVersion = playerBuilder.GetBundleVersion();
+            }
+            EditorGUILayout.HelpBox(bundleVersion, MessageType.Info);
+
             EditorGUILayout.PropertyField(m_Icon);
-            EditorGUILayout.Space();
-
-            EditorGUILayout.PropertyField(m_CopyList);
-
-            serializedObject.ApplyModifiedProperties();
         }
     }
 }
