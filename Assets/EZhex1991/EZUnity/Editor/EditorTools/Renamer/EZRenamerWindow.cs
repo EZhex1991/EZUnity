@@ -181,11 +181,43 @@ namespace EZhex1991.EZUnity
         protected void OnGUI()
         {
             EZEditorGUIUtility.WindowTitle(this);
+
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Reset"))
+            {
+                assetList.Clear();
+                sceneObjectList.Clear();
+                ResetConfigs();
+            }
             DrawConfig();
+
+            scrollView = EditorGUILayout.BeginScrollView(scrollView);
+
             EditorGUILayout.Space();
-            DrawButton();
+            if (GUILayout.Button("Rename Assets"))
+            {
+                RenameAssets();
+                ResetConfigs();
+            }
+            if (assetListFoldOut = EditorGUILayout.Foldout(assetListFoldOut, "Asset List " + assetNameList.Count.ToString("(00)")))
+            {
+                if (collapse) DrawNameDict(assetNameDict);
+                else DrawNameList(assetNameList);
+            }
+
             EditorGUILayout.Space();
-            DrawPreview();
+            if (GUILayout.Button("Rename Scene Objects"))
+            {
+                RenameSceneObjects();
+                ResetConfigs();
+            }
+            if (sceneObjectListFoldOut = EditorGUILayout.Foldout(sceneObjectListFoldOut, "Scene Object List " + sceneObjectNameList.Count.ToString("(00)")))
+            {
+                if (collapse) DrawNameDict(sceneObjectNameDict);
+                else DrawNameList(sceneObjectNameList);
+            }
+
+            EditorGUILayout.EndScrollView();
         }
 
         private void DrawConfig()
@@ -204,42 +236,12 @@ namespace EZhex1991.EZUnity
                 suffix = EditorGUILayout.TextField("Suffix", suffix);
                 EditorGUILayout.EndHorizontal();
             }
-            showLog = EditorGUILayout.ToggleLeft("Show Log", showLog);
-        }
-        private void DrawButton()
-        {
-            if (GUILayout.Button("Reset"))
             {
-                assetList.Clear();
-                sceneObjectList.Clear();
-                ResetConfigs();
+                EditorGUILayout.BeginHorizontal();
+                showLog = EditorGUILayout.Toggle("Show Log", showLog);
+                collapse = EditorGUILayout.Toggle("Collapse", collapse);
+                EditorGUILayout.EndHorizontal();
             }
-            if (GUILayout.Button("Rename Assets"))
-            {
-                RenameAssets();
-                ResetConfigs();
-            }
-            if (GUILayout.Button("Rename Scene Objects"))
-            {
-                RenameSceneObjects();
-                ResetConfigs();
-            }
-        }
-        private void DrawPreview()
-        {
-            collapse = EditorGUILayout.ToggleLeft("Collapse", collapse);
-            scrollView = EditorGUILayout.BeginScrollView(scrollView);
-            if (assetListFoldOut = EditorGUILayout.Foldout(assetListFoldOut, "Asset List " + assetNameList.Count.ToString("(00)")))
-            {
-                if (collapse) DrawNameDict(assetNameDict);
-                else DrawNameList(assetNameList);
-            }
-            if (sceneObjectListFoldOut = EditorGUILayout.Foldout(sceneObjectListFoldOut, "Scene Object List " + sceneObjectNameList.Count.ToString("(00)")))
-            {
-                if (collapse) DrawNameDict(sceneObjectNameDict);
-                else DrawNameList(sceneObjectNameList);
-            }
-            EditorGUILayout.EndScrollView();
         }
         private void DrawNameDict(Dictionary<string, int> nameDict)
         {
