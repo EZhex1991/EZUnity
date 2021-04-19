@@ -17,6 +17,7 @@ Shader "EZUnity/Unlit/EdgeFadeOut" {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 
 		Pass {
+			Cull Off
 			Blend SrcAlpha One
 			ZWrite Off
 
@@ -56,7 +57,7 @@ Shader "EZUnity/Unlit/EdgeFadeOut" {
 				half4 color = tex2D(_MainTex, i.uv_MainTex) * _Color;
 
 				half dotNV = dot(i.worldNormal, i.worldView);
-				half alpha = pow(saturate(dotNV), _AlphaPower);
+				half alpha = pow(abs(dotNV), _AlphaPower);
 
 				color.a *= alpha;
 				return color;
@@ -64,5 +65,5 @@ Shader "EZUnity/Unlit/EdgeFadeOut" {
 			ENDCG
 		}
 	}
-	FallBack "Unlit/Transparent"
+	//FallBack "Unlit/Transparent"
 }

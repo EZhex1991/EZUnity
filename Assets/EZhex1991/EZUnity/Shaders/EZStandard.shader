@@ -42,9 +42,10 @@ Shader "EZUnity/EZStandard"
 
         // Blending state
         [HideInInspector] _Mode ("__mode", Float) = 0.0
-        [HideInInspector] _SrcBlend ("__src", Float) = 1.0
-        [HideInInspector] _DstBlend ("__dst", Float) = 0.0
-        [HideInInspector] _ZWrite ("__zw", Float) = 1.0
+        [HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend Mode", Float) = 1.0
+        [HideInInspector][Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend Mode", Float) = 0.0
+        [HideInInspector][Enum(Off, 0, On, 1)] _ZWrite ("ZWrite", Float) = 1.0
+		[HideInInspector][Enum(UnityEngine.Rendering.CullMode)] _CullMode ("Cull Mode", Float) = 0
     }
 
     CGINCLUDE
@@ -56,7 +57,7 @@ Shader "EZUnity/EZStandard"
         Tags { "RenderType"="Opaque" "PerformanceChecks"="False" }
         LOD 300
 
-		Cull Off
+		Cull [_CullMode]
 
         // ------------------------------------------------------------------
         //  Base forward pass (directional light, emission, lightmaps, ...)

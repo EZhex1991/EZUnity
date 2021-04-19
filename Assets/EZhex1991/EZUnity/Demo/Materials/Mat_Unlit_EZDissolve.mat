@@ -4,11 +4,12 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Mat_Surface_ColorFilter
-  m_Shader: {fileID: 4800000, guid: 8656d4a5248b35b4791d61275dec365f, type: 3}
-  m_ShaderKeywords: _FILTERMODE_HSV
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mat_Unlit_EZDissolve
+  m_Shader: {fileID: 4800000, guid: 128cd36da68195849b26bdcef9d8f3a9, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -22,9 +23,13 @@ Material:
         m_Texture: {fileID: 2800000, guid: 328c3db85f1df484cb773820f366f4ae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: e3ae103ece712c74fb90867bd8f842a9, type: 3}
+        m_Scale: {x: 1.5, y: 1.5}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _FilterMode: 1
+    - _Cutoff: 0.5
+    - _EdgeSize: 0.15
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _GreyFactor: {r: 0.299, g: 0.587, b: 0.114, a: 1}
-    - _HSVFactor: {r: 50, g: -50, b: 50, a: 0.01}
+    - _EdgeColor: {r: 1.4980392, g: 0.6431373, b: 0, a: 1}

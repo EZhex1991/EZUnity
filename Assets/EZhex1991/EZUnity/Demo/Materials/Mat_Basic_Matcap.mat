@@ -4,9 +4,10 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Mat_Matcap
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mat_Basic_Matcap
   m_Shader: {fileID: 4800000, guid: 6fd7775d4bead024889c1d23c4ca3f46, type: 3}
   m_ShaderKeywords: _BUMP_ON _SPEC_ON
   m_LightmapFlags: 4
