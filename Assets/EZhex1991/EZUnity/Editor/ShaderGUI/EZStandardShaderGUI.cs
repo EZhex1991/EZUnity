@@ -10,7 +10,19 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
-    public class EZStandardShaderGUI : ShaderGUI
+    public class EZStandardShaderGUI : StandardShaderGUI
+    {
+        public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] props)
+        {
+            base.OnGUI(materialEditor, props);
+            EditorGUILayout.Space();
+            materialEditor.ShaderProperty(FindProperty("_SrcBlend", props));
+            materialEditor.ShaderProperty(FindProperty("_DstBlend", props));
+            materialEditor.ShaderProperty(FindProperty("_ZWrite", props));
+            materialEditor.ShaderProperty(FindProperty("_CullMode", props));
+        }
+    }
+    public class StandardShaderGUI : ShaderGUI
     {
         private enum WorkflowMode
         {

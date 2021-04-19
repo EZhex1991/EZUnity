@@ -179,11 +179,15 @@ namespace EZhex1991.EZUnity
 
         private MaterialProperty _BumpTex;
         private MaterialProperty _Bumpiness;
-        protected void BumpGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
+        protected void BumpGUI(MaterialEditor materialEditor, MaterialProperty[] properties, bool scaleOffset = false)
         {
             _BumpTex = FindProperty("_BumpTex", properties);
             _Bumpiness = FindProperty("_Bumpiness", properties);
             materialEditor.TexturePropertyFeatured(_BumpTex, _Bumpiness, Keyword_BumpOn, firstCall);
+            if (scaleOffset && _BumpTex.textureValue != null)
+            {
+                materialEditor.TextureScaleOffsetProperty(_BumpTex);
+            }
         }
 
         private MaterialProperty _AlphaTex;
