@@ -71,7 +71,7 @@ namespace EZhex1991.EZUnity
             sceneObjectList.Clear();
             sceneObjectNameList.Clear();
             sceneObjectNameDict.Clear();
-            foreach (GameObject go in Selection.GetFiltered<GameObject>(SelectionMode.OnlyUserModifiable))
+            foreach (GameObject go in Selection.GetFiltered<GameObject>(SelectionMode.Editable))
             {
                 sceneObjectList.Add(go);
                 sceneObjectNameList.Add(go.name);
