@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e182fe965b6bad48a8ec799c55dd11c, type: 3}
+  m_Name: EZScriptStatistics
+  m_EditorClassIdentifier: 
+  filePatterns:
+  - '*.cs'
+  - '*.lua'
+  - '*.lua.txt'
+  - '*.shader'
+  - '*.cginc'
+  includePaths:
+  - Assets/EZhex1991
+  excludePaths:
+  - Assets/EZhex1991/EZUnity/XLuaExtension/Resources/json.lua
+  infoLineCount: 5
+  authorRegex: ^\W*Author:\s*(\S[\s\S]*)$
+  createTimeRegex: ^\W*CreateTime:\s*(\S[\s\S]*)$
+  validLineRegex: ^\W*(\S+)[\S\s]*$

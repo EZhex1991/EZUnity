@@ -1,0 +1,22 @@
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "",
+        "m_EditorClassIdentifier": "Assembly-CSharp-Editor:EZhex1991.EZUnity:EZAssetImporterManager",
+        "m_DefaultModelImporterOverrides": {
+            "enabled": false,
+            "blendShapeNormals": 0,
+            "resampleCurves": false,
+            "animationCompression": 0
+        },
+        "m_ModelImporters": [],
+        "m_DefaultTextureImporterOverrides": {
+            "enabled": false,
+            "alphaIsTransparency": true,
+            "mipmapEnabled": false
+        },
+        "m_TextureImporters": [],
+        "m_AudioImporters": []
+    }
+}
