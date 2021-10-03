@@ -59,16 +59,16 @@ namespace EZhex1991.EZUnity
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Model Importer Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_DefaultModelImporterOverrides, m_DefaultModelImporterOverrides.isExpanded);
-            modelImporterList.DoLayoutList();
+            EZEditorGUIUtility.DoLayoutReorderableList(modelImporterList);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Texture Importer Settings", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(m_DefaultTextureImporterOverrides, m_DefaultTextureImporterOverrides.isExpanded);
-            textureImporterList.DoLayoutList();
+            EZEditorGUIUtility.DoLayoutReorderableList(textureImporterList);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Audio Importer Settings", EditorStyles.boldLabel);
-            audioImporterList.DoLayoutList();
+            EZEditorGUIUtility.DoLayoutReorderableList(audioImporterList);
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -76,7 +76,7 @@ namespace EZhex1991.EZUnity
         private static void DrawImporterListHeader(Rect rect, ReorderableList list)
         {
             rect.y += 1;
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, list);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, list);
             float width = (rect.width - recursiveToggleWidth) * 0.5f;
             rect.width = width;
             EditorGUI.LabelField(rect, "Preset");

@@ -42,8 +42,6 @@ namespace EZhex1991.EZUnity.Builder
         public BundleInfo[] bundleList;
 
         // view options
-        public bool copyListFoldout = true;
-        public bool bundleListFoldout = true;
         public AssetsViewOption showAssets = AssetsViewOption.Object;
         public BundleDependenciesViewOption showDependencies = BundleDependenciesViewOption.Recursive;
 

@@ -126,14 +126,14 @@ namespace EZhex1991.EZUnity
             }
             EditorGUI.BeginProperty(position, label, property);
             EditorGUI.LabelField(position, label, EditorStyles.boldLabel);
-            copyList.DoLayoutList();
-            blackList.DoLayoutList();
+            EZEditorGUIUtility.DoLayoutReorderableList(copyList);
+            EZEditorGUIUtility.DoLayoutReorderableList(blackList);
             EditorGUI.EndProperty();
         }
 
         public void DrawCopyListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, copyList);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, copyList);
             if (copyList.count == 0)
             {
                 EditorGUI.LabelField(rect, "Copy List");
@@ -163,7 +163,7 @@ namespace EZhex1991.EZUnity
 
         public void DrawBlackListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, blackList);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, blackList);
             EditorGUI.LabelField(rect, "Black List");
         }
         public void DrawBlackListElement(Rect rect, int index, bool isActive, bool isFocused)

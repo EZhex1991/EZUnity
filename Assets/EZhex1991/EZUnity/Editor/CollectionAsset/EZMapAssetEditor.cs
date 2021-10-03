@@ -42,9 +42,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
 
             serializedObject.Update();
 
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-            itemList.DoLayoutList();
-            GUILayout.EndScrollView();
+            EZEditorGUIUtility.DoLayoutReorderableList(itemList);
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -64,7 +62,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
 
         protected void DrawItemListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, itemList);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, itemList);
             Rect keyRect, valueRect;
             SplitRect(rect, out keyRect, out valueRect);
 

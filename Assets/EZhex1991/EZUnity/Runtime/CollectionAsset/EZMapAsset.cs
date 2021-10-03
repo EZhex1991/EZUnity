@@ -132,6 +132,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
 
         public override bool IsKeyDuplicate(int index)
         {
+            if (index >= m_Keys.Count) return false;
             TKey key = m_Keys[index];
             return m_KeyCountMap.ContainsKey(key) && m_KeyCountMap[key] > 1;
         }

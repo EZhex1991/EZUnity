@@ -23,8 +23,6 @@ namespace EZhex1991.EZUnity.Builder
         private SerializedProperty m_CopyList;
         private SerializedProperty m_BundleList;
 
-        private SerializedProperty m_CopyListFoldout;
-        private SerializedProperty m_BundleListFoldout;
         private SerializedProperty m_ShowAssets;
         private SerializedProperty m_ShowDependencies;
 
@@ -42,16 +40,18 @@ namespace EZhex1991.EZUnity.Builder
             m_ForceRebuild = serializedObject.FindProperty("forceRebuild");
             m_CopyList = serializedObject.FindProperty("copyList");
             m_BundleList = serializedObject.FindProperty("bundleList");
-            m_CopyListFoldout = serializedObject.FindProperty("copyListFoldout");
-            m_BundleListFoldout = serializedObject.FindProperty("bundleListFoldout");
             m_ShowAssets = serializedObject.FindProperty("showAssets");
             m_ShowDependencies = serializedObject.FindProperty("showDependencies");
-            copyList = new ReorderableList(serializedObject, m_CopyList, true, true, true, true);
-            copyList.drawHeaderCallback = DrawCopyListHeader;
-            copyList.drawElementCallback = DrawCopyListElement;
-            bundleList = new ReorderableList(serializedObject, m_BundleList, true, true, true, true);
-            bundleList.drawHeaderCallback = DrawBundleListHeader;
-            bundleList.drawElementCallback = DrawBundleListElement;
+            copyList = new ReorderableList(serializedObject, m_CopyList, true, true, true, true)
+            {
+                drawHeaderCallback = DrawCopyListHeader,
+                drawElementCallback = DrawCopyListElement
+            };
+            bundleList = new ReorderableList(serializedObject, m_BundleList, true, true, true, true)
+            {
+                drawHeaderCallback = DrawBundleListHeader,
+                drawElementCallback = DrawBundleListElement
+            };
             EZBundleManager.Refresh();
         }
         public override void OnInspectorGUI()
@@ -75,28 +75,20 @@ namespace EZhex1991.EZUnity.Builder
             EditorGUILayout.LabelField("Build Options", EditorStyles.boldLabel);
             DrawBaseProperties();
 
-            if (m_CopyListFoldout.boolValue = EditorGUILayout.Foldout(m_CopyListFoldout.boolValue, string.Format("Copy List ({0})", copyList.count)))
-            {
-                copyList.DoLayoutList();
-            }
+            EZEditorGUIUtility.DoLayoutReorderableList(copyList);
 
             if (m_ManagerMode.boolValue)
             {
                 EditorGUILayout.BeginHorizontal();
                 string label = string.Format("Bundle List ({0})", AssetDatabase.GetAllAssetBundleNames().Length);
-                m_BundleListFoldout.boolValue = EditorGUILayout.Foldout(m_BundleListFoldout.boolValue, label);
+                m_BundleList.isExpanded = EditorGUILayout.Foldout(m_BundleList.isExpanded, label, true);
                 EditorGUILayout.EndHorizontal();
-                if (m_BundleListFoldout.boolValue)
+                if (m_BundleList.isExpanded)
                     DrawAssetBundleManager();
             }
             else
             {
-                EditorGUILayout.BeginHorizontal();
-                string label = string.Format("Bundle List ({0})", bundleList.count);
-                m_BundleListFoldout.boolValue = EditorGUILayout.Foldout(m_BundleListFoldout.boolValue, label);
-                EditorGUILayout.EndHorizontal();
-                if (m_BundleListFoldout.boolValue)
-                    bundleList.DoLayoutList();
+                EZEditorGUIUtility.DoLayoutReorderableList(bundleList);
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -141,7 +133,7 @@ namespace EZhex1991.EZUnity.Builder
 
         private void DrawCopyListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, copyList);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, copyList);
             rect.y += 1;
             float width = rect.width / 2; float margin = 5;
             EditorGUI.LabelField(new Rect(rect.x, rect.y, width - margin, rect.height), "Destination");
@@ -165,7 +157,7 @@ namespace EZhex1991.EZUnity.Builder
 
         private void DrawBundleListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, bundleList);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, bundleList);
             rect.y += 1;
 
             float width = Mathf.Min(100, rect.width / 4); float residue = (rect.width - width * 4) / 10; float margin = 5;

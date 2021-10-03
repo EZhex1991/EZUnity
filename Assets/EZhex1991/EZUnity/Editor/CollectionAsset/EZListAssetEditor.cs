@@ -35,16 +35,14 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
 
             serializedObject.Update();
 
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-            elementList.DoLayoutList();
-            GUILayout.EndScrollView();
+            EZEditorGUIUtility.DoLayoutReorderableList(elementList);
 
             serializedObject.ApplyModifiedProperties();
         }
 
         protected void DrawElementListHeader(Rect rect)
         {
-            rect = EZEditorGUIUtility.DrawReorderableListCount(rect, elementList);
+            rect = EZEditorGUIUtility.CalcReorderableListHeaderRect(rect, elementList);
             EditorGUI.LabelField(rect, "Elements");
         }
         protected void DrawElementListElement(Rect rect, int index, bool isActive, bool isFocused)
