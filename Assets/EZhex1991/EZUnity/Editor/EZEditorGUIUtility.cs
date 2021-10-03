@@ -14,6 +14,7 @@ namespace EZhex1991.EZUnity
         public const float digitWidth_2 = 30;
         public const float digitWidth_3 = 35;
         public const float dragHandleWidth = 15;
+        public const float countRectWidth = 48;
 
         public static void WindowTitle(EditorWindow target)
         {
@@ -37,6 +38,25 @@ namespace EZhex1991.EZUnity
             GUI.enabled = true;
         }
 
+        public static void DoLayoutReorderableList(ReorderableList list)
+        {
+            DoLayoutReorderableList(list, list.serializedProperty.displayName);
+        }
+        public static void DoLayoutReorderableList(ReorderableList list, string label)
+        {
+            Rect rect = EditorGUILayout.GetControlRect();
+            Rect countRect = new Rect(rect.x + rect.width - countRectWidth, rect.y, countRectWidth, rect.height);
+            int count = EditorGUI.DelayedIntField(countRect, GUIContent.none, list.count);
+            if (count != list.count)
+            {
+                list.serializedProperty.arraySize = count;
+            }
+            if (list.serializedProperty.isExpanded = EditorGUI.Foldout(rect, list.serializedProperty.isExpanded, label, true))
+            {
+                list.DoLayoutList();
+            }
+        }
+
         public static Rect CalcReorderableListHeaderRect(Rect rect, ReorderableList list)
         {
             float indentWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
@@ -44,24 +64,12 @@ namespace EZhex1991.EZUnity
             rect.x += indentWidth; rect.width -= indentWidth;
             return rect;
         }
+
+        [System.Obsolete("Use CalcReorderableListHeaderRect and DoLayoutReorderableList instead")]
         public static Rect DrawReorderableListCount(Rect rect, ReorderableList list)
         {
             float indentWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
             if (list.draggable) indentWidth += dragHandleWidth;
-            Rect countRect = new Rect(rect);
-            countRect.width = indentWidth - 5;
-            if (list.serializedProperty != null)
-            {
-                int length = EditorGUI.DelayedIntField(countRect, list.count, EditorStyles.miniTextField);
-                if (length != list.count)
-                {
-                    list.serializedProperty.arraySize = length;
-                }
-            }
-            else
-            {
-                EditorGUI.LabelField(countRect, list.count.ToString(), EditorStyles.miniLabel);
-            }
             rect.x += indentWidth; rect.width -= indentWidth;
             return rect;
         }
