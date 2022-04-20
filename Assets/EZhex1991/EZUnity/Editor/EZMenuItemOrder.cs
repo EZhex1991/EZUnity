@@ -8,17 +8,24 @@ namespace EZhex1991.EZUnity
     public enum EZMenuItemOrder
     {
         _Section_0 = 10000,
+        // Project Settings
+        EZUnitySettings,
+
+        _Section_1 = _Section_0 + 100,
+        // Application Settings
         ApplicationSettings,
         OpenPersistentFolder,
         ClearPersistentFolder,
         PlayerPrefsEditor,
 
-        _Section_1 = _Section_0 + 100,
+        _Section_2 = _Section_0 + 200,
+        // 
         SaveAssets,
         RefreshAssetDatabase,
         Renamer,
 
-        _Section_2 = _Section_0 + 200,
+        _Section_3 = _Section_0 + 300,
+        // Object Viewer
         AssetBundleManager,
         AssetReferenceViewer,
         CorrespondingObjectViewer,
@@ -27,14 +34,13 @@ namespace EZhex1991.EZUnity
         HierachyDiffChecker,
         PropertyPathViewer,
 
-        _Section_3 = _Section_0 + 300,
+        _Section_4 = _Section_0 + 400,
+        // Helper
         GuidGenerator,
         RegexTester,
         ColorBlender,
         TimePanel,
         TypeReflectionHelper,
-
-        _Section_4 = _Section_0 + 400,
 
         _Section_5 = _Section_0 + 500,
 
@@ -45,6 +51,7 @@ namespace EZhex1991.EZUnity
         _Section_8 = _Section_0 + 800,
 
         _Section_9 = _Section_0 + 900,
+        // Experimental
         ShaderKeywordManager,
     }
 }

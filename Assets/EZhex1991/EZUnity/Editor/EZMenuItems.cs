@@ -15,6 +15,56 @@ namespace EZhex1991.EZUnity
     {
         private const string ROOT_NAME = "EZUnity/";
 
+
+        [MenuItem(ROOT_NAME + "EZUnitySettings", false, (int)EZMenuItemOrder.EZUnitySettings)]
+        private static void EZUnitySettings()
+        {
+            SettingsService.OpenProjectSettings("Project/EZUnity");
+        }
+#if UNITY_2018_3_OR_NEWER
+        private static SettingsProvider CreateProjectSettingsProvider<T>(string name, T instance) where T : EZProjectSettingsSingleton<T>
+        {
+            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/" + ROOT_NAME + name, instance);
+            provider.guiHandler += (searchContext) =>
+            {
+                if (GUI.changed) instance.Save();
+            };
+            return provider;
+        }
+        [SettingsProvider]
+        private static SettingsProvider CreateEZEditorSettingsProvider()
+        {
+            return CreateProjectSettingsProvider("EZEditorSettings", EZEditorSettings.Instance);
+        }
+        [SettingsProvider]
+        private static SettingsProvider CreateEZScriptSettingsProvider()
+        {
+            return CreateProjectSettingsProvider("EZScriptSettings", EZScriptSettings.Instance);
+        }
+        [SettingsProvider]
+        private static SettingsProvider CreateEZAssetImporterProvider()
+        {
+            return CreateProjectSettingsProvider(typeof(EZAssetImporterManager).Name, EZAssetImporterManager.Instance);
+        }
+        [SettingsProvider]
+        private static SettingsProvider CreateEZGrapicSettingsProvider()
+        {
+            EZGraphicsSettings provider = new EZGraphicsSettings("Project/" + ROOT_NAME + "EZGraphicsSettings", SettingsScope.Project);
+            return provider;
+        }
+#else
+        [PreferenceItem("EZScriptSettings")]
+        private static void CreateEZScriptSettingsProvider()
+        {
+            Editor.CreateEditor(EZScriptSettings.Instance).OnInspectorGUI();
+        }
+        [PreferenceItem("EZEditorSettings")]
+        private static void CreateEZEditorSettingsProvider()
+        {
+            Editor.CreateEditor(EZEditorSettings.Instance).OnInspectorGUI();
+        }
+#endif
+
         [MenuItem(ROOT_NAME + "EZTimePanel", false, (int)EZMenuItemOrder.TimePanel)]
         private static void ShowTimePanel()
         {
@@ -149,49 +199,5 @@ namespace EZhex1991.EZUnity
         {
             EditorWindow.GetWindow<EZPropertyPathViewer>("PropertyPathViewer").Show();
         }
-
-#if UNITY_2018_3_OR_NEWER
-        private static SettingsProvider CreateProjectSettingsProvider<T>(string name, T instance) where T : EZProjectSettingsSingleton<T>
-        {
-            AssetSettingsProvider provider = AssetSettingsProvider.CreateProviderFromObject("Project/" + ROOT_NAME + name, instance);
-            provider.guiHandler += (searchContext) =>
-            {
-                if (GUI.changed) instance.Save();
-            };
-            return provider;
-        }
-        [SettingsProvider]
-        private static SettingsProvider CreateEZScriptSettingsProvider()
-        {
-            return CreateProjectSettingsProvider("EZScriptSettings", EZScriptSettings.Instance);
-        }
-        [SettingsProvider]
-        private static SettingsProvider CreateEZEditorSettingsProvider()
-        {
-            return CreateProjectSettingsProvider("EZEditorSettings", EZEditorSettings.Instance);
-        }
-        [SettingsProvider]
-        private static SettingsProvider CreateEZAssetImporterProvider()
-        {
-            return CreateProjectSettingsProvider(typeof(EZAssetImporterManager).Name, EZAssetImporterManager.Instance);
-        }
-        [SettingsProvider]
-        private static SettingsProvider CreateEZGrapicSettingsProvider()
-        {
-            EZGraphicsSettings provider = new EZGraphicsSettings("Project/" + ROOT_NAME + "EZGraphicsSettings", SettingsScope.Project);
-            return provider;
-        }
-#else
-        [PreferenceItem("EZScriptSettings")]
-        private static void CreateEZScriptSettingsProvider()
-        {
-            Editor.CreateEditor(EZScriptSettings.Instance).OnInspectorGUI();
-        }
-        [PreferenceItem("EZEditorSettings")]
-        private static void CreateEZEditorSettingsProvider()
-        {
-            Editor.CreateEditor(EZEditorSettings.Instance).OnInspectorGUI();
-        }
-#endif
     }
 }
