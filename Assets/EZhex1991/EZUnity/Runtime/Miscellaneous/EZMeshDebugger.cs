@@ -7,56 +7,82 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
+    [RequireComponent(typeof(MeshFilter))]
     public class EZMeshDebugger : MonoBehaviour
     {
-        public Mesh mesh;
+        private MeshFilter m_MeshFilter;
+        public MeshFilter meshFilter
+        {
+            get
+            {
+                if (m_MeshFilter == null)
+                {
+                    m_MeshFilter = GetComponent<MeshFilter>();
+                }
+                return m_MeshFilter;
+            }
+        }
+
+        public Mesh mesh { get { return meshFilter.sharedMesh; } }
+
         public int startIndex = 0;
         public int maxCount = 1000;
-        public float lineLength = 0.2f;
 
-        public bool showNormal = true;
-        public bool showTangent = false;
-        public bool showBitangent = false;
+        public float vectorLength = 0.2f;
+        public float vertexSize = 0.02f;
+
+        public bool showVertexNumbers = true;
+        public bool showNormals = true;
+        public bool showTangents = false;
 
         private int meshId;
         private Vector3[] vertices;
         private Vector3[] normals;
         private Vector4[] tangents;
-        private Vector3[] bitangents;
 
         private void OnEnable()
         {
             GetMeshData();
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (vertices == null) return;
-            Gizmos.matrix = transform.localToWorldMatrix;
+
+            Gizmos.matrix = UnityEditor.Handles.matrix = transform.localToWorldMatrix;
             int count = Mathf.Min(maxCount + startIndex, vertices.Length);
-            for (int i = startIndex; i < count; i++)
+            if (vertices != null)
             {
-                Vector3 vertex = vertices[i];
-                Vector3 normal = normals[i];
-                Vector3 tangent = tangents[i];
-                Vector3 bitangent = bitangents[i];
-                if (showNormal)
+                for (int i = startIndex; i < count; i++)
                 {
+                    Gizmos.DrawSphere(vertices[i], vertexSize);
+                    if (showVertexNumbers)
+                    {
+                        UnityEditor.Handles.Label(vertices[i], i.ToString());
+                    }
+                }
+            }
+            if (showNormals && normals != null)
+            {
+                for (int i = startIndex; i < count; i++)
+                {
+                    if (i >= normals.Length) break;
                     Gizmos.color = Color.blue;
-                    Gizmos.DrawRay(vertex, normal * lineLength);
+                    Gizmos.DrawRay(vertices[i], normals[i] * vectorLength);
                 }
-                if (showTangent)
+            }
+            if (showTangents && tangents != null)
+            {
+                for (int i = startIndex; i < count; i++)
                 {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawRay(vertex, tangent * lineLength);
-                }
-                if (showBitangent)
-                {
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawRay(vertex, bitangent * lineLength);
+                    if (i >= tangents.Length) break;
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawRay(vertices[i], tangents[i] * vectorLength);
                 }
             }
         }
+#endif
 
         private void OnValidate()
         {
@@ -71,7 +97,6 @@ namespace EZhex1991.EZUnity
                 vertices = null;
                 normals = null;
                 tangents = null;
-                bitangents = null;
             }
             else
             {
@@ -82,11 +107,6 @@ namespace EZhex1991.EZUnity
                     vertices = mesh.vertices;
                     normals = mesh.normals;
                     tangents = mesh.tangents;
-                    bitangents = new Vector3[vertices.Length];
-                    for (int i = 0; i < bitangents.Length; i++)
-                    {
-                        bitangents[i] = Vector3.Cross(normals[i], tangents[i]);
-                    }
                 }
             }
         }
