@@ -10,7 +10,7 @@
 
 ## 功能菜单（EZUnity/..）
 
-- Save Assets: Editor下部分资源的修改不会立马写入到磁盘，使用该菜单强制存档资源
+- Save Assets: Editor下部分资源的修改不会立马写入到磁盘，使用该菜单强制存档资源而不用保存场景变更
 - Renamer: 批量重命名工具窗口，支持正则式匹配，整理资源目录很方便
 - Material Optimizer: 用来查看和删除材质中的keywords和多余的properties
 - Guid Generator: 生成Guid的工具窗口
