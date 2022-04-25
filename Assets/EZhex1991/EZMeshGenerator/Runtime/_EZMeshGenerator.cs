@@ -32,13 +32,31 @@ namespace EZhex1991.EZMeshGenerator
         public abstract string GetMeshName();
         public abstract Mesh GenerateMesh();
 
-        public static int SetQuad(int[] triangles, int i, int v00, int v01, int v10, int v11)
+        public static int SetQuad(int[] triangles, int triangleIndex, int v00, int v01, int v10, int v11)
         {
-            triangles[i] = v00;
-            triangles[i + 1] = triangles[i + 4] = v01;
-            triangles[i + 2] = triangles[i + 3] = v10;
-            triangles[i + 5] = v11;
-            return i + 6;
+            triangles[triangleIndex] = v00;
+            triangles[triangleIndex + 1] = triangles[triangleIndex + 4] = v01;
+            triangles[triangleIndex + 2] = triangles[triangleIndex + 3] = v10;
+            triangles[triangleIndex + 5] = v11;
+            return triangleIndex + 6;
+        }
+        public static int SetPlane(int[] triangles, int triangleIndex, int vertexIndex, int subdivisionX, int subdivisionY)
+        {
+            int v00, v01, v10, v11;
+            for (int x = 0; x < subdivisionX; x++)
+            {
+                for (int y = 0; y < subdivisionY; y++)
+                {
+                    v00 = vertexIndex;
+                    v01 = v00 + 1;
+                    v10 = v00 + subdivisionY + 1;
+                    v11 = v10 + 1;
+                    triangleIndex = SetQuad(triangles, triangleIndex, v00, v01, v10, v11);
+                    vertexIndex++;
+                }
+                vertexIndex++;
+            }
+            return triangleIndex;
         }
     }
 }
