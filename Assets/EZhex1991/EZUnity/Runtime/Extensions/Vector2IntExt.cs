@@ -9,26 +9,34 @@ namespace EZhex1991.EZUnity
 {
     public static class Vector2IntExt
     {
-        public static float Lerp(this Vector2Int v2, float t)
+        public static float RangeLerp(this Vector2Int v, float t)
         {
-            return Mathf.Lerp(v2.x, v2.y, t);
+            return Mathf.Lerp(v.x, v.y, t);
         }
-        public static int Random(this Vector2Int v2)
+        public static float RangeInverseLerp(this Vector2Int v, float value)
         {
-            return UnityEngine.Random.Range(v2.x, v2.y);
+            return Mathf.InverseLerp(v.x, v.y, value);
+        }
+        public static int RangeRandom(this Vector2Int v)
+        {
+            return UnityEngine.Random.Range(v.x, v.y);
         }
 
-        public static int MaxComponent(this Vector2Int v2)
+        public static int ComponentMax(this Vector2Int v)
         {
-            return Mathf.Max(v2.x, v2.y);
+            return Mathf.Max(v.x, v.y);
         }
-        public static int MinComponent(this Vector2Int v2)
+        public static int ComponentMin(this Vector2Int v)
         {
-            return Mathf.Min(v2.x, v2.y);
+            return Mathf.Min(v.x, v.y);
         }
-        public static Vector2Int Abs(this Vector2Int v2)
+        public static Vector2Int ComponentAbs(this Vector2Int v)
         {
-            return new Vector2Int(Mathf.Abs(v2.x), Mathf.Abs(v2.y));
+            return new Vector2Int(Mathf.Abs(v.x), Mathf.Abs(v.y));
+        }
+        public static Vector2Int ComponentMultiply(this Vector2Int v1, Vector2Int v2)
+        {
+            return new Vector2Int(v1.x * v2.x, v1.y * v2.y);
         }
     }
 }
