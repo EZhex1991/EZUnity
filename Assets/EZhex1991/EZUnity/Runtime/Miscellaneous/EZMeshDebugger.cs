@@ -40,15 +40,19 @@ namespace EZhex1991.EZUnity
         private Vector3[] normals;
         private Vector4[] tangents;
 
-        private void OnEnable()
+        private void Start()
         {
-            GetMeshData();
+
         }
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (vertices == null) return;
+            if (!isActiveAndEnabled || mesh == null) return;
+
+            vertices = mesh.vertices;
+            normals = mesh.normals;
+            tangents = mesh.tangents;
 
             Gizmos.matrix = UnityEditor.Handles.matrix = transform.localToWorldMatrix;
             int count = Mathf.Min(maxCount + startIndex, vertices.Length);
@@ -83,32 +87,5 @@ namespace EZhex1991.EZUnity
             }
         }
 #endif
-
-        private void OnValidate()
-        {
-            GetMeshData();
-        }
-
-        private void GetMeshData()
-        {
-            if (mesh == null)
-            {
-                meshId = -1;
-                vertices = null;
-                normals = null;
-                tangents = null;
-            }
-            else
-            {
-                int id = mesh.GetInstanceID();
-                if (id != meshId)
-                {
-                    meshId = id;
-                    vertices = mesh.vertices;
-                    normals = mesh.normals;
-                    tangents = mesh.tangents;
-                }
-            }
-        }
     }
 }
