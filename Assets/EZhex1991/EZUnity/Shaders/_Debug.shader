@@ -6,7 +6,7 @@
 Shader "EZUnity/_Debug" {
 	Properties {
 		_DebugTex ("Debug Texture", 2D) = "white" {}
-		[KeywordEnum(Normal, Tangent, Bitangent, Color, UV0, UV1)]
+		[KeywordEnum(Normal, Tangent, Bitangent, Color, UV0, UV1, UV2)]
 		_DebugMode ("Debug Mode", Int) = 0
 		[KeywordEnum(Clamp, Repeat, Mirror)]
 		_WrapMode ("Wrap Mode", Int) = 0
@@ -21,7 +21,7 @@ Shader "EZUnity/_Debug" {
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma shader_feature _DEBUGMODE_NORMAL _DEBUGMODE_TANGENT _DEBUGMODE_BITANGENT _DEBUGMODE_COLOR _DEBUGMODE_UV0 _DEBUGMODE_UV1
+			#pragma shader_feature _DEBUGMODE_NORMAL _DEBUGMODE_TANGENT _DEBUGMODE_BITANGENT _DEBUGMODE_COLOR _DEBUGMODE_UV0 _DEBUGMODE_UV1 _DEBUGMODE_UV2
 			#pragma shader_feature _WRAPMODE_CLAMP _WRAPMODE_REPEAT _WRAPMODE_MIRROR
 
 			#include "UnityCG.cginc"
@@ -34,6 +34,7 @@ Shader "EZUnity/_Debug" {
 				float4 vertex : POSITION;
 				float2 uv0 : TEXCOORD0;
 				float2 uv1 : TEXCOORD1;
+				float2 uv2 : TEXCOORD2;
 				float3 normal : NORMAL;
 				float4 tangent : TANGENT;
 				float4 color : COLOR;
@@ -42,10 +43,11 @@ Shader "EZUnity/_Debug" {
 				float4 pos : SV_POSITION;
 				float2 uv0 : TEXCOORD0;
 				float2 uv1 : TEXCOORD1;
-				float3 worldNormal : TEXCOORD2;
-				float3 worldTangent : TEXCOORD3;
-				float3 worldBitangent : TEXCOORD4;
-				float4 color : TEXCOORD5;
+				float2 uv2 : TEXCOORD2;
+				float3 worldNormal : TEXCOORD10;
+				float3 worldTangent : TEXCOORD11;
+				float3 worldBitangent : TEXCOORD12;
+				float4 color : TEXCOORD13;
 			};
 
 			v2f vert (appdata v) {
@@ -53,6 +55,7 @@ Shader "EZUnity/_Debug" {
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.uv0 = TRANSFORM_TEX(v.uv0, _DebugTex);
 				o.uv1 = TRANSFORM_TEX(v.uv1, _DebugTex);
+				o.uv2 = TRANSFORM_TEX(v.uv2, _DebugTex);
 				o.worldNormal = normalize(UnityObjectToWorldNormal(v.normal));
 				o.worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
 				o.worldBitangent = normalize(cross(o.worldNormal, o.worldTangent));
@@ -72,6 +75,8 @@ Shader "EZUnity/_Debug" {
 					color.rg = i.uv0;
 				#elif _DEBUGMODE_UV1
 					color.rg = i.uv1;
+				#elif _DEBUGMODE_UV2
+					color.rg = i.uv2;
 				#elif _DEBUGMODE_COLOR
 					color = i.color;
 				#endif
