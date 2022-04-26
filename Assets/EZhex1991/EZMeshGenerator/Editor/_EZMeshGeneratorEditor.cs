@@ -13,10 +13,12 @@ namespace EZhex1991.EZMeshGenerator
     public class EZMeshGeneratorEditor : Editor
     {
         protected EZMeshGenerator meshGenerator;
+        protected Editor meshEditor;
 
         protected virtual void OnEnable()
         {
             meshGenerator = target as EZMeshGenerator;
+            meshEditor = CreateEditor(meshGenerator.mesh);
         }
 
         public override void OnInspectorGUI()
@@ -27,10 +29,18 @@ namespace EZhex1991.EZMeshGenerator
                 Mesh mesh = meshGenerator.GenerateMesh();
                 EditorUtility.SetDirty(mesh);
                 AssetDatabase.SaveAssets();
-                Selection.activeObject = mesh;
             }
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        public override bool HasPreviewGUI()
+        {
+            return meshGenerator.mesh != null;
+        }
+        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background)
+        {
+            meshEditor.OnInteractivePreviewGUI(r, background);
         }
     }
 }
