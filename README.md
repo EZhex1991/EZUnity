@@ -3,7 +3,7 @@
 **部分模块已从该目录中移除**
 
 - [EZSoftBone](https://github.com/EZhex1991/EZSoftBone): 柔性物体（头发/尾巴/胸部/裙子）模拟插件。支持所有碰撞体；独立的材质"EZSoftBoneMaterial"存放参数，重用度高；代码可读性强；碰撞体可通过继承EZSoftBoneColliderBase进行自定义扩展。
-- [EZTextureProcessor](https://github.com/EZhex1991/EZTextureProcessor): 图片处理工具，可在Unity中进行参数化图片生成/图片拼合/图片通道调整/描边/模糊/扭曲等效果。
+- [EZAssetGenerator](https://github.com/EZhex1991/EZAssetGenerator): 资源生成工具。网格生成工具可以通过参数生成Plane/RoundedCube/UVSphere；图片处理工具可在Unity中进行参数化图片生成/图片拼合/图片通道调整/描边/模糊/扭曲等效果。
 - [EZAnimation](https://github.com/EZhex1991/EZAnimation): 插值动画组件，有一个可以可视化编辑移动轨迹的EZTransformAnimation（支持贝塞尔曲线移动）。
 - [EZPostProcessing](https://github.com/EZhex1991/EZPostProcessing): 基于PostProcessing Stack V2开发的一系列后处理效果。
 - [XLuaExtension](https://github.com/EZhex1991/XLuaExtension): 在腾讯XLua的基础上做的一些非官方示例和扩展工具.
