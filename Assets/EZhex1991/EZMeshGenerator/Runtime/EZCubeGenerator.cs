@@ -65,25 +65,26 @@ namespace EZhex1991.EZMeshGenerator
 
             Vector3 center = new Vector3(0.5f * subdivision.x, 0.5f * subdivision.y, 0.5f * subdivision.z);
             int vertexIndex0 = 0;
-            int triangleIndex0 = 0;
             int vertexIndex1 = SetLatticeXY(vertexIndex0, center);
-            int triangleIndex1 = SetPlane(triangles, triangleIndex0, vertexIndex0, subdivision.x, subdivision.y);
             int vertexIndex2 = SetLatticeXY(vertexIndex1, center, true);
-            int triangleIndex2 = SetPlane(triangles, triangleIndex1, vertexIndex1, subdivision.x, subdivision.y);
             int vertexIndex3 = SetLatticeZY(vertexIndex2, center);
-            int triangleIndex3 = SetPlane(triangles, triangleIndex2, vertexIndex2, subdivision.z, subdivision.y);
             int vertexIndex4 = SetLatticeZY(vertexIndex3, center, true);
-            int triangleIndex4 = SetPlane(triangles, triangleIndex3, vertexIndex3, subdivision.z, subdivision.y);
             int vertexIndex5 = SetLatticeXZ(vertexIndex4, center);
-            int triangleIndex5 = SetPlane(triangles, triangleIndex4, vertexIndex4, subdivision.x, subdivision.z);
             int vertexIndex6 = SetLatticeXZ(vertexIndex5, center, true);
+
+            int triangleIndex0 = 0;
+            int triangleIndex1 = SetPlane(triangles, triangleIndex0, vertexIndex0, subdivision.x, subdivision.y);
+            int triangleIndex2 = SetPlane(triangles, triangleIndex1, vertexIndex1, subdivision.x, subdivision.y);
+            int triangleIndex3 = SetPlane(triangles, triangleIndex2, vertexIndex2, subdivision.z, subdivision.y);
+            int triangleIndex4 = SetPlane(triangles, triangleIndex3, vertexIndex3, subdivision.z, subdivision.y);
+            int triangleIndex5 = SetPlane(triangles, triangleIndex4, vertexIndex4, subdivision.x, subdivision.z);
             int triangleIndex6 = SetPlane(triangles, triangleIndex5, vertexIndex5, subdivision.x, subdivision.z);
         }
         public int SetLatticeXY(int vertexIndex, Vector3 center, bool mirrored = false)
         {
-            for (int x = 0; x <= subdivision.x; x++)
+            for (int y = 0; y <= subdivision.y; y++)
             {
-                for (int y = 0; y <= subdivision.y; y++)
+                for (int x = 0; x <= subdivision.x; x++)
                 {
                     float u = (float)x / subdivision.x;
                     float v = (float)y / subdivision.y;
@@ -107,9 +108,9 @@ namespace EZhex1991.EZMeshGenerator
         }
         public int SetLatticeZY(int vertexIndex, Vector3 center, bool mirrored = false)
         {
-            for (int z = 0; z <= subdivision.z; z++)
+            for (int y = 0; y <= subdivision.y; y++)
             {
-                for (int y = 0; y <= subdivision.y; y++)
+                for (int z = 0; z <= subdivision.z; z++)
                 {
                     float u = (float)z / subdivision.z;
                     float v = (float)y / subdivision.y;
@@ -133,9 +134,9 @@ namespace EZhex1991.EZMeshGenerator
         }
         public int SetLatticeXZ(int vertexIndex, Vector3 center, bool mirrored = false)
         {
-            for (int x = 0; x <= subdivision.x; x++)
+            for (int z = 0; z <= subdivision.z; z++)
             {
-                for (int z = 0; z <= subdivision.z; z++)
+                for (int x = 0; x <= subdivision.x; x++)
                 {
                     float u = (float)x / subdivision.x;
                     float v = (float)z / subdivision.z;

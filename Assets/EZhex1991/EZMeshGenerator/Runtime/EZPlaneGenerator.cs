@@ -64,9 +64,9 @@ namespace EZhex1991.EZMeshGenerator
         public int SetLatticeXY(Vector3 normal, Vector3 tangent)
         {
             int vertexIndex = 0;
-            for (int x = 0; x <= subdivision.x; x++)
+            for (int y = 0; y <= subdivision.y; y++)
             {
-                for (int y = 0; y <= subdivision.y; y++)
+                for (int x = 0; x <= subdivision.x; x++)
                 {
                     float u = (float)x / subdivision.x;
                     float v = (float)y / subdivision.y;
