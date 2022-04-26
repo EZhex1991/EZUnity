@@ -91,14 +91,15 @@ namespace EZhex1991.EZMeshGenerator
                     {
                         vertices[vertexIndex] = new Vector3(center.x - x, y - center.y, center.z);
                         normals[vertexIndex] = Vector3.forward;
+                        tangents[vertexIndex] = new Vector4(-1, 0, 0, -1);
                     }
                     else
                     {
                         vertices[vertexIndex] = new Vector3(x - center.x, y - center.y, -center.z);
                         normals[vertexIndex] = Vector3.back;
+                        tangents[vertexIndex] = new Vector4(1, 0, 0, -1);
                     }
                     uv[vertexIndex] = new Vector2(u, v);
-                    tangents[vertexIndex] = Vector3.up;
                     vertexIndex++;
                 }
             }
@@ -116,14 +117,15 @@ namespace EZhex1991.EZMeshGenerator
                     {
                         vertices[vertexIndex] = new Vector3(-center.x, y - center.y, center.z - z);
                         normals[vertexIndex] = Vector3.left;
+                        tangents[vertexIndex] = new Vector4(0, 0, 1, -1);
                     }
                     else
                     {
                         vertices[vertexIndex] = new Vector3(center.x, y - center.y, z - center.z);
                         normals[vertexIndex] = Vector3.right;
+                        tangents[vertexIndex] = new Vector4(0, 0, -1, -1);
                     }
                     uv[vertexIndex] = new Vector2(u, v);
-                    tangents[vertexIndex] = Vector3.up;
                     vertexIndex++;
                 }
             }
@@ -141,14 +143,15 @@ namespace EZhex1991.EZMeshGenerator
                     {
                         vertices[vertexIndex] = new Vector3(center.x - x, -center.y, z - center.z);
                         normals[vertexIndex] = Vector3.down;
+                        tangents[vertexIndex] = new Vector4(-1, 0, 0, -1);
                     }
                     else
                     {
                         vertices[vertexIndex] = new Vector3(x - center.x, center.y, z - center.z);
                         normals[vertexIndex] = Vector3.up;
+                        tangents[vertexIndex] = new Vector4(1, 0, 0, -1);
                     }
                     uv[vertexIndex] = new Vector2(u, v);
-                    tangents[vertexIndex] = Vector3.forward;
                     vertexIndex++;
                 }
             }
