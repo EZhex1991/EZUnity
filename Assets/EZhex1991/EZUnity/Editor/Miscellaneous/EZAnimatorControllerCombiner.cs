@@ -11,60 +11,71 @@ namespace EZhex1991.EZUnity
 {
     public class EZAnimatorControllerCombiner : EditorWindow
     {
-        public class Controllers : ScriptableObject
+        public class Combiner : ScriptableSingleton<Combiner>
         {
+            public bool combineLayers = true;
+            public bool combineParameters = true;
             public AnimatorController output;
             public AnimatorController[] elements;
-        }
 
-        public static Controllers m_Controllers;
-        public static Controllers controllers
+            public bool Combine()
+            {
+                if (output != null)
+                {
+                    if (combineLayers)
+                    {
+                        foreach (AnimatorController controller in elements)
+                        {
+                            foreach (AnimatorControllerLayer layer in controller.layers)
+                            {
+                                output.AddLayer(layer);
+                            }
+                        }
+                    }
+                    if (combineParameters)
+                    {
+                        foreach (AnimatorController controller in elements)
+                        {
+                            foreach (AnimatorControllerParameter parameter in controller.parameters)
+                            {
+                                output.AddParameter(parameter);
+                            }
+                        }
+                    }
+                    EditorUtility.SetDirty(output);
+                    return true;
+                }
+                return false;
+            }
+        }
+        public static Combiner combiner { get { return Combiner.instance; } }
+
+        public static Editor m_CombinerEditor;
+        public static Editor combinerEditor
         {
             get
             {
-                if (m_Controllers == null)
+                if (m_CombinerEditor == null)
                 {
-                    m_Controllers = CreateInstance<Controllers>();
+                    m_CombinerEditor = Editor.CreateEditor(combiner);
                 }
-                return m_Controllers;
+                return m_CombinerEditor;
             }
-        }
-
-        public SerializedObject serializedObject;
-        private SerializedProperty m_Output;
-        private SerializedProperty m_Elements;
-
-        protected void Awake()
-        {
-            serializedObject = new SerializedObject(controllers);
-            m_Output = serializedObject.FindProperty(nameof(Controllers.output));
-            m_Elements = serializedObject.FindProperty(nameof(Controllers.elements));
         }
 
         protected void OnGUI()
         {
             EZEditorGUIUtility.WindowTitle(this);
 
-            EditorGUILayout.PropertyField(m_Output);
-            EditorGUILayout.PropertyField(m_Elements);
+            combinerEditor.DrawDefaultInspector();
 
             if (GUILayout.Button("Combine"))
             {
-                if (controllers.output != null)
+                if (combiner.Combine())
                 {
-                    foreach (AnimatorController controller in controllers.elements)
-                    {
-                        foreach (AnimatorControllerLayer layer in controller.layers)
-                        {
-                            controllers.output.AddLayer(layer);
-                        }
-                    }
-                    EditorUtility.SetDirty(controllers.output);
-                    Selection.activeObject = controllers.output;
+                    Selection.activeObject = combiner.output;
                 }
             }
-
-            serializedObject.ApplyModifiedProperties();
         }
     }
 }
