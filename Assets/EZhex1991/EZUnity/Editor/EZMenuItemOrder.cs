@@ -33,6 +33,7 @@ namespace EZhex1991.EZUnity
         MaterialOptimizer,
         HierachyDiffChecker,
         PropertyPathViewer,
+        AnimatorControllerCombiner,
 
         _Section_4 = _Section_0 + 400,
         // Helper

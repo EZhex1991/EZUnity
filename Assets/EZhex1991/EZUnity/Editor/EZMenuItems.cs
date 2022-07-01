@@ -65,6 +65,7 @@ namespace EZhex1991.EZUnity
         }
 #endif
 
+
         [MenuItem(ROOT_NAME + "EZTimePanel", false, (int)EZMenuItemOrder.TimePanel)]
         private static void ShowTimePanel()
         {
@@ -198,6 +199,12 @@ namespace EZhex1991.EZUnity
         private static void PropertyPathViewer()
         {
             EditorWindow.GetWindow<EZPropertyPathViewer>("PropertyPathViewer").Show();
+        }
+
+        [MenuItem(ROOT_NAME + "Animator Controller Combiner", false, (int)EZMenuItemOrder.AnimatorControllerCombiner)]
+        private static void AnimatorControllerCombiner()
+        {
+            EditorWindow.GetWindow<EZAnimatorControllerCombiner>("AnimatorControllerCombiner").Show();
         }
     }
 }
