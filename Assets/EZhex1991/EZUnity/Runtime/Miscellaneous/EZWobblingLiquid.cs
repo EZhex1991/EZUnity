@@ -24,6 +24,7 @@ namespace EZhex1991.EZUnity
         [Range(0, 1)]
         public float foamAmount = 0.1f;
 
+        public Space simulateSpace = Space.World;
         public float waveSpeed = 10f;
         [Range(0, 1)]
         public float damping = 0.9f;
@@ -35,10 +36,17 @@ namespace EZhex1991.EZUnity
         private float amplitude;
         private float deltaTime;
 
+        private Vector3 GetPos()
+        {
+            return simulateSpace == Space.World
+                ? transform.position
+                : transform.localPosition;
+        }
+
         private void OnEnable()
         {
             propertyBlock = new MaterialPropertyBlock();
-            lastPos = transform.position;
+            lastPos = GetPos();
         }
         private void Update()
         {
@@ -53,7 +61,8 @@ namespace EZhex1991.EZUnity
 
             if (Application.isPlaying)
             {
-                Vector3 translation = transform.position - lastPos;
+                Vector3 crntPos = GetPos();
+                Vector3 translation = crntPos - lastPos;
                 if (translation.magnitude != 0)
                 {
                     movement = movement * amplitude + translation;
@@ -68,7 +77,7 @@ namespace EZhex1991.EZUnity
                     deltaTime -= timeStep;
                     amplitude *= damping;
                 }
-                lastPos = transform.position;
+                lastPos = crntPos;
 
                 propertyBlock.SetVector(Uniforms.PropertyID_Centroid, centroid);
             }
