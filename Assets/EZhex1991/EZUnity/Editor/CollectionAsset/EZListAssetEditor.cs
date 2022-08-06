@@ -34,7 +34,6 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
             EZEditorGUIUtility.ScriptableObjectTitle(target as ScriptableObject);
 
             serializedObject.Update();
-
             EZEditorGUIUtility.DoLayoutReorderableList(elementList);
 
             serializedObject.ApplyModifiedProperties();

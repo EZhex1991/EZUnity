@@ -11,10 +11,21 @@ namespace EZhex1991.EZUnity
 {
     public static partial class EZEditorGUIUtility
     {
-        public const float digitWidth_2 = 30;
-        public const float digitWidth_3 = 35;
+        public static float width;
+        public static float GetDigitWidth(float number)
+        {
+            return ((int)Mathf.Log10(number) + 1) * 8 + 5;
+        }
+
+        public const float marginHorizontal = 2;
         public const float dragHandleWidth = 15;
         public const float countRectWidth = 48;
+        public const float verticalOffset = 2f;
+
+        public readonly static GUIStyle rightAlignedLabel = new GUIStyle(EditorStyles.label)
+        {
+            alignment = TextAnchor.MiddleRight
+        };
 
         public static void WindowTitle(EditorWindow target)
         {
@@ -45,7 +56,7 @@ namespace EZhex1991.EZUnity
         public static void DoLayoutReorderableList(ReorderableList list, string label)
         {
             Rect rect = EditorGUILayout.GetControlRect();
-            Rect countRect = new Rect(rect.x + rect.width - countRectWidth, rect.y, countRectWidth, rect.height);
+            Rect countRect = new Rect(rect.x + rect.width - countRectWidth, rect.y + 2, countRectWidth, rect.height);
             int count = EditorGUI.DelayedIntField(countRect, GUIContent.none, list.count);
             if (count != list.count)
             {
@@ -59,69 +70,27 @@ namespace EZhex1991.EZUnity
 
         public static Rect CalcReorderableListHeaderRect(Rect rect, ReorderableList list)
         {
-            float indentWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
+            float indentWidth = GetDigitWidth(list.count - 1);
             if (list.draggable) indentWidth += dragHandleWidth;
             rect.x += indentWidth; rect.width -= indentWidth;
             return rect;
         }
-
         [System.Obsolete("Use CalcReorderableListHeaderRect and DoLayoutReorderableList instead")]
         public static Rect DrawReorderableListCount(Rect rect, ReorderableList list)
         {
-            float indentWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
-            if (list.draggable) indentWidth += dragHandleWidth;
-            rect.x += indentWidth; rect.width -= indentWidth;
-            return rect;
+            return CalcReorderableListHeaderRect(rect, list);
         }
 
         public static Rect DrawReorderableListIndex(Rect rect, int index, ReorderableList list)
         {
-            float labelWidth = list.count > 100 ? digitWidth_3 : digitWidth_2;
-            if (list.serializedProperty != null)
-            {
-                if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
-                {
-                    DrawReorderMenu(index, list.serializedProperty).ShowAsContext();
-                }
-            }
-            else
-            {
-                EditorGUI.LabelField(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString());
-            }
-            rect.x += labelWidth; rect.width -= labelWidth;
-            return rect;
+            return DrawReorderableListIndex(rect, index, list.serializedProperty);
         }
-        private static GenericMenu DrawReorderMenu(int index, SerializedProperty listProperty)
-        {
-            GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Insert"), false, delegate
-            {
-                listProperty.InsertArrayElementAtIndex(index);
-                listProperty.serializedObject.ApplyModifiedProperties();
-            });
-            menu.AddItem(new GUIContent("Delete"), false, delegate
-            {
-                listProperty.DeleteArrayElementAtIndex(index);
-                listProperty.serializedObject.ApplyModifiedProperties();
-            });
-            menu.AddSeparator("");
-            menu.AddItem(new GUIContent("Move to Top"), false, delegate
-            {
-                listProperty.MoveArrayElement(index, 0);
-                listProperty.serializedObject.ApplyModifiedProperties();
-            });
-            menu.AddItem(new GUIContent("Move to Bottom"), false, delegate
-            {
-                listProperty.MoveArrayElement(index, listProperty.arraySize - 1);
-                listProperty.serializedObject.ApplyModifiedProperties();
-            });
-            return menu;
-        }
-
         public static Rect DrawReorderableListIndex(Rect rect, int index, params SerializedProperty[] listProperties)
         {
-            float labelWidth = listProperties[0].arraySize > 100 ? digitWidth_3 : digitWidth_2;
-            if (GUI.Button(new Rect(rect.x, rect.y, labelWidth, EditorGUIUtility.singleLineHeight), index.ToString(), EditorStyles.label))
+            rect.y += verticalOffset;
+            rect.height -= verticalOffset;
+            float labelWidth = GetDigitWidth(listProperties[0].arraySize - 1);
+            if (GUI.Button(new Rect(rect) { width = labelWidth - marginHorizontal, height = EditorGUIUtility.singleLineHeight }, index.ToString(), rightAlignedLabel))
             {
                 DrawReorderMenu(index, listProperties).ShowAsContext();
             }
@@ -131,11 +100,19 @@ namespace EZhex1991.EZUnity
         private static GenericMenu DrawReorderMenu(int index, params SerializedProperty[] listProperties)
         {
             GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Insert"), false, delegate
+            menu.AddItem(new GUIContent("Insert Above"), false, delegate
             {
                 for (int i = 0; i < listProperties.Length; i++)
                 {
                     listProperties[i].InsertArrayElementAtIndex(index);
+                    listProperties[i].serializedObject.ApplyModifiedProperties();
+                }
+            });
+            menu.AddItem(new GUIContent("Insert Below"), false, delegate
+            {
+                for (int i = 0; i < listProperties.Length; i++)
+                {
+                    listProperties[i].InsertArrayElementAtIndex(index + 1);
                     listProperties[i].serializedObject.ApplyModifiedProperties();
                 }
             });

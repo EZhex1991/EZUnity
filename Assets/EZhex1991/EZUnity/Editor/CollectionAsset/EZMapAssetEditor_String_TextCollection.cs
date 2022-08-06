@@ -47,9 +47,9 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
 
             float width = rect.width / 2; float margin = 5;
             rect.width = width - margin;
-            EditorGUI.PropertyField(rect, ch, GUIContent.none);
+            ch.stringValue = EditorGUI.TextArea(rect, ch.stringValue, EditorStyles.textArea);
             rect.x += width;
-            EditorGUI.PropertyField(rect, en, GUIContent.none);
+            en.stringValue = EditorGUI.TextArea(rect, en.stringValue, EditorStyles.textArea);
         }
     }
 }
