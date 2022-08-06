@@ -75,11 +75,6 @@ namespace EZhex1991.EZUnity
             rect.x += indentWidth; rect.width -= indentWidth;
             return rect;
         }
-        [System.Obsolete("Use CalcReorderableListHeaderRect and DoLayoutReorderableList instead")]
-        public static Rect DrawReorderableListCount(Rect rect, ReorderableList list)
-        {
-            return CalcReorderableListHeaderRect(rect, list);
-        }
 
         public static Rect DrawReorderableListIndex(Rect rect, int index, ReorderableList list)
         {
