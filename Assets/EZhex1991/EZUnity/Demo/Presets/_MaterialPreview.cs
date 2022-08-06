@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
+    [SelectionBase]
     public class _MaterialPreview : MonoBehaviour
     {
         public Renderer[] renderers;
