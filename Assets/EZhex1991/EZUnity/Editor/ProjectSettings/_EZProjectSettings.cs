@@ -13,7 +13,7 @@ namespace EZhex1991.EZUnity
     public abstract class EZProjectSettingsSingleton<T> : ScriptableObject
         where T : EZProjectSettingsSingleton<T>
     {
-        public abstract string assetPath { get; }
+        public static readonly string assetPath = $"ProjectSettings/EZhex1991/{typeof(T).Name}.asset";
 
         private static T m_Instance;
         public static T Instance

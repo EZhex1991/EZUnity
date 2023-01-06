@@ -60,8 +60,6 @@ namespace EZhex1991.EZUnity
             public bool mipmapEnabled = false;
         }
 
-        public override string assetPath { get { return "ProjectSettings/EZAssetImporterManager.asset"; } }
-
         [SerializeField]
         private ModelImporterOverrides m_DefaultModelImporterOverrides = new ModelImporterOverrides();
         public ModelImporterOverrides defaultModelImporterOverrides { get { return m_DefaultModelImporterOverrides; } }
