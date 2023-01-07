@@ -50,6 +50,8 @@ namespace EZhex1991.EZUnity
         }
         public override void OnInspectorGUI()
         {
+            EZEditorGUIUtility.ScriptableObjectTitle(this, false);
+
             serializedObject.Update();
 
             scrollRect = EditorGUILayout.BeginScrollView(scrollRect);
@@ -63,7 +65,6 @@ namespace EZhex1991.EZUnity
         }
         public void OnDisable()
         {
-            settings.Save();
             Selection.selectionChanged -= GetSelectedTemplates;
         }
 

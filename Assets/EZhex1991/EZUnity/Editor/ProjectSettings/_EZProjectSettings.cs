@@ -39,7 +39,7 @@ namespace EZhex1991.EZUnity
             }
             catch (Exception ex)
             {
-                Debug.Log("Creating new asset file on " + assetPath + "\n" + ex.Message);
+                Debug.LogWarning($"Load asset file on {assetPath} failed. Creating new...\n {ex.Message}");
                 Save();
             }
         }
@@ -47,10 +47,16 @@ namespace EZhex1991.EZUnity
         {
             if (m_Instance == null)
             {
-                Debug.Log(typeof(T) + " instance not exist");
-                return;
+                m_Instance = CreateInstance<T>();
+                m_Instance.hideFlags = HideFlags.DontSave;
             }
+            Directory.CreateDirectory(Path.GetDirectoryName(assetPath));
             File.WriteAllText(assetPath, EditorJsonUtility.ToJson(m_Instance, true));
+        }
+
+        private void OnValidate()
+        {
+            Save();
         }
     }
 }
