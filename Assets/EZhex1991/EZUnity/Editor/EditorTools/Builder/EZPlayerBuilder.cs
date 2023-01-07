@@ -25,9 +25,7 @@ namespace EZhex1991.EZUnity.Builder
                 case BuildTarget.StandaloneOSX: return BuildTargetGroup.Standalone;
                 case BuildTarget.StandaloneWindows: return BuildTargetGroup.Standalone;
                 case BuildTarget.StandaloneWindows64: return BuildTargetGroup.Standalone;
-                case BuildTarget.StandaloneLinux: return BuildTargetGroup.Standalone;
                 case BuildTarget.StandaloneLinux64: return BuildTargetGroup.Standalone;
-                case BuildTarget.StandaloneLinuxUniversal: return BuildTargetGroup.Standalone;
                 case BuildTarget.iOS: return BuildTargetGroup.iOS;
                 case BuildTarget.Android: return BuildTargetGroup.Android;
                 case BuildTarget.WebGL: return BuildTargetGroup.WebGL;
@@ -47,9 +45,7 @@ namespace EZhex1991.EZUnity.Builder
                 case BuildTarget.StandaloneOSX: return "OSX";
                 case BuildTarget.StandaloneWindows: return "Win";
                 case BuildTarget.StandaloneWindows64: return "Win64";
-                case BuildTarget.StandaloneLinux: return "Linux";
                 case BuildTarget.StandaloneLinux64: return "Linux64";
-                case BuildTarget.StandaloneLinuxUniversal: return "LinuxU";
                 case BuildTarget.iOS: return "iOS";
                 case BuildTarget.Android: return "Android";
                 case BuildTarget.WebGL: return "WebGL";
