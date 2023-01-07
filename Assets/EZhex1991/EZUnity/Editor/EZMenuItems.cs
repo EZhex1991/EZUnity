@@ -34,22 +34,22 @@ namespace EZhex1991.EZUnity
         [SettingsProvider]
         private static SettingsProvider CreateEZEditorSettingsProvider()
         {
-            return CreateProjectSettingsProvider("EZEditorSettings", EZEditorSettings.Instance);
+            return CreateProjectSettingsProvider(nameof(EZEditorSettings), EZEditorSettings.Instance);
         }
         [SettingsProvider]
         private static SettingsProvider CreateEZScriptSettingsProvider()
         {
-            return CreateProjectSettingsProvider("EZScriptSettings", EZScriptSettings.Instance);
+            return CreateProjectSettingsProvider(nameof(EZScriptSettings), EZScriptSettings.Instance);
         }
         [SettingsProvider]
         private static SettingsProvider CreateEZAssetImporterProvider()
         {
-            return CreateProjectSettingsProvider(typeof(EZAssetImporterManager).Name, EZAssetImporterManager.Instance);
+            return CreateProjectSettingsProvider(nameof(EZAssetImporterManager), EZAssetImporterManager.Instance);
         }
         [SettingsProvider]
         private static SettingsProvider CreateEZGrapicSettingsProvider()
         {
-            EZGraphicsSettings provider = new EZGraphicsSettings("Project/" + ROOT_NAME + "EZGraphicsSettings", SettingsScope.Project);
+            EZGraphicsSettings provider = new EZGraphicsSettings("Project/" + ROOT_NAME + nameof(EZGraphicsSettings), SettingsScope.Project);
             return provider;
         }
 #else
