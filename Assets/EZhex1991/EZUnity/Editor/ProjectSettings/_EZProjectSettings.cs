@@ -39,7 +39,7 @@ namespace EZhex1991.EZUnity
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"Load asset file on {assetPath} failed. Creating new...\n {ex.Message}");
+                Debug.LogWarning($"Load asset file on {assetPath} failed.\n{ex.Message}");
                 Save();
             }
         }
@@ -47,8 +47,7 @@ namespace EZhex1991.EZUnity
         {
             if (m_Instance == null)
             {
-                m_Instance = CreateInstance<T>();
-                m_Instance.hideFlags = HideFlags.DontSave;
+                m_Instance = this as T;
             }
             Directory.CreateDirectory(Path.GetDirectoryName(assetPath));
             File.WriteAllText(assetPath, EditorJsonUtility.ToJson(m_Instance, true));

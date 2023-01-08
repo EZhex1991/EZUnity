@@ -50,7 +50,7 @@ namespace EZhex1991.EZUnity
         }
         public override void OnInspectorGUI()
         {
-            EZEditorGUIUtility.ScriptableObjectTitle(this, false);
+            EZEditorGUIUtility.ScriptableObjectTitle(settings, false);
 
             serializedObject.Update();
 
