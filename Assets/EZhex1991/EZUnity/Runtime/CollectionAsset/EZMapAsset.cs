@@ -4,6 +4,7 @@
  * Description:     
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,10 +16,49 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
     public abstract class EZMapAsset : ScriptableObject
     {
         public virtual float keyRectWidth { get { return 0.5f; } }
+        public abstract int Count { get; }
         public abstract bool IsKeyDuplicate(int index);
     }
 
-    public class EZMapAsset<TKey, TValue> : EZMapAsset, ISerializationCallbackReceiver
+    public class EZMapAssetEnumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>
+    {
+        private EZMapAsset<TKey, TValue> map;
+        private int currentIndex;
+        private KeyValuePair<TKey, TValue> current;
+
+        public KeyValuePair<TKey, TValue> Current { get { return current; } }
+        object IEnumerator.Current { get { return current; } }
+
+        public EZMapAssetEnumerator(EZMapAsset<TKey, TValue> map)
+        {
+            this.map = map;
+            currentIndex = -1;
+            current = default(KeyValuePair<TKey, TValue>);
+        }
+
+        public bool MoveNext()
+        {
+            currentIndex++;
+            if (currentIndex >= map.Count) return false;
+            else
+            {
+                current = new KeyValuePair<TKey, TValue>(map.keys[currentIndex], map.values[currentIndex]);
+            }
+            return true;
+        }
+
+        public void Reset()
+        {
+            currentIndex = -1;
+        }
+
+        public void Dispose()
+        {
+
+        }
+    }
+
+    public class EZMapAsset<TKey, TValue> : EZMapAsset, ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TKey, TValue>>
     {
         [SerializeField]
         protected List<TKey> m_Keys = new List<TKey>();
@@ -30,7 +70,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
         protected Dictionary<TKey, int> m_KeyIndexMap = new Dictionary<TKey, int>();
         protected Dictionary<TKey, int> m_KeyCountMap = new Dictionary<TKey, int>();
 
-        public int Count { get { return m_Keys.Count; } }
+        public override int Count { get { return m_Keys.Count; } }
 
         public TValue this[TKey key] { get { return m_Values[m_KeyIndexMap[key]]; } set { m_Values[m_KeyIndexMap[key]] = value; } }
         protected TValue this[int index] { get { return m_Values[index]; } set { m_Values[index] = value; } }
@@ -146,6 +186,15 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
             m_Values.Clear();
             m_KeyIndexMap.Clear();
             m_KeyCountMap.Clear();
+        }
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            return new EZMapAssetEnumerator<TKey, TValue>(this);
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
