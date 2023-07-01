@@ -42,7 +42,7 @@ namespace EZhex1991.EZUnity.EZCollectionAsset
 
             serializedObject.Update();
 
-            EZEditorGUIUtility.DoLayoutReorderableList(itemList);
+            EZEditorGUIUtility.DoLayoutReorderableList(itemList, "Elements");
 
             serializedObject.ApplyModifiedProperties();
         }

@@ -19,6 +19,7 @@ namespace EZhex1991.EZUnity
         public readonly string buttonLabel;
         public readonly string methodName;
         public ButtonLayout layout;
+
         public EZButtonPropertyAttribute(string methodName, ButtonLayout layout = ButtonLayout.Above)
         {
             this.buttonLabel = methodName;
