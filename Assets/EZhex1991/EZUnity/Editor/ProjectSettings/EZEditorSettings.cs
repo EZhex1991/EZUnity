@@ -13,7 +13,7 @@ namespace EZhex1991.EZUnity
     public class EZEditorSettings : EZProjectSettingsSingleton<EZEditorSettings>
     {
         [Header("Editor Modifier")]
-        public bool hierarchyToggleEnabled;
+        public bool hierarchyToggleEnabled = true;
 
         static EZEditorSettings()
         {
