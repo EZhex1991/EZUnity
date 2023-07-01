@@ -43,6 +43,7 @@ namespace EZhex1991.EZUnity
 
         _Section_4 = _Section_0 + 400,
         EZAssetListRenamer,
+        EZMaterialMap,
 
         _Section_5 = _Section_0 + 500,
 
