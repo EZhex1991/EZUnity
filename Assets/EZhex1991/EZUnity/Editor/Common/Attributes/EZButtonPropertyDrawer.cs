@@ -43,20 +43,20 @@ namespace EZhex1991.EZUnity
                     DrawButton(position, property.serializedObject.targetObject);
                     position.y += position.height + EditorGUIUtility.standardVerticalSpacing;
                     position.height = base.GetPropertyHeight(property, label);
-                    EditorGUI.PropertyField(position, property);
+                    EditorGUI.PropertyField(position, property, label);
                     break;
                 case EZButtonPropertyAttribute.ButtonLayout.Replace:
                     DrawButton(position, property.serializedObject.targetObject);
                     break;
                 case EZButtonPropertyAttribute.ButtonLayout.Below:
                     position.height = base.GetPropertyHeight(property, label);
-                    EditorGUI.PropertyField(position, property);
+                    EditorGUI.PropertyField(position, property, label);
                     position.y += position.height + EditorGUIUtility.standardVerticalSpacing;
                     position.height = EditorGUIUtility.singleLineHeight;
                     DrawButton(position, property.serializedObject.targetObject);
                     break;
                 default:
-                    EditorGUI.PropertyField(position, property);
+                    EditorGUI.PropertyField(position, property, label);
                     break;
             }
             EditorGUI.EndProperty();
