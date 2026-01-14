@@ -193,7 +193,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 155002772}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -286,7 +286,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -329,9 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd53827e9426424d9412ab0275c00ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerCount: 5
-  interval: 0.1
-  moveCount: 0
+  layerCount: 8
+  interval: 0.05
   text: {fileID: 590970033}
 --- !u!1 &255204907
 GameObject:
