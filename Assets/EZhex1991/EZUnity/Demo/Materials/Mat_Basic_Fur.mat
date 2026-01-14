@@ -45,3 +45,4 @@ Material:
     - _RimColor: {r: 1, g: 1, b: 0.5, a: 1}
     - _Spec1Color: {r: 0.6007843, g: 0.4, b: 0.8, a: 1}
     - _Spec2Color: {r: 0.6519217, g: 0.16, b: 0.8, a: 1}
+  m_BuildTextureStacks: []
