@@ -6,9 +6,9 @@
 using System;
 using UnityEditor;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
-    public static class EZGameView
+    public static class EZGameViewUtility
     {
         private static Type m_Type;
         public static Type type
@@ -62,7 +62,6 @@ namespace EZhex1991.EZUnity
                 {
                     return m_TargetDisplay.intValue;
                 }
-                // No game view was found
                 return -1;
             }
             set

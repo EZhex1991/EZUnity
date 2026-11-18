@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZAnimatorControllerCombiner : EditorWindow
     {
@@ -79,3 +79,4 @@ namespace EZhex1991.EZUnity
         }
     }
 }
+

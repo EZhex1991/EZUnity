@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZHierachyDiffChecker : EditorWindow
     {
@@ -105,3 +105,4 @@ namespace EZhex1991.EZUnity
         }
     }
 }
+

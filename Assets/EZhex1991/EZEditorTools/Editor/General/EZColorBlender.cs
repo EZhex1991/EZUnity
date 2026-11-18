@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZColorBlender : EditorWindow
     {
@@ -163,47 +163,47 @@ namespace EZhex1991.EZUnity
             return CalcPerComponent(src, dst, (a, b) => Mathf.Max(a, b));
         }
 
-        // 不透明度
+        // 涓嶉€忔槑搴?
         public static Color Opacity(Color src, Color dst)
         {
             return src.a * src + (1 - src.a) * dst;
         }
-        // 变暗
+        // 鍙樻殫
         public static Color Darken(Color src, Color dst)
         {
             return Min(src, dst);
         }
-        // 变亮
+        // 鍙樹寒
         public static Color Lighten(Color src, Color dst)
         {
             return Max(src, dst);
         }
-        // 滤色
+        // 婊よ壊
         public static Color Screen(Color src, Color dst)
         {
             return Inverse(Inverse(src) * Inverse(dst));
         }
-        // 颜色加深
+        // 棰滆壊鍔犳繁
         public static Color ColorBurn(Color src, Color dst)
         {
             return src - Divide(Inverse(src) * Inverse(dst), dst);
         }
-        // 颜色减淡
+        // 棰滆壊鍑忔贰
         public static Color ColorDodge(Color src, Color dst)
         {
             return src + Divide(src * dst, Inverse(dst));
         }
-        // 线性加深
+        // 绾挎€у姞娣?
         public static Color LinearBurn(Color src, Color dst)
         {
             return src + dst - Color.white;
         }
-        // 线性减淡
+        // 绾挎€у噺娣?
         public static Color LinearDodge(Color src, Color dst)
         {
             return src + dst;
         }
-        // 叠加
+        // 鍙犲姞
         public static Color Overlay(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -212,7 +212,7 @@ namespace EZhex1991.EZUnity
                 else return 1 - (1 - a) * (1 - b) * 2;
             });
         }
-        // 强光
+        // 寮哄厜
         public static Color HardLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -221,7 +221,7 @@ namespace EZhex1991.EZUnity
                 else return 1 - (1 - a) * (1 - b) * 2;
             });
         }
-        // 柔光
+        // 鏌斿厜
         public static Color SoftLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -230,7 +230,7 @@ namespace EZhex1991.EZUnity
                 else return a * (1 - b) * 2 + Mathf.Sqrt(a * (2 * b - 1));
             });
         }
-        // 亮光
+        // 浜厜
         public static Color VividLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -239,12 +239,12 @@ namespace EZhex1991.EZUnity
                 else return a + a * (2 * b - 1) / (2 * (1 - b));
             });
         }
-        // 线性光
+        // 绾挎€у厜
         public static Color LinearLight(Color src, Color dst)
         {
             return src - 2 * dst - Color.white;
         }
-        // 点光
+        // 鐐瑰厜
         public static Color PinLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -253,7 +253,7 @@ namespace EZhex1991.EZUnity
                 else return Mathf.Min(a, 2 * b - 1);
             });
         }
-        // 实色混合
+        // 瀹炶壊娣峰悎
         public static Color HardMix(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -261,7 +261,7 @@ namespace EZhex1991.EZUnity
                 return a < 1 - b ? 0 : 1;
             });
         }
-        // 差值
+        // 宸€?
         public static Color Difference(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -269,7 +269,7 @@ namespace EZhex1991.EZUnity
                 return Mathf.Abs(a - b);
             });
         }
-        // 排除
+        // 鎺掗櫎
         public static Color Exclusion(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -296,3 +296,4 @@ namespace EZhex1991.EZUnity
         }
     }
 }
+
