@@ -14,6 +14,7 @@ EZEditorTools 是一个独立的 Unity 编辑器工具模块，提供通用的�
 | `EZColorBlender` | 预览常见的颜色混合运算结果。 |
 | `EZPlayerPrefsEditor` | 查看、修改和删除 PlayerPrefs 数据。 |
 | `EZTimePanel` | 查看和解析当前时间及其各类格式化结果。 |
+| `EZShaderKeywordManager` | 查看和管理材质及 Shader 的关键字状态。 |
 | `EZPropertyPathViewer` | 查看对象的序列化属性和属性路径。 |
 | `EZAssetReferenceViewer` | 查看资源依赖关系和场景引用。 |
 | `EZFontReferenceViewer` | 查找引用指定字体的 UI 文本组件。 |
@@ -53,7 +54,7 @@ EZEditorTools/
 
 ### General
 
-存放一般用途的独立编辑器窗口。窗口类及其功能见上方“窗口和功能说明”。
+存放一般用途的独立编辑器窗口，包括 `EZShaderKeywordManager`。窗口类及其功能见上方“窗口和功能说明”。
 
 ### Renamer
 

@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZShaderKeywordManager : EditorWindow
     {
@@ -93,6 +93,14 @@ namespace EZhex1991.EZUnity
             GetKeywordsFromMaterials();
         }
 
+        private static void SetAllFoldouts(bool expanded)
+        {
+            foreach (KeywordInfo keywordInfo in keywordInfoDict.Values)
+            {
+                keywordInfo.foldout = expanded;
+            }
+        }
+
         private void OnSelectionChange()
         {
             Repaint();
@@ -101,16 +109,36 @@ namespace EZhex1991.EZUnity
         {
             EZEditorGUIUtility.WindowTitle(this);
 
-            if (GUILayout.Button("Clear"))
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Additional Keywords", EditorStyles.boldLabel);
+            EditorGUILayout.HelpBox(
+                "Paste space-separated keywords from shader warnings or logs. These keywords are added to the material scan results.",
+                MessageType.Info);
+            keywordStringFromWarning = EditorGUILayout.TextArea(keywordStringFromWarning, GUILayout.Height(80));
+
+            Rect buttonRow = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+            float buttonWidth = (buttonRow.width - 2f) * 0.5f;
+            Rect leftButton = new Rect(buttonRow.x, buttonRow.y, buttonWidth, buttonRow.height);
+            Rect rightButton = new Rect(buttonRow.x + buttonWidth + 2f, buttonRow.y, buttonWidth, buttonRow.height);
+            if (GUI.Button(leftButton, "Get Keywords"))
+            {
+                GetKeywords();
+            }
+            if (GUI.Button(rightButton, "Clear Results"))
             {
                 keywordInfoDict.Clear();
             }
 
-            EditorGUILayout.Space();
-            keywordStringFromWarning = EditorGUILayout.TextArea(keywordStringFromWarning, GUILayout.Height(80));
-            if (GUILayout.Button("Get Keywords"))
+            buttonRow = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
+            leftButton = new Rect(buttonRow.x, buttonRow.y, buttonWidth, buttonRow.height);
+            rightButton = new Rect(buttonRow.x + buttonWidth + 2f, buttonRow.y, buttonWidth, buttonRow.height);
+            if (GUI.Button(leftButton, "Expand All"))
             {
-                GetKeywords();
+                SetAllFoldouts(true);
+            }
+            if (GUI.Button(rightButton, "Collapse All"))
+            {
+                SetAllFoldouts(false);
             }
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
             bool changed = false;
@@ -151,3 +179,6 @@ namespace EZhex1991.EZUnity
         }
     }
 }
+
+
+

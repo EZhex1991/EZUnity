@@ -26,7 +26,5 @@ namespace EZhex1991.EZUnity
         SECTION_4_TIME = SECTION_0_PROJECT_SETTINGS + 400,
         TimePanel,
 
-        SECTION_9_EXPERIMENTAL = SECTION_0_PROJECT_SETTINGS + 900,
-        ShaderKeywordManager,
     }
 }

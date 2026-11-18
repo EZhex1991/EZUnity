@@ -33,6 +33,9 @@ namespace EZhex1991.EZEditorTools
         AssetBundleManager,
         BundleBuilder,
         PlayerBuilder,
+
+        SECTION_5_SHADER = SECTION_0_RENAMING + 500,
+        ShaderKeywordManager,
     }
 }
 

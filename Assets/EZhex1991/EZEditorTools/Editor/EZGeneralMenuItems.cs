@@ -18,6 +18,9 @@ namespace EZhex1991.EZEditorTools
         [MenuItem(Root + "Asset Bundle Manager", false, (int)EZMenuItemOrder.AssetBundleManager)]
         private static void ShowAssetBundleManager() => EditorWindow.GetWindow<EZBundleManager>("Asset Bundle Manager").Show();
 
+        [MenuItem(Root + "Experimental/Shader Keyword Manager", false, (int)EZMenuItemOrder.ShaderKeywordManager)]
+        private static void ShowShaderKeywordManager() => EditorWindow.GetWindow<EZShaderKeywordManager>("ShaderKeyword Manager").Show();
+
         [MenuItem(Root + "Guid Generator", false, (int)EZMenuItemOrder.GuidGenerator)]
         private static void ShowGuidGenerator() => EditorWindow.GetWindow<EZGuidGenerator>("Guid Generator").Show();
 
@@ -31,10 +34,10 @@ namespace EZhex1991.EZEditorTools
         private static void ShowPlayerPrefsEditor() => EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefs Editor").Show();
 
         [MenuItem(Root + "Time Panel", false, (int)EZMenuItemOrder.TimePanel)]
-        private static void ShowTimePanel() => EditorWindow.GetWindow<EZTimePanel>("EZTimePanel").Show();
+        private static void ShowTimePanel() => EditorWindow.GetWindow<EZTimePanel>(" Time Panel").Show();
 
         [MenuItem(Root + "Property Path Viewer", false, (int)EZMenuItemOrder.PropertyPathViewer)]
-        private static void ShowPropertyPathViewer() => EditorWindow.GetWindow<EZPropertyPathViewer>("PropertyPathViewer").Show();
+        private static void ShowPropertyPathViewer() => EditorWindow.GetWindow<EZPropertyPathViewer>("Property Path Viewer").Show();
 
         [MenuItem(Root + "Asset Reference Viewer", false, (int)EZMenuItemOrder.AssetReferenceViewer)]
         private static void ShowAssetReferenceViewer() => EditorWindow.GetWindow<EZAssetReferenceViewer>("Asset Reference Viewer").Show();
@@ -52,6 +55,6 @@ namespace EZhex1991.EZEditorTools
         private static void ShowTypeReflectionHelper() => EditorWindow.GetWindow<EZTypeReflectionHelper>("Type Reflection Helper").Show();
 
         [MenuItem(Root + "Animator Controller Combiner", false, (int)EZMenuItemOrder.AnimatorControllerCombiner)]
-        private static void ShowAnimatorControllerCombiner() => EditorWindow.GetWindow<EZAnimatorControllerCombiner>("AnimatorControllerCombiner").Show();
+        private static void ShowAnimatorControllerCombiner() => EditorWindow.GetWindow<EZAnimatorControllerCombiner>("Animator Controller Combiner").Show();
     }
 }

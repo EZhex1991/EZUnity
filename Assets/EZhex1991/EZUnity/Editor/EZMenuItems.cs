@@ -111,12 +111,6 @@ namespace EZhex1991.EZUnity
             }
         }
 
-        [MenuItem(ROOT_NAME + "Experimental/Shader Keyword Manager", false, (int)EZUnityMenuItemOrder.ShaderKeywordManager)]
-        private static void ShaderKeywordManager()
-        {
-            EditorWindow.GetWindow<EZShaderKeywordManager>("Keyword Manager").Show();
-        }
-
         [MenuItem(ROOT_NAME + "Material Optimizer", false, (int)EZUnityMenuItemOrder.MaterialOptimizer)]
         private static void MaterialOptimizer()
         {
