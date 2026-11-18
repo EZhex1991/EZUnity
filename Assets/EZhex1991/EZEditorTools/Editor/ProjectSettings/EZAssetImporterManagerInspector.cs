@@ -9,7 +9,7 @@ using UnityEditor.Presets;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     [CustomEditor(typeof(EZAssetImporterManager))]
     public class EZAssetImporterManagerInspector : Editor

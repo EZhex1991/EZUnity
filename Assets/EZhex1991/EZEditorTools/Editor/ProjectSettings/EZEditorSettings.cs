@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     [InitializeOnLoad]
     public class EZEditorSettings : EZProjectSettingsSingleton<EZEditorSettings>

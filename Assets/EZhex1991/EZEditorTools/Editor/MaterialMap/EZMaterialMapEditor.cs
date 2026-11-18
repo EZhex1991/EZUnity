@@ -3,11 +3,10 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity.EZCollectionAsset;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     [CustomEditor(typeof(EZMaterialMap))]
     public class EZMaterialMapEditor : EZMapAssetEditor

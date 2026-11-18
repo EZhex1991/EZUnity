@@ -8,7 +8,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public abstract class EZProjectSettingsSingleton<T> : ScriptableObject
         where T : EZProjectSettingsSingleton<T>

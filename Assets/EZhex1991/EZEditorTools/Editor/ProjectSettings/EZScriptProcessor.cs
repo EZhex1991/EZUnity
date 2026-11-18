@@ -6,7 +6,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZScriptProcessor : UnityEditor.AssetModificationProcessor
     {

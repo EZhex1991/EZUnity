@@ -7,37 +7,50 @@ namespace EZhex1991.EZEditorTools
 {
     public enum EZMenuItemOrder
     {
-        SECTION_0_RENAMING = 10000,
+        SECTION_0_PROJECT_SETTINGS = 10000,
+        ProjectSettings,
+
+        SECTION_1_APPLICATION_SETTINGS = SECTION_0_PROJECT_SETTINGS + 100,
+        OpenPersistentFolder,
+        ClearPersistentFolder,
+        PlayerPrefsEditor,
+
+        SECTION_2_ASSET_OPERATIONS = SECTION_0_PROJECT_SETTINGS + 200,
+        SaveAssets,
+        RefreshAssetDatabase,
         Renamer,
 
-        SECTION_1_OBJECT_VIEWER = SECTION_0_RENAMING + 100,
+        SECTION_3_OBJECT_VIEWER = SECTION_0_PROJECT_SETTINGS + 300,
+        AssetBundleManager,
+        BundleBuilder,
+        PlayerBuilder,
         AssetReferenceViewer,
         CorrespondingObjectViewer,
         FontReferenceViewer,
+        MaterialOptimizer,
+        MaterialMap,
         HierachyDiffChecker,
         PropertyPathViewer,
         AnimatorControllerCombiner,
 
-        SECTION_2_HELPER = SECTION_0_RENAMING + 200,
+        SECTION_4_HELPER = SECTION_0_PROJECT_SETTINGS + 400,
         GuidGenerator,
         RegexTester,
         ColorBlender,
-        PlayerPrefsEditor,
         TimePanel,
         TypeReflectionHelper,
 
-        SECTION_3_ANALYSIS = SECTION_0_RENAMING + 300,
+        SECTION_5_ANALYSIS = SECTION_0_PROJECT_SETTINGS + 500,
         ScriptStatistics,
 
-        SECTION_4_BUILD = SECTION_0_RENAMING + 400,
-        AssetBundleManager,
-        BundleBuilder,
-        PlayerBuilder,
-
-        SECTION_5_IMAGE_CAPTURE = SECTION_0_RENAMING + 500,
+        SECTION_6_IMAGE_CAPTURE = SECTION_0_PROJECT_SETTINGS + 600,
         ImageCapture,
 
-        SECTION_6_SHADER = SECTION_0_RENAMING + 600,
+        SECTION_7_SHADER = SECTION_0_PROJECT_SETTINGS + 700,
+
+        SECTION_8_GENERAL = SECTION_0_PROJECT_SETTINGS + 800,
+
+        SECTION_9_EXPERIMENTAL = SECTION_0_PROJECT_SETTINGS + 900,
         ShaderKeywordManager,
     }
 }

@@ -3,17 +3,16 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-using EZhex1991.EZUnity.EZCollectionAsset;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     [CreateAssetMenu(
         fileName = "EZMaterialMap",
-        menuName = "EZUnity/EZMaterialMap",
-        order = (int)EZAssetMenuOrder.EZMaterialMap
+        menuName = "EZEditorTools/Material Map",
+        order = (int)EZMenuItemOrder.MaterialMap
         )]
     public class EZMaterialMap : EZMapAsset<string, Material>
     {

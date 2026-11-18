@@ -4,11 +4,14 @@
  * Description:     Menu entries for EZEditorTools general tools.
  */
 using EZhex1991.EZEditorTools.Build;
+using System;
+using System.IO;
 using UnityEditor;
+using UnityEngine;
 
 namespace EZhex1991.EZEditorTools
 {
-    internal static class EZGeneralMenuItems
+    internal static class EZEditorToolsMenuItems
     {
         private const string Root = "EZEditorTools/";
 
@@ -56,5 +59,41 @@ namespace EZhex1991.EZEditorTools
 
         [MenuItem(Root + "Animator Controller Combiner", false, (int)EZMenuItemOrder.AnimatorControllerCombiner)]
         private static void ShowAnimatorControllerCombiner() => EditorWindow.GetWindow<EZAnimatorControllerCombiner>("Animator Controller Combiner").Show();
+
+        [MenuItem(Root + "Material Optimizer", false, (int)EZMenuItemOrder.MaterialOptimizer)]
+        private static void ShowMaterialOptimizer() => EditorWindow.GetWindow<EZMaterialOptimizer>("Material Optimizer").Show();
+
+        [MenuItem(Root + "Save Assets", false, (int)EZMenuItemOrder.SaveAssets)]
+        private static void SaveAssets() => AssetDatabase.SaveAssets();
+
+        [MenuItem(Root + "Refresh AssetDatabase", false, (int)EZMenuItemOrder.RefreshAssetDatabase)]
+        private static void RefreshAssetDatabase() => AssetDatabase.Refresh();
+
+        [MenuItem(Root + "Open Persistent Folder", false, (int)EZMenuItemOrder.OpenPersistentFolder)]
+        private static void OpenPersistentFolder()
+        {
+            try
+            {
+                Application.OpenURL("file://" + Application.persistentDataPath);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+        }
+
+        [MenuItem(Root + "Clear Persistent Folder", false, (int)EZMenuItemOrder.ClearPersistentFolder)]
+        private static void ClearPersistentFolder()
+        {
+            try
+            {
+                Directory.Delete(Application.persistentDataPath, true);
+                Debug.LogFormat("{0} Cleared", Application.persistentDataPath);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e.Message);
+            }
+        }
     }
 }

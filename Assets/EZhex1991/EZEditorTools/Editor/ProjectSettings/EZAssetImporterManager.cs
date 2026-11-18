@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEditor.Presets;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZAssetImporterManager : EZProjectSettingsSingleton<EZAssetImporterManager>
     {
