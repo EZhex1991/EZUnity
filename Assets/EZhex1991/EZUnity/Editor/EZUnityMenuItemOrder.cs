@@ -7,15 +7,26 @@ namespace EZhex1991.EZUnity
 {
     internal enum EZUnityMenuItemOrder
     {
-        EZUnitySettings = 10001,
-        ApplicationSettings = 10101,
-        OpenPersistentFolder = 10102,
-        ClearPersistentFolder = 10103,
-        SaveAssets = 10201,
-        RefreshAssetDatabase = 10202,
-        AssetBundleManager = 10301,
-        MaterialOptimizer = 10305,
-        TimePanel = 10404,
-        ShaderKeywordManager = 10901,
+        SECTION_0_PROJECT_SETTINGS = 10000,
+        EZUnitySettings,
+
+        SECTION_1_APPLICATION_SETTINGS = SECTION_0_PROJECT_SETTINGS + 100,
+        ApplicationSettings,
+        OpenPersistentFolder,
+        ClearPersistentFolder,
+
+        SECTION_2_ASSET_OPERATIONS = SECTION_0_PROJECT_SETTINGS + 200,
+        SaveAssets,
+        RefreshAssetDatabase,
+
+        SECTION_3_BUILD_AND_MATERIAL = SECTION_0_PROJECT_SETTINGS + 300,
+        AssetBundleManager,
+        MaterialOptimizer,
+
+        SECTION_4_TIME = SECTION_0_PROJECT_SETTINGS + 400,
+        TimePanel,
+
+        SECTION_9_EXPERIMENTAL = SECTION_0_PROJECT_SETTINGS + 900,
+        ShaderKeywordManager,
     }
 }

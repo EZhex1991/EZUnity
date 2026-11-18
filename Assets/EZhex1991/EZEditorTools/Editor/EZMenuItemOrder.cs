@@ -7,53 +7,23 @@ namespace EZhex1991.EZEditorTools
 {
     public enum EZMenuItemOrder
     {
-        _Section_0 = 10000,
-        // Project Settings
-        EZUnitySettings,
-
-        _Section_1 = _Section_0 + 100,
-        // Application Settings
-        ApplicationSettings,
-        OpenPersistentFolder,
-        ClearPersistentFolder,
-        PlayerPrefsEditor,
-
-        _Section_2 = _Section_0 + 200,
-        // 
-        SaveAssets,
-        RefreshAssetDatabase,
+        SECTION_0_RENAMING = 10000,
         Renamer,
 
-        _Section_3 = _Section_0 + 300,
-        // Object Viewer
-        AssetBundleManager,
+        SECTION_1_OBJECT_VIEWER = SECTION_0_RENAMING + 100,
         AssetReferenceViewer,
         CorrespondingObjectViewer,
         FontReferenceViewer,
-        MaterialOptimizer,
         HierachyDiffChecker,
         PropertyPathViewer,
         AnimatorControllerCombiner,
 
-        _Section_4 = _Section_0 + 400,
-        // Helper
+        SECTION_2_HELPER = SECTION_0_RENAMING + 200,
         GuidGenerator,
         RegexTester,
         ColorBlender,
-        TimePanel,
+        PlayerPrefsEditor,
         TypeReflectionHelper,
-
-        _Section_5 = _Section_0 + 500,
-
-        _Section_6 = _Section_0 + 600,
-
-        _Section_7 = _Section_0 + 700,
-
-        _Section_8 = _Section_0 + 800,
-
-        _Section_9 = _Section_0 + 900,
-        // Experimental
-        ShaderKeywordManager,
     }
 }
 
