@@ -123,46 +123,10 @@ namespace EZhex1991.EZUnity
             EditorWindow.GetWindow<EZRenamerWindow>("Renamer").Show();
         }
 
-        [MenuItem(ROOT_NAME + "Guid Generator", false, (int)EZMenuItemOrder.GuidGenerator)]
-        private static void GuidGenerator()
-        {
-            EditorWindow.GetWindow<EZGuidGenerator>("Guid Generator").Show();
-        }
-
         [MenuItem(ROOT_NAME + "Asset Bundle Manager", false, (int)EZMenuItemOrder.AssetBundleManager)]
         private static void BundleManager()
         {
             EditorWindow.GetWindow<Builder.EZBundleManager>("Asset Bundle Manager").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Asset Reference Viewer", false, (int)EZMenuItemOrder.AssetReferenceViewer)]
-        private static void AssetReferenceViewer()
-        {
-            EditorWindow.GetWindow<EZAssetReferenceViewer>("Asset Reference Viewer").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Font Reference Viewer", false, (int)EZMenuItemOrder.FontReferenceViewer)]
-        private static void FontReferenceViewer()
-        {
-            EditorWindow.GetWindow<EZFontReferenceViewer>("Font Reference Viewer").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "PlayerPrefs Editor", false, (int)EZMenuItemOrder.PlayerPrefsEditor)]
-        private static void PlayerPrefsEditor()
-        {
-            EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefs Editor").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Color Blender", false, (int)EZMenuItemOrder.ColorBlender)]
-        private static void ColorBlender()
-        {
-            EditorWindow.GetWindow<EZColorBlender>("Color Blender").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Corresponding Object Viewer", false, (int)EZMenuItemOrder.CorrespondingObjectViewer)]
-        private static void CorrespondingObjectViewer()
-        {
-            EditorWindow.GetWindow<EZCorrespondingObjectViewer>("Corresponding Object Viewer").Show();
         }
 
         [MenuItem(ROOT_NAME + "Experimental/Shader Keyword Manager", false, (int)EZMenuItemOrder.ShaderKeywordManager)]
@@ -177,34 +141,5 @@ namespace EZhex1991.EZUnity
             EditorWindow.GetWindow<EZMaterialOptimizer>("Material Optimizer").Show();
         }
 
-        [MenuItem(ROOT_NAME + "Regex Tester", false, (int)EZMenuItemOrder.RegexTester)]
-        private static void RegexTester()
-        {
-            EditorWindow.GetWindow<EZRegexTester>("Regex Tester").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Hierachy Diff Checker", false, (int)EZMenuItemOrder.HierachyDiffChecker)]
-        private static void HierachyDiffChecker()
-        {
-            EditorWindow.GetWindow<EZHierachyDiffChecker>("Hierarchey Diff Checker").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Type Reflection Helper", false, (int)EZMenuItemOrder.TypeReflectionHelper)]
-        private static void ReflectionHelper()
-        {
-            EditorWindow.GetWindow<EZTypeReflectionHelper>("Type Reflection Helper").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Property Path Viewer", false, (int)EZMenuItemOrder.PropertyPathViewer)]
-        private static void PropertyPathViewer()
-        {
-            EditorWindow.GetWindow<EZPropertyPathViewer>("PropertyPathViewer").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Animator Controller Combiner", false, (int)EZMenuItemOrder.AnimatorControllerCombiner)]
-        private static void AnimatorControllerCombiner()
-        {
-            EditorWindow.GetWindow<EZAnimatorControllerCombiner>("AnimatorControllerCombiner").Show();
-        }
     }
 }

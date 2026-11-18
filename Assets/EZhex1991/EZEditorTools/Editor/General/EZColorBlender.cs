@@ -163,47 +163,47 @@ namespace EZhex1991.EZEditorTools
             return CalcPerComponent(src, dst, (a, b) => Mathf.Max(a, b));
         }
 
-        // 涓嶉€忔槑搴?
+        // 不透明度
         public static Color Opacity(Color src, Color dst)
         {
             return src.a * src + (1 - src.a) * dst;
         }
-        // 鍙樻殫
+        // 变暗
         public static Color Darken(Color src, Color dst)
         {
             return Min(src, dst);
         }
-        // 鍙樹寒
+        // 变亮
         public static Color Lighten(Color src, Color dst)
         {
             return Max(src, dst);
         }
-        // 婊よ壊
+        // 滤色
         public static Color Screen(Color src, Color dst)
         {
             return Inverse(Inverse(src) * Inverse(dst));
         }
-        // 棰滆壊鍔犳繁
+        // 颜色加深
         public static Color ColorBurn(Color src, Color dst)
         {
             return src - Divide(Inverse(src) * Inverse(dst), dst);
         }
-        // 棰滆壊鍑忔贰
+        // 颜色减淡
         public static Color ColorDodge(Color src, Color dst)
         {
             return src + Divide(src * dst, Inverse(dst));
         }
-        // 绾挎€у姞娣?
+        // 线性加深
         public static Color LinearBurn(Color src, Color dst)
         {
             return src + dst - Color.white;
         }
-        // 绾挎€у噺娣?
+        // 线性减淡
         public static Color LinearDodge(Color src, Color dst)
         {
             return src + dst;
         }
-        // 鍙犲姞
+        // 叠加
         public static Color Overlay(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -212,7 +212,7 @@ namespace EZhex1991.EZEditorTools
                 else return 1 - (1 - a) * (1 - b) * 2;
             });
         }
-        // 寮哄厜
+        // 强光
         public static Color HardLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -221,7 +221,7 @@ namespace EZhex1991.EZEditorTools
                 else return 1 - (1 - a) * (1 - b) * 2;
             });
         }
-        // 鏌斿厜
+        // 柔光
         public static Color SoftLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -230,7 +230,7 @@ namespace EZhex1991.EZEditorTools
                 else return a * (1 - b) * 2 + Mathf.Sqrt(a * (2 * b - 1));
             });
         }
-        // 浜厜
+        // 亮光
         public static Color VividLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -239,12 +239,12 @@ namespace EZhex1991.EZEditorTools
                 else return a + a * (2 * b - 1) / (2 * (1 - b));
             });
         }
-        // 绾挎€у厜
+        // 线性光
         public static Color LinearLight(Color src, Color dst)
         {
             return src - 2 * dst - Color.white;
         }
-        // 鐐瑰厜
+        // 点光
         public static Color PinLight(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -253,7 +253,7 @@ namespace EZhex1991.EZEditorTools
                 else return Mathf.Min(a, 2 * b - 1);
             });
         }
-        // 瀹炶壊娣峰悎
+        // 实色混合
         public static Color HardMix(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -261,7 +261,7 @@ namespace EZhex1991.EZEditorTools
                 return a < 1 - b ? 0 : 1;
             });
         }
-        // 宸€?
+        // 差值
         public static Color Difference(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
@@ -269,7 +269,7 @@ namespace EZhex1991.EZEditorTools
                 return Mathf.Abs(a - b);
             });
         }
-        // 鎺掗櫎
+        // 排除
         public static Color Exclusion(Color src, Color dst)
         {
             return CalcPerComponent(src, dst, (a, b) =>
