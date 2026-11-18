@@ -20,3 +20,4 @@ namespace EZhex1991.EZEditorTools
         public string validLineRegex = @"^\W*(\S+)[\S\s]*$";
     }
 }
+

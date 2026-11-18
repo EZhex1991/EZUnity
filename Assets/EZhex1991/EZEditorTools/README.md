@@ -32,7 +32,7 @@ EZEditorTools/
     ├── Common/
     ├── General/
     ├── Renamer/
-    ├── Analysis/
+    ├── ScriptStatistics/
     └── Builder/
 
 ```
@@ -63,7 +63,7 @@ EZEditorTools/
 - `EZAssetListRenamer`：保存资源列表和重命名规则的编辑器资产。
 - `EZAssetListRenamerEditor`：`EZAssetListRenamer` 的 Inspector。
 
-### Analysis
+### ScriptStatistics
 
 存放脚本统计和分析相关功能：
 
