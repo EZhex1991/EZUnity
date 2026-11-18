@@ -8,9 +8,9 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
-    [CreateAssetMenu(fileName = "EZAssetListRenamer", menuName = "EZUnity/EZAssetListRenamer", order = (int)EZAssetMenuOrder.EZAssetListRenamer)]
+    [CreateAssetMenu(fileName = "EZAssetListRenamer", menuName = "EZEditorTools/Asset List Renamer")]
     public class EZAssetListRenamer : ScriptableObject
     {
         public float indexStep = 1;
@@ -52,3 +52,4 @@ namespace EZhex1991.EZUnity
         }
     }
 }
+

@@ -8,6 +8,7 @@ EZEditorTools 是一个独立的 Unity 编辑器工具模块，提供通用的�
 
 | 窗口 | 功能 |
 | --- | --- |
+| `EZRenamerWindow` | 批量重命名选中的资源或对象。 |
 | `EZGuidGenerator` | 生成系统 GUID 和 Unity GUID。 |
 | `EZRegexTester` | 测试正则表达式，并显示匹配项、分组和捕获结果。 |
 | `EZColorBlender` | 预览常见的颜色混合运算结果。 |
@@ -26,11 +27,15 @@ EZEditorTools 是一个独立的 Unity 编辑器工具模块，提供通用的�
 EZEditorTools/
 └── Editor/
     ├── EZGeneralMenuItems.cs
+    ├── EZMenuItemOrder.cs
     ├── Common/
-    └── General/
+    ├── General/
+    └── Renaming/
 ```
 
 `EZGeneralMenuItems` 位于 `Editor` 外层，负责注册 `EZEditorTools` 菜单，并整理各个窗口的菜单入口。
+
+`EZMenuItemOrder` 定义 `EZEditorTools` 菜单项的显示顺序。
 
 ### Common
 
@@ -43,6 +48,14 @@ EZEditorTools/
 ### General
 
 存放一般用途的独立编辑器窗口。窗口类及其功能见上方“窗口和功能说明”。
+
+### Renaming
+
+存放资源重命名相关功能：
+
+- `EZRenamerWindow`：通用重命名窗口。
+- `EZAssetListRenamer`：保存资源列表和重命名规则的编辑器资产。
+- `EZAssetListRenamerEditor`：`EZAssetListRenamer` 的 Inspector。
 
 ### 程序集
 

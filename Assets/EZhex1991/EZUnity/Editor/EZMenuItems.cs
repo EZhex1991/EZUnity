@@ -16,7 +16,7 @@ namespace EZhex1991.EZUnity
         private const string ROOT_NAME = "EZUnity/";
 
 
-        [MenuItem(ROOT_NAME + "EZUnitySettings", false, (int)EZMenuItemOrder.EZUnitySettings)]
+        [MenuItem(ROOT_NAME + "EZUnitySettings", false, (int)EZUnityMenuItemOrder.EZUnitySettings)]
         private static void EZUnitySettings()
         {
             SettingsService.OpenProjectSettings("Project/EZUnity");
@@ -66,31 +66,31 @@ namespace EZhex1991.EZUnity
 #endif
 
 
-        [MenuItem(ROOT_NAME + "EZTimePanel", false, (int)EZMenuItemOrder.TimePanel)]
+        [MenuItem(ROOT_NAME + "EZTimePanel", false, (int)EZUnityMenuItemOrder.TimePanel)]
         private static void ShowTimePanel()
         {
             EditorWindow.GetWindow<EZTimePanel>("EZTimePanel").Show();
         }
 
-        [MenuItem(ROOT_NAME + "Application Settings", false, (int)EZMenuItemOrder.ApplicationSettings)]
+        [MenuItem(ROOT_NAME + "Application Settings", false, (int)EZUnityMenuItemOrder.ApplicationSettings)]
         private static void ApplicationSettings()
         {
             Selection.activeObject = EZApplicationSettings.Instance;
         }
 
-        [MenuItem(ROOT_NAME + "Save Assets", false, (int)EZMenuItemOrder.SaveAssets)]
+        [MenuItem(ROOT_NAME + "Save Assets", false, (int)EZUnityMenuItemOrder.SaveAssets)]
         private static void SaveAssets()
         {
             AssetDatabase.SaveAssets();
         }
 
-        [MenuItem(ROOT_NAME + "Refresh AssetDatabase", false, (int)EZMenuItemOrder.RefreshAssetDatabase)]
+        [MenuItem(ROOT_NAME + "Refresh AssetDatabase", false, (int)EZUnityMenuItemOrder.RefreshAssetDatabase)]
         private static void RefreshAssetDatabase()
         {
             AssetDatabase.Refresh();
         }
 
-        [MenuItem(ROOT_NAME + "Open Persistent Folder", false, (int)EZMenuItemOrder.OpenPersistentFolder)]
+        [MenuItem(ROOT_NAME + "Open Persistent Folder", false, (int)EZUnityMenuItemOrder.OpenPersistentFolder)]
         private static void OpenPersistentFolder()
         {
             try
@@ -103,7 +103,7 @@ namespace EZhex1991.EZUnity
             }
         }
 
-        [MenuItem(ROOT_NAME + "Clear Persistent Folder", false, (int)EZMenuItemOrder.ClearPersistentFolder)]
+        [MenuItem(ROOT_NAME + "Clear Persistent Folder", false, (int)EZUnityMenuItemOrder.ClearPersistentFolder)]
         private static void ClearPersistentFolder()
         {
             try
@@ -117,25 +117,19 @@ namespace EZhex1991.EZUnity
             }
         }
 
-        [MenuItem(ROOT_NAME + "Renamer", false, (int)EZMenuItemOrder.Renamer)]
-        private static void Renamer()
-        {
-            EditorWindow.GetWindow<EZRenamerWindow>("Renamer").Show();
-        }
-
-        [MenuItem(ROOT_NAME + "Asset Bundle Manager", false, (int)EZMenuItemOrder.AssetBundleManager)]
+        [MenuItem(ROOT_NAME + "Asset Bundle Manager", false, (int)EZUnityMenuItemOrder.AssetBundleManager)]
         private static void BundleManager()
         {
             EditorWindow.GetWindow<Builder.EZBundleManager>("Asset Bundle Manager").Show();
         }
 
-        [MenuItem(ROOT_NAME + "Experimental/Shader Keyword Manager", false, (int)EZMenuItemOrder.ShaderKeywordManager)]
+        [MenuItem(ROOT_NAME + "Experimental/Shader Keyword Manager", false, (int)EZUnityMenuItemOrder.ShaderKeywordManager)]
         private static void ShaderKeywordManager()
         {
             EditorWindow.GetWindow<EZShaderKeywordManager>("Keyword Manager").Show();
         }
 
-        [MenuItem(ROOT_NAME + "Material Optimizer", false, (int)EZMenuItemOrder.MaterialOptimizer)]
+        [MenuItem(ROOT_NAME + "Material Optimizer", false, (int)EZUnityMenuItemOrder.MaterialOptimizer)]
         private static void MaterialOptimizer()
         {
             EditorWindow.GetWindow<EZMaterialOptimizer>("Material Optimizer").Show();

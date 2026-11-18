@@ -1,4 +1,4 @@
-﻿/* Author:          ezhex1991@outlook.com
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2017-09-02 18:23:42
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZRenamerWindow : EditorWindow
     {
@@ -267,3 +267,4 @@ namespace EZhex1991.EZUnity
         }
     }
 }
+

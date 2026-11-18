@@ -3,7 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public enum EZMenuItemOrder
     {
@@ -56,3 +56,4 @@ namespace EZhex1991.EZUnity
         ShaderKeywordManager,
     }
 }
+
