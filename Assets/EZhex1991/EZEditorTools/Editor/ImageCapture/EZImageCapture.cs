@@ -8,9 +8,9 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
-    [CreateAssetMenu(fileName = "EZImageCapture", menuName = "EZUnity/EZImageCapture", order = (int)EZAssetMenuOrder.EZImageCapture)]
+    [CreateAssetMenu(fileName = "EZImageCapture", menuName = "EZEditorTools/Image Capture", order = (int)EZMenuItemOrder.ImageCapture)]
     public class EZImageCapture : ScriptableObject
     {
         public Vector2Int resolution = new Vector2Int(1920, 1080);
@@ -68,3 +68,4 @@ namespace EZhex1991.EZUnity
         }
     }
 }
+

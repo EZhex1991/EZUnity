@@ -34,7 +34,10 @@ namespace EZhex1991.EZEditorTools
         BundleBuilder,
         PlayerBuilder,
 
-        SECTION_5_SHADER = SECTION_0_RENAMING + 500,
+        SECTION_5_IMAGE_CAPTURE = SECTION_0_RENAMING + 500,
+        ImageCapture,
+
+        SECTION_6_SHADER = SECTION_0_RENAMING + 600,
         ShaderKeywordManager,
     }
 }
