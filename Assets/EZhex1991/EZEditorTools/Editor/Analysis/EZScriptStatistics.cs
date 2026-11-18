@@ -5,9 +5,9 @@
  */
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
-    [CreateAssetMenu(fileName = "EZScriptStatistics", menuName = "EZUnity/EZScriptStatistics", order = (int)EZAssetMenuOrder.EZScriptStatistics)]
+    [CreateAssetMenu(fileName = "EZScriptStatistics", menuName = "EZEditorTools/Script Statistics", order = (int)EZMenuItemOrder.ScriptStatistics)]
     public class EZScriptStatistics : ScriptableObject
     {
         public string[] filePatterns = new string[] { "*.cs", "*.lua", "*.lua.txt", "*.shader", "*.cginc" };

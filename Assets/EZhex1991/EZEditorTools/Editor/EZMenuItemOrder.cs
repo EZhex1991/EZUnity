@@ -24,6 +24,9 @@ namespace EZhex1991.EZEditorTools
         ColorBlender,
         PlayerPrefsEditor,
         TypeReflectionHelper,
+
+        SECTION_3_ANALYSIS = SECTION_0_RENAMING + 300,
+        ScriptStatistics,
     }
 }
 

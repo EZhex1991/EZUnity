@@ -11,9 +11,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
-using static EZhex1991.EZUnity.EZScriptStatisticResult;
+using static EZhex1991.EZEditorTools.EZScriptStatisticResult;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     [CustomEditor(typeof(EZScriptStatistics))]
     public class EZScriptStatisticsEditor : Editor

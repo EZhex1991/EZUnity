@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity
+namespace EZhex1991.EZEditorTools
 {
     public class EZScriptStatisticResult : ScriptableObject
     {
@@ -45,3 +45,4 @@ namespace EZhex1991.EZUnity
         public List<Contributor> contributors = new List<Contributor>();
     }
 }
+

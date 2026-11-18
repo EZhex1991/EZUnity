@@ -30,7 +30,9 @@ EZEditorTools/
     ├── EZMenuItemOrder.cs
     ├── Common/
     ├── General/
-    └── Renaming/
+    ├── Renaming/
+    └── Analysis/
+
 ```
 
 `EZGeneralMenuItems` 位于 `Editor` 外层，负责注册 `EZEditorTools` 菜单，并整理各个窗口的菜单入口。
@@ -56,6 +58,15 @@ EZEditorTools/
 - `EZRenamerWindow`：通用重命名窗口。
 - `EZAssetListRenamer`：保存资源列表和重命名规则的编辑器资产。
 - `EZAssetListRenamerEditor`：`EZAssetListRenamer` 的 Inspector。
+
+### Analysis
+
+存放脚本统计和分析相关功能：
+
+- `EZScriptStatistics`：保存脚本统计结果的编辑器资产。
+- `EZScriptStatisticsEditor`：`EZScriptStatistics` 的 Inspector 和统计执行界面。
+- `EZScriptStatisticResult`：保存单个脚本统计结果的子资产。
+- `EZScriptStatisticResultEditor`：`EZScriptStatisticResult` 的 Inspector。
 
 ### 程序集
 
