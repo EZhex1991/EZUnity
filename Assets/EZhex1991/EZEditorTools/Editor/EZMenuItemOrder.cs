@@ -23,6 +23,7 @@ namespace EZhex1991.EZEditorTools
         RegexTester,
         ColorBlender,
         PlayerPrefsEditor,
+        TimePanel,
         TypeReflectionHelper,
 
         SECTION_3_ANALYSIS = SECTION_0_RENAMING + 300,

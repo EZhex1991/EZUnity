@@ -13,6 +13,7 @@ EZEditorTools 是一个独立的 Unity 编辑器工具模块，提供通用的�
 | `EZRegexTester` | 测试正则表达式，并显示匹配项、分组和捕获结果。 |
 | `EZColorBlender` | 预览常见的颜色混合运算结果。 |
 | `EZPlayerPrefsEditor` | 查看、修改和删除 PlayerPrefs 数据。 |
+| `EZTimePanel` | 查看和解析当前时间及其各类格式化结果。 |
 | `EZPropertyPathViewer` | 查看对象的序列化属性和属性路径。 |
 | `EZAssetReferenceViewer` | 查看资源依赖关系和场景引用。 |
 | `EZFontReferenceViewer` | 查找引用指定字体的 UI 文本组件。 |
@@ -30,9 +31,9 @@ EZEditorTools/
     ├── EZMenuItemOrder.cs
     ├── Common/
     ├── General/
-    ├── Renaming/
+    ├── Renamer/
     ├── Analysis/
-    └── Build/
+    └── Builder/
 
 ```
 
@@ -54,7 +55,7 @@ EZEditorTools/
 
 存放一般用途的独立编辑器窗口。窗口类及其功能见上方“窗口和功能说明”。
 
-### Renaming
+### Renamer
 
 存放资源重命名相关功能：
 
@@ -71,7 +72,7 @@ EZEditorTools/
 - `EZScriptStatisticResult`：保存单个脚本统计结果的子资产。
 - `EZScriptStatisticResultEditor`：`EZScriptStatisticResult` 的 Inspector。
 
-### Build
+### Builder
 
 存放 AssetBundle 和 Player 构建相关功能：
 

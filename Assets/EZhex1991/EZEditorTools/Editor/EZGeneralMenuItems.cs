@@ -30,6 +30,9 @@ namespace EZhex1991.EZEditorTools
         [MenuItem(Root + "PlayerPrefs Editor", false, (int)EZMenuItemOrder.PlayerPrefsEditor)]
         private static void ShowPlayerPrefsEditor() => EditorWindow.GetWindow<EZPlayerPrefsEditor>("PlayerPrefs Editor").Show();
 
+        [MenuItem(Root + "Time Panel", false, (int)EZMenuItemOrder.TimePanel)]
+        private static void ShowTimePanel() => EditorWindow.GetWindow<EZTimePanel>("EZTimePanel").Show();
+
         [MenuItem(Root + "Property Path Viewer", false, (int)EZMenuItemOrder.PropertyPathViewer)]
         private static void ShowPropertyPathViewer() => EditorWindow.GetWindow<EZPropertyPathViewer>("PropertyPathViewer").Show();
 

@@ -66,12 +66,6 @@ namespace EZhex1991.EZUnity
 #endif
 
 
-        [MenuItem(ROOT_NAME + "EZTimePanel", false, (int)EZUnityMenuItemOrder.TimePanel)]
-        private static void ShowTimePanel()
-        {
-            EditorWindow.GetWindow<EZTimePanel>("EZTimePanel").Show();
-        }
-
         [MenuItem(ROOT_NAME + "Application Settings", false, (int)EZUnityMenuItemOrder.ApplicationSettings)]
         private static void ApplicationSettings()
         {
