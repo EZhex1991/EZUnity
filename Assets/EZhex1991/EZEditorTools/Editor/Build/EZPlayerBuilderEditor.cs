@@ -1,4 +1,4 @@
-﻿/* Author:          ezhex1991@outlook.com
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2019-04-04 16:14:44
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -6,7 +6,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity.Builder
+namespace EZhex1991.EZEditorTools.Build
 {
     [CustomEditor(typeof(EZPlayerBuilder)), CanEditMultipleObjects]
     public class EZPlayerBuilderEditor : Editor
@@ -152,3 +152,4 @@ namespace EZhex1991.EZUnity.Builder
         }
     }
 }
+

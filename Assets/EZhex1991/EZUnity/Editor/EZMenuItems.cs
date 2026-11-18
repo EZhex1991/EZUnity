@@ -117,12 +117,6 @@ namespace EZhex1991.EZUnity
             }
         }
 
-        [MenuItem(ROOT_NAME + "Asset Bundle Manager", false, (int)EZUnityMenuItemOrder.AssetBundleManager)]
-        private static void BundleManager()
-        {
-            EditorWindow.GetWindow<Builder.EZBundleManager>("Asset Bundle Manager").Show();
-        }
-
         [MenuItem(ROOT_NAME + "Experimental/Shader Keyword Manager", false, (int)EZUnityMenuItemOrder.ShaderKeywordManager)]
         private static void ShaderKeywordManager()
         {

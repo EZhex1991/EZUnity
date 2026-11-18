@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity.Builder
+namespace EZhex1991.EZEditorTools.Build
 {
     public class EZBundleManager : EditorWindow
     {

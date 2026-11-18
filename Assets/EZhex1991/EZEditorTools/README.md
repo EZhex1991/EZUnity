@@ -31,7 +31,8 @@ EZEditorTools/
     ├── Common/
     ├── General/
     ├── Renaming/
-    └── Analysis/
+    ├── Analysis/
+    └── Build/
 
 ```
 
@@ -44,6 +45,8 @@ EZEditorTools/
 存放编辑器内部复用的基础脚本和辅助实现：
 
 - `EZEditorGUIUtility`：通用编辑器 GUI 绘制辅助方法。
+- `EZEditorUtility`：编辑器资源、类型和着色器查询辅助方法。
+- `EZCopyList`：用于构建流程的文件复制列表及其 Inspector 绘制器。
 - `EZGameViewUtility`：访问 Unity Game View，并读取或修改当前目标 Display。
 - `TransformExt`：Transform 扩展方法，包括层级 Transform 的 TRS 复制。
 
@@ -67,6 +70,17 @@ EZEditorTools/
 - `EZScriptStatisticsEditor`：`EZScriptStatistics` 的 Inspector 和统计执行界面。
 - `EZScriptStatisticResult`：保存单个脚本统计结果的子资产。
 - `EZScriptStatisticResultEditor`：`EZScriptStatisticResult` 的 Inspector。
+
+### Build
+
+存放 AssetBundle 和 Player 构建相关功能：
+
+- `EZBundleBuilder`：AssetBundle 构建配置和执行逻辑。
+- `EZBundleBuilderEditor`：`EZBundleBuilder` 的 Inspector。
+- `EZBundleManager`：AssetBundle 管理窗口。
+- `EZPlayerBuilder`：Player 构建配置和执行逻辑。
+- `EZPlayerBuilderEditor`：`EZPlayerBuilder` 的 Inspector。
+- `EZBuilderOptions`：构建相关选项定义。
 
 ### 程序集
 

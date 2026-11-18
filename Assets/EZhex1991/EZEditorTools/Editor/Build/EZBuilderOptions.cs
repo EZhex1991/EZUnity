@@ -6,7 +6,7 @@
 using System;
 using System.IO;
 
-namespace EZhex1991.EZUnity.Builder
+namespace EZhex1991.EZEditorTools.Build
 {
     public enum AssetsViewOption
     {
@@ -45,3 +45,4 @@ namespace EZhex1991.EZUnity.Builder
         public int size;
     }
 }
+

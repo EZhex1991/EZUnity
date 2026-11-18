@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity.Builder
+namespace EZhex1991.EZEditorTools.Build
 {
     [CustomEditor(typeof(EZBundleBuilder))]
     public class EZBundleBuilderEditor : Editor

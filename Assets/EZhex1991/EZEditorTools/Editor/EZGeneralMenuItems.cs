@@ -3,6 +3,7 @@
  * Organization:    #ORGANIZATION#
  * Description:     Menu entries for EZEditorTools general tools.
  */
+using EZhex1991.EZEditorTools.Build;
 using UnityEditor;
 
 namespace EZhex1991.EZEditorTools
@@ -13,6 +14,9 @@ namespace EZhex1991.EZEditorTools
 
         [MenuItem(Root + "Renamer", false, (int)EZMenuItemOrder.Renamer)]
         private static void ShowRenamer() => EditorWindow.GetWindow<EZRenamerWindow>("Renamer").Show();
+
+        [MenuItem(Root + "Asset Bundle Manager", false, (int)EZMenuItemOrder.AssetBundleManager)]
+        private static void ShowAssetBundleManager() => EditorWindow.GetWindow<EZBundleManager>("Asset Bundle Manager").Show();
 
         [MenuItem(Root + "Guid Generator", false, (int)EZMenuItemOrder.GuidGenerator)]
         private static void ShowGuidGenerator() => EditorWindow.GetWindow<EZGuidGenerator>("Guid Generator").Show();

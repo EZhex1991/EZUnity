@@ -1,4 +1,4 @@
-﻿/* Author:          ezhex1991@outlook.com
+/* Author:          ezhex1991@outlook.com
  * CreateTime:      2019-04-02 20:41:29
  * Organization:    #ORGANIZATION#
  * Description:     
@@ -12,9 +12,9 @@ using System.IO;
 using UnityEditor.Build.Reporting;
 #endif
 
-namespace EZhex1991.EZUnity.Builder
+namespace EZhex1991.EZEditorTools.Build
 {
-    [CreateAssetMenu(fileName = "EZPlayerBuilder", menuName = "EZUnity/EZPlayerBuilder", order = (int)EZAssetMenuOrder.EZPlayerBuilder)]
+    [CreateAssetMenu(fileName = "EZPlayerBuilder", menuName = "EZEditorTools/Player Builder", order = (int)EZMenuItemOrder.PlayerBuilder)]
     public class EZPlayerBuilder : ScriptableObject
     {
         public static BuildTargetGroup GetGroup(BuildTarget buildTarget)
@@ -248,3 +248,4 @@ namespace EZhex1991.EZUnity.Builder
         }
     }
 }
+

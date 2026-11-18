@@ -27,6 +27,11 @@ namespace EZhex1991.EZEditorTools
 
         SECTION_3_ANALYSIS = SECTION_0_RENAMING + 300,
         ScriptStatistics,
+
+        SECTION_4_BUILD = SECTION_0_RENAMING + 400,
+        AssetBundleManager,
+        BundleBuilder,
+        PlayerBuilder,
     }
 }
 

@@ -13,9 +13,9 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace EZhex1991.EZUnity.Builder
+namespace EZhex1991.EZEditorTools.Build
 {
-    [CreateAssetMenu(fileName = "EZBundleBuilder", menuName = "EZUnity/EZBundleBuilder", order = (int)EZAssetMenuOrder.EZBundleBuilder)]
+    [CreateAssetMenu(fileName = "EZBundleBuilder", menuName = "EZEditorTools/Bundle Builder", order = (int)EZMenuItemOrder.BundleBuilder)]
     public class EZBundleBuilder : ScriptableObject
     {
         [AttributeUsage(AttributeTargets.Method)]
