@@ -20,6 +20,8 @@ EZUnity 本身不作为独立程序集或 Package 发布，项目可以按需直
 | [EZPostProcessing](https://github.com/EZhex1991/EZPostProcessing) | 基于 Unity Post-Processing Stack 的 Color、Depth、Distortion 和 Glow 自定义后处理效果。 |
 | [XLuaExtension](https://github.com/EZhex1991/XLuaExtension) | 基于腾讯 XLua 的非官方示例和扩展工具 |
 
+Assets下的Samples保留用于示例调整和发布，示例来源和版本记录见 [`Assets/Samples/README.md`](Assets/Samples/README.md)。
+
 ## 迁移状态
 
 - `Runtime/Rendering` 与 `EZPostProcessing` 的实现不同：前者是旧式图像效果组件，后者依赖 Unity Post-Processing Stack，暂不视为重复功能。
