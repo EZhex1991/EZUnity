@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd7f935b28e29e489787a9ad4624f35, type: 3}
+  m_Name: EZTextureTwirl
+  m_EditorClassIdentifier: 
+  m_OutputResolution: {x: 256, y: 256}
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
+  m_OutputTexture: {fileID: 2800000, guid: ad706ba9c830b1241a051e425ac33e02, type: 3}
+  m_CorrespondingGenerator: {fileID: 0}
+  m_Shader: {fileID: 4800000, guid: 8cac50c6fcf81584ab07dad960b3d2df, type: 3}
+  m_InputTexture: {fileID: 2800000, guid: 1b21e28567d46744cb3819df3e776204, type: 3}
+  twirlCenter: {x: 0.5, y: 0.5}
+  twirlStrength: 10

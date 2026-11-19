@@ -3,7 +3,6 @@
  * Organization:    #ORGANIZATION#
  * Description:     
  */
-#if UNITY_2018_2_OR_NEWER
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -442,4 +441,3 @@ namespace EZhex1991.EZUnity
         }
     }
 }
-#endif

@@ -38,11 +38,7 @@ namespace EZhex1991.EZUnity.Playables
     {
         public int materialIndex = 0;
         public string propertyName;
-#if UNITY_2018_1_OR_NEWER
         [ColorUsage(true, true)]
-#else
-        [ColorUsage(true, true, 0, 8, 0.125f, 3)]
-#endif
         public Color value;
 
         private MaterialPropertyBlock propertyBlock;

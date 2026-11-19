@@ -3,7 +3,7 @@
 --- !u!30 &1
 GraphicsSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
   m_Deferred:
     m_Mode: 1
     m_Shader: {fileID: 69, guid: 0000000000000000f000000000000000, type: 0}
@@ -28,26 +28,8 @@ GraphicsSettings:
   m_LensFlare:
     m_Mode: 1
     m_Shader: {fileID: 102, guid: 0000000000000000f000000000000000, type: 0}
+  m_VideoShadersIncludeMode: 2
   m_AlwaysIncludedShaders:
-  - {fileID: 10704, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10705, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10706, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10703, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10723, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10722, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10700, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10708, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10701, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10707, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 103, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10800, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10782, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10783, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10765, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10766, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10767, guid: 0000000000000000f000000000000000, type: 0}
@@ -55,14 +37,6 @@ GraphicsSettings:
   - {fileID: 10764, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10761, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10762, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10763, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10760, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10755, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10751, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 17000, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 16000, guid: 0000000000000000f000000000000000, type: 0}
   m_PreloadedShaders: []
   m_SpritesDefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000,
     type: 0}
@@ -87,3 +61,7 @@ GraphicsSettings:
   m_AlbedoSwatchInfos: []
   m_LightsUseLinearIntensity: 0
   m_LightsUseColorTemperature: 0
+  m_DefaultRenderingLayerMask: 1
+  m_LogWhenShaderIsCompiled: 0
+  m_CameraRelativeLightCulling: 0
+  m_CameraRelativeShadowCulling: 0

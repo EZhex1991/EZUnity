@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a2088401b381a4e9d51c54b7e95b36, type: 3}
+  m_Name: EZPerlinNoiseTextureGenerator
+  m_EditorClassIdentifier: 
+  m_OutputResolution: {x: 256, y: 256}
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
+  m_OutputTexture: {fileID: 2800000, guid: 56e55da2e3ace984293e08a3cb8625ee, type: 3}
+  m_CorrespondingGenerator: {fileID: 0}
+  m_Shader: {fileID: 4800000, guid: 77fd8fe7a33ddec4baddc4df8e8332a3, type: 3}
+  noiseDensity: {x: 50, y: 2}

@@ -136,12 +136,7 @@ namespace EZhex1991.EZUnity
                 case TextureEncoding.PNG: return texture.EncodeToPNG();
                 case TextureEncoding.JPG: return texture.EncodeToJPG();
                 case TextureEncoding.TGA:
-#if UNITY_2018_3_OR_NEWER
                     return texture.EncodeToTGA();
-#else
-                    Debug.LogError("TGA encoding is not available on Unity2018.2 or earlier version, PNG encoding will be used");
-                    break;
-#endif
             }
             return texture.EncodeToPNG();
         }

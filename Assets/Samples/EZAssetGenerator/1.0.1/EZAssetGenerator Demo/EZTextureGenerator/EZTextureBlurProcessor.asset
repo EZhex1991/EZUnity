@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dd401b097cc6d94dbc15653e8958736, type: 3}
+  m_Name: EZTextureBlurProcessor
+  m_EditorClassIdentifier: 
+  m_OutputResolution: {x: 512, y: 512}
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
+  m_OutputTexture: {fileID: 2800000, guid: bdf9833f6f1c6454ea75e9d49c5253a7, type: 3}
+  m_CorrespondingGenerator: {fileID: 0}
+  m_Shader: {fileID: 4800000, guid: c34342432ca9bea40b3ab76846ea7251, type: 3}
+  m_InputTexture: {fileID: 2800000, guid: b7e9108271e34364e8952148c1e60010, type: 3}
+  blurWeightTexture: {fileID: 2800000, guid: a29ab7d357b12d3488212867cab63f06, type: 3}
+  blurRadius: {x: 40, y: 40}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044109351db655a48bb4b9e9ff5e3057, type: 3}
+  m_Name: EZColorBasedOutline
+  m_EditorClassIdentifier: 
+  m_OutputResolution: {x: 256, y: 256}
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
+  m_OutputTexture: {fileID: 2800000, guid: 12fad3a0bb6ffaf4fb16b8eeaef1805d, type: 3}
+  m_CorrespondingGenerator: {fileID: 0}
+  m_Shader: {fileID: 4800000, guid: 4f54ae2edd106f84ebddbef259f5f090, type: 3}
+  m_InputTexture: {fileID: 2800000, guid: f1c2a2e857d866f40a5f13688eab01ea, type: 3}
+  grayWeight: {r: 1, g: 0, b: 0, a: 1}
+  tolerance: 50
+  outlineColor: {r: 1, g: 1, b: 0, a: 0.5}
+  outlineThickness: 1

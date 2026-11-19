@@ -1,0 +1,835 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
+  m_Name: TestProfile
+  m_EditorClassIdentifier: 
+  settings:
+  - {fileID: 114071853704143054}
+  - {fileID: 114472218384341448}
+  - {fileID: 114480943200636920}
+  - {fileID: 114132224149561278}
+  - {fileID: 114377123851961114}
+  - {fileID: 114302888658557160}
+--- !u!114 &114014720246538040
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZColorBasedOutline
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZColorBasedOutline
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _GrayWeight:
+    overrideState: 0
+    value: {r: 0.299, g: 0.587, b: 0.114, a: 1}
+  _Tolerance:
+    overrideState: 0
+    value: 50
+  _OutlineColor:
+    overrideState: 0
+    value: {r: 0, g: 0, b: 0, a: 1}
+  _OutlineThickness:
+    overrideState: 0
+    value: 1
+--- !u!114 &114015933187187390
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf7bdae2eb001844bf15291fa22255d, type: 3}
+  m_Name: EZGlow
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 0
+    value: 0
+  sourceLayer:
+    overrideState: 1
+    value:
+      serializedVersion: 2
+      m_Bits: 2
+  textureResolution:
+    overrideState: 1
+    value: {x: 512, y: 512}
+  edgeMode:
+    overrideState: 0
+    value: 2
+  diffusion:
+    overrideState: 1
+    value: 4
+  blendMode:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 0
+    value: 0
+  color:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114039898272091738
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZColorBasedOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZColorBasedOutlineSettings
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _GrayWeight:
+    overrideState: 0
+    value:
+      r: 0.299
+      g: 0.587
+      b: 0.114
+      a: 1
+  _Tolerance:
+    overrideState: 0
+    value: 50
+  _OutlineColor:
+    overrideState: 0
+    value:
+      r: 0
+      g: 0
+      b: 0
+      a: 1
+  _OutlineThickness:
+    overrideState: 0
+    value: 1
+--- !u!114 &114071853704143054
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d835dc7d6717df745861a1f334f37c6b, type: 3}
+  m_Name: EZColorBasedOutline
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  _GrayWeight:
+    overrideState: 1
+    value: {r: 0.299, g: 0.587, b: 0.114, a: 1}
+  _Tolerance:
+    overrideState: 1
+    value: 20
+  _OutlineColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 1}
+  _OutlineThickness:
+    overrideState: 1
+    value: 1
+--- !u!114 &114103909398770608
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZOutline
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZOutline
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _SampleDistance:
+    overrideState: 0
+    value: 1
+  _DepthSensitivity:
+    overrideState: 0
+    value: 5
+  _NormalSensitivity:
+    overrideState: 0
+    value: 0
+  _CoverColor:
+    overrideState: 0
+    value: {r: 0, g: 0, b: 0, a: 0}
+  _CoverStrength:
+    overrideState: 0
+    value: 0
+  _OutlineColor:
+    overrideState: 0
+    value: {r: 0, g: 0, b: 0, a: 0}
+  _OutlineStrength:
+    overrideState: 0
+    value: 1
+--- !u!114 &114132224149561278
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cea293c6c8f4f4699ec24bfc2d28e5, type: 3}
+  m_Name: EZDepthBasedOutline
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  _SampleDistance:
+    overrideState: 1
+    value: 2
+  _DepthSensitivity:
+    overrideState: 1
+    value: 5
+  _NormalSensitivity:
+    overrideState: 1
+    value: 5
+  _CoverColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 0}
+  _CoverStrength:
+    overrideState: 1
+    value: 1
+  _OutlineColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 1, a: 0}
+  _OutlineStrength:
+    overrideState: 1
+    value: 1
+--- !u!114 &114132868419373600
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf7bdae2eb001844bf15291fa22255d, type: 3}
+  m_Name: EZOuterGlow
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 0
+    value: 0
+  sourceLayer:
+    overrideState: 1
+    value:
+      serializedVersion: 2
+      m_Bits: 4
+  textureResolution:
+    overrideState: 1
+    value: {x: 512, y: 512}
+  edgeMode:
+    overrideState: 0
+    value: 2
+  diffusion:
+    overrideState: 0
+    value: 7
+  blendMode:
+    overrideState: 0
+    value: 0
+  intensity:
+    overrideState: 0
+    value: 0
+  color:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114244473407199044
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZOutlineSettings
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _SampleDistance:
+    overrideState: 0
+    value: 1
+  _DepthSensitivity:
+    overrideState: 0
+    value: 5
+  _NormalSensitivity:
+    overrideState: 0
+    value: 0
+  _CoverColor:
+    overrideState: 0
+    value:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+  _CoverStrength:
+    overrideState: 0
+    value: 0
+  _OutlineColor:
+    overrideState: 0
+    value:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+  _OutlineStrength:
+    overrideState: 0
+    value: 1
+--- !u!114 &114302888658557160
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf7bdae2eb001844bf15291fa22255d, type: 3}
+  m_Name: EZGlow
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 1
+    value: 1
+  sourceLayer:
+    overrideState: 1
+    value:
+      serializedVersion: 2
+      m_Bits: 2
+  textureResolution:
+    overrideState: 1
+    value: {x: 512, y: 512}
+  edgeMode:
+    overrideState: 1
+    value: 2
+  diffusion:
+    overrideState: 1
+    value: 7
+  blendMode:
+    overrideState: 1
+    value: 0
+  intensity:
+    overrideState: 1
+    value: 1
+  color:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0.5019608, a: 1}
+--- !u!114 &114372768077199508
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp:EZUnity.PostProcessing:EZOutlineSettings
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _SampleDistance:
+    overrideState: 0
+    value: 1
+  _DepthSensitivity:
+    overrideState: 0
+    value: 5
+  _NormalSensitivity:
+    overrideState: 0
+    value: 0
+  _CoverColor:
+    overrideState: 0
+    value:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+  _CoverStrength:
+    overrideState: 0
+    value: 0
+  _OutlineColor:
+    overrideState: 0
+    value:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+  _OutlineStrength:
+    overrideState: 0
+    value: 1
+--- !u!114 &114377123851961114
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
+  m_Name: Bloom
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 50
+  threshold:
+    overrideState: 1
+    value: 1.1
+  softKnee:
+    overrideState: 1
+    value: 0.19
+  clamp:
+    overrideState: 0
+    value: 65472
+  diffusion:
+    overrideState: 0
+    value: 7
+  anamorphicRatio:
+    overrideState: 0
+    value: 0
+  color:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+  fastMode:
+    overrideState: 0
+    value: 0
+  dirtTexture:
+    overrideState: 0
+    value: {fileID: 0}
+    defaultState: 1
+  dirtIntensity:
+    overrideState: 0
+    value: 0
+--- !u!114 &114395738290172558
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZColorBasedOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZColorBasedOutlineSettings
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  _GrayWeight:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  _Tolerance:
+    overrideState: 1
+    value: 50
+  _OutlineColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 1, a: 1}
+  _OutlineThickness:
+    overrideState: 1
+    value: 1
+--- !u!114 &114400439911925230
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf7bdae2eb001844bf15291fa22255d, type: 3}
+  m_Name: EZGlow
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 0
+    value: 0
+  sourceLayer:
+    overrideState: 0
+    value:
+      serializedVersion: 2
+      m_Bits: 0
+  textureResolution:
+    overrideState: 0
+    value: {x: 512, y: 512}
+  edgeMode:
+    overrideState: 0
+    value: 2
+  diffusion:
+    overrideState: 0
+    value: 7
+  blendMode:
+    overrideState: 0
+    value: 0
+  intensity:
+    overrideState: 0
+    value: 0
+  color:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114472218384341448
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f7b53524febbc4ea4d64ab1b9329fe, type: 3}
+  m_Name: EZDepthBasedGradient
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  _ColorNear:
+    overrideState: 1
+    value: {r: 1, g: 0, b: 0, a: 1}
+  _ColorFar:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 1, a: 1}
+  _GradientPower:
+    overrideState: 1
+    value: 1
+  _GradientSoftness:
+    overrideState: 1
+    value: {x: 0.15, y: 0.35}
+--- !u!114 &114480943200636920
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037ac13988a27f64882e4e454806a394, type: 3}
+  m_Name: EZDistortion
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: {x: 0.1, y: 0.1}
+  sourceLayer:
+    overrideState: 1
+    value:
+      serializedVersion: 2
+      m_Bits: 2
+  textureResolution:
+    overrideState: 1
+    value: {x: 512, y: 512}
+  textureFormat:
+    overrideState: 1
+    value: 16
+  depthTest:
+    overrideState: 1
+    value: 1
+  distortionTex:
+    overrideState: 1
+    value: {fileID: 2800000, guid: e6b36aab6ddc12c4ca82c132a93645d1, type: 3}
+    defaultState: 2
+--- !u!114 &114511983909454506
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZDepthBasedGradientSettings
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZDepthBasedGradientSettings
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _ColorNear:
+    overrideState: 0
+    value:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+  _ColorFar:
+    overrideState: 0
+    value:
+      r: 0
+      g: 0
+      b: 0
+      a: 1
+  _GradientPower:
+    overrideState: 0
+    value: 1
+  _GradientSoftness:
+    overrideState: 0
+    value: {x: 0, y: 1}
+--- !u!114 &114517181364998954
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ace49906c1cbd43a24d429ba6a6efa, type: 3}
+  m_Name: EZInnerGlow
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  sourceLayer:
+    overrideState: 1
+    value:
+      m_Bits: 2
+  textureResolution:
+    overrideState: 1
+    value: {x: 512, y: 512}
+  depthTest:
+    overrideState: 1
+    value: 0
+  diffusion:
+    overrideState: 1
+    value: 7
+  blendMode:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 2.39
+  color:
+    overrideState: 1
+    value:
+      r: 0
+      g: 0
+      b: 0
+      a: 1
+--- !u!114 &114526044361150356
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZDepthBasedGradientSettings
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZDepthBasedGradientSettings
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _ColorNear:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  _ColorFar:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 1}
+  _GradientPower:
+    overrideState: 1
+    value: 1
+  _GradientSoftness:
+    overrideState: 1
+    value: {x: 0, y: 0.98067945}
+--- !u!114 &114701900401349514
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZOutlineSettings
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZOutlineSettings
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _SampleDistance:
+    overrideState: 1
+    value: 2
+  _DepthSensitivity:
+    overrideState: 1
+    value: 5
+  _NormalSensitivity:
+    overrideState: 1
+    value: 5
+  _CoverColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 0}
+  _CoverStrength:
+    overrideState: 1
+    value: 0
+  _OutlineColor:
+    overrideState: 1
+    value: {r: 1, g: 0, b: 0, a: 1}
+  _OutlineStrength:
+    overrideState: 1
+    value: 1
+--- !u!114 &114729935169759584
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZOuterGlow
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZOuterGlow
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  sourceLayer:
+    overrideState: 1
+    value:
+      serializedVersion: 2
+      m_Bits: 2
+  textureResolution:
+    overrideState: 1
+    value: {x: 512, y: 512}
+  depthTest:
+    overrideState: 1
+    value: 1
+  diffusion:
+    overrideState: 1
+    value: 7
+  blendMode:
+    overrideState: 1
+    value: 0
+  intensity:
+    overrideState: 1
+    value: 5
+  color:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &114735288612485908
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: EZDepthBasedGradient
+  m_EditorClassIdentifier: Assembly-CSharp:EZhex1991.EZPostProcessing:EZDepthBasedGradient
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  _ColorNear:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+  _ColorFar:
+    overrideState: 0
+    value: {r: 0, g: 0, b: 0, a: 1}
+  _GradientPower:
+    overrideState: 0
+    value: 1
+  _GradientSoftness:
+    overrideState: 0
+    value: {x: 0, y: 1}
+--- !u!114 &114777101130276714
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cea293c6c8f4f4699ec24bfc2d28e5, type: 3}
+  m_Name: EZOutline
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  _SampleDistance:
+    overrideState: 1
+    value: 2
+  _DepthSensitivity:
+    overrideState: 1
+    value: 5
+  _NormalSensitivity:
+    overrideState: 1
+    value: 5
+  _CoverColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 0}
+  _CoverStrength:
+    overrideState: 1
+    value: 0
+  _OutlineColor:
+    overrideState: 1
+    value: {r: 1, g: 0, b: 0, a: 1}
+  _OutlineStrength:
+    overrideState: 1
+    value: 1

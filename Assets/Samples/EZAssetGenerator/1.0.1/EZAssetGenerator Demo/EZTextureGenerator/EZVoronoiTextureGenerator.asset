@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1190c00d76a7994429fd38a7585892f6, type: 3}
+  m_Name: EZVoronoiTextureGenerator
+  m_EditorClassIdentifier: 
+  m_OutputResolution: {x: 256, y: 256}
+  m_OutputFormat: 3
+  m_OutputEncoding: 1
+  m_OutputTexture: {fileID: 2800000, guid: b1dfd9cc08e27d74894ba5c5881693d9, type: 3}
+  m_CorrespondingGenerator: {fileID: 0}
+  m_Shader: {fileID: 4800000, guid: 44929f49243a9e84da9e9f504a67a868, type: 3}
+  fillType: 0
+  angleOffset: 2
+  voronoiDensity: {x: 10, y: 10}

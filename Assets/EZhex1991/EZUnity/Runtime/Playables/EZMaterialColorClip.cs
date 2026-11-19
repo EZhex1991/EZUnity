@@ -29,11 +29,7 @@ namespace EZhex1991.EZUnity.Playables
     [System.Serializable]
     public class EZMaterialColorPlayableBehaviour : PlayableBehaviour
     {
-#if UNITY_2018_1_OR_NEWER
         [ColorUsage(true, true)]
-#else
-        [ColorUsage(true, true, 0, 8, 0.125f, 3)]
-#endif
         public Color value;
     }
 }

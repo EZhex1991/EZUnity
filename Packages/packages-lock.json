@@ -64,6 +64,47 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "ezhex1991.ezanimation": {
+      "version": "file:ezhex1991.ezanimation",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.timeline": "1.4.8",
+        "com.unity.ugui": "1.0.0"
+      }
+    },
+    "ezhex1991.ezassetgenerator": {
+      "version": "file:ezhex1991.ezassetgenerator",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "ezhex1991.ezeditortools": {
+      "version": "file:ezhex1991.ezeditortools",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "ezhex1991.ezpostprocessing": {
+      "version": "file:ezhex1991.ezpostprocessing",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.postprocessing": "3.0.3"
+      }
+    },
+    "ezhex1991.ezprojectsettings": {
+      "version": "file:ezhex1991.ezprojectsettings",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "ezhex1991.ezsoftbone": {
+      "version": "file:ezhex1991.ezsoftbone",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.modules.animation": {
       "version": "1.0.0",
       "depth": 0,

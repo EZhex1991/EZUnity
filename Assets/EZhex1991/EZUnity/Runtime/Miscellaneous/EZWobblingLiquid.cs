@@ -18,7 +18,7 @@ namespace EZhex1991.EZUnity
         }
         private const float timeStep = 0.1f;
 
-        public Renderer renderer;
+        public new Renderer renderer;
         [Range(0, 1)]
         public float fillAmount = 0.5f;
         [Range(0, 1)]
