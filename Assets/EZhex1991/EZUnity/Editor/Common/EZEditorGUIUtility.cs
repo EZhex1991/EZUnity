@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace EZhex1991.EZUnity
 {
-    public static partial class EZEditorGUIUtility
+    public static class EZEditorGUIUtility
     {
         public static float width;
         public static float GetDigitWidth(float number)
@@ -49,6 +49,25 @@ namespace EZhex1991.EZUnity
             GUI.enabled = false;
             EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour(target), typeof(MonoScript), false);
             GUI.enabled = true;
+        }
+
+        public static void DrawFolderPathField(Rect rect, SerializedProperty property)
+        {
+            const float buttonWidth = 24f;
+            const float spacing = 2f;
+            Rect pathRect = new Rect(rect.x, rect.y, rect.width - buttonWidth - spacing, rect.height);
+            Rect buttonRect = new Rect(pathRect.xMax + spacing, rect.y, buttonWidth, rect.height);
+
+            property.stringValue = EditorGUI.TextField(pathRect, property.stringValue);
+            if (GUI.Button(buttonRect, "..."))
+            {
+                string path = EditorUtility.OpenFolderPanel("Select Folder", property.stringValue, "");
+                if (!string.IsNullOrEmpty(path))
+                {
+                    string projectRelativePath = FileUtil.GetProjectRelativePath(path);
+                    property.stringValue = string.IsNullOrEmpty(projectRelativePath) ? path : projectRelativePath;
+                }
+            }
         }
 
         public static void DoLayoutReorderableList(ReorderableList list)
