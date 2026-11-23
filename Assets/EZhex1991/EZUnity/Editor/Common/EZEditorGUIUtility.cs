@@ -2,6 +2,8 @@
  * CreateTime:      2017-11-22 18:08:40
  * Organization:    #ORGANIZATION#
  * Description:     
+ * Role:             Source file for independent package copies.
+ * Sync:             Changes to this file should be synchronized to the package copies.
  */
 using UnityEditor;
 using UnityEditorInternal;

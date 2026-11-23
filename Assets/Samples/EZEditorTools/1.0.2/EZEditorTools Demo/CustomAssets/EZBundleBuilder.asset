@@ -23,7 +23,7 @@ MonoBehaviour:
   - bundleName: customasset
     filePattern: '*.*'
     searchOption: 1
-    dirPath: Assets/EZhex1991/EZUnity/Demo/CustomAssets
+    dirPath: Assets/EZhex1991/EZUnity/Demo
   - bundleName: materials
     filePattern: '*.mat'
     searchOption: 0

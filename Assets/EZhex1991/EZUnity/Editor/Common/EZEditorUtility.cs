@@ -2,6 +2,8 @@
  * CreateTime:      #CREATETIME#
  * Organization:    #ORGANIZATION#
  * Description:     
+ * Role:             Source file for independent package copies.
+ * Sync:             Changes to this file should be synchronized to the package copies.
  */
 using System;
 using System.Collections.Generic;

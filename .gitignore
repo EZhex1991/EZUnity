@@ -14,21 +14,10 @@
 [Ll]ogs/
 [Bb]uild/
 [Bb]uilds/
-UnityPackageManager/
+ProjectSettings/UPRSettings.asset
+ProjectSettings/EZhex1991/EZScriptSettings.asset
 
-# EZUnity
-EZPersistent/
-EZScreenshots/
-
-# XLua
-LuaDebuggee.dll
-Assets/.lpproj/
-Assets/ThirdParty/
-Assets/ThirdParty.meta
-Assets/XLua/Gen/
-Assets/XLua/Gen.meta
-
-# Others
+# Assets
 Assets/_Temp*
 Assets/EZhex1991/EZAnimation
 Assets/EZhex1991/EZAnimation.meta
@@ -40,6 +29,9 @@ Assets/EZhex1991/EZSoftBone
 Assets/EZhex1991/EZSoftBone.meta
 Assets/AssetStoreTools
 Assets/AssetStoreTools.meta
+Assets/StreamingAssets/
+Assets/StreamingAssets.meta
+EZScreenshots/
 
 # Windows image file caches
 Thumbs.db
@@ -88,5 +80,3 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-ProjectSettings/UPRSettings.asset
-ProjectSettings/EZhex1991/EZScriptSettings.asset
