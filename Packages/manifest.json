@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.unity.ide.visualstudio": "2.0.18",
+    "com.unity.ide.visualstudio": "2.0.23",
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.postprocessing": "3.0.3",
     "com.unity.recorder": "2.5.7",

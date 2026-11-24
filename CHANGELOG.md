@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026-11-24]
+
+### Added
+
+- Added the EZProjectSettings Texture Importer preset sample.
+- Added pre-build and post-build copy list samples for EZEditorTools.
+
+### Changed
+
+- Updated Bundle Builder samples to use folder references and the current output settings.
+- Updated Player Builder sample copy list references.
+- Removed the generated `Assets/Resources/files.txt` and its metadata file.
+- Updated Unity package and project settings files.
+
 ## [2026-11-20]
 
 ### Added

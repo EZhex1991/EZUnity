@@ -25,8 +25,8 @@ MonoBehaviour:
   - bundleName: customasset
     filePattern: '*.*'
     searchOption: 1
-    dirPath: Assets/EZhex1991/EZUnity/Demo
+    directory: {fileID: 102900000, guid: 370322063a5fab4458160ee57a4f6536, type: 3}
   - bundleName: materials
     filePattern: '*.mat'
     searchOption: 0
-    dirPath: Assets/EZhex1991/EZUnity/Demo/Materials
+    directory: {fileID: 102900000, guid: 243f1b320fb96b342a642f129626113d, type: 3}
