@@ -15,7 +15,7 @@ MonoBehaviour:
   buildTarget: -2
   buildOptions: 8
   bundleBuilder: {fileID: 11400000, guid: 80a219ea299caa849904e23dbf7e8e7d, type: 2}
-  outputPath: Builds/<BuildTarget>/<ProductName>-<BundleVersion>
+  outputPath: Builds/Players/<BuildTarget>/<ProductName>-<BundleVersion>
   exeFileName: <ProductName>-<BundleVersion>
   scenes:
   - {fileID: 102900000, guid: 2a2b20e4f6d68fa49ae096f28f8f88c4, type: 3}

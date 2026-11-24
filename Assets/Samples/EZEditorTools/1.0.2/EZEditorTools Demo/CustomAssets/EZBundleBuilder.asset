@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildTarget: -2
   buildOptions: 16
-  outputPath: Assets/StreamingAssets
+  outputPath: Builds/AssetBundles/<BuildTarget>
   listFileName: files.txt
   managerMode: 0
   forceRebuild: 0
