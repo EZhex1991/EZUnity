@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildTarget: -2
   buildOptions: 16
-  outputPath: Builds/AssetBundles/<BuildTarget>
+  buildNumber: 0
+  outputDirectory: Builds/AssetBundles
+  outputPattern: <BuildTarget>-<BuildNumber>
   listFileName: files.txt
-  managerMode: 0
   forceRebuild: 0
-  copyList: []
+  preBuildCopyList: []
   bundleList:
   - bundleName: customasset
     filePattern: '*.*'
@@ -28,5 +29,3 @@ MonoBehaviour:
     filePattern: '*.mat'
     searchOption: 0
     dirPath: Assets/EZhex1991/EZUnity/Demo/Materials
-  showAssets: 0
-  showDependencies: 2

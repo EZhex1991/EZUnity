@@ -70,6 +70,17 @@ namespace EZhex1991.EZUnity
             }
         }
 
+        public static void DrawBuildNumberField(SerializedProperty property)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(property);
+            if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.Width(30)))
+            {
+                property.intValue++;
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
         public static void DoLayoutReorderableList(ReorderableList list)
         {
             DoLayoutReorderableList(list, list.serializedProperty.displayName);
