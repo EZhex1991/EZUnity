@@ -19,7 +19,8 @@ MonoBehaviour:
   outputPattern: <BuildTarget>-<BuildNumber>
   listFileName: files.txt
   forceRebuild: 0
-  preBuildCopyList: []
+  preBuildCopyList: {fileID: 0}
+  postBuildCopyList: {fileID: 0}
   bundleList:
   - bundleName: customasset
     filePattern: '*.*'

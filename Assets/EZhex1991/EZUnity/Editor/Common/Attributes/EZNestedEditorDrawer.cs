@@ -31,6 +31,7 @@ namespace EZhex1991.EZUnity
                     if (property.isExpanded)
                     {
                         EditorGUI.indentLevel++;
+                        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                         if (property.type == "PPtr<$Material>")
                         {
                             Editor.CreateCachedEditor(property.objectReferenceValue, typeof(MaterialEditor), ref nestedEditor);
@@ -41,6 +42,7 @@ namespace EZhex1991.EZUnity
                             Editor.CreateCachedEditor(property.objectReferenceValue, null, ref nestedEditor);
                             nestedEditor.OnInspectorGUI();
                         }
+                        EditorGUILayout.EndVertical();
                         EditorGUI.indentLevel--;
                     }
                 }
