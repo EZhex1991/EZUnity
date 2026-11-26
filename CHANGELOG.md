@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-11-26]
+
+### Changed
+
+- Added the TextMeshPro package to the development project.
+- Updated editor user settings.
+
 ## [2026-11-24]
 
 ### Added
