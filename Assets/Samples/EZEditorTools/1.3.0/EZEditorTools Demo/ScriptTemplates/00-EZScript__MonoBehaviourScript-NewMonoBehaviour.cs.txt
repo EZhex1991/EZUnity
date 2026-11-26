@@ -1,0 +1,11 @@
+/* Author:          #AUTHORNAME#
+ * CreateTime:      #CREATETIME#
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+using UnityEngine;
+
+public class #SCRIPTNAME# : MonoBehaviour
+{
+    
+}

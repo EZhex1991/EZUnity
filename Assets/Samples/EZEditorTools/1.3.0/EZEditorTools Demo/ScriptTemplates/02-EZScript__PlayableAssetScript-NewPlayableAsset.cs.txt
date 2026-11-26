@@ -1,0 +1,29 @@
+/* Author:          #AUTHORNAME#
+ * CreateTime:      #CREATETIME#
+ * Organization:    #ORGANIZATION#
+ * Description:     
+ */
+using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
+
+public class #SCRIPTNAME# : PlayableAsset
+{
+    public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
+    {
+        var playable = ScriptPlayable<#SCRIPTNAME#PlayableBehaviour>.Create(graph);
+        return playable;
+    }
+}
+
+public class #SCRIPTNAME#PlayableBehaviour : PlayableBehaviour
+{
+    public override void PrepareFrame(Playable playable, FrameData info)
+    {
+
+    }
+    public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+    {
+
+    }
+}
